@@ -96,6 +96,9 @@
     --ds-motion-scale: 1;
   }
 }
+:root[data-ds-instant] :is(.motion-popover, .motion-tooltip, .motion-modal, .motion-backdrop, [data-slot=sheet-content]) {
+  transition-duration: 0ms;
+}
 @utility motion-popover {
   transform-origin: var(--transform-origin);
   transition: opacity var(--ds-duration-popover) var(--ds-ease-out), transform var(--ds-duration-popover) var(--ds-ease-out);

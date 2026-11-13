@@ -11,6 +11,9 @@ importers:
       '@base-ui/react':
         specifier: ^1.9.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@tanstack/react-hotkeys':
+        specifier: 0.25.0
+        version: 0.25.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -859,6 +862,17 @@ packages:
 
   '@tailwindcss/postcss@4.3.5':
     resolution: {integrity: sha512-FAV37Tlx9wBiT/hkfgVD0Q6CWsP2oUX3lf28nrfjW8+ksILjnpuFulUqWDfNR4/ZiEHHDRBX8DUTzD1Rys687A==}
+
+  '@tanstack/hotkeys@0.29.0':
+    resolution: {integrity: sha512-aRL4MICfFmvzVgz5pAC1JmFTeeJjd5KbFA4ZLAZuqAPoqsDUUtJfTZpx+WKKNDJGi3X/p9gO87CZ+alFHTd3Og==}
+    engines: {node: '>=20'}
+
+  '@tanstack/react-hotkeys@0.25.0':
+    resolution: {integrity: sha512-pVkW1du9rp7YA9InTbuwIQGCcS678wkxXy854nN+Q8crMP84+LwqAr20kvu2XY5keY4KdLI9LTv1DeiuZDT7NA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
 
   '@ts-morph/common@0.27.0':
     resolution: {integrity: sha512-Wf29UqxWDpc+i61k3oIOzcUfQt79PIT9y/MWfAGlrkjg6lBC1hwDECLXPVJAhWjiGbfBCxZd65F/LIZF3+jeJQ==}
@@ -3742,6 +3756,14 @@ snapshots:
       '@tailwindcss/oxide': 4.3.5
       postcss: 8.5.32
       tailwindcss: 4.3.5
+
+  '@tanstack/hotkeys@0.29.0': {}
+
+  '@tanstack/react-hotkeys@0.25.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+    dependencies:
+      '@tanstack/hotkeys': 0.29.0
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
 
   '@ts-morph/common@0.27.0':
     dependencies:

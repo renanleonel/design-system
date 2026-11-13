@@ -4,8 +4,15 @@ import * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
+import type { RegisterableHotkey } from "@tanstack/react-hotkeys"
 
+import { Hotkey } from "@/components/ui/hotkey"
 import { Spinner } from "@/components/ui/spinner"
+import {
+  mergeRefs,
+  toAriaKeyShortcuts,
+  useHotkeyPress,
+} from "@/hooks/use-hotkey-press"
 
 const buttonVariants = cva(
   "group/button hit-area inline-flex shrink-0 motion-press items-center justify-center rounded-control border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap focus-ring outline-none select-none disabled:pointer-events-none disabled:opacity-50 aria-busy:cursor-progress aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&>svg]:transition-[width,opacity,margin-inline-end] [&>svg]:duration-200 [&>svg]:ease-out aria-busy:[&>svg]:-me-(--btn-gap) aria-busy:[&>svg]:w-0! aria-busy:[&>svg]:opacity-0",
@@ -50,13 +57,23 @@ function Button({
   size = "default",
   loading = false,
   disabled,
+  hotkey,
+  showHotkey = false,
+  ref,
   children,
   ...props
 }: ButtonPrimitive.Props &
   VariantProps<typeof buttonVariants> & {
     /** Busy state: keeps the label, slides a spinner in, blocks clicks, keeps focus. */
     loading?: boolean
+    /** Presses the button from anywhere, e.g. `"Mod+S"`. Off while disabled or loading. */
+    hotkey?: RegisterableHotkey
+    /** Shows the hotkey as key caps at the end of the label. */
+    showHotkey?: boolean
   }) {
+  const innerRef = React.useRef<HTMLButtonElement>(null)
+  useHotkeyPress(innerRef, hotkey, { enabled: !disabled && !loading })
+
   // The spinner mounts as soon as loading starts (state adjusted during render, no
   // effect) and unmounts when the collapse transition ends, so it keeps spinning
   // while it fades out instead of freezing.
@@ -66,6 +83,9 @@ function Button({
   return (
     <ButtonPrimitive
       data-slot="button"
+      data-variant={variant}
+      ref={mergeRefs(ref, innerRef)}
+      aria-keyshortcuts={toAriaKeyShortcuts(hotkey)}
       className={cn(buttonVariants({ variant, size, className }))}
       disabled={disabled || loading}
       focusableWhenDisabled={loading || undefined}
@@ -89,6 +109,12 @@ function Button({
         </span>
       </span>
       {children}
+      {hotkey && showHotkey && (
+        <Hotkey
+          hotkey={hotkey}
+          className="-me-1 in-data-[variant=default]:*:bg-primary-foreground/15 in-data-[variant=default]:*:text-primary-foreground"
+        />
+      )}
     </ButtonPrimitive>
   )
 }

@@ -31,6 +31,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/drawer.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/field.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json",
@@ -162,6 +163,9 @@
           ":root": {
             "--ds-motion-scale": "1"
           }
+        },
+        ":root[data-ds-instant] :is(.motion-popover, .motion-tooltip, .motion-modal, .motion-backdrop, [data-slot=sheet-content])": {
+          "transition-duration": "0ms"
         },
         "@utility motion-popover": {
           "transform-origin": "var(--transform-origin)",
@@ -552,6 +556,20 @@
       "name": "theme-neutral"
     },
     {
+      "name": "use-hotkey-press",
+      "type": "registry:hook",
+      "dependencies": [
+        "@tanstack/react-hotkeys"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hooks/use-hotkey-press.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "accordion",
       "type": "registry:ui",
       "dependencies": [
@@ -620,11 +638,14 @@
       "type": "registry:ui",
       "dependencies": [
         "@base-ui/react",
+        "@tanstack/react-hotkeys",
         "class-variance-authority",
         "cn"
       ],
       "registryDependencies": [
-        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json"
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json"
       ],
       "files": [
         {
@@ -720,10 +741,14 @@
       "type": "registry:ui",
       "dependencies": [
         "@base-ui/react",
+        "@tanstack/react-hotkeys",
         "cn",
         "lucide-react"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json"
+      ],
       "files": [
         {
           "path": "components/ui/dropdown-menu.tsx",
@@ -745,6 +770,23 @@
       "files": [
         {
           "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hotkey",
+      "type": "registry:ui",
+      "dependencies": [
+        "@tanstack/react-hotkeys",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/hotkey.tsx",
           "type": "registry:ui"
         }
       ]
@@ -984,9 +1026,12 @@
       "type": "registry:ui",
       "dependencies": [
         "@base-ui/react",
+        "@tanstack/react-hotkeys",
         "cn"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json"
+      ],
       "files": [
         {
           "path": "components/ui/tooltip.tsx",

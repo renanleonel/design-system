@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-hotkey-press",
+  "dependencies": [
+    "@tanstack/react-hotkeys"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-hotkey-press.ts",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { useHotkey, type RegisterableHotkey } from \"@tanstack/react-hotkeys\"\n\n/**\n * Clicks `element` as if pressed. Popups it opens skip their entrance motion:\n * keyboard-initiated actions never animate (`animate` skill), so `data-ds-instant`\n * zeroes the motion-* transitions for the two frames the popup takes to mount.\n */\nexport function pressInstantly(element: HTMLElement | null | undefined) {\n  if (!element) return\n  const root = document.documentElement\n  root.setAttribute(\"data-ds-instant\", \"\")\n  element.click()\n  requestAnimationFrame(() =>\n    requestAnimationFrame(() => root.removeAttribute(\"data-ds-instant\"))\n  )\n}\n\n/** Presses the element in `ref` when `hotkey` fires. No hotkey registers nothing. */\nexport function useHotkeyPress(\n  ref: React.RefObject<HTMLElement | null>,\n  hotkey: RegisterableHotkey | null | undefined,\n  { enabled = true }: { enabled?: boolean } = {}\n) {\n  useHotkey(hotkey, () => pressInstantly(ref.current), { enabled })\n}\n\n/** `aria-keyshortcuts` value. `Mod` lists both platforms, so server and client agree. */\nexport function toAriaKeyShortcuts(\n  hotkey: RegisterableHotkey | null | undefined\n) {\n  if (!hotkey || typeof hotkey !== \"string\") return undefined\n  const map: Record<string, string> = {\n    Ctrl: \"Control\",\n    Cmd: \"Meta\",\n    Option: \"Alt\",\n  }\n  const chord = (mod: string) =>\n    hotkey\n      .split(\"+\")\n      .map((key) => (key === \"Mod\" ? mod : (map[key] ?? key)))\n      .join(\"+\")\n  return hotkey.split(\"+\").includes(\"Mod\")\n    ? `${chord(\"Control\")} ${chord(\"Meta\")}`\n    : chord(\"\")\n}\n\n/** Merges refs into one callback ref. */\nexport function mergeRefs<T>(...refs: Array<React.Ref<T> | undefined>) {\n  return (node: T | null) => {\n    for (const ref of refs) {\n      if (typeof ref === \"function\") ref(node)\n      else if (ref) ref.current = node\n    }\n  }\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

@@ -54,7 +54,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -153,6 +152,8 @@ function SaveDemo() {
   return (
     <Button
       loading={saving}
+      hotkey="Mod+S"
+      showHotkey
       onClick={() => {
         setSaving(true)
         setTimeout(() => {
@@ -382,26 +383,39 @@ export function Playground({ themes }: { themes: string[] }) {
             <CardContent className="flex flex-col gap-4">
               <div className="flex flex-wrap items-center gap-2">
                 <DropdownMenu>
-                  <DropdownMenuTrigger render={<Button variant="outline" />}>
+                  <DropdownMenuTrigger
+                    render={
+                      <Button variant="outline" hotkey="Shift+A" showHotkey />
+                    }
+                  >
                     Actions
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>
-                      <PencilIcon /> Rename{" "}
-                      <DropdownMenuShortcut>R</DropdownMenuShortcut>
+                    <DropdownMenuItem
+                      hotkey="Mod+E"
+                      onClick={() => toast("Renamed")}
+                    >
+                      <PencilIcon /> Rename
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <CopyIcon /> Duplicate{" "}
-                      <DropdownMenuShortcut>D</DropdownMenuShortcut>
+                    <DropdownMenuItem
+                      hotkey="Mod+D"
+                      onClick={() => toast("Duplicated")}
+                    >
+                      <CopyIcon /> Duplicate
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive">
+                    <DropdownMenuItem
+                      variant="destructive"
+                      hotkey="Mod+Backspace"
+                    >
                       <TrashIcon /> Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <Popover>
-                  <PopoverTrigger render={<Button variant="outline" />}>
+                  <PopoverTrigger
+                    render={<Button variant="outline" hotkey="Shift+P" />}
+                  >
                     Popover
                   </PopoverTrigger>
                   <PopoverContent>
@@ -418,20 +432,35 @@ export function Playground({ themes }: { themes: string[] }) {
                     />
                   </PopoverContent>
                 </Popover>
-                {["Bold", "Italic", "Underline"].map((label) => (
+                {(
+                  [
+                    ["Bold", "Mod+B"],
+                    ["Italic", "Mod+I"],
+                    ["Underline", "Mod+U"],
+                  ] as const
+                ).map(([label, hotkey]) => (
                   <Tooltip key={label}>
                     <TooltipTrigger
-                      render={<Button variant="ghost" size="sm" />}
+                      render={
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          hotkey={hotkey}
+                          onClick={() => toast(`${label} toggled`)}
+                        />
+                      }
                     >
                       {label}
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipContent hotkey={hotkey}>
                       Toggle {label.toLowerCase()}
                     </TooltipContent>
                   </Tooltip>
                 ))}
                 <Sheet>
-                  <SheetTrigger render={<Button variant="outline" />}>
+                  <SheetTrigger
+                    render={<Button variant="outline" hotkey="Shift+F" />}
+                  >
                     Open sheet
                   </SheetTrigger>
                   <SheetContent>

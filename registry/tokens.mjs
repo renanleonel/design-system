@@ -129,6 +129,9 @@ export const css = {
   },
   // Reduced motion: popups keep the fade, drop the scale.
   [REDUCED]: { ":root": { "--ds-motion-scale": "1" } },
+  // Opened from a hotkey (pressInstantly): no entrance motion, keyboard actions are instant.
+  ":root[data-ds-instant] :is(.motion-popover, .motion-tooltip, .motion-modal, .motion-backdrop, [data-slot=sheet-content])":
+    { "transition-duration": "0ms" },
   "@utility motion-popover": popup("--ds-duration-popover", "0.95", "var(--transform-origin)"),
   "@utility motion-tooltip": {
     ...popup("--ds-duration-tooltip", "0.97", "var(--transform-origin)"),

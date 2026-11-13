@@ -4,6 +4,14 @@ import * as React from "react"
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { cn } from "cn"
 import { ChevronRightIcon, CheckIcon } from "lucide-react"
+import type { RegisterableHotkey } from "@tanstack/react-hotkeys"
+
+import { Hotkey } from "@/components/ui/hotkey"
+import {
+  mergeRefs,
+  toAriaKeyShortcuts,
+  useHotkeyPress,
+} from "@/hooks/use-hotkey-press"
 
 function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
   return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />
@@ -40,7 +48,10 @@ function DropdownMenuContent({
       >
         <MenuPrimitive.Popup
           data-slot="dropdown-menu-content"
-          className={cn("motion-popover z-50 max-h-(--available-height) w-(--anchor-width) min-w-32 overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-popover outline-none data-closed:overflow-hidden", className )}
+          className={cn(
+            "z-50 max-h-(--available-height) w-(--anchor-width) min-w-32 motion-popover overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-popover outline-none data-closed:overflow-hidden",
+            className
+          )}
           {...props}
         />
       </MenuPrimitive.Positioner>
@@ -76,14 +87,27 @@ function DropdownMenuItem({
   className,
   inset,
   variant = "default",
+  hotkey,
+  ref,
+  children,
   ...props
 }: MenuPrimitive.Item.Props & {
   inset?: boolean
   variant?: "default" | "destructive"
+  /**
+   * Shown at the end of the item, and fires it while the menu is open. For a
+   * shortcut that also works with the menu closed, register the same hotkey on the
+   * action itself (`useHotkey`) and pass it here only for display.
+   */
+  hotkey?: RegisterableHotkey
 }) {
+  const innerRef = React.useRef<HTMLDivElement>(null)
+  useHotkeyPress(innerRef, hotkey, { enabled: !props.disabled })
   return (
     <MenuPrimitive.Item
       data-slot="dropdown-menu-item"
+      ref={mergeRefs(ref, innerRef)}
+      aria-keyshortcuts={toAriaKeyShortcuts(hotkey)}
       data-inset={inset}
       data-variant={variant}
       className={cn(
@@ -91,7 +115,14 @@ function DropdownMenuItem({
         className
       )}
       {...props}
-    />
+    >
+      {children}
+      {hotkey && (
+        <DropdownMenuShortcut>
+          <Hotkey hotkey={hotkey} variant="text" />
+        </DropdownMenuShortcut>
+      )}
+    </MenuPrimitive.Item>
   )
 }
 
@@ -134,7 +165,10 @@ function DropdownMenuSubContent({
   return (
     <DropdownMenuContent
       data-slot="dropdown-menu-sub-content"
-      className={cn("motion-popover w-auto min-w-[96px] rounded-lg bg-popover p-1 text-popover-foreground shadow-popover", className )}
+      className={cn(
+        "w-auto min-w-[96px] motion-popover rounded-lg bg-popover p-1 text-popover-foreground shadow-popover",
+        className
+      )}
       align={align}
       alignOffset={alignOffset}
       side={side}
@@ -169,8 +203,7 @@ function DropdownMenuCheckboxItem({
         data-slot="dropdown-menu-checkbox-item-indicator"
       >
         <MenuPrimitive.CheckboxItemIndicator>
-          <CheckIcon
-          />
+          <CheckIcon />
         </MenuPrimitive.CheckboxItemIndicator>
       </span>
       {children}
@@ -210,8 +243,7 @@ function DropdownMenuRadioItem({
         data-slot="dropdown-menu-radio-item-indicator"
       >
         <MenuPrimitive.RadioItemIndicator>
-          <CheckIcon
-          />
+          <CheckIcon />
         </MenuPrimitive.RadioItemIndicator>
       </span>
       {children}
