@@ -7,7 +7,6 @@ import {
   ChartLineIcon,
   CheckIcon,
   GitForkIcon,
-  GripVerticalIcon,
   InfoIcon,
   ListOrderedIcon,
   PlusIcon,
@@ -30,6 +29,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { IconTile } from "@/components/ui/icon-tile"
+import {
+  Sortable,
+  SortableHandle,
+  SortableItem,
+} from "@/components/ui/sortable"
 import {
   Select,
   SelectContent,
@@ -112,10 +116,7 @@ function ConditionRow({
 }) {
   return (
     <div className="flex items-center gap-2">
-      <GripVerticalIcon
-        aria-hidden
-        className="hidden size-4 shrink-0 text-muted-foreground/60 sm:block"
-      />
+      <SortableHandle label="Reorder condition" />
       <div className="grid min-w-0 flex-1 grid-cols-1 gap-2 sm:grid-cols-[1.2fr_1fr_1fr]">
         <Picker
           label="Field"
@@ -179,9 +180,12 @@ function ActionRow({
       >
         <SelectTrigger
           aria-label={`${label} action`}
-          className="h-control-lg w-full bg-muted/50 ps-2"
+          className="w-full bg-muted/50 pl-1.5 data-[size=default]:h-11!"
         >
-          <IconTile size="sm" tone="inverse">
+          <IconTile
+            tone="inverse"
+            className="size-8 rounded-[max(0.25rem,calc(var(--ds-radius-control)-0.375rem))]"
+          >
             {action?.icon}
           </IconTile>
           <SelectValue className="font-medium" />
@@ -257,32 +261,45 @@ export function RuleDialog() {
               </Button>
             </div>
 
-            {conditions.map((c, index) => (
-              <React.Fragment key={c.id}>
-                {index > 0 && (
-                  <div className="flex items-center gap-2 sm:ps-6">
-                    <Badge variant="outline" className="bg-background">
-                      {join}
-                    </Badge>
-                    <span className="h-px flex-1 bg-border" />
-                  </div>
-                )}
-                <ConditionRow
-                  condition={c}
-                  canRemove={conditions.length > 1}
-                  onChange={(next) =>
-                    setConditions((list) =>
-                      list.map((x) => (x.id === c.id ? next : x))
-                    )
-                  }
-                  onRemove={() =>
-                    setConditions((list) => list.filter((x) => x.id !== c.id))
-                  }
-                />
-              </React.Fragment>
-            ))}
+            <Sortable
+              items={conditions}
+              getId={(c) => c.id}
+              onReorder={setConditions}
+              getLabel={(c) =>
+                `${FIELDS.find((f) => f.value === c.field)?.label} ${OPERATORS.find((o) => o.value === c.op)?.label} ${c.value}`
+              }
+            >
+              {conditions.map((c, index) => (
+                <React.Fragment key={c.id}>
+                  {index > 0 && (
+                    <div className="flex items-center gap-2 ps-6">
+                      <Badge variant="outline" className="bg-background">
+                        {join}
+                      </Badge>
+                      <span className="h-px flex-1 bg-border" />
+                    </div>
+                  )}
+                  <SortableItem id={c.id}>
+                    <ConditionRow
+                      condition={c}
+                      canRemove={conditions.length > 1}
+                      onChange={(next) =>
+                        setConditions((list) =>
+                          list.map((x) => (x.id === c.id ? next : x))
+                        )
+                      }
+                      onRemove={() =>
+                        setConditions((list) =>
+                          list.filter((x) => x.id !== c.id)
+                        )
+                      }
+                    />
+                  </SortableItem>
+                </React.Fragment>
+              ))}
+            </Sortable>
 
-            <div className="flex items-center gap-2 sm:ps-6">
+            <div className="flex items-center gap-2 ps-6">
               <Button
                 variant="outline"
                 size="sm"
