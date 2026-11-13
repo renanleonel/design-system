@@ -2,9 +2,9 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "tooltip",
   "dependencies": [
-    "@base-ui/react",
-    "@tanstack/react-hotkeys",
-    "cn"
+    "@base-ui/react@^1.9.0",
+    "@tanstack/react-hotkeys@0.25.0",
+    "cn@^0.5.2"
   ],
   "registryDependencies": [
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json"

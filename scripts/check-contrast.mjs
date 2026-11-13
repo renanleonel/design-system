@@ -39,7 +39,8 @@ function hslToRgb(h, s, l) {
   l /= 100
   const k = (n) => (n + h / 30) % 12
   const a = s * Math.min(l, 1 - l)
-  const f = (n) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
+  const f = (n) =>
+    l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
   return [f(0), f(8), f(4)].map((v) => {
     // sRGB-encoded -> linear
     return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4
@@ -74,7 +75,8 @@ const lightnessOf = (v) => {
   const m = v.trim().match(OKLCH)
   return m ? (m[2] ? m[1] / 100 : +m[1]) : null
 }
-const withLightness = (v, l) => v.trim().replace(OKLCH, (_, _l, _p, rest) => `oklch(${l.toFixed(4)}${rest}`)
+const withLightness = (v, l) =>
+  v.trim().replace(OKLCH, (_, _l, _p, rest) => `oklch(${l.toFixed(4)}${rest}`)
 
 // Moves `key` away from `other` in lightness until the pair reaches `min`.
 function nudge(vars, key, other, min) {
@@ -92,7 +94,9 @@ function nudge(vars, key, other, min) {
 }
 
 let failures = 0
-for (const file of readdirSync("registry/themes").filter((f) => f.endsWith(".json"))) {
+for (const file of readdirSync("registry/themes").filter((f) =>
+  f.endsWith(".json")
+)) {
   const path = `registry/themes/${file}`
   const theme = JSON.parse(readFileSync(path, "utf8"))
   const { cssVars } = theme
@@ -106,10 +110,18 @@ for (const file of readdirSync("registry/themes").filter((f) => f.endsWith(".jso
       const b = vars[bg] && parse(vars[bg])
       if (!a || !b) continue
       const r = ratio(a, b)
-      if (r < min && FIX && (nudge(vars, fg, bg, min) || nudge(vars, bg, fg, min))) {
-        const changed = [fg, bg].filter((k) => vars[k] !== (own[k] ?? cssVars.light[k]))
+      if (
+        r < min &&
+        FIX &&
+        (nudge(vars, fg, bg, min) || nudge(vars, bg, fg, min))
+      ) {
+        const changed = [fg, bg].filter(
+          (k) => vars[k] !== (own[k] ?? cssVars.light[k])
+        )
         for (const k of changed) own[k] = vars[k]
-        rows.push(`  ~ ${changed.join(", ")} adjusted (${r.toFixed(2)} -> ${ratio(parse(vars[fg]), parse(vars[bg])).toFixed(2)})`)
+        rows.push(
+          `  ~ ${changed.join(", ")} adjusted (${r.toFixed(2)} -> ${ratio(parse(vars[fg]), parse(vars[bg])).toFixed(2)})`
+        )
         continue
       }
       if (r < min) {
@@ -117,25 +129,39 @@ for (const file of readdirSync("registry/themes").filter((f) => f.endsWith(".jso
         rows.push(`  ✗ ${fg} on ${bg}: ${r.toFixed(2)} (needs ${min})`)
       }
     }
-    console.log(`${file.replace(".json", "")} / ${mode}: ${rows.length ? "" : "ok"}`)
+    console.log(
+      `${file.replace(".json", "")} / ${mode}: ${rows.length ? "" : "ok"}`
+    )
     rows.forEach((r) => console.log(r))
   }
   if (FIX) writeFileSync(path, JSON.stringify(theme, null, 2) + "\n")
 }
 // Tones: text in the tone on a 12% tint of itself over the card (Badge tone, pills).
 const { tones } = await import("../registry/tokens.mjs")
-const blend = (fg, bg, alpha) => fg.map((c, i) => c * alpha + bg[i] * (1 - alpha))
-for (const file of readdirSync("registry/themes").filter((f) => f.endsWith(".json"))) {
-  const { cssVars } = JSON.parse(readFileSync(`registry/themes/${file}`, "utf8"))
+const blend = (fg, bg, alpha) =>
+  fg.map((c, i) => c * alpha + bg[i] * (1 - alpha))
+for (const file of readdirSync("registry/themes").filter((f) =>
+  f.endsWith(".json")
+)) {
+  const { cssVars } = JSON.parse(
+    readFileSync(`registry/themes/${file}`, "utf8")
+  )
   for (const mode of ["light", "dark"]) {
-    const card = parse({ ...cssVars.light, ...(mode === "dark" ? cssVars.dark : {}) }.card)
+    const card = parse(
+      { ...cssVars.light, ...(mode === "dark" ? cssVars.dark : {}) }.card
+    )
     if (!card) continue
     const bad = Object.entries(tones[mode])
-      .map(([name, value]) => [name, ratio(parse(value), blend(parse(value), card, 0.12))])
+      .map(([name, value]) => [
+        name,
+        ratio(parse(value), blend(parse(value), card, 0.12)),
+      ])
       .filter(([, r]) => r < 4.5)
     if (bad.length) {
       failures += bad.length
-      bad.forEach(([n, r]) => console.log(`  ✗ tone ${n} (${file} / ${mode}): ${r.toFixed(2)}`))
+      bad.forEach(([n, r]) =>
+        console.log(`  ✗ tone ${n} (${file} / ${mode}): ${r.toFixed(2)}`)
+      )
     }
   }
 }

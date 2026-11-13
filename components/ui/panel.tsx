@@ -22,7 +22,7 @@ function Panel({ className, ...props }: React.ComponentProps<"section">) {
     <section
       data-slot="panel"
       className={cn(
-        "bg-panel flex flex-col gap-(--ds-panel-pad) rounded-(--ds-panel-radius) p-(--ds-panel-pad) text-sm text-foreground shadow-border [--ds-card-pad:--spacing(4)] [--ds-control-h-lg:2.75rem] [--ds-radius-control:9999px]",
+        "flex flex-col gap-(--ds-panel-pad) rounded-(--ds-panel-radius) bg-panel p-(--ds-panel-pad) text-sm text-foreground shadow-border [--ds-card-pad:--spacing(4)] [--ds-control-h-lg:2.75rem] [--ds-radius-control:9999px]",
         className
       )}
       {...props}

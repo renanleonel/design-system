@@ -1,6 +1,6 @@
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
@@ -36,3 +36,4 @@ A shadcn registry on Base UI. Rules come from the `frontend-design` and `animate
 - **Worst-case data:** base CSS sets `overflow-wrap: anywhere` so long words never widen a card; user-entered labels in chips/badges truncate with a `title`. Popups that list options (`DropdownMenu`, `Select`) are at least the trigger's width and grow to fit, capped at `--available-width`. Rows in menus/selects/comboboxes are 36px (44px on touch). Before shipping a component, render it at 320px with a 50-char word, an empty value and CJK/Arabic text.
 - **Composition:** before building a card, panel, dialog or palette, read `docs/COMPOSITION.md` and start from the closest example in `components/examples/` (`/examples` in the playground). Use `Panel`/`PanelCard`, `IconTile`, `Badge tone`, `DataList`, `TabsList variant="segmented"`, `Alert tone` and `Button variant="surface"` instead of one-off styling.
 - **Checks before pushing:** `pnpm typecheck && pnpm lint && pnpm check:contrast && pnpm registry:build && pnpm build && pnpm audit:ui`. `audit:ui` (Playwright) runs `/` and `/examples` at 320px and 1280px in light and dark, opens every select and dialog, and fails on icons off their label's center by more than 0.5px, horizontal overflow, select popups narrower than or offset from their trigger, unnamed icon-only buttons, and console errors. New pages go in its `PAGES` list. CI (`.github/workflows/ci.yml`) runs all of this plus a fresh-project install of the registry.
+- **Blocks** (`components/blocks/<name>/`, published as `registry:block`): full screens built only from `components/ui`. Keep them router-agnostic (plain `<a>` or a `linkComponent` prop, `onNavigate`, `currentPath`) so they run in Next.js and Vite; put shareable view state in the URL with `hooks/use-url-state` (`useSyncExternalStore` + History API). Demo routes live in `app/blocks/` (the `(app)` group wraps pages in `AppShell`); add each new route to `ALL_PAGES` in `scripts/audit-ui.mjs`. With TanStack Table, memoize state derived from the URL by value: a new array each render re-triggers its auto-resets and loops.

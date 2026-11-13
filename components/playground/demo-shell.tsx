@@ -1,0 +1,74 @@
+"use client"
+
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import {
+  BookOpenIcon,
+  CreditCardIcon,
+  FolderKanbanIcon,
+  HexagonIcon,
+  InboxIcon,
+  SettingsIcon,
+} from "lucide-react"
+
+import { AppShell } from "@/components/blocks/app-shell/app-shell"
+import { Toaster } from "@/components/ui/sonner"
+
+/** Wires the router-agnostic AppShell to Next.js (Link, pathname, push). */
+export function DemoShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const router = useRouter()
+  return (
+    <>
+      <AppShell
+        workspace={{ name: "Acme", plan: "Pro plan", logo: <HexagonIcon /> }}
+        user={{ name: "Ana Kowalski", email: "ana@acme.dev", initials: "AK" }}
+        currentPath={pathname}
+        linkComponent={Link}
+        onNavigate={(href) => router.push(href)}
+        settingsHref="/blocks/settings"
+        onSignOut={() => router.push("/blocks/sign-in")}
+        sections={[
+          {
+            items: [
+              {
+                label: "Inbox",
+                href: "/blocks/inbox",
+                icon: <InboxIcon />,
+                badge: 3,
+                hotkey: ["G", "I"],
+              },
+              {
+                label: "Projects",
+                href: "/blocks/projects",
+                icon: <FolderKanbanIcon />,
+                hotkey: ["G", "P"],
+              },
+            ],
+          },
+          {
+            label: "Workspace",
+            items: [
+              {
+                label: "Settings",
+                href: "/blocks/settings",
+                icon: <SettingsIcon />,
+                hotkey: ["G", "S"],
+              },
+              {
+                label: "Billing",
+                href: "/blocks/billing",
+                icon: <CreditCardIcon />,
+                hotkey: ["G", "B"],
+              },
+              { label: "Docs", href: "/blocks", icon: <BookOpenIcon /> },
+            ],
+          },
+        ]}
+      >
+        {children}
+      </AppShell>
+      <Toaster />
+    </>
+  )
+}

@@ -11,7 +11,22 @@
 import { execSync, spawn } from "node:child_process"
 import { chromium } from "playwright"
 
-const PAGES = ["/", "/examples"]
+// AUDIT_PAGES=/blocks/projects,/examples limits the run to some pages.
+const ALL_PAGES = [
+  "/",
+  "/examples",
+  "/blocks",
+  "/blocks/projects",
+  "/blocks/inbox",
+  "/blocks/settings",
+  "/blocks/billing",
+  "/blocks/sign-in",
+  "/blocks/sign-up",
+  "/blocks/reset-password",
+]
+const PAGES = process.env.AUDIT_PAGES
+  ? process.env.AUDIT_PAGES.split(",")
+  : ALL_PAGES
 const VIEWPORTS = [
   { name: "mobile", width: 320, height: 800 },
   { name: "desktop", width: 1280, height: 900 },
@@ -99,11 +114,18 @@ function staticChecks(tolerance) {
 // `scope` limits the selects to a container (an open dialog), so nothing behind an overlay is clicked.
 async function selectChecks(page, scope = "") {
   const issues = []
-  const selector = `${scope} [data-slot=select-trigger]:visible`.trim()
+  const selector =
+    `${scope} [data-slot=select-trigger]:visible:not([disabled]):not([data-disabled])`.trim()
   const count = await page.locator(selector).count()
   for (let i = 0; i < count; i++) {
     const trigger = page.locator(selector).nth(i)
-    await trigger.click()
+    try {
+      await trigger.click({ timeout: 3000 })
+    } catch (error) {
+      const reason = error.message.split("\n")[0]
+      issues.push(`select #${i} could not be opened: ${reason}`)
+      continue
+    }
     const popup = page.locator("[data-slot=select-content][data-open]")
     const opened = await popup
       .waitFor({ state: "visible", timeout: 1500 })
@@ -184,9 +206,17 @@ try {
         if (vp.name === "desktop") {
           issues.push(...(await selectChecks(page)))
           // Dialogs: open each, audit inside, close.
-          const triggers = page.locator("[data-slot=dialog-trigger]:visible")
+          const triggers = page.locator(
+            "[data-slot=dialog-trigger]:visible:not([disabled]):not([data-disabled])"
+          )
           for (let i = 0; i < (await triggers.count()); i++) {
-            await triggers.nth(i).click()
+            try {
+              await triggers.nth(i).click({ timeout: 3000 })
+            } catch (error) {
+              const reason = error.message.split("\n")[0]
+              issues.push(`dialog #${i} could not be opened: ${reason}`)
+              continue
+            }
             await page.waitForTimeout(400)
             issues.push(
               ...(await page.evaluate(staticChecks, TOLERANCE)).map(
@@ -200,6 +230,20 @@ try {
             )
             await page.keyboard.press("Escape")
             await page.waitForTimeout(400)
+          }
+        }
+        if (vp.name === "desktop") {
+          // Command palette (Mod+K), on pages that have one: opening it must not throw.
+          await page.keyboard.press("Control+K")
+          await page.waitForTimeout(400)
+          if (await page.locator("[cmdk-root]").count()) {
+            issues.push(
+              ...(await page.evaluate(staticChecks, TOLERANCE)).map(
+                (x) => `palette: ${x}`
+              )
+            )
+            await page.keyboard.press("Escape")
+            await page.waitForTimeout(300)
           }
         }
         issues.push(...errors)

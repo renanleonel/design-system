@@ -2,11 +2,11 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form",
   "dependencies": [
-    "@hookform/resolvers",
-    "cn",
-    "lucide-react",
-    "react-hook-form",
-    "zod"
+    "@hookform/resolvers@^7.0.6",
+    "cn@^0.5.2",
+    "lucide-react@^1.72.0",
+    "react-hook-form@^7.92.0",
+    "zod@^4.6.7"
   ],
   "registryDependencies": [
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert.json",

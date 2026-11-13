@@ -38,7 +38,7 @@ function Hotkey({
       <span
         data-slot="hotkey"
         suppressHydrationWarning
-        className={cn("tabular-nums", className)}
+        className={cn("tabular-nums pointer-coarse:hidden", className)}
       >
         {Array.isArray(hotkey) ? hotkey.map(label).join(" ") : label(hotkey)}
       </span>
@@ -47,7 +47,10 @@ function Hotkey({
 
   const steps = Array.isArray(hotkey) ? hotkey.map(partsOf) : [partsOf(hotkey)]
   return (
-    <KbdGroup data-slot="hotkey" className={className}>
+    <KbdGroup
+      data-slot="hotkey"
+      className={cn("pointer-coarse:hidden", className)}
+    >
       {steps.flatMap((parts, s) =>
         parts.map((part, p) => (
           <Kbd key={`${s}-${p}`} suppressHydrationWarning>

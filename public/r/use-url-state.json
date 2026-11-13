@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-url-state",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-url-state.ts",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\n// Shareable view state lives in the URL (interaction.md: filters, sort, search,\n// tab, page). Framework-agnostic: reads location with useSyncExternalStore and\n// writes with the History API, so it works in Next.js and Vite alike.\nconst EVENT = \"ds:urlchange\"\n\nfunction subscribe(onChange: () => void) {\n  window.addEventListener(\"popstate\", onChange)\n  window.addEventListener(EVENT, onChange)\n  return () => {\n    window.removeEventListener(\"popstate\", onChange)\n    window.removeEventListener(EVENT, onChange)\n  }\n}\n\nconst getSearch = () => window.location.search\nconst getServerSearch = () => \"\"\n\n/** All current query params (re-renders when the URL changes). */\nexport function useSearchParams() {\n  const search = React.useSyncExternalStore(\n    subscribe,\n    getSearch,\n    getServerSearch\n  )\n  return React.useMemo(() => new URLSearchParams(search), [search])\n}\n\n/**\n * Writes params. `mode: \"replace\"` for rapid changes (typing, paging through\n * results) so Back isn't flooded; `\"push\"` for discrete navigation (tabs).\n * `null` / `\"\"` removes a param, so defaults never clutter the URL.\n */\nexport function setSearchParams(\n  next: Record<string, string | number | null | undefined>,\n  mode: \"replace\" | \"push\" = \"replace\"\n) {\n  const params = new URLSearchParams(window.location.search)\n  for (const [key, value] of Object.entries(next)) {\n    if (value === null || value === undefined || value === \"\")\n      params.delete(key)\n    else params.set(key, String(value))\n  }\n  const query = params.toString()\n  const url = `${window.location.pathname}${query ? `?${query}` : \"\"}${window.location.hash}`\n  window.history[mode === \"push\" ? \"pushState\" : \"replaceState\"](\n    window.history.state,\n    \"\",\n    url\n  )\n  window.dispatchEvent(new Event(EVENT))\n}\n\n/** One param as state: `[value, setValue]`, falling back to `fallback` when absent. */\nexport function useUrlState(\n  key: string,\n  fallback = \"\",\n  mode: \"replace\" | \"push\" = \"replace\"\n) {\n  const params = useSearchParams()\n  const value = params.get(key) ?? fallback\n  const setValue = React.useCallback(\n    (next: string | null) =>\n      setSearchParams({ [key]: next === fallback ? null : next }, mode),\n    [key, fallback, mode]\n  )\n  return [value, setValue] as const\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

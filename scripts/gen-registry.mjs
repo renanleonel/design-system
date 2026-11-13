@@ -12,6 +12,12 @@ const IGNORED_DEPS = new Set(["react", "react-dom", "next"])
 
 const ref = (name) => `${BASE_URL}/${name}.json`
 
+// Declare each dependency with the range this repo is built against, so an
+// install never pulls an incompatible major (e.g. TanStack Table v9 vs v8).
+const PKG = JSON.parse(readFileSync("package.json", "utf8"))
+const RANGES = { ...PKG.devDependencies, ...PKG.dependencies }
+const withRange = (pkg) => (RANGES[pkg] ? `${pkg}@${RANGES[pkg]}` : pkg)
+
 function pkgName(spec) {
   const parts = spec.split("/")
   return spec.startsWith("@") ? parts.slice(0, 2).join("/") : parts[0]
@@ -22,15 +28,20 @@ function analyze(path) {
   const dependencies = new Set()
   const registryDependencies = new Set()
   for (const [, spec] of src.matchAll(/from\s+["']([^"']+)["']/g)) {
-    if (spec.startsWith("@/components/ui/")) registryDependencies.add(ref(basename(spec)))
+    if (spec.startsWith("@/components/ui/"))
+      registryDependencies.add(ref(basename(spec)))
     else if (spec === "@/lib/utils") registryDependencies.add(ref("utils"))
-    else if (spec.startsWith("@/hooks/")) registryDependencies.add(ref(basename(spec)))
+    else if (spec.startsWith("@/hooks/"))
+      registryDependencies.add(ref(basename(spec)))
     else if (!spec.startsWith(".") && !spec.startsWith("@/")) {
       const pkg = pkgName(spec)
       if (!IGNORED_DEPS.has(pkg)) dependencies.add(pkg)
     }
   }
-  return { dependencies: [...dependencies].sort(), registryDependencies: [...registryDependencies].sort() }
+  return {
+    dependencies: [...dependencies].sort().map(withRange),
+    registryDependencies: [...registryDependencies].sort(),
+  }
 }
 
 function fileItems(dir, type) {
@@ -52,6 +63,36 @@ function fileItems(dir, type) {
 const ui = fileItems("components/ui", "registry:ui")
 const hooks = fileItems("hooks", "registry:hook")
 
+// Blocks: one item per folder in components/blocks, every file in it, installed
+// at the same path so their relative imports keep working.
+const BLOCKS_DIR = "components/blocks"
+const blocks = existsSync(BLOCKS_DIR)
+  ? readdirSync(BLOCKS_DIR)
+      .sort()
+      .map((name) => {
+        const dir = `${BLOCKS_DIR}/${name}`
+        const files = readdirSync(dir)
+          .filter((f) => /.tsx?$/.test(f))
+          .sort()
+        const deps = files.map((file) => analyze(`${dir}/${file}`))
+        return {
+          name,
+          type: "registry:block",
+          dependencies: [
+            ...new Set(deps.flatMap((d) => d.dependencies)),
+          ].sort(),
+          registryDependencies: [
+            ...new Set(deps.flatMap((d) => d.registryDependencies)),
+          ].sort(),
+          files: files.map((file) => ({
+            path: `${dir}/${file}`,
+            type: "registry:component",
+            target: `${dir}/${file}`,
+          })),
+        }
+      })
+  : []
+
 const utils = {
   name: "utils",
   type: "registry:lib",
@@ -63,7 +104,8 @@ const tokens = {
   name: "tokens",
   type: "registry:style",
   title: "Design tokens",
-  description: "Layer-2 tokens (control size, control radius, shadows) on top of the shadcn theme contract.",
+  description:
+    "Layer-2 tokens (control size, control radius, shadows) on top of the shadcn theme contract.",
   cssVars: { theme, light: root, dark },
   css,
 }
@@ -74,8 +116,14 @@ const themes = existsSync(themesDir)
       .filter((f) => f.endsWith(".json"))
       .sort()
       .map((f) => {
-        const { $schema, name, ...rest } = JSON.parse(readFileSync(join(themesDir, f), "utf8"))
-        return { ...rest, name: `theme-${f.replace(/\.json$/, "")}`, type: "registry:theme" }
+        const { $schema, name, ...rest } = JSON.parse(
+          readFileSync(join(themesDir, f), "utf8")
+        )
+        return {
+          ...rest,
+          name: `theme-${f.replace(/\.json$/, "")}`,
+          type: "registry:theme",
+        }
       })
   : []
 
@@ -89,14 +137,18 @@ const base = {
     iconLibrary: "lucide",
     tailwind: { baseColor: "neutral", cssVariables: true },
   },
-  registryDependencies: [ref("utils"), ref("tokens"), ...ui.map((i) => ref(i.name))],
+  registryDependencies: [
+    ref("utils"),
+    ref("tokens"),
+    ...ui.map((i) => ref(i.name)),
+  ],
 }
 
 const registry = {
   $schema: "https://ui.shadcn.com/schema/registry.json",
   name: NAME,
   homepage: "https://github.com/renanleonel/design-system",
-  items: [base, utils, tokens, ...themes, ...hooks, ...ui],
+  items: [base, utils, tokens, ...themes, ...hooks, ...ui, ...blocks],
 }
 writeFileSync("registry.json", JSON.stringify(registry, null, 2) + "\n")
 
@@ -125,4 +177,6 @@ writeFileSync(
   ].join(NL + NL) + NL
 )
 
-console.log(`registry.json: ${registry.items.length} items (${ui.length} ui, ${themes.length} themes)`)
+console.log(
+  `registry.json: ${registry.items.length} items (${ui.length} ui, ${blocks.length} blocks, ${themes.length} themes)`
+)

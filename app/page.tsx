@@ -3,7 +3,9 @@ import { join } from "node:path"
 
 import { Playground } from "@/components/playground/playground"
 
-type ThemeFile = { cssVars: { light?: Record<string, string>; dark?: Record<string, string> } }
+type ThemeFile = {
+  cssVars: { light?: Record<string, string>; dark?: Record<string, string> }
+}
 
 function loadThemes() {
   const dir = join(process.cwd(), "registry/themes")
@@ -11,7 +13,9 @@ function loadThemes() {
     .filter((f) => f.endsWith(".json"))
     .map((f) => {
       const name = f.replace(/\.json$/, "")
-      const { cssVars } = JSON.parse(readFileSync(join(dir, f), "utf8")) as ThemeFile
+      const { cssVars } = JSON.parse(
+        readFileSync(join(dir, f), "utf8")
+      ) as ThemeFile
       return { name, cssVars }
     })
 }

@@ -2,8 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "native-select",
   "dependencies": [
-    "cn",
-    "lucide-react"
+    "cn@^0.5.2",
+    "lucide-react@^1.72.0"
   ],
   "registryDependencies": [],
   "files": [

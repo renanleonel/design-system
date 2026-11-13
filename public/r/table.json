@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "table",
   "dependencies": [
-    "cn"
+    "cn@^0.5.2"
   ],
   "registryDependencies": [],
   "files": [

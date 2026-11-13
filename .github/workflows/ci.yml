@@ -63,7 +63,8 @@ jobs:
           cp "$GITHUB_WORKSPACE"/public/r/*.json consumer/r/
           sed -i 's#https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/#./r/#g' consumer/r/*.json
           cd consumer
-          npx -y shadcn@4.23.0 add ./r/base.json -y --overwrite
+          npx -y shadcn@4.23.0 add ./r/base.json ./r/app-shell.json ./r/data-table.json ./r/settings.json ./r/billing.json ./r/auth.json -y --overwrite
+          npx tsc --noEmit
       - name: Build the consumer
         working-directory: ${{ runner.temp }}/consumer
         run: npx next build

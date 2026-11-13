@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "error-state",
   "dependencies": [
-    "lucide-react"
+    "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",

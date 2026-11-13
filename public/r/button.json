@@ -2,10 +2,10 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "button",
   "dependencies": [
-    "@base-ui/react",
-    "@tanstack/react-hotkeys",
-    "class-variance-authority",
-    "cn"
+    "@base-ui/react@^1.9.0",
+    "@tanstack/react-hotkeys@0.25.0",
+    "class-variance-authority@^0.7.1",
+    "cn@^0.5.2"
   ],
   "registryDependencies": [
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",

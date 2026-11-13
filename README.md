@@ -13,6 +13,22 @@ npx shadcn add https://tweakcn.com/r/themes/<id>.json   # ...or any tweakcn them
 npx shadcn add $R/button.json             # a single component in an existing project
 ```
 
+## Blocks
+
+Full screens on top of the components (see them at `/blocks`):
+
+| Block | What's in it |
+| --- | --- |
+| `app-shell` | Sidebar (collapses to an icon rail with Mod+B, sheet on mobile), Mod+K palette, G-then-key navigation, page header |
+| `data-table` | TanStack Table v8 with search, facet filters, sort and page in the URL; bulk actions; loading, empty, no-results and error states |
+| `settings` | Profile form, members with roles and invites, typed delete confirmation |
+| `billing` | Plans with monthly/yearly, usage meters, payment method, invoices |
+| `auth` | Sign in, sign up with live password rules, password reset |
+
+```bash
+npx shadcn add $R/app-shell.json $R/data-table.json
+```
+
 ## Theming in layers
 
 1. **Theme** (shadcn contract): `--primary`, `--radius`, `--font-sans`, `--shadow-*`… Anything tweakcn exports.

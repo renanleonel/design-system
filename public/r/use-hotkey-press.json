@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "use-hotkey-press",
   "dependencies": [
-    "@tanstack/react-hotkeys"
+    "@tanstack/react-hotkeys@0.25.0"
   ],
   "registryDependencies": [],
   "files": [
