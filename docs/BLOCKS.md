@@ -34,6 +34,14 @@ Pick by job:
 - Row checkboxes are named after the row (`getRowLabel`).
 - TanStack Table: memoize URL-derived state by value; a new array each render re-triggers auto-resets and loops.
 
+## Settings pages
+
+- Individual settings: `SettingsList` / `SettingsRow` (title and description beside the control, hairlines, no cards); with React Hook Form, `FormField layout="row"`. Grouped forms (profile, members) and the danger zone keep section cards.
+- Pages that save as a whole end with `UnsavedChangesBar` inside the `<form>` (Discard, Save, Mod+S; warns before leaving). No Save/Cancel at the top of the page.
+- Device preferences (theme) apply at once and say "Saved on this device"; they stay out of the form.
+- Switch rows: `Field orientation="horizontal"`, switch top-aligned with its title; several in one row get `role="group"` named by the row title.
+- Long option lists (time zones, countries) use a virtualized combobox (`TimezoneSelect`), not a `Select`.
+
 ## Resizable sidebars
 
 Every sidebar that resizes or collapses (app shell, docs nav, settings sub-nav, inspector panels) reuses the app shell pattern, `variant="fade"` (default):

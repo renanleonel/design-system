@@ -27,6 +27,7 @@ import {
   FieldError,
   FieldLabel,
 } from "@/components/ui/field"
+import { SettingsRow } from "@/components/ui/settings-list"
 
 /**
  * `useForm` with a zod schema and the validation timing from interaction.md:
@@ -130,6 +131,8 @@ function FormField<
   description,
   required,
   orientation,
+  layout,
+  badge,
   className,
   hideError = false,
   describedBy: extraDescribedBy,
@@ -141,6 +144,10 @@ function FormField<
   /** Adds the visible required marker; pair with the schema rule. */
   required?: boolean
   orientation?: React.ComponentProps<typeof Field>["orientation"]
+  /** `row`: a `SettingsRow` (title and description beside the control). */
+  layout?: "row"
+  /** Beside the title in `layout="row"`. */
+  badge?: React.ReactNode
   className?: string
   /**
    * Skip the error line when something else already shows the problem (e.g. a
@@ -192,6 +199,36 @@ function FormField<
         const errorNode = !hideError && (
           <FieldError id={errorId} errors={[fieldState.error]} />
         )
+
+        if (layout === "row") {
+          return (
+            <SettingsRow
+              label={
+                <>
+                  {label}
+                  {required && (
+                    <span aria-hidden className="ms-1 text-destructive">
+                      *
+                    </span>
+                  )}
+                </>
+              }
+              badge={badge}
+              description={description}
+              htmlFor={id}
+              descriptionId={descriptionId}
+              className={className}
+            >
+              <div
+                data-invalid={fieldState.invalid || undefined}
+                className="grid w-full gap-2"
+              >
+                {controlNode}
+                {errorNode}
+              </div>
+            </SettingsRow>
+          )
+        }
 
         // Horizontal (checkbox, switch): control first, then label, description
         // and error stacked beside it, so the error sits under its label.

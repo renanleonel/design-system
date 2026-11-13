@@ -138,8 +138,9 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
         <div
           role="region"
           aria-label="Demo control"
-          // Hidden on full-height pages (tables), where it would cover the footer.
-          className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-2 rounded-2xl bg-popover p-2 shadow-popover md:flex [:root:has([data-fill])_&]:hidden!"
+          // Hidden on full-height pages (tables), where it would cover the
+          // footer, and while an unsaved-changes bar needs the same spot.
+          className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-2 rounded-2xl bg-popover p-2 shadow-popover md:flex [:root:has([data-fill])_&]:hidden! [:root:has([data-slot=unsaved-changes-bar]_[data-open])_&]:hidden!"
         >
           {/* Not part of the block: picks the AppShell `motion` prop for this demo. */}
           <div className="flex w-full items-center justify-between gap-2 ps-2">

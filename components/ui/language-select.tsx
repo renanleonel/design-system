@@ -39,6 +39,8 @@ export function LanguageSelect({
   onValueChange,
   languages = LANGUAGES,
   compact = false,
+  size = "sm",
+  id,
   className,
 }: {
   value?: string
@@ -47,6 +49,10 @@ export function LanguageSelect({
   languages?: Language[]
   /** Icon and code only ("EN"), for tight headers. */
   compact?: boolean
+  /** `default` matches form controls (settings); `sm` suits headers. */
+  size?: "sm" | "default"
+  /** For a visible `<label htmlFor>`. */
+  id?: string
   className?: string
 }) {
   return (
@@ -58,7 +64,8 @@ export function LanguageSelect({
       aria-label="Language"
     >
       <SelectTrigger
-        size="sm"
+        id={id}
+        size={size}
         aria-label="Language"
         className={cn(compact ? "w-auto" : "w-44", className)}
       >

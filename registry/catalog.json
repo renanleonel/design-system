@@ -541,6 +541,45 @@
         "Persist sizes with `onLayoutChanged` and `defaultLayout`.",
         "App sidebars use the app shell pattern instead."
       ]
+    },
+    "settings-list": {
+      "group": "Layout",
+      "title": "Settings List",
+      "description": "One row per setting: title and description beside the control, hairline dividers, stacked when narrow.",
+      "notes": [
+        "Use it for long pages of individual settings; keep cards for grouped forms (profile, members).",
+        "`htmlFor` labels a single control; groups take `aria-labelledby={labelId}`.",
+        "With React Hook Form: `<FormField layout=\"row\">`."
+      ]
+    },
+    "swatch-picker": {
+      "group": "Inputs",
+      "title": "Swatch Picker",
+      "description": "Pick one color from a row of swatches: accent colors, labels, themes.",
+      "notes": [
+        "A radio group: arrows move and pick.",
+        "The chosen swatch gets a ring in its own color and a check, so it never relies on color alone.",
+        "Pass token colors (`var(--ds-tone-blue)`)."
+      ]
+    },
+    "timezone-select": {
+      "group": "Inputs",
+      "title": "Timezone Select",
+      "description": "Search every IANA time zone by city, region or offset; virtualized.",
+      "notes": [
+        "Offsets follow today's date (DST) and appear after mount, so server and client render the same.",
+        "Values are IANA ids (\"America/Sao_Paulo\")."
+      ]
+    },
+    "unsaved-changes-bar": {
+      "group": "Feedback",
+      "title": "Unsaved Changes Bar",
+      "description": "A floating Discard / Save bar that rises in once a form has edits.",
+      "notes": [
+        "Place it last inside the `<form>`; Save submits it and answers Mod+S.",
+        "Leaving the page while it is open asks first.",
+        "Use it for pages that save as a whole; settings that apply at once (theme) skip it."
+      ]
     }
   },
   "blocks": [
@@ -634,6 +673,13 @@
       "title": "Settings",
       "description": "Profile form, members and roles, and a delete confirmed by typing the name.",
       "src": "/blocks/settings"
+    },
+    {
+      "id": "settings-general",
+      "registry": "settings",
+      "title": "General settings",
+      "description": "Workspace preferences as a flat settings list: name, URL, week start, allowed domains, accent color, language and time zone, date format, composer switches and theme. Edits raise an unsaved-changes bar (Discard, Save, Mod+S).",
+      "src": "/blocks/settings/general"
     },
     {
       "id": "billing",

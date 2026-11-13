@@ -39,6 +39,7 @@ const ALL_PAGES = [
   "/blocks/server-error",
   "/blocks/inbox",
   "/blocks/settings",
+  "/blocks/settings/general",
   "/blocks/billing",
   "/blocks/sign-in",
   "/blocks/sign-up",
