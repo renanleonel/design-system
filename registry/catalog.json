@@ -470,6 +470,20 @@
       "src": "/blocks/inbox"
     },
     {
+      "id": "onboarding",
+      "registry": "onboarding",
+      "title": "First-run intro",
+      "description": "A product area's empty page as an invitation: two-line title, pill actions, art bleeding off the corner, a hint.",
+      "src": "/blocks/onboarding"
+    },
+    {
+      "id": "onboarding-card",
+      "registry": "onboarding",
+      "title": "First-run card",
+      "description": "The compact empty state for a list: what goes here, two actions, media tiles.",
+      "src": "/blocks/onboarding?variant=card"
+    },
+    {
       "id": "data-table",
       "registry": "data-table",
       "title": "Data table",

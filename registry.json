@@ -1885,6 +1885,28 @@
       ]
     },
     {
+      "name": "onboarding",
+      "type": "registry:block",
+      "title": "First-run intro",
+      "description": "A product area's empty page as an invitation: two-line title, pill actions, art bleeding off the corner, a hint.",
+      "dependencies": [
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/blocks/onboarding/empty-state-card.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding/empty-state-card.tsx"
+        },
+        {
+          "path": "components/blocks/onboarding/feature-intro.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/onboarding/feature-intro.tsx"
+        }
+      ]
+    },
+    {
       "name": "settings",
       "type": "registry:block",
       "title": "Settings",

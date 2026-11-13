@@ -25,6 +25,8 @@ const ALL_PAGES = [
   "/examples",
   "/blocks",
   "/blocks/dashboard",
+  "/blocks/onboarding",
+  "/blocks/onboarding?variant=card",
   "/blocks/projects",
   "/blocks/not-found",
   "/blocks/server-error",
