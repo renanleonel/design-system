@@ -502,6 +502,20 @@
       "src": "/blocks/inbox"
     },
     {
+      "id": "setup",
+      "registry": "onboarding",
+      "title": "Setup wizard",
+      "description": "Workspace, team and plan in steps: the step in the URL, validation per step, values kept going back, direction-aware transitions.",
+      "src": "/blocks/setup"
+    },
+    {
+      "id": "checklist",
+      "registry": "onboarding",
+      "title": "Get started checklist",
+      "description": "Segmented progress and tasks; the next open one expands with its action. Shown on the dashboard.",
+      "src": "/blocks/dashboard"
+    },
+    {
       "id": "onboarding",
       "registry": "onboarding",
       "title": "First-run intro",

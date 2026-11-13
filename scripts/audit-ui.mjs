@@ -27,6 +27,7 @@ const ALL_PAGES = [
   "/blocks/landing",
   "/blocks/pricing",
   "/blocks/dashboard",
+  "/blocks/setup",
   "/blocks/onboarding",
   "/blocks/onboarding?variant=card",
   "/blocks/projects",
@@ -227,7 +228,12 @@ try {
           (msg) =>
             msg.type() === "error" && errors.push(`console: ${msg.text()}`)
         )
-        await page.goto(url + path, { waitUntil: "networkidle" })
+        // Pages full of iframes (the blocks gallery) never go fully idle:
+        // wait for load, then give the network a few seconds to settle.
+        await page.goto(url + path, { waitUntil: "load" })
+        await page
+          .waitForLoadState("networkidle", { timeout: 5000 })
+          .catch(() => {})
         await page.evaluate(() => document.fonts.ready)
 
         const where = `${path} · ${vp.name} · ${scheme}`
