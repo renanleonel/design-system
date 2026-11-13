@@ -10,15 +10,20 @@ import {
   InboxIcon,
   LayoutDashboardIcon,
   SettingsIcon,
+  UserCogIcon,
 } from "lucide-react"
 
 import { AppShell } from "@/components/blocks/app-shell/app-shell"
 import { Toaster } from "@/components/ui/sonner"
+import { useSearchParams } from "@/hooks/use-url-state"
 
 /** Wires the router-agnostic AppShell to Next.js (Link, pathname, push). */
 export function DemoShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
+  // ?sidebar=default shows the original rail (labels unmount, icons center).
+  const variant =
+    useSearchParams().get("sidebar") === "default" ? "default" : "fade"
   return (
     <>
       <AppShell
@@ -57,21 +62,31 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
             label: "Workspace",
             items: [
               {
-                label: "Settings",
+                label: "Account",
                 href: "/blocks/settings",
-                icon: <SettingsIcon />,
-                hotkey: ["G", "S"],
+                icon: <UserCogIcon />,
+                items: [
+                  {
+                    label: "Settings",
+                    href: "/blocks/settings",
+                    icon: <SettingsIcon />,
+                    hotkey: ["G", "S"],
+                  },
+                  {
+                    label: "Billing",
+                    href: "/blocks/billing",
+                    icon: <CreditCardIcon />,
+                    hotkey: ["G", "B"],
+                  },
+                ],
               },
-              {
-                label: "Billing",
-                href: "/blocks/billing",
-                icon: <CreditCardIcon />,
-                hotkey: ["G", "B"],
-              },
-              { label: "Docs", href: "/blocks", icon: <BookOpenIcon /> },
             ],
           },
         ]}
+        footerItems={[
+          { label: "Docs", href: "/blocks", icon: <BookOpenIcon /> },
+        ]}
+        variant={variant}
       >
         {children}
       </AppShell>

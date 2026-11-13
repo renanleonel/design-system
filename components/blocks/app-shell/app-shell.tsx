@@ -6,8 +6,10 @@ import {
   useHotkeys,
   type RegisterableHotkey,
 } from "@tanstack/react-hotkeys"
+import { Collapsible } from "@base-ui/react/collapsible"
 import { cn } from "cn"
 import {
+  ChevronRightIcon,
   ChevronsUpDownIcon,
   LogOutIcon,
   MenuIcon,
@@ -54,6 +56,8 @@ export type NavItem = {
   badge?: React.ReactNode
   /** Usually a sequence: ["G", "P"] goes to Projects. */
   hotkey?: RegisterableHotkey
+  /** Sub-pages: a collapsible group with a guide line under the parent's icon. */
+  items?: Omit<NavItem, "items">[]
 }
 export type NavSection = { label?: string; items: NavItem[] }
 
@@ -84,43 +88,83 @@ function instantly(change: () => void) {
   )
 }
 
+/**
+ * `variant="fade"`: labels stay mounted and the icons never move. Collapsing,
+ * the labels fade, blur and drift 4px toward their icons (150ms) while the
+ * width starts closing just behind them; expanding, the width opens first and
+ * the labels return one after another, 20ms apart (`--i`). Keyboard toggles
+ * (Mod+B) skip all of it; reduced motion keeps only the fade.
+ */
+const FADE_LABEL =
+  "whitespace-nowrap transition-[opacity,filter,translate] duration-150 ease-out delay-[calc(100ms_+_var(--i,0)*20ms)] group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:-translate-x-1 group-data-collapsed/sidebar:opacity-0 group-data-collapsed/sidebar:blur-[2px] group-data-collapsed/sidebar:delay-0 in-data-ds-instant:transition-none motion-reduce:translate-x-0 motion-reduce:blur-none"
+
+const NAV_ROW =
+  "flex h-control items-center gap-2.5 rounded-control px-2.5 text-sm text-sidebar-foreground/75 focus-ring transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground [&_svg]:size-4 [&_svg]:shrink-0"
+
+const indexStyle = (index?: number) =>
+  index === undefined
+    ? undefined
+    : ({ "--i": index } as React.CSSProperties)
+
 function NavLink({
   item,
   active,
   collapsed,
+  fade = false,
+  index,
   Link,
   onClick,
 }: {
-  item: NavItem
+  item: Omit<NavItem, "items">
   active: boolean
   collapsed: boolean
+  fade?: boolean
+  index?: number
   Link: LinkComponent
   onClick?: () => void
 }) {
+  const showLabel = fade || !collapsed
   const link = (
     <Link
       href={item.href}
       onClick={onClick}
       aria-current={active ? "page" : undefined}
+      style={indexStyle(index)}
       className={cn(
-        "group/nav flex h-control items-center gap-2.5 rounded-control px-2.5 text-sm text-sidebar-foreground/75 focus-ring transition-colors",
-        "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+        "group/nav",
+        NAV_ROW,
         "aria-[current=page]:bg-background aria-[current=page]:font-medium aria-[current=page]:text-foreground aria-[current=page]:shadow-border dark:aria-[current=page]:bg-sidebar-accent",
-        "[&_svg]:size-4 [&_svg]:shrink-0",
-        collapsed && "justify-center px-0"
+        !fade && collapsed && "justify-center px-0"
       )}
     >
       {item.icon}
-      {!collapsed && (
-        <span className="min-w-0 flex-1 truncate">{item.label}</span>
+      {showLabel && (
+        <span className={cn("min-w-0 flex-1 truncate", fade && FADE_LABEL)}>
+          {item.label}
+        </span>
       )}
-      {!collapsed && item.badge != null && (
-        <span className="text-xs text-muted-foreground tabular-nums">
+      {showLabel && item.badge != null && (
+        <span
+          className={cn(
+            "text-xs text-muted-foreground tabular-nums",
+            fade && FADE_LABEL
+          )}
+        >
           {item.badge}
         </span>
       )}
     </Link>
   )
+  // Fade: one element in both states (no remount, focus survives a toggle).
+  if (fade)
+    return (
+      <Tooltip disabled={!collapsed}>
+        <TooltipTrigger render={link} />
+        <TooltipContent side="right" hotkey={item.hotkey}>
+          {item.label}
+        </TooltipContent>
+      </Tooltip>
+    )
   if (!collapsed) return link
   return (
     <Tooltip>
@@ -132,15 +176,117 @@ function NavLink({
   )
 }
 
+/**
+ * A parent with sub-pages. Open while one of them is current; the panel's
+ * height animates. In the rail the group folds away (smoothly, so the icons
+ * below glide up) and clicking the parent expands the sidebar on it.
+ */
+function NavGroup({
+  item,
+  activeHref,
+  collapsed,
+  fade,
+  index,
+  Link,
+  onClick,
+  onExpand,
+}: {
+  item: NavItem
+  activeHref?: string
+  collapsed: boolean
+  fade: boolean
+  index: number
+  Link: LinkComponent
+  onClick?: () => void
+  onExpand: () => void
+}) {
+  const children = item.items ?? []
+  const childActive = children.some((c) => c.href === activeHref)
+  const [open, setOpen] = React.useState(childActive)
+  if (collapsed && !fade)
+    return (
+      <NavLink
+        item={item}
+        active={childActive}
+        collapsed
+        Link={Link}
+        onClick={onClick}
+      />
+    )
+  const trigger = (
+    <Collapsible.Trigger
+      style={indexStyle(index)}
+      onClick={(event) => {
+        if (!collapsed) return
+        event.preventDefault()
+        setOpen(true)
+        onExpand()
+      }}
+      className={cn(
+        "group/navtrigger w-full text-start",
+        NAV_ROW,
+        childActive &&
+          "text-foreground group-data-collapsed/sidebar:bg-background group-data-collapsed/sidebar:shadow-border dark:group-data-collapsed/sidebar:bg-sidebar-accent"
+      )}
+    >
+      {item.icon}
+      <span className={cn("min-w-0 flex-1 truncate", fade && FADE_LABEL)}>
+        {item.label}
+      </span>
+      <ChevronRightIcon
+        className={cn(
+          "text-muted-foreground transition-[rotate,opacity,filter,translate] duration-200 ease-out group-data-panel-open/navtrigger:rotate-90",
+          fade && FADE_LABEL
+        )}
+      />
+    </Collapsible.Trigger>
+  )
+  return (
+    <Collapsible.Root
+      open={open}
+      onOpenChange={setOpen}
+      className="flex flex-col"
+    >
+      {fade ? (
+        <Tooltip disabled={!collapsed}>
+          <TooltipTrigger render={trigger} />
+          <TooltipContent side="right">{item.label}</TooltipContent>
+        </Tooltip>
+      ) : (
+        trigger
+      )}
+      <Collapsible.Panel className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 group-data-collapsed/sidebar:h-0 in-data-ds-instant:transition-none motion-reduce:transition-none">
+        {/* The guide line sits under the parent's icon (row padding + half the icon). */}
+        <div className="ms-4.5 flex flex-col gap-0.5 border-s border-sidebar-border ps-2 pt-0.5">
+          {children.map((child, i) => (
+            <NavLink
+              key={child.href}
+              item={child}
+              active={child.href === activeHref}
+              collapsed={false}
+              fade={fade}
+              index={index + i + 1}
+              Link={Link}
+              onClick={onClick}
+            />
+          ))}
+        </div>
+      </Collapsible.Panel>
+    </Collapsible.Root>
+  )
+}
+
 function UserMenu({
   user,
   collapsed,
+  fade = false,
   onSignOut,
   settingsHref,
   Link,
 }: {
   user: { name: string; email: string; initials: string }
   collapsed: boolean
+  fade?: boolean
   onSignOut?: () => void
   settingsHref?: string
   Link: LinkComponent
@@ -154,7 +300,7 @@ function UserMenu({
             aria-label={`Account: ${user.name}`}
             className={cn(
               "flex h-control-lg w-full items-center gap-2.5 rounded-control px-1.5 text-start text-sm focus-ring transition-colors hover:bg-sidebar-accent aria-expanded:bg-sidebar-accent",
-              collapsed && "justify-center px-0"
+              !fade && collapsed && "justify-center px-0"
             )}
           />
         }
@@ -164,15 +310,20 @@ function UserMenu({
             {user.initials}
           </AvatarFallback>
         </Avatar>
-        {!collapsed && (
+        {(fade || !collapsed) && (
           <>
-            <span className="min-w-0 flex-1">
+            <span className={cn("min-w-0 flex-1", fade && FADE_LABEL)}>
               <span className="block truncate font-medium">{user.name}</span>
               <span className="block truncate text-xs text-muted-foreground">
                 {user.email}
               </span>
             </span>
-            <ChevronsUpDownIcon className="size-4 shrink-0 text-muted-foreground" />
+            <ChevronsUpDownIcon
+              className={cn(
+                "size-4 shrink-0 text-muted-foreground",
+                fade && FADE_LABEL
+              )}
+            />
           </>
         )}
       </DropdownMenuTrigger>
@@ -227,6 +378,8 @@ function AppShell({
   settingsHref,
   onSignOut,
   defaultCollapsed = false,
+  variant = "default",
+  footerItems,
   children,
 }: {
   workspace: { name: string; logo: React.ReactNode; plan?: string }
@@ -238,12 +391,20 @@ function AppShell({
   settingsHref?: string
   onSignOut?: () => void
   defaultCollapsed?: boolean
+  /** `fade`: labels fade and blur out before the rail closes; icons never move. */
+  variant?: "default" | "fade"
+  /** Pinned above the account menu (Settings, Help…). */
+  footerItems?: NavItem[]
   children: React.ReactNode
 }) {
+  const fade = variant === "fade"
   const [collapsed, setCollapsed] = React.useState(defaultCollapsed)
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [paletteOpen, setPaletteOpen] = React.useState(false)
-  const items = sections.flatMap((s) => s.items)
+  const items = [
+    ...sections.flatMap((s) => s.items),
+    ...(footerItems ?? []),
+  ].flatMap((item) => (item.items?.length ? item.items : [item]))
   // Only the most specific matching link is current (/blocks/projects, not also /blocks).
   const activeHref = items
     .map((item) => item.href)
@@ -280,43 +441,82 @@ function AppShell({
     [collapsed, toggleSidebar]
   )
 
-  const nav = (rail: boolean, onItemClick?: () => void) => (
-    <nav aria-label="Main" className="flex flex-col gap-5">
-      {sections.map((section, i) => (
-        <div key={section.label ?? i} className="flex flex-col gap-0.5">
-          {section.label && !rail && (
-            <p className="px-2.5 pb-1 text-xs font-medium text-muted-foreground">
-              {section.label}
-            </p>
-          )}
-          {section.items.map((item) => (
-            <NavLink
-              key={item.href}
-              item={item}
-              active={isActive(item.href)}
-              collapsed={rail}
-              Link={Link}
-              onClick={onItemClick}
-            />
-          ))}
-        </div>
-      ))}
-    </nav>
-  )
+  const expand = () => setCollapsed(false)
+  const navItem = (
+    item: NavItem,
+    rail: boolean,
+    index: number,
+    onItemClick?: () => void
+  ) =>
+    item.items?.length ? (
+      <NavGroup
+        key={item.href}
+        item={item}
+        activeHref={activeHref}
+        collapsed={rail}
+        fade={fade}
+        index={index}
+        Link={Link}
+        onClick={onItemClick}
+        onExpand={expand}
+      />
+    ) : (
+      <NavLink
+        key={item.href}
+        item={item}
+        active={isActive(item.href)}
+        collapsed={rail}
+        fade={fade}
+        index={index}
+        Link={Link}
+        onClick={onItemClick}
+      />
+    )
+
+  const nav = (rail: boolean, onItemClick?: () => void) => {
+    // Running index for the staggered label fade-in.
+    let index = 0
+    return (
+      <nav aria-label="Main" className="flex flex-col gap-5">
+        {sections.map((section, i) => (
+          <div key={section.label ?? i} className="flex flex-col gap-0.5">
+            {section.label && (fade || !rail) && (
+              <p
+                style={indexStyle(index++)}
+                className={cn(
+                  "px-2.5 pb-1 text-xs font-medium text-muted-foreground",
+                  fade && FADE_LABEL
+                )}
+              >
+                {section.label}
+              </p>
+            )}
+            {section.items.map((item) => {
+              const node = navItem(item, rail, index, onItemClick)
+              index += 1 + (item.items?.length ?? 0)
+              return node
+            })}
+          </div>
+        ))}
+      </nav>
+    )
+  }
 
   const sidebarBody = (rail: boolean, onItemClick?: () => void) => (
     <>
       <div
         className={cn(
-          "flex items-center gap-2.5 px-1.5",
-          rail && "justify-center px-0"
+          "flex items-center gap-2.5",
+          // Fade: the logo's center lines up with the nav icons in both states.
+          fade ? "px-0.5" : "px-1.5",
+          !fade && rail && "justify-center px-0"
         )}
       >
         <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-foreground text-background [&_svg]:size-4">
           {workspace.logo}
         </span>
-        {!rail && (
-          <div className="min-w-0">
+        {(fade || !rail) && (
+          <div className={cn("min-w-0", fade && FADE_LABEL)}>
             <p className="truncate text-sm font-medium">{workspace.name}</p>
             {workspace.plan && (
               <p className="truncate text-xs text-muted-foreground">
@@ -335,23 +535,35 @@ function AppShell({
         aria-label={rail ? "Search" : undefined}
         className={cn(
           "flex h-control items-center gap-2.5 rounded-control bg-background px-2.5 text-sm text-muted-foreground shadow-border focus-ring transition-shadow hover:shadow-border-hover",
-          rail && "justify-center px-0"
+          !fade && rail && "justify-center px-0"
         )}
       >
         <SearchIcon className="size-4 shrink-0" />
-        {!rail && (
+        {(fade || !rail) && (
           <>
-            <span className="flex-1 text-start">Search</span>
-            <Hotkey hotkey="Mod+K" variant="text" className="text-xs" />
+            <span className={cn("flex-1 text-start", fade && FADE_LABEL)}>
+              Search
+            </span>
+            <Hotkey
+              hotkey="Mod+K"
+              variant="text"
+              className={cn("text-xs", fade && FADE_LABEL)}
+            />
           </>
         )}
       </button>
-      <div className="min-h-0 flex-1 overflow-y-auto">
+      <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
         {nav(rail, onItemClick)}
       </div>
+      {footerItems && (
+        <div className="flex flex-col gap-0.5">
+          {footerItems.map((item, i) => navItem(item, rail, i, onItemClick))}
+        </div>
+      )}
       <UserMenu
         user={user}
         collapsed={rail}
+        fade={fade}
         onSignOut={onSignOut}
         settingsHref={settingsHref}
         Link={Link}
@@ -369,9 +581,14 @@ function AppShell({
         >
           <aside
             data-slot="app-sidebar"
+            data-collapsed={collapsed || undefined}
             className={cn(
-              "sticky top-0 hidden h-dvh shrink-0 flex-col gap-4 overflow-hidden p-3 transition-[width] duration-200 ease-in-out in-data-ds-instant:transition-none motion-reduce:transition-none md:flex",
-              collapsed ? "w-16" : "w-64"
+              "group/sidebar sticky top-0 hidden h-dvh shrink-0 flex-col gap-4 overflow-hidden p-3 transition-[width] ease-in-out in-data-ds-instant:transition-none motion-reduce:transition-none md:flex",
+              fade
+                ? // Closing waits a beat for the labels to fade; opening starts at once.
+                  "duration-250 data-collapsed:delay-[60ms]"
+                : "duration-200",
+              collapsed ? (fade ? "w-15" : "w-16") : "w-64"
             )}
           >
             {sidebarBody(collapsed)}
@@ -411,7 +628,9 @@ function AppShell({
                   key={section.label ?? i}
                   heading={section.label ?? "Pages"}
                 >
-                  {section.items.map((item) => (
+                  {section.items
+                    .flatMap((item) => (item.items?.length ? item.items : [item]))
+                    .map((item) => (
                     <CommandItem
                       key={item.href}
                       value={item.label}

@@ -1698,8 +1698,9 @@
       "name": "app-shell",
       "type": "registry:block",
       "title": "App shell",
-      "description": "Collapsible sidebar, Mod+K palette, G-then-key navigation, and a sheet on mobile.",
+      "description": "Collapsible sidebar (variant=\"fade\": labels fade and blur out, icons never move), nested groups, Mod+K palette, G-then-key navigation, a sheet on mobile.",
       "dependencies": [
+        "@base-ui/react@^1.9.0",
         "@tanstack/react-hotkeys@0.25.0",
         "cn@^0.5.2",
         "lucide-react@^1.72.0"
