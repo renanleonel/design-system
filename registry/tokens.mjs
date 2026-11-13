@@ -29,9 +29,22 @@ export const tones = {
 const toneVars = (mode) =>
   Object.fromEntries(Object.entries(tones[mode]).map(([k, v]) => [`ds-tone-${k}`, v]))
 
+// Categorical chart series (dataviz skill's validated palette): assign in this
+// order, never cycled. The same hues across every theme, stepped per mode, and
+// checked with validate_palette.js on white and on the dark card (adjacent CVD
+// dE >= 8.4). Light slots 3-5 are under 3:1 on white, so charts always ship a
+// legend and a tooltip.
+export const chart = {
+  light: ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"],
+  dark: ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"],
+}
+const chartVars = (mode) =>
+  Object.fromEntries(chart[mode].map((v, i) => [`ds-chart-${i + 1}`, v]))
+
 // :root values. Everything is prefixed --ds-* except shadcn-compatible names.
 export const root = {
   ...toneVars("light"),
+  ...chartVars("light"),
   // Nested surfaces (Panel): a tray holds cards; card radius = tray radius - padding.
   "ds-panel-radius": "calc(var(--radius) * 2.4)",
   "ds-panel-pad": "0.5rem",
@@ -79,6 +92,7 @@ export const root = {
 // .dark overrides. Dark mode: depth shadows vanish, so a single white ring carries the edge.
 export const dark = {
   ...toneVars("dark"),
+  ...chartVars("dark"),
   // Dark: elevation reads as lightness, so the tray sits below its cards.
   "ds-panel-bg": "var(--background)",
   "ds-shadow-border": "0 0 0 1px oklch(1 0 0 / 0.08)",
@@ -96,6 +110,7 @@ export const theme = {
   "radius-control": "var(--ds-radius-control)",
   ...Object.fromEntries(Object.keys(tones.light).map((k) => [`color-tone-${k}`, `var(--ds-tone-${k})`])),
   "color-panel": "var(--ds-panel-bg)",
+  ...Object.fromEntries(chart.light.map((_, i) => [`color-series-${i + 1}`, `var(--ds-chart-${i + 1})`])),
   // Opaque tints (tone mixed onto the card) for overlapping things like avatar stacks,
   // where a translucent tint would let the avatar underneath show through.
   ...Object.fromEntries(

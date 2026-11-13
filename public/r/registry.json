@@ -24,34 +24,44 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/breadcrumb.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/calendar.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/card.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/chart.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/checkbox.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/combobox.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/command.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/data-list.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/date-picker.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dialog.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/drawer.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/error-state.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/field.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/file-dropzone.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/form.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-otp.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/item.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/multi-select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/pagination.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/panel.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/progress.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/radio-group.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/separator.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sheet.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/skeleton.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/slider.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sortable.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
@@ -59,6 +69,8 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
       ]
     },
@@ -95,6 +107,14 @@
           "color-tone-red": "var(--ds-tone-red)",
           "color-tone-purple": "var(--ds-tone-purple)",
           "color-panel": "var(--ds-panel-bg)",
+          "color-series-1": "var(--ds-chart-1)",
+          "color-series-2": "var(--ds-chart-2)",
+          "color-series-3": "var(--ds-chart-3)",
+          "color-series-4": "var(--ds-chart-4)",
+          "color-series-5": "var(--ds-chart-5)",
+          "color-series-6": "var(--ds-chart-6)",
+          "color-series-7": "var(--ds-chart-7)",
+          "color-series-8": "var(--ds-chart-8)",
           "color-tone-gray-soft": "color-mix(in oklch, var(--ds-tone-gray) 16%, var(--card))",
           "color-tone-blue-soft": "color-mix(in oklch, var(--ds-tone-blue) 16%, var(--card))",
           "color-tone-green-soft": "color-mix(in oklch, var(--ds-tone-green) 16%, var(--card))",
@@ -125,6 +145,14 @@
           "ds-tone-orange": "oklch(0.55 0.16 42)",
           "ds-tone-red": "oklch(0.53 0.19 25)",
           "ds-tone-purple": "oklch(0.5 0.19 318)",
+          "ds-chart-1": "#2a78d6",
+          "ds-chart-2": "#eb6834",
+          "ds-chart-3": "#1baf7a",
+          "ds-chart-4": "#eda100",
+          "ds-chart-5": "#e87ba4",
+          "ds-chart-6": "#008300",
+          "ds-chart-7": "#6250d6",
+          "ds-chart-8": "#e34948",
           "ds-panel-radius": "calc(var(--radius) * 2.4)",
           "ds-panel-pad": "0.5rem",
           "ds-panel-bg": "color-mix(in oklch, var(--muted) 65%, var(--background))",
@@ -162,6 +190,14 @@
           "ds-tone-orange": "oklch(0.83 0.11 50)",
           "ds-tone-red": "oklch(0.84 0.1 22)",
           "ds-tone-purple": "oklch(0.82 0.11 318)",
+          "ds-chart-1": "#3987e5",
+          "ds-chart-2": "#d95926",
+          "ds-chart-3": "#199e70",
+          "ds-chart-4": "#c98500",
+          "ds-chart-5": "#d55181",
+          "ds-chart-6": "#008300",
+          "ds-chart-7": "#9085e9",
+          "ds-chart-8": "#e66767",
           "ds-panel-bg": "var(--background)",
           "ds-shadow-border": "0 0 0 1px oklch(1 0 0 / 0.08)",
           "ds-shadow-border-hover": "0 0 0 1px oklch(1 0 0 / 0.13)",
@@ -765,6 +801,24 @@
       ]
     },
     {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Where this page sits in the hierarchy, with links back up.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
@@ -789,6 +843,27 @@
       ]
     },
     {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "A month grid for picking a day or a range (react-day-picker).",
+      "dependencies": [
+        "cn@^0.5.2",
+        "date-fns@^4.4.0",
+        "lucide-react@^1.72.0",
+        "react-day-picker@^10.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
@@ -800,6 +875,23 @@
       "files": [
         {
           "path": "components/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "Recharts with a validated categorical palette, DS tooltips and legends.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "recharts@3.8.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/chart.tsx",
           "type": "registry:ui"
         }
       ]
@@ -876,6 +968,30 @@
       "files": [
         {
           "path": "components/ui/data-list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "A button that opens a calendar, for a single date or a range.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "date-fns@^4.4.0",
+        "lucide-react@^1.72.0",
+        "react-day-picker@^10.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/calendar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/date-picker.tsx",
           "type": "registry:ui"
         }
       ]
@@ -999,6 +1115,25 @@
       ]
     },
     {
+      "name": "file-dropzone",
+      "type": "registry:ui",
+      "title": "File Dropzone",
+      "description": "Drop files or browse, with type and size limits and a removable list.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/file-dropzone.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "form",
       "type": "registry:ui",
       "title": "Form",
@@ -1075,6 +1210,24 @@
       "files": [
         {
           "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "Input OTP",
+      "description": "One-time codes for 2FA and email verification.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "input-otp@^1.5.0",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/input-otp.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1182,6 +1335,25 @@
       ]
     },
     {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Links between pages of results.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "panel",
       "type": "registry:ui",
       "title": "Panel",
@@ -1210,6 +1382,40 @@
       "files": [
         {
           "path": "components/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "How far along a task is.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Pick exactly one of a few visible options.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/radio-group.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1284,6 +1490,23 @@
       "files": [
         {
           "path": "components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Pick a value or a range by dragging.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/slider.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1409,6 +1632,44 @@
       "files": [
         {
           "path": "components/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "description": "A row of toggles, single or multiple choice: alignment, view modes, filters.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "class-variance-authority@^0.7.1",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "A button that stays pressed: bold on, bold off.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "class-variance-authority@^0.7.1",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/toggle.tsx",
           "type": "registry:ui"
         }
       ]

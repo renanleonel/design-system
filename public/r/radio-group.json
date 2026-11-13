@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group",
+  "title": "Radio Group",
+  "description": "Pick exactly one of a few visible options.",
+  "dependencies": [
+    "@base-ui/react@^1.9.0",
+    "cn@^0.5.2"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/radio-group.tsx",
+      "content": "\"use client\"\n\nimport { Radio as RadioPrimitive } from \"@base-ui/react/radio\"\nimport { RadioGroup as RadioGroupPrimitive } from \"@base-ui/react/radio-group\"\nimport { cn } from \"cn\"\n\nfunction RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {\n  return (\n    <RadioGroupPrimitive\n      data-slot=\"radio-group\"\n      className={cn(\"grid w-full gap-3\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * One option. The dot grows in from half size (never from 0) in 150ms; the\n * hit area extends past the circle like Checkbox's.\n */\nfunction RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {\n  return (\n    <RadioPrimitive.Root\n      data-slot=\"radio-group-item\"\n      className={cn(\n        \"group/radio-group-item peer hit-area relative flex size-4 shrink-0 items-center justify-center rounded-full border border-input focus-ring transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 not-data-checked:hover:border-foreground/25 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive dark:bg-input/30 dark:not-data-checked:hover:border-foreground/30 dark:aria-invalid:border-destructive/50 data-checked:border-primary data-checked:bg-primary\",\n        className\n      )}\n      {...props}\n    >\n      <span\n        aria-hidden\n        className=\"size-1.5 scale-50 rounded-full bg-primary-foreground opacity-0 transition-[scale,opacity] duration-150 ease-out group-data-checked/radio-group-item:scale-100 group-data-checked/radio-group-item:opacity-100 motion-reduce:transition-none\"\n      />\n    </RadioPrimitive.Root>\n  )\n}\n\nexport { RadioGroup, RadioGroupItem }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

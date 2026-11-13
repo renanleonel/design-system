@@ -6,34 +6,44 @@ import * as alertDialogDemos from "./alert-dialog"
 import * as alertDemos from "./alert"
 import * as avatarDemos from "./avatar"
 import * as badgeDemos from "./badge"
+import * as breadcrumbDemos from "./breadcrumb"
 import * as buttonDemos from "./button"
+import * as calendarDemos from "./calendar"
 import * as cardDemos from "./card"
+import * as chartDemos from "./chart"
 import * as checkboxDemos from "./checkbox"
 import * as comboboxDemos from "./combobox"
 import * as commandDemos from "./command"
 import * as dataListDemos from "./data-list"
+import * as datePickerDemos from "./date-picker"
 import * as dialogDemos from "./dialog"
 import * as drawerDemos from "./drawer"
 import * as dropdownMenuDemos from "./dropdown-menu"
 import * as emptyDemos from "./empty"
 import * as errorStateDemos from "./error-state"
 import * as fieldDemos from "./field"
+import * as fileDropzoneDemos from "./file-dropzone"
 import * as formDemos from "./form"
 import * as hotkeyDemos from "./hotkey"
 import * as iconTileDemos from "./icon-tile"
 import * as inputGroupDemos from "./input-group"
+import * as inputOtpDemos from "./input-otp"
 import * as inputDemos from "./input"
 import * as itemDemos from "./item"
 import * as kbdDemos from "./kbd"
 import * as labelDemos from "./label"
 import * as multiSelectDemos from "./multi-select"
 import * as nativeSelectDemos from "./native-select"
+import * as paginationDemos from "./pagination"
 import * as panelDemos from "./panel"
 import * as popoverDemos from "./popover"
+import * as progressDemos from "./progress"
+import * as radioGroupDemos from "./radio-group"
 import * as selectDemos from "./select"
 import * as separatorDemos from "./separator"
 import * as sheetDemos from "./sheet"
 import * as skeletonDemos from "./skeleton"
+import * as sliderDemos from "./slider"
 import * as sonnerDemos from "./sonner"
 import * as sortableDemos from "./sortable"
 import * as spinnerDemos from "./spinner"
@@ -41,6 +51,8 @@ import * as switchDemos from "./switch"
 import * as tableDemos from "./table"
 import * as tabsDemos from "./tabs"
 import * as textareaDemos from "./textarea"
+import * as toggleGroupDemos from "./toggle-group"
+import * as toggleDemos from "./toggle"
 import * as tooltipDemos from "./tooltip"
 
 export const demos: Record<string, Record<string, ComponentType>> = {
@@ -49,34 +61,44 @@ export const demos: Record<string, Record<string, ComponentType>> = {
   "alert": alertDemos,
   "avatar": avatarDemos,
   "badge": badgeDemos,
+  "breadcrumb": breadcrumbDemos,
   "button": buttonDemos,
+  "calendar": calendarDemos,
   "card": cardDemos,
+  "chart": chartDemos,
   "checkbox": checkboxDemos,
   "combobox": comboboxDemos,
   "command": commandDemos,
   "data-list": dataListDemos,
+  "date-picker": datePickerDemos,
   "dialog": dialogDemos,
   "drawer": drawerDemos,
   "dropdown-menu": dropdownMenuDemos,
   "empty": emptyDemos,
   "error-state": errorStateDemos,
   "field": fieldDemos,
+  "file-dropzone": fileDropzoneDemos,
   "form": formDemos,
   "hotkey": hotkeyDemos,
   "icon-tile": iconTileDemos,
   "input-group": inputGroupDemos,
+  "input-otp": inputOtpDemos,
   "input": inputDemos,
   "item": itemDemos,
   "kbd": kbdDemos,
   "label": labelDemos,
   "multi-select": multiSelectDemos,
   "native-select": nativeSelectDemos,
+  "pagination": paginationDemos,
   "panel": panelDemos,
   "popover": popoverDemos,
+  "progress": progressDemos,
+  "radio-group": radioGroupDemos,
   "select": selectDemos,
   "separator": separatorDemos,
   "sheet": sheetDemos,
   "skeleton": skeletonDemos,
+  "slider": sliderDemos,
   "sonner": sonnerDemos,
   "sortable": sortableDemos,
   "spinner": spinnerDemos,
@@ -84,5 +106,7 @@ export const demos: Record<string, Record<string, ComponentType>> = {
   "table": tableDemos,
   "tabs": tabsDemos,
   "textarea": textareaDemos,
+  "toggle-group": toggleGroupDemos,
+  "toggle": toggleDemos,
   "tooltip": tooltipDemos,
 }

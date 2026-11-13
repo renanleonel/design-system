@@ -1,6 +1,13 @@
 {
   "$comment": "Docs metadata. Feeds the docs site (sidebar, pages, search) and the registry item descriptions. Every registry:ui item needs an entry and a demo in components/demos/<name>.tsx.",
-  "groups": ["Inputs", "Forms", "Overlays", "Feedback", "Display", "Layout"],
+  "groups": [
+    "Inputs",
+    "Forms",
+    "Overlays",
+    "Feedback",
+    "Display",
+    "Layout"
+  ],
   "components": {
     "button": {
       "group": "Inputs",
@@ -34,7 +41,9 @@
       "group": "Inputs",
       "title": "Textarea",
       "description": "Multi-line text that grows with its content.",
-      "notes": ["Grows with `field-sizing: content`; cap it with `max-h-*`."]
+      "notes": [
+        "Grows with `field-sizing: content`; cap it with `max-h-*`."
+      ]
     },
     "select": {
       "group": "Inputs",
@@ -50,7 +59,9 @@
       "group": "Inputs",
       "title": "Native Select",
       "description": "The platform select, styled like the rest of the controls.",
-      "notes": ["Best on mobile and for long, plain lists."]
+      "notes": [
+        "Best on mobile and for long, plain lists."
+      ]
     },
     "combobox": {
       "group": "Inputs",
@@ -83,7 +94,9 @@
       "group": "Inputs",
       "title": "Switch",
       "description": "A setting that applies immediately when toggled.",
-      "notes": ["Use a checkbox instead when the change waits for a Save button."]
+      "notes": [
+        "Use a checkbox instead when the change waits for a Save button."
+      ]
     },
     "label": {
       "group": "Forms",
@@ -132,19 +145,25 @@
       "group": "Overlays",
       "title": "Drawer",
       "description": "A panel that slides in from an edge and follows your finger.",
-      "notes": ["Swipe in its direction to dismiss; the backdrop fades with the drag."]
+      "notes": [
+        "Swipe in its direction to dismiss; the backdrop fades with the drag."
+      ]
     },
     "sheet": {
       "group": "Overlays",
       "title": "Sheet",
       "description": "A side panel for filters, details and navigation.",
-      "notes": ["`side` can be `top`, `right`, `bottom` or `left`."]
+      "notes": [
+        "`side` can be `top`, `right`, `bottom` or `left`."
+      ]
     },
     "popover": {
       "group": "Overlays",
       "title": "Popover",
       "description": "Rich content anchored to a trigger. A bottom sheet on phones.",
-      "notes": ["Scales in from its trigger; Escape or a click outside closes it."]
+      "notes": [
+        "Scales in from its trigger; Escape or a click outside closes it."
+      ]
     },
     "dropdown-menu": {
       "group": "Overlays",
@@ -168,19 +187,25 @@
       "group": "Overlays",
       "title": "Command",
       "description": "A searchable list of commands, inline or as a Mod+K palette.",
-      "notes": ["Arrow keys move, Enter runs, Escape closes the dialog."]
+      "notes": [
+        "Arrow keys move, Enter runs, Escape closes the dialog."
+      ]
     },
     "alert": {
       "group": "Feedback",
       "title": "Alert",
       "description": "An inline message, as a bordered card or a tinted callout.",
-      "notes": ["`tone` makes a borderless tinted callout; an `AlertAction` sits on the trailing edge."]
+      "notes": [
+        "`tone` makes a borderless tinted callout; an `AlertAction` sits on the trailing edge."
+      ]
     },
     "badge": {
       "group": "Feedback",
       "title": "Badge",
       "description": "Status pills and counts in seven contrast-checked tones.",
-      "notes": ["`tone` replaces the variant's colors with a tint of the tone."]
+      "notes": [
+        "`tone` replaces the variant's colors with a tint of the tone."
+      ]
     },
     "sonner": {
       "group": "Feedback",
@@ -203,7 +228,9 @@
       "group": "Feedback",
       "title": "Spinner",
       "description": "An indeterminate progress indicator.",
-      "notes": ["Prefer a skeleton for content and `Button loading` for actions."]
+      "notes": [
+        "Prefer a skeleton for content and `Button loading` for actions."
+      ]
     },
     "empty": {
       "group": "Feedback",
@@ -215,31 +242,41 @@
       "group": "Feedback",
       "title": "Error State",
       "description": "A region that failed to load: what failed, a retry, and a request ID for support.",
-      "notes": ["Render it per section, so the rest of the screen stays usable."]
+      "notes": [
+        "Render it per section, so the rest of the screen stays usable."
+      ]
     },
     "card": {
       "group": "Display",
       "title": "Card",
       "description": "A surface with a header, content and footer.",
-      "notes": ["`size=\"sm\"` tightens the spacing."]
+      "notes": [
+        "`size=\"sm\"` tightens the spacing."
+      ]
     },
     "panel": {
       "group": "Display",
       "title": "Panel",
       "description": "A tinted tray holding white cards with concentric corners.",
-      "notes": ["Card radii follow `--ds-panel-radius` minus `--ds-panel-pad`, so corners stay parallel."]
+      "notes": [
+        "Card radii follow `--ds-panel-radius` minus `--ds-panel-pad`, so corners stay parallel."
+      ]
     },
     "item": {
       "group": "Display",
       "title": "Item",
       "description": "A row with media, title, description and actions.",
-      "notes": ["Render it as a link or button with `render` to make the whole row clickable."]
+      "notes": [
+        "Render it as a link or button with `render` to make the whole row clickable."
+      ]
     },
     "data-list": {
       "group": "Display",
       "title": "Data List",
       "description": "Label and value pairs that reflow with their container.",
-      "notes": ["`layout=\"row\"` spreads short pairs across a line; `stack` lists them."]
+      "notes": [
+        "`layout=\"row\"` spreads short pairs across a line; `stack` lists them."
+      ]
     },
     "icon-tile": {
       "group": "Display",
@@ -263,7 +300,9 @@
       "group": "Display",
       "title": "Hotkey",
       "description": "Shows a shortcut for the user's platform: Mod+K reads ⌘K on macOS and Ctrl K elsewhere.",
-      "notes": ["Hidden on touch screens, where there is no keyboard."]
+      "notes": [
+        "Hidden on touch screens, where there is no keyboard."
+      ]
     },
     "table": {
       "group": "Display",
@@ -275,13 +314,17 @@
       "group": "Layout",
       "title": "Accordion",
       "description": "Stacked sections that expand one or several at a time.",
-      "notes": ["The panel height animates; reduced motion keeps only a fade."]
+      "notes": [
+        "The panel height animates; reduced motion keeps only a fade."
+      ]
     },
     "tabs": {
       "group": "Layout",
       "title": "Tabs",
       "description": "Switch between views, as pills, a line or a sliding segmented control.",
-      "notes": ["Arrow keys move between tabs."]
+      "notes": [
+        "Arrow keys move between tabs."
+      ]
     },
     "separator": {
       "group": "Layout",
@@ -296,6 +339,111 @@
       "notes": [
         "Keyboard: focus a handle, Space to lift, arrows to move, Space to drop, Escape to cancel.",
         "Moves are announced to screen readers; works inside dialogs."
+      ]
+    },
+    "radio-group": {
+      "group": "Inputs",
+      "title": "Radio Group",
+      "description": "Pick exactly one of a few visible options.",
+      "notes": [
+        "Use it for 2 to 5 options that should all stay visible; past that, a Select.",
+        "Arrow keys move the selection within the group."
+      ]
+    },
+    "toggle": {
+      "group": "Inputs",
+      "title": "Toggle",
+      "description": "A button that stays pressed: bold on, bold off.",
+      "notes": [
+        "`pressed` / `onPressedChange`; the pressed state is announced to screen readers."
+      ]
+    },
+    "toggle-group": {
+      "group": "Inputs",
+      "title": "Toggle Group",
+      "description": "A row of toggles, single or multiple choice: alignment, view modes, filters.",
+      "notes": [
+        "`spacing={0}` joins the items into one segmented control.",
+        "Arrow keys move focus between items."
+      ]
+    },
+    "slider": {
+      "group": "Inputs",
+      "title": "Slider",
+      "description": "Pick a value or a range by dragging.",
+      "notes": [
+        "Arrow keys step, Shift+arrows step by 10, Home and End jump to the ends.",
+        "Pass an array for a range; the thumb grows slightly while dragged."
+      ]
+    },
+    "input-otp": {
+      "group": "Inputs",
+      "title": "Input OTP",
+      "description": "One-time codes for 2FA and email verification.",
+      "notes": [
+        "Pasting fills every slot; `autoComplete=\"one-time-code\"` lets phones offer the SMS code.",
+        "`onComplete` fires on the last digit, so you can verify without a submit button."
+      ]
+    },
+    "calendar": {
+      "group": "Inputs",
+      "title": "Calendar",
+      "description": "A month grid for picking a day or a range (react-day-picker).",
+      "notes": [
+        "Arrow keys move by day, Page Up/Down by month.",
+        "Cells grow to 40px on touch screens."
+      ]
+    },
+    "date-picker": {
+      "group": "Inputs",
+      "title": "Date Picker",
+      "description": "A button that opens a calendar, for a single date or a range.",
+      "notes": [
+        "A bottom sheet on phones; the range picker shows one month there and two elsewhere.",
+        "Labels use date-fns patterns (`dateFormat`)."
+      ]
+    },
+    "file-dropzone": {
+      "group": "Inputs",
+      "title": "File Dropzone",
+      "description": "Drop files or browse, with type and size limits and a removable list.",
+      "notes": [
+        "The zone is one button: Enter or Space opens the file picker.",
+        "Rejected files are listed with the reason (type, size, count) instead of disappearing."
+      ]
+    },
+    "progress": {
+      "group": "Feedback",
+      "title": "Progress",
+      "description": "How far along a task is.",
+      "notes": [
+        "For a value against a limit (seats, storage) use a meter instead; see the Billing block."
+      ]
+    },
+    "breadcrumb": {
+      "group": "Layout",
+      "title": "Breadcrumb",
+      "description": "Where this page sits in the hierarchy, with links back up.",
+      "notes": [
+        "The current page is `aria-current=\"page\"` and not a link."
+      ]
+    },
+    "pagination": {
+      "group": "Layout",
+      "title": "Pagination",
+      "description": "Links between pages of results.",
+      "notes": [
+        "`getPageRange(page, pageCount)` returns the pages and ellipses to render, always the same count, so the row never changes width."
+      ]
+    },
+    "chart": {
+      "group": "Display",
+      "title": "Chart",
+      "description": "Recharts with a validated categorical palette, DS tooltips and legends.",
+      "notes": [
+        "Series colors are `--ds-chart-1` to `-8` (`fill-series-1`…): the same hues in every theme, validated for color blindness in light and dark. Assign them in order, never cycled.",
+        "Two or more series always get a legend; every chart gets a tooltip.",
+        "One y-axis per chart: two measures of different scale go in two charts."
       ]
     }
   },

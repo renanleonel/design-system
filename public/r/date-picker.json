@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-picker",
+  "title": "Date Picker",
+  "description": "A button that opens a calendar, for a single date or a range.",
+  "dependencies": [
+    "cn@^0.5.2",
+    "date-fns@^4.4.0",
+    "lucide-react@^1.72.0",
+    "react-day-picker@^10.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/calendar.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/date-picker.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"cn\"\nimport { format } from \"date-fns\"\nimport { CalendarIcon } from \"lucide-react\"\nimport type { DateRange } from \"react-day-picker\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Calendar } from \"@/components/ui/calendar\"\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from \"@/components/ui/popover\"\nimport { useIsMobile } from \"@/hooks/use-media-query\"\n\ntype TriggerProps = {\n  placeholder?: string\n  /** date-fns pattern for the trigger label. */\n  dateFormat?: string\n  disabled?: boolean\n  id?: string\n  className?: string\n  \"aria-invalid\"?: boolean\n  \"aria-describedby\"?: string\n}\n\nfunction Trigger({\n  label,\n  placeholder,\n  className,\n  ...props\n}: Omit<TriggerProps, \"dateFormat\"> & { label?: string }) {\n  return (\n    <PopoverTrigger\n      render={\n        <Button\n          variant=\"outline\"\n          className={cn(\n            \"w-60 justify-start px-2.5 font-normal data-[empty=true]:text-muted-foreground\",\n            className\n          )}\n          data-empty={!label}\n          {...props}\n        />\n      }\n    >\n      <CalendarIcon data-icon=\"inline-start\" />\n      <span className=\"truncate\">{label ?? placeholder}</span>\n    </PopoverTrigger>\n  )\n}\n\n/**\n * A button that opens a calendar in a popover (a bottom sheet on phones).\n * Picking a day closes it and returns focus to the button.\n */\nfunction DatePicker({\n  value,\n  defaultValue,\n  onValueChange,\n  placeholder = \"Pick a date\",\n  dateFormat = \"PPP\",\n  calendarProps,\n  ...trigger\n}: TriggerProps & {\n  value?: Date\n  defaultValue?: Date\n  onValueChange?: (date: Date | undefined) => void\n  calendarProps?: Omit<\n    React.ComponentProps<typeof Calendar>,\n    \"mode\" | \"selected\" | \"onSelect\"\n  >\n}) {\n  const [open, setOpen] = React.useState(false)\n  const [internal, setInternal] = React.useState(defaultValue)\n  const date = value !== undefined ? value : internal\n  return (\n    <Popover open={open} onOpenChange={setOpen}>\n      <Trigger\n        label={date ? format(date, dateFormat) : undefined}\n        placeholder={placeholder}\n        {...trigger}\n      />\n      <PopoverContent className=\"w-auto p-0\" align=\"start\">\n        <Calendar\n          mode=\"single\"\n          selected={date}\n          defaultMonth={date}\n          onSelect={(next) => {\n            setInternal(next)\n            onValueChange?.(next)\n            setOpen(false)\n          }}\n          {...calendarProps}\n        />\n      </PopoverContent>\n    </Popover>\n  )\n}\n\n/** Two months side by side (one on phones); stays open until both ends are set. */\nfunction DateRangePicker({\n  value,\n  defaultValue,\n  onValueChange,\n  placeholder = \"Pick dates\",\n  dateFormat = \"LLL d, y\",\n  calendarProps,\n  ...trigger\n}: TriggerProps & {\n  value?: DateRange\n  defaultValue?: DateRange\n  onValueChange?: (range: DateRange | undefined) => void\n  calendarProps?: Omit<\n    React.ComponentProps<typeof Calendar>,\n    \"mode\" | \"selected\" | \"onSelect\"\n  >\n}) {\n  const isMobile = useIsMobile()\n  const [internal, setInternal] = React.useState(defaultValue)\n  const range = value !== undefined ? value : internal\n  const label = range?.from\n    ? range.to\n      ? `${format(range.from, dateFormat)} – ${format(range.to, dateFormat)}`\n      : format(range.from, dateFormat)\n    : undefined\n  return (\n    <Popover>\n      <Trigger\n        label={label}\n        placeholder={placeholder}\n        className=\"w-72\"\n        {...trigger}\n      />\n      <PopoverContent className=\"w-auto p-0\" align=\"start\">\n        <Calendar\n          mode=\"range\"\n          selected={range}\n          defaultMonth={range?.from}\n          numberOfMonths={isMobile ? 1 : 2}\n          onSelect={(next) => {\n            setInternal(next)\n            onValueChange?.(next)\n          }}\n          {...calendarProps}\n        />\n      </PopoverContent>\n    </Popover>\n  )\n}\n\nexport { DatePicker, DateRangePicker }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
