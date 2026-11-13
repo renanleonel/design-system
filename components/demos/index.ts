@@ -37,9 +37,12 @@ import * as multiSelectDemos from "./multi-select"
 import * as nativeSelectDemos from "./native-select"
 import * as paginationDemos from "./pagination"
 import * as panelDemos from "./panel"
+import * as passwordInputDemos from "./password-input"
 import * as popoverDemos from "./popover"
 import * as progressDemos from "./progress"
 import * as radioGroupDemos from "./radio-group"
+import * as ratingDemos from "./rating"
+import * as resizableDemos from "./resizable"
 import * as selectDemos from "./select"
 import * as separatorDemos from "./separator"
 import * as sheetDemos from "./sheet"
@@ -53,9 +56,14 @@ import * as tableDemos from "./table"
 import * as tabsDemos from "./tabs"
 import * as textareaDemos from "./textarea"
 import * as themeToggleDemos from "./theme-toggle"
+import * as timeInputDemos from "./time-input"
+import * as timelineDemos from "./timeline"
 import * as toggleGroupDemos from "./toggle-group"
 import * as toggleDemos from "./toggle"
+import * as tokenInputDemos from "./token-input"
 import * as tooltipDemos from "./tooltip"
+import * as treeDemos from "./tree"
+import * as virtualListDemos from "./virtual-list"
 
 export const demos: Record<string, Record<string, ComponentType>> = {
   "accordion": accordionDemos,
@@ -94,9 +102,12 @@ export const demos: Record<string, Record<string, ComponentType>> = {
   "native-select": nativeSelectDemos,
   "pagination": paginationDemos,
   "panel": panelDemos,
+  "password-input": passwordInputDemos,
   "popover": popoverDemos,
   "progress": progressDemos,
   "radio-group": radioGroupDemos,
+  "rating": ratingDemos,
+  "resizable": resizableDemos,
   "select": selectDemos,
   "separator": separatorDemos,
   "sheet": sheetDemos,
@@ -110,7 +121,12 @@ export const demos: Record<string, Record<string, ComponentType>> = {
   "tabs": tabsDemos,
   "textarea": textareaDemos,
   "theme-toggle": themeToggleDemos,
+  "time-input": timeInputDemos,
+  "timeline": timelineDemos,
   "toggle-group": toggleGroupDemos,
   "toggle": toggleDemos,
+  "token-input": tokenInputDemos,
   "tooltip": tooltipDemos,
+  "tree": treeDemos,
+  "virtual-list": virtualListDemos,
 }

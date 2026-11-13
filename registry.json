@@ -55,9 +55,12 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/pagination.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/panel.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/password-input.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/progress.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/radio-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/rating.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/resizable.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/separator.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sheet.json",
@@ -71,9 +74,14 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-toggle.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/time-input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/timeline.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json",
-        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/token-input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/virtual-list.json"
       ]
     },
     {
@@ -674,6 +682,18 @@
       "name": "theme-neutral"
     },
     {
+      "name": "use-debounce",
+      "type": "registry:hook",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hooks/use-debounce.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "use-hotkey-press",
       "type": "registry:hook",
       "dependencies": [
@@ -923,6 +943,7 @@
       "description": "Type to filter a list and pick one value.",
       "dependencies": [
         "@base-ui/react@^1.9.0",
+        "@tanstack/react-virtual@^3.14.26",
         "cn@^0.5.2",
         "lucide-react@^1.72.0"
       ],
@@ -1391,6 +1412,24 @@
       ]
     },
     {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "Password Input",
+      "description": "A password field with a show/hide toggle and a Caps Lock warning.",
+      "dependencies": [
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/password-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -1437,6 +1476,41 @@
       "files": [
         {
           "path": "components/ui/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "A star rating: a radio group when interactive, an image with fractions when read-only.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/rating.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Panels split by draggable, keyboard-operable handles.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "react-resizable-panels@^4.22.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/resizable.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1680,6 +1754,40 @@
       ]
     },
     {
+      "name": "time-input",
+      "type": "registry:ui",
+      "title": "Time Input",
+      "description": "A time of day with the browser's own segmented field and native picker on touch.",
+      "dependencies": [
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/time-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "A vertical history of events with tone markers: audit logs, order status, deploys.",
+      "dependencies": [
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/timeline.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "toggle-group",
       "type": "registry:ui",
       "title": "Toggle Group",
@@ -1718,6 +1826,25 @@
       ]
     },
     {
+      "name": "token-input",
+      "type": "registry:ui",
+      "title": "Token Input",
+      "description": "Free-form values as removable tokens: emails, keywords, domains.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/token-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
@@ -1733,6 +1860,41 @@
       "files": [
         {
           "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tree",
+      "type": "registry:ui",
+      "title": "Tree",
+      "description": "A virtualized file-explorer tree with keyboard navigation, selection and filtering.",
+      "dependencies": [
+        "@tanstack/react-virtual@^3.14.26",
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/tree.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "virtual-list",
+      "type": "registry:ui",
+      "title": "Virtual List",
+      "description": "A scrolling list that renders only the items in view, for feeds and logs.",
+      "dependencies": [
+        "@tanstack/react-virtual@^3.14.26",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/virtual-list.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1866,6 +2028,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/skeleton.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-debounce.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
       ],
       "files": [
@@ -1908,6 +2071,7 @@
       "description": "Rows in collapsible groups with pinned header, group bands and a calculation footer; continuous row numbers, group selection and a floating bulk-action bar.",
       "dependencies": [
         "@tanstack/react-table@^8.21.3",
+        "@tanstack/react-virtual@^3.14.26",
         "cn@^0.5.2",
         "lucide-react@^1.72.0",
         "sonner@^2.0.8"
@@ -1942,6 +2106,7 @@
       "description": "Cursor pagination that loads ahead as you scroll: skeleton rows, inline retry, an end marker, a Load more fallback and back to top.",
       "dependencies": [
         "@tanstack/react-table@^8.21.3",
+        "@tanstack/react-virtual@^3.14.26",
         "cn@^0.5.2",
         "date-fns@^4.4.0",
         "lucide-react@^1.72.0"

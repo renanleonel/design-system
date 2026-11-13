@@ -10,6 +10,7 @@ import {
   type Row,
   type SortingState,
 } from "@tanstack/react-table"
+import { useVirtualizer } from "@tanstack/react-virtual"
 import { cn } from "cn"
 import {
   ArrowDownIcon,
@@ -212,7 +213,53 @@ function GroupedTable<TData>({
   const leafColumns = table.getVisibleLeafColumns()
   const span = leafColumns.length + 2 // select + row number
   const allSelected = table.getIsAllRowsSelected()
-  let rowNumber = 0
+
+  // Bands and rows flattened into one virtual list: only what's near the
+  // viewport renders, so thousands of rows scroll like dozens.
+  const { entries, spans } = React.useMemo(() => {
+    const entries: Entry<TData>[] = []
+    const spans: GroupSpan<TData>[] = []
+    let number = 0
+    for (const { value, rows } of groups) {
+      const open = !group || !collapsed.has(`${group.id}:${value}`)
+      const a = entries.length
+      if (group) entries.push({ kind: "band", index: a })
+      if (open)
+        for (const row of rows)
+          entries.push({ kind: "row", index: entries.length, row, number: ++number })
+      else number += rows.length
+      spans.push({ value, rows, open, a, b: entries.length - 1 })
+    }
+    return { entries, spans }
+  }, [groups, group, collapsed])
+
+  const scroller = React.useRef<HTMLDivElement>(null)
+  const virtualizer = useVirtualizer({
+    count: entries.length,
+    getScrollElement: () => scroller.current,
+    estimateSize: (i) => (entries[i].kind === "band" ? BAND_HEIGHT : ROW_HEIGHT),
+    overscan: 12,
+    paddingStart: HEAD_HEIGHT,
+    // Keyboard focus never lands under the pinned header and band.
+    scrollPaddingStart: HEAD_HEIGHT + BAND_HEIGHT,
+    // Server render and first paint show the top rows instead of nothing.
+    initialRect: { width: 0, height: 800 },
+  })
+  const range = virtualizer.getVirtualItems()
+  const rangeStart = range[0]?.index ?? 0
+  const rangeEnd = range.at(-1)?.index ?? -1
+  const measurements = virtualizer.measurementsCache
+  const startOf = (i: number) => measurements[i]?.start ?? HEAD_HEIGHT
+  const endOf = (i: number) => measurements[i]?.end ?? HEAD_HEIGHT
+  const visibleSpans = spans.filter(
+    (s) => s.b >= s.a && s.b >= rangeStart && s.a <= rangeEnd
+  )
+  const topGap = visibleSpans.length
+    ? startOf(visibleSpans[0].a) - HEAD_HEIGHT
+    : 0
+  const bottomGap = visibleSpans.length
+    ? virtualizer.getTotalSize() - endOf(visibleSpans.at(-1)!.b)
+    : 0
 
   return (
     <div
@@ -254,7 +301,10 @@ function GroupedTable<TData>({
         </p>
       </div>
 
-      <div className="relative min-h-0 flex-1 overflow-auto overscroll-contain rounded-lg bg-card shadow-border">
+      <div
+        ref={scroller}
+        className="relative min-h-0 flex-1 overflow-auto overscroll-contain rounded-lg bg-card shadow-border"
+      >
         {/* border-separate: sticky cells keep their borders while scrolling. */}
         <table className="w-full border-separate border-spacing-0 text-sm">
           <thead>
@@ -310,17 +360,29 @@ function GroupedTable<TData>({
             </tr>
           </thead>
 
-          {groups.map(({ value, rows }) => {
-            const open = !group || !collapsed.has(keyOf(value))
-            const first = rowNumber
-            rowNumber += rows.length
+          {topGap > 0 && <SpacerBody height={topGap} span={span} />}
+          {visibleSpans.map(({ value, rows, open, a, b }) => {
             const groupSelected = rows.every((r) => r.getIsSelected())
             const someSelected = rows.some((r) => r.getIsSelected())
             const label = group?.render?.(value) ?? (value || "No value")
+            // Rows of this group inside the rendered range; spacers keep the
+            // tbody its full height so the band stays pinned over all of it.
+            const rowStart = group ? a + 1 : a
+            const from = Math.max(rowStart, rangeStart)
+            const to = Math.min(b, rangeEnd)
+            const groupTop = group ? endOf(a) : startOf(a)
+            const innerTop = from <= to ? startOf(from) - groupTop : 0
+            const innerBottom =
+              from <= to ? endOf(b) - endOf(to) : endOf(b) - groupTop
+            const shown: Entry<TData>[] = []
+            for (let i = from; i <= to; i++) shown.push(entries[i])
             return (
               <tbody key={value}>
                 {group && (
-                  <tr>
+                  <tr
+                    ref={virtualizer.measureElement}
+                    data-index={a}
+                  >
                     <td className={cn(BAND, "ps-3 pe-1")}>
                       <Checkbox
                         aria-label={`Select all in ${value || "No value"}`}
@@ -359,16 +421,24 @@ function GroupedTable<TData>({
                     </th>
                   </tr>
                 )}
+                {open && innerTop > 0 && (
+                  <SpacerRow height={innerTop} span={span} />
+                )}
                 {open &&
-                  rows.map((row, i) => (
+                  shown.map((entry) => {
+                    if (entry.kind !== "row") return null
+                    const { row, number } = entry
+                    return (
                     <tr
                       key={row.id}
+                      ref={virtualizer.measureElement}
+                      data-index={entry.index}
                       data-state={row.getIsSelected() ? "selected" : undefined}
                       className="group/row hover:bg-muted/50 data-[state=selected]:bg-muted"
                     >
                       <td className={cn(CELL, "ps-3 pe-1")}>
                         <Checkbox
-                          aria-label={`Select ${getRowLabel?.(row.original) ?? `row ${first + i + 1}`}`}
+                          aria-label={`Select ${getRowLabel?.(row.original) ?? `row ${number}`}`}
                           checked={row.getIsSelected()}
                           onCheckedChange={(v) => row.toggleSelected(!!v)}
                         />
@@ -379,7 +449,7 @@ function GroupedTable<TData>({
                           "px-1 text-end text-xs text-muted-foreground tabular-nums"
                         )}
                       >
-                        {first + i + 1}
+                        {number}
                       </td>
                       {row.getVisibleCells().map((cell) => (
                         <td
@@ -397,10 +467,15 @@ function GroupedTable<TData>({
                         </td>
                       ))}
                     </tr>
-                  ))}
+                    )
+                  })}
+                {open && innerBottom > 0 && (
+                  <SpacerRow height={innerBottom} span={span} />
+                )}
               </tbody>
             )
           })}
+          {bottomGap > 0 && <SpacerBody height={bottomGap} span={span} />}
 
           <tfoot>
             <tr>
@@ -529,6 +604,40 @@ function GroupedTable<TData>({
         </div>
       )}
     </div>
+  )
+}
+
+type Entry<TData> =
+  | { kind: "band"; index: number }
+  | { kind: "row"; index: number; row: Row<TData>; number: number }
+
+type GroupSpan<TData> = {
+  value: string
+  rows: Row<TData>[]
+  open: boolean
+  /** First and last entry index (band, then rows). */
+  a: number
+  b: number
+}
+
+/** Match `h-10` header/rows and `h-9` bands; rendered rows are measured. */
+const HEAD_HEIGHT = 40
+const BAND_HEIGHT = 36
+const ROW_HEIGHT = 40
+
+function SpacerRow({ height, span }: { height: number; span: number }) {
+  return (
+    <tr aria-hidden>
+      <td colSpan={span} style={{ height }} className="p-0" />
+    </tr>
+  )
+}
+
+function SpacerBody(props: { height: number; span: number }) {
+  return (
+    <tbody aria-hidden>
+      <SpacerRow {...props} />
+    </tbody>
   )
 }
 

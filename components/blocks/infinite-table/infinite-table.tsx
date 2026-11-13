@@ -7,6 +7,7 @@ import {
   useReactTable,
   type ColumnDef,
 } from "@tanstack/react-table"
+import { useVirtualizer } from "@tanstack/react-virtual"
 import { cn } from "cn"
 import { ArrowUpIcon, RotateCwIcon } from "lucide-react"
 
@@ -123,6 +124,25 @@ function InfiniteTable<TData>({
 
   const scroller = React.useRef<HTMLDivElement>(null)
   const [scrolled, setScrolled] = React.useState(false)
+
+  // Feeds grow without bound: render only the rows near the viewport, with
+  // spacer rows standing in for the rest (keeps native table layout and the
+  // pinned header).
+  const tableRows = table.getRowModel().rows
+  const virtualizer = useVirtualizer({
+    count: tableRows.length,
+    getScrollElement: () => scroller.current,
+    estimateSize: () => ROW_HEIGHT,
+    getItemKey: (i) => tableRows[i].id,
+    overscan: 10,
+    // Rows start under the pinned header.
+    paddingStart: HEAD_HEIGHT,
+    scrollPaddingStart: HEAD_HEIGHT,
+  })
+  const virtualRows = virtualizer.getVirtualItems()
+  const padTop = (virtualRows[0]?.start ?? HEAD_HEIGHT) - HEAD_HEIGHT
+  const padBottom =
+    virtualizer.getTotalSize() - (virtualRows.at(-1)?.end ?? HEAD_HEIGHT)
   const canLoad = hasNextPage && !isFetchingNextPage && !isError
 
   // Watches the end of the list. A new callback (after each page, or a state
@@ -193,10 +213,15 @@ function InfiniteTable<TData>({
           firstLoad ? "overflow-hidden" : "overflow-auto"
         )}
       >
-        <table className="w-full border-separate border-spacing-0 text-sm">
+        <table
+          // Only the rows near the viewport are in the DOM; these keep the
+          // real count and position available to screen readers.
+          aria-rowcount={total !== undefined ? total + 1 : -1}
+          className="w-full border-separate border-spacing-0 text-sm"
+        >
           <thead>
             {table.getHeaderGroups().map((group) => (
-              <tr key={group.id}>
+              <tr key={group.id} aria-rowindex={1}>
                 {group.headers.map((header) => (
                   <th
                     key={header.id}
@@ -215,21 +240,35 @@ function InfiniteTable<TData>({
             ))}
           </thead>
           <tbody aria-busy={isFetchingNextPage || undefined}>
-            {table.getRowModel().rows.map((row) => (
-              <tr
-                key={row.id}
-                className="hover:bg-muted/50"
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    className={cn(CELL, cellClass(cell.column.columnDef.meta))}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
+            {padTop > 0 && <Spacer height={padTop} span={span} />}
+            {virtualRows.map((v) => {
+              const row = tableRows[v.index]
+              return (
+                <tr
+                  key={row.id}
+                  ref={virtualizer.measureElement}
+                  data-index={v.index}
+                  aria-rowindex={v.index + 2}
+                  className="hover:bg-muted/50"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      className={cn(
+                        CELL,
+                        cellClass(cell.column.columnDef.meta)
+                      )}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              )
+            })}
+            {padBottom > 0 && <Spacer height={padBottom} span={span} />}
 
             {(firstLoad || isFetchingNextPage) && skeletonRows(firstLoad ? 40 : 3)}
 
@@ -304,6 +343,18 @@ function InfiniteTable<TData>({
         Back to top
       </Button>
     </div>
+  )
+}
+
+/** Matches `h-10` on the header and `h-11` on rows; rows are also measured. */
+const HEAD_HEIGHT = 40
+const ROW_HEIGHT = 44
+
+function Spacer({ height, span }: { height: number; span: number }) {
+  return (
+    <tr aria-hidden>
+      <td colSpan={span} style={{ height }} className="p-0" />
+    </tr>
   )
 }
 

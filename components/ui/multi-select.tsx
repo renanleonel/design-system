@@ -10,8 +10,8 @@ import {
   ComboboxContent,
   ComboboxEmpty,
   ComboboxItem,
-  ComboboxList,
   ComboboxValue,
+  ComboboxVirtualList,
   useComboboxAnchor,
 } from "@/components/ui/combobox"
 
@@ -20,7 +20,8 @@ type Option = { value: string; label: string }
 /**
  * Pick several values as removable tags, with type-to-filter (interaction.md:
  * 8+ options want a searchable control). Values are plain strings; labels come
- * from `options`. Backspace in the empty input removes the last tag.
+ * from `options`. Backspace in the empty input removes the last tag. The list
+ * is virtualized, so thousands of options stay fast.
  */
 function MultiSelect({
   options,
@@ -54,14 +55,17 @@ function MultiSelect({
   "aria-describedby"?: string
 }) {
   const anchor = useComboboxAnchor()
+  const index = React.useMemo(
+    () => new Map(options.map((o) => [o.value, o])),
+    [options]
+  )
   const byValue = (values: string[] | undefined) =>
-    values?.map(
-      (v) => options.find((o) => o.value === v) ?? { value: v, label: v }
-    )
+    values?.map((v) => index.get(v) ?? { value: v, label: v })
 
   return (
     <Combobox
       multiple
+      virtualized
       items={options}
       value={byValue(value)}
       defaultValue={byValue(defaultValue)}
@@ -92,13 +96,9 @@ function MultiSelect({
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
         <ComboboxEmpty>{emptyMessage}</ComboboxEmpty>
-        <ComboboxList>
-          {(item: Option) => (
-            <ComboboxItem key={item.value} value={item}>
-              {item.label}
-            </ComboboxItem>
-          )}
-        </ComboboxList>
+        <ComboboxVirtualList<Option>>
+          {(item) => <ComboboxItem value={item}>{item.label}</ComboboxItem>}
+        </ComboboxVirtualList>
       </ComboboxContent>
     </Combobox>
   )

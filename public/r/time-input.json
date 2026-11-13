@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "time-input",
+  "title": "Time Input",
+  "description": "A time of day with the browser's own segmented field and native picker on touch.",
+  "dependencies": [
+    "cn@^0.5.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/time-input.tsx",
+      "content": "import * as React from \"react\"\nimport { cn } from \"cn\"\n\nimport { Input } from \"@/components/ui/input\"\n\n/**\n * A time of day (\"HH:mm\", or \"HH:mm:ss\" with `step` under 60). The browser's\n * own field: segment-by-segment typing, arrow keys, the locale's 12/24h\n * format and the native picker on touch. Pair it with `DatePicker` for a\n * date and time.\n */\nfunction TimeInput({\n  className,\n  step = 60,\n  ...props\n}: Omit<React.ComponentProps<\"input\">, \"type\">) {\n  return (\n    <Input\n      type=\"time\"\n      step={step}\n      data-slot=\"time-input\"\n      className={cn(\n        \"w-auto min-w-28 tabular-nums scheme-light dark:scheme-dark [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-datetime-edit-fields-wrapper]:p-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { TimeInput }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

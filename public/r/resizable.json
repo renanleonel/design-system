@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "resizable",
+  "title": "Resizable",
+  "description": "Panels split by draggable, keyboard-operable handles.",
+  "dependencies": [
+    "cn@^0.5.2",
+    "react-resizable-panels@^4.22.0"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/resizable.tsx",
+      "content": "\"use client\"\r\n\r\nimport * as React from \"react\"\r\nimport { cn } from \"cn\"\r\nimport * as ResizablePrimitive from \"react-resizable-panels\"\r\n\r\n/**\r\n * Panels split by draggable handles: editors beside a preview, a list beside\r\n * its detail. Handles take drag, arrows, Home/End and double-click (reset).\r\n * Sizes are percentages by default; persist them with `onLayoutChanged` and\r\n * `defaultLayout`. For app sidebars use the app shell's pattern instead\r\n * (BLOCKS.md, Resizable sidebars).\r\n */\r\nfunction ResizablePanelGroup({\r\n  className,\r\n  ...props\r\n}: ResizablePrimitive.GroupProps) {\r\n  return (\r\n    <ResizablePrimitive.Group\r\n      data-slot=\"resizable-panel-group\"\r\n      // The library sets flex direction from `orientation`.\r\n      className={cn(\"size-full\", className)}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nfunction ResizablePanel({ ...props }: ResizablePrimitive.PanelProps) {\r\n  return <ResizablePrimitive.Panel data-slot=\"resizable-panel\" {...props} />\r\n}\r\n\r\nfunction ResizableHandle({\r\n  withHandle,\r\n  className,\r\n  ...props\r\n}: ResizablePrimitive.SeparatorProps & {\r\n  /** Shows a grip, for handles people might not find. */\r\n  withHandle?: boolean\r\n}) {\r\n  return (\r\n    <ResizablePrimitive.Separator\r\n      data-slot=\"resizable-handle\"\r\n      className={cn(\r\n        // A 1px rule; the library widens the hit target around it.\r\n        // aria-orientation is the handle's own: vertical in a horizontal group.\r\n        \"relative flex w-px shrink-0 items-center justify-center bg-border outline-none transition-colors\",\r\n        // data-separator: inactive | hover | active | focus | disabled.\r\n        \"data-[separator=active]:bg-(--ds-focus-ring) data-[separator=focus]:bg-(--ds-focus-ring) data-[separator=hover]:bg-foreground/30\",\r\n        \"aria-[orientation=horizontal]:h-px aria-[orientation=horizontal]:w-full\",\r\n        className\r\n      )}\r\n      {...props}\r\n    >\r\n      {withHandle && (\r\n        <span\r\n          aria-hidden\r\n          className=\"z-10 flex h-6 w-1.5 shrink-0 rounded-full border bg-border in-aria-[orientation=horizontal]:h-1.5 in-aria-[orientation=horizontal]:w-6\"\r\n        />\r\n      )}\r\n    </ResizablePrimitive.Separator>\r\n  )\r\n}\r\n\r\nexport { ResizablePanelGroup, ResizablePanel, ResizableHandle }\r\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

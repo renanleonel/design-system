@@ -58,6 +58,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { useDebouncedCallback } from "@/hooks/use-debounce"
 import { setSearchParams, useSearchParams } from "@/hooks/use-url-state"
 
 declare module "@tanstack/react-table" {
@@ -145,22 +146,22 @@ function DataTable<TData>({
     [filterKey]
   )
 
-  // Search input is local for instant typing; the URL catches up after 300ms.
+  // Search input is local for instant typing; the URL catches up once typing
+  // pauses (each URL write re-filters the table).
   const [draft, setDraft] = React.useState(query)
-  const timer = React.useRef<ReturnType<typeof setTimeout>>(undefined)
   const [lastQuery, setLastQuery] = React.useState(query)
   if (query !== lastQuery) {
     // URL changed elsewhere (Back, clear filters): adopt it.
     setLastQuery(query)
     setDraft(query)
   }
+  const commitSearch = useDebouncedCallback((value: string) => {
+    setLastQuery(value)
+    setSearchParams({ q: value.trim() || null, page: null })
+  })
   const onSearch = (value: string) => {
     setDraft(value)
-    clearTimeout(timer.current)
-    timer.current = setTimeout(() => {
-      setLastQuery(value)
-      setSearchParams({ q: value.trim() || null, page: null })
-    }, 300)
+    commitSearch(value)
   }
 
   const [rowSelection, setRowSelection] = React.useState<
@@ -269,6 +270,7 @@ function DataTable<TData>({
             placeholder={searchPlaceholder}
             value={draft}
             onChange={(e) => onSearch(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && commitSearch.flush()}
           />
         </InputGroup>
         {filters.map((filter) => {

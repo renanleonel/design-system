@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Combobox as ComboboxPrimitive } from "@base-ui/react"
+import { useVirtualizer } from "@tanstack/react-virtual"
 import { cn } from "cn"
 
 import { Button } from "@/components/ui/button"
@@ -13,7 +14,37 @@ import {
 } from "@/components/ui/input-group"
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
 
-const Combobox = ComboboxPrimitive.Root
+/** Lets `ComboboxVirtualList` scroll keyboard-highlighted rows into view. */
+const VirtualScroll = React.createContext<React.RefObject<
+  ((index: number) => void) | null
+> | null>(null)
+/** Index of the virtual row an item renders in (Base UI needs it). */
+const VirtualRow = React.createContext<{ index: number; size: number } | null>(
+  null
+)
+
+function Combobox<
+  Value,
+  Multiple extends boolean | undefined = false,
+  Item = Value,
+>({
+  onItemHighlighted,
+  ...props
+}: ComboboxPrimitive.Root.Props<Value, Multiple, Item>) {
+  const scrollTo = React.useRef<((index: number) => void) | null>(null)
+  return (
+    <VirtualScroll value={scrollTo}>
+      <ComboboxPrimitive.Root
+        {...(props as ComboboxPrimitive.Root.Props<Value, Multiple, Item>)}
+        onItemHighlighted={(item, details) => {
+          // A virtualized row may not be mounted yet: bring it in first.
+          if (details.reason !== "pointer") scrollTo.current?.(details.index)
+          onItemHighlighted?.(item, details)
+        }}
+      />
+    </VirtualScroll>
+  )
+}
 
 function ComboboxValue({ ...props }: ComboboxPrimitive.Value.Props) {
   return <ComboboxPrimitive.Value data-slot="combobox-value" {...props} />
@@ -139,14 +170,81 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
   )
 }
 
+/**
+ * A `ComboboxList` that renders only the rows in view, for long lists
+ * (hundreds of options and up). Set `virtualized` and `items` on `Combobox`;
+ * `children` renders one filtered item.
+ */
+function ComboboxVirtualList<Item>({
+  children,
+  estimateSize = 36,
+  className,
+}: {
+  children: (item: Item, index: number) => React.ReactNode
+  /** Row height before measuring; 36px rows (44px on touch) by default. */
+  estimateSize?: number
+  className?: string
+}) {
+  const items = ComboboxPrimitive.useFilteredItems<Item>()
+  const scroller = React.useRef<HTMLDivElement | null>(null)
+  const scrollTo = React.use(VirtualScroll)
+  // eslint-disable-next-line react-hooks/incompatible-library -- TanStack Virtual returns non-memoizable functions by design
+  const virtualizer = useVirtualizer({
+    count: items.length,
+    getScrollElement: () => scroller.current,
+    estimateSize: () => estimateSize,
+    overscan: 8,
+  })
+  return (
+    <ComboboxList
+      ref={(el: HTMLDivElement | null) => {
+        scroller.current = el
+        if (!scrollTo) return
+        scrollTo.current = (index) => virtualizer.scrollToIndex(index)
+        return () => {
+          scrollTo.current = null
+        }
+      }}
+      className={className}
+    >
+      {items.length > 0 && (
+        <div
+          role="presentation"
+          className="relative w-full"
+          style={{ height: virtualizer.getTotalSize() }}
+        >
+          {virtualizer.getVirtualItems().map((row) => (
+            <div
+              key={row.key}
+              ref={virtualizer.measureElement}
+              data-index={row.index}
+              role="presentation"
+              className="absolute inset-x-0 top-0"
+              style={{ transform: `translateY(${row.start}px)` }}
+            >
+              <VirtualRow value={{ index: row.index, size: items.length }}>
+                {children(items[row.index], row.index)}
+              </VirtualRow>
+            </div>
+          ))}
+        </div>
+      )}
+    </ComboboxList>
+  )
+}
+
 function ComboboxItem({
   className,
   children,
   ...props
 }: ComboboxPrimitive.Item.Props) {
+  const virtual = React.use(VirtualRow)
   return (
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
+      index={virtual?.index}
+      aria-setsize={virtual?.size}
+      aria-posinset={virtual ? virtual.index + 1 : undefined}
       className={cn(
         "relative flex min-h-9 w-full cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground pointer-coarse:min-h-11 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
@@ -297,6 +395,7 @@ export {
   ComboboxInput,
   ComboboxContent,
   ComboboxList,
+  ComboboxVirtualList,
   ComboboxItem,
   ComboboxGroup,
   ComboboxLabel,

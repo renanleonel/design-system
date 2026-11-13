@@ -40,6 +40,16 @@ Effects never `setState` synchronously and never sync one piece of state from an
 
 **Browser-only values** (stored theme, locale, `toLocaleString` without a locale) render after mount via `useSyncExternalStore`, or with a fixed locale (date-fns), so hydration matches.
 
+## Performance
+
+Fast by default, not after a complaint.
+
+- **Virtualize anything that can grow past ~100 rows** (`@tanstack/react-virtual`): `VirtualList` for feeds and logs, `Tree`, `ComboboxVirtualList` (`MultiSelect` already uses it), and the `InfiniteTable` / `GroupedTable` bodies. Paginated views (`DataTable`, 10 rows a page) don't need it.
+- Virtualized tables keep native `<table>` layout: spacer rows above and below the rendered rows, `paddingStart` / `scrollPaddingStart` for pinned headers, `measureElement` on rows.
+- Virtualized widgets keep their semantics: `aria-setsize` / `aria-posinset` (or `aria-rowcount` / `aria-rowindex`), and the active row stays mounted (`rangeExtractor`) so `aria-activedescendant` resolves.
+- **Debounce inputs that trigger work** (URL writes, filtering large data, requests) with `hooks/use-debounce`: `useDebouncedState` (instant value for the input, debounced copy for the work) or `useDebouncedCallback` (`.flush()` on Enter). 300ms (`DEBOUNCE_MS`). The input itself never lags.
+- Lookups in render go through a `Map` built in `useMemo`, not `find` per item.
+
 ## Hotkeys
 
 - Actionable components take a `hotkey` prop (`Button`, `DropdownMenuItem`); `TooltipContent hotkey` only displays.

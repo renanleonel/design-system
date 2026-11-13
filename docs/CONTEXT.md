@@ -4,7 +4,7 @@ How the repo is laid out and how source becomes an installable registry. Terms a
 
 ## Stack
 
-Next.js 16 (App Router, Turbopack) · React 19 · Tailwind v4 · Base UI · shadcn CLI 4 (`base-nova` style) · TanStack Table v8 · React Hook Form + zod · Recharts 3 · dnd-kit · `@tanstack/react-hotkeys` · Playwright + axe-core for the audit. pnpm only.
+Next.js 16 (App Router, Turbopack) · React 19 · Tailwind v4 · Base UI · shadcn CLI 4 (`base-nova` style) · TanStack Table v8 · TanStack Virtual · react-resizable-panels · React Hook Form + zod · Recharts 3 · dnd-kit · `@tanstack/react-hotkeys` · Playwright + axe-core for the audit. pnpm only.
 
 ## Map
 

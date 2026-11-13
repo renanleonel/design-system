@@ -24,6 +24,8 @@ Pick by job:
 | `GroupedTable` | Spreadsheet view: collapsible groups, calculation footer, floating bulk bar |
 | `InfiniteTable` | Feeds and logs: cursor pagination; `useCursorPages` has the `useInfiniteQuery` shape, reset with a `key` when filters change |
 
+- Scrolling bodies are virtualized (`InfiniteTable`, `GroupedTable`): spacer rows stand in for off-screen rows; `GroupedTable` keeps one `<tbody>` per group, padded to its full height, so bands stay pinned. See Performance in [`RULES.md`](RULES.md).
+- Search inputs debounce their URL write (`useDebouncedCallback`) and flush on Enter.
 - Pinned header, bands or footer: `border-separate border-spacing-0`, borders as inset shadows.
 - The scroll container is the table's own `relative` div. An outer `overflow-x-auto` wrapper breaks `sticky top`; a missing `relative` lets `sr-only` descendants escape the clip and scroll the page.
 - Full-height tables: `AppShellContent fill` + `flex-1 min-h-0`, so only the table scrolls (no `calc(100dvh-…)`).

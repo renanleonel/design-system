@@ -42,9 +42,12 @@
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/pagination.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/panel.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/password-input.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/progress.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/radio-group.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/rating.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/resizable.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/separator.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sheet.json",
@@ -58,9 +61,14 @@
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-toggle.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/time-input.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/timeline.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/token-input.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/virtual-list.json"
   ],
   "type": "registry:base",
   "config": {

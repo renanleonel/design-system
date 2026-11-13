@@ -69,7 +69,8 @@
       "description": "Type to filter a list and pick one value.",
       "notes": [
         "Use it once a list has 8 or more options.",
-        "Arrow keys move, Enter picks, Escape closes."
+        "Arrow keys move, Enter picks, Escape closes.",
+        "Past a few hundred options, set `virtualized` on `Combobox` and render rows with `ComboboxVirtualList`."
       ]
     },
     "multi-select": {
@@ -78,7 +79,8 @@
       "description": "Pick several values as removable tags, with type-to-filter.",
       "notes": [
         "Backspace in the empty input removes the last tag.",
-        "Values are plain strings; labels come from `options`."
+        "Values are plain strings; labels come from `options`.",
+        "The list is virtualized: thousands of options open and filter instantly."
       ]
     },
     "checkbox": {
@@ -462,6 +464,82 @@
       "notes": [
         "Options carry `lang`, so screen readers pronounce each name correctly.",
         "`compact` shows an icon and the code (EN) for headers and footers."
+      ]
+    },
+    "password-input": {
+      "group": "Inputs",
+      "title": "Password Input",
+      "description": "A password field with a show/hide toggle and a Caps Lock warning.",
+      "notes": [
+        "Showing the password keeps focus and the caret in place.",
+        "Use `autoComplete=\"new-password\"` on sign-up so password managers suggest one."
+      ]
+    },
+    "token-input": {
+      "group": "Inputs",
+      "title": "Token Input",
+      "description": "Free-form values as removable tokens: emails, keywords, domains.",
+      "notes": [
+        "Enter, comma or Tab adds; pasting a list adds each entry; blur keeps a half-typed one.",
+        "Invalid tokens stay, marked with the reason, so nothing typed is lost.",
+        "For values from a fixed list, use Multi Select."
+      ]
+    },
+    "time-input": {
+      "group": "Inputs",
+      "title": "Time Input",
+      "description": "A time of day with the browser's own segmented field and native picker on touch.",
+      "notes": [
+        "`step` is in seconds: 900 snaps the arrows to 15 minutes; under 60 adds seconds.",
+        "Pair it with Date Picker for a date and time."
+      ]
+    },
+    "rating": {
+      "group": "Inputs",
+      "title": "Rating",
+      "description": "A star rating: a radio group when interactive, an image with fractions when read-only.",
+      "notes": [
+        "Hover previews; arrow keys move and pick.",
+        "`readOnly` is named \"4.5 out of 5 stars\" for review summaries."
+      ]
+    },
+    "tree": {
+      "group": "Display",
+      "title": "Tree",
+      "description": "A virtualized file-explorer tree with keyboard navigation, selection and filtering.",
+      "notes": [
+        "Only rows in view render: tens of thousands of nodes stay fast.",
+        "Arrows move and open, Home/End jump, Enter selects, * opens siblings, typing jumps to a label.",
+        "`filter` shows matches with their ancestors; debounce it with `useDebouncedState`."
+      ]
+    },
+    "virtual-list": {
+      "group": "Display",
+      "title": "Virtual List",
+      "description": "A scrolling list that renders only the items in view, for feeds and logs.",
+      "notes": [
+        "Use it for any list that can grow past ~100 items.",
+        "Items may differ in height; each is measured once rendered.",
+        "`onEndReached` loads the next page; guard requests already in flight."
+      ]
+    },
+    "timeline": {
+      "group": "Display",
+      "title": "Timeline",
+      "description": "A vertical history of events with tone markers: audit logs, order status, deploys.",
+      "notes": [
+        "Give `TimelineTime` an ISO `dateTime`.",
+        "Past ~50 events, show the latest with a \"Show more\", or render them in a Virtual List."
+      ]
+    },
+    "resizable": {
+      "group": "Layout",
+      "title": "Resizable",
+      "description": "Panels split by draggable, keyboard-operable handles.",
+      "notes": [
+        "Handles take drag, arrows, Home/End and double-click to reset.",
+        "Persist sizes with `onLayoutChanged` and `defaultLayout`.",
+        "App sidebars use the app shell pattern instead."
       ]
     }
   },
