@@ -89,14 +89,134 @@ function instantly(change: () => void) {
 }
 
 /**
- * `variant="fade"`: labels stay mounted and the icons never move. Collapsing,
- * the labels fade, blur and drift 4px toward their icons (150ms) while the
- * width starts closing just behind them; expanding, the width opens first and
- * the labels return one after another, 20ms apart (`--i`). Keyboard toggles
- * (Mod+B) skip all of it; reduced motion keeps only the fade.
+ * `variant="fade"`: labels stay mounted and the icons never move. How the
+ * labels leave and return is set per `motion` through CSS variables on the
+ * sidebar (`SIDEBAR_MOTION`): delay, per-row stagger (`--i`, top down),
+ * duration, drift and blur. Keyboard toggles (Mod+B) skip all of it; reduced
+ * motion keeps only the fade.
  */
 const FADE_LABEL =
-  "whitespace-nowrap transition-[opacity,filter,translate] duration-150 ease-out delay-[calc(100ms_+_var(--i,0)*20ms)] group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:-translate-x-1 group-data-collapsed/sidebar:opacity-0 group-data-collapsed/sidebar:blur-[2px] group-data-collapsed/sidebar:delay-0 in-data-ds-instant:transition-none motion-reduce:translate-x-0 motion-reduce:blur-none"
+  "whitespace-nowrap opacity-[var(--sb-label-o,1)] transition-[opacity,filter,translate] duration-[var(--sb-dur,150ms)] ease-out delay-[calc(var(--sb-delay,0ms)_+_var(--i,0)*var(--sb-stagger,0ms))] group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:translate-x-[var(--sb-drift,-4px)] group-data-collapsed/sidebar:opacity-0 group-data-collapsed/sidebar:blur-[var(--sb-blur,2px)] in-data-ds-instant:transition-none motion-reduce:translate-x-0 motion-reduce:blur-none"
+
+export type SidebarMotion = "ease-out" | "cascade" | "scrub"
+
+/** Rail width (icons only) and the drag width under which it snaps to it. */
+const RAIL = 60
+const SNAP = 160
+const MAX_WIDTH = 360
+
+type LabelTiming = {
+  delay: number
+  stagger: number
+  duration: number
+  drift: number
+  blur: number
+}
+const EASE_OUT = "cubic-bezier(0.23, 1, 0.32, 1)"
+const EASE_IN_OUT = "cubic-bezier(0.77, 0, 0.175, 1)"
+const fadeOnly: LabelTiming = { delay: 0, stagger: 0, duration: 160, drift: 0, blur: 0 }
+const SIDEBAR_MOTION: Record<
+  SidebarMotion,
+  { out: LabelTiming; in: LabelTiming; width: { duration: number; ease: string } }
+> = {
+  // Labels fade in 0.16s while the width glides over 0.4s.
+  "ease-out": {
+    out: fadeOnly,
+    in: { ...fadeOnly, delay: 120 },
+    width: { duration: 400, ease: EASE_OUT },
+  },
+  // Labels drift left and fade from the top down; the width moves in one motion.
+  cascade: {
+    out: { delay: 0, stagger: 25, duration: 160, drift: -8, blur: 2 },
+    in: { delay: 100, stagger: 25, duration: 200, drift: -8, blur: 2 },
+    width: { duration: 400, ease: EASE_IN_OUT },
+  },
+  // While dragging, label opacity follows the width; toggles behave like ease-out.
+  scrub: {
+    out: fadeOnly,
+    in: { ...fadeOnly, delay: 120 },
+    width: { duration: 400, ease: EASE_OUT },
+  },
+}
+
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, value))
+
+/**
+ * The sidebar's trailing edge: drag to resize (below 160px it settles to the
+ * icon rail), double-click or Enter to collapse/expand, arrows to resize by
+ * 16px. A 2px line shows on hover and while dragging.
+ */
+function ResizeHandle({
+  width,
+  dragging,
+  onDragStart,
+  onDrag,
+  onDragEnd,
+  onToggle,
+  onNudge,
+}: {
+  width: number
+  dragging: boolean
+  onDragStart: () => void
+  onDrag: (width: number) => void
+  onDragEnd: () => void
+  onToggle: () => void
+  onNudge: (delta: number) => void
+}) {
+  const origin = React.useRef<{ x: number; width: number } | null>(null)
+  return (
+    <Tooltip disabled={dragging}>
+      <TooltipTrigger
+        render={
+          <div
+            role="separator"
+            tabIndex={0}
+            aria-label="Resize sidebar"
+            aria-orientation="vertical"
+            aria-valuemin={RAIL}
+            aria-valuemax={MAX_WIDTH}
+            aria-valuenow={Math.round(width)}
+            data-dragging={dragging || undefined}
+            onPointerDown={(event) => {
+              if (event.button !== 0) return
+              event.currentTarget.setPointerCapture(event.pointerId)
+              origin.current = { x: event.clientX, width }
+            }}
+            onPointerMove={(event) => {
+              const start = origin.current
+              if (!start) return
+              const dx = event.clientX - start.x
+              if (!dragging && Math.abs(dx) < 3) return
+              if (!dragging) onDragStart()
+              onDrag(clamp(start.width + dx, RAIL, MAX_WIDTH))
+            }}
+            onPointerUp={() => {
+              origin.current = null
+              if (dragging) onDragEnd()
+            }}
+            onPointerCancel={() => {
+              origin.current = null
+              if (dragging) onDragEnd()
+            }}
+            onDoubleClick={onToggle}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") onToggle()
+              else if (event.key === "ArrowLeft") onNudge(-16)
+              else if (event.key === "ArrowRight") onNudge(16)
+              else return
+              event.preventDefault()
+            }}
+            className="group/handle absolute inset-y-0 right-0 z-10 w-2 cursor-col-resize touch-none outline-none select-none focus-visible:[&>span]:opacity-100"
+          >
+            <span className="absolute inset-y-0 right-0 w-0.5 bg-primary opacity-0 transition-opacity duration-150 group-hover/handle:opacity-100 group-data-dragging/handle:opacity-100" />
+          </div>
+        }
+      />
+      <TooltipContent side="right">Drag to resize sidebar</TooltipContent>
+    </Tooltip>
+  )
+}
 
 const NAV_ROW =
   "flex h-control items-center gap-2.5 rounded-control px-2.5 text-sm text-sidebar-foreground/75 focus-ring transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground [&_svg]:size-4 [&_svg]:shrink-0"
@@ -379,6 +499,9 @@ function AppShell({
   onSignOut,
   defaultCollapsed = false,
   variant = "default",
+  motion = "cascade",
+  resizable = true,
+  defaultWidth = 256,
   footerItems,
   children,
 }: {
@@ -393,12 +516,22 @@ function AppShell({
   defaultCollapsed?: boolean
   /** `fade`: labels fade and blur out before the rail closes; icons never move. */
   variant?: "default" | "fade"
+  /** Fade variant: how the labels leave and return (see SIDEBAR_MOTION). */
+  motion?: SidebarMotion
+  /** Fade variant: drag the trailing edge to resize; under 160px it settles to icons. */
+  resizable?: boolean
+  /** Fade variant: expanded width in px. */
+  defaultWidth?: number
   /** Pinned above the account menu (Settings, Help…). */
   footerItems?: NavItem[]
   children: React.ReactNode
 }) {
   const fade = variant === "fade"
   const [collapsed, setCollapsed] = React.useState(defaultCollapsed)
+  // Fade variant: the expanded width, and the live width while dragging.
+  const [width, setWidth] = React.useState(defaultWidth)
+  const [dragWidth, setDragWidth] = React.useState<number | null>(null)
+  const dragging = dragWidth !== null
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [paletteOpen, setPaletteOpen] = React.useState(false)
   const items = [
@@ -571,6 +704,43 @@ function AppShell({
     </>
   )
 
+  // Fade variant: what the sidebar shows right now.
+  const timing = SIDEBAR_MOTION[motion]
+  const belowSnap = dragging && dragWidth < SNAP
+  // Ease out snaps to the rail as soon as the drag crosses 160px; cascade and
+  // scrub keep following the pointer until it's released.
+  const snapped = dragging && motion === "ease-out" && belowSnap
+  const shownWidth = dragging
+    ? snapped
+      ? RAIL
+      : dragWidth
+    : collapsed
+      ? RAIL
+      : width
+  const labelsHidden = fade
+    ? dragging
+      ? motion === "scrub"
+        ? false
+        : belowSnap
+      : collapsed
+    : collapsed
+  const label = labelsHidden ? timing.out : timing.in
+  const sidebarStyle = {
+    width: shownWidth,
+    transitionDuration: dragging && !snapped ? "0ms" : `${timing.width.duration}ms`,
+    transitionTimingFunction: timing.width.ease,
+    "--sb-delay": `${label.delay}ms`,
+    "--sb-stagger": `${label.stagger}ms`,
+    "--sb-dur": dragging && motion === "scrub" ? "0ms" : `${label.duration}ms`,
+    "--sb-drift": `${label.drift}px`,
+    "--sb-blur": `${label.blur}px`,
+    // Scrub: labels fade with the width between the rail and 160px.
+    "--sb-label-o":
+      dragging && motion === "scrub"
+        ? clamp((dragWidth - RAIL) / (SNAP - RAIL), 0, 1)
+        : 1,
+  } as React.CSSProperties
+
   return (
     <AppShellContext value={context}>
       <TooltipProvider>
@@ -581,17 +751,42 @@ function AppShell({
         >
           <aside
             data-slot="app-sidebar"
-            data-collapsed={collapsed || undefined}
+            data-collapsed={labelsHidden || undefined}
+            data-motion={fade ? motion : undefined}
+            style={fade ? sidebarStyle : undefined}
             className={cn(
-              "group/sidebar sticky top-0 hidden h-dvh shrink-0 flex-col gap-4 overflow-hidden p-3 transition-[width] ease-in-out in-data-ds-instant:transition-none motion-reduce:transition-none md:flex",
-              fade
-                ? // Closing waits a beat for the labels to fade; opening starts at once.
-                  "duration-250 data-collapsed:delay-[60ms]"
-                : "duration-200",
-              collapsed ? (fade ? "w-15" : "w-16") : "w-64"
+              "group/sidebar sticky top-0 hidden h-dvh shrink-0 flex-col gap-4 overflow-hidden p-3 transition-[width] in-data-ds-instant:transition-none motion-reduce:transition-none md:flex",
+              !fade && "duration-200 ease-in-out",
+              !fade && (collapsed ? "w-16" : "w-64")
             )}
           >
             {sidebarBody(collapsed)}
+            {fade && resizable && (
+              <ResizeHandle
+                width={shownWidth}
+                dragging={dragging}
+                onDragStart={() => setDragWidth(collapsed ? RAIL : width)}
+                onDrag={setDragWidth}
+                onDragEnd={() => {
+                  const final = dragWidth ?? width
+                  setDragWidth(null)
+                  if (final < SNAP) setCollapsed(true)
+                  else {
+                    setWidth(final)
+                    setCollapsed(false)
+                  }
+                }}
+                onToggle={() => toggleSidebar()}
+                onNudge={(delta) => {
+                  const next = clamp((collapsed ? RAIL : width) + delta, RAIL, MAX_WIDTH)
+                  if (next < SNAP) setCollapsed(true)
+                  else {
+                    setWidth(next)
+                    setCollapsed(false)
+                  }
+                }}
+              />
+            )}
           </aside>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>

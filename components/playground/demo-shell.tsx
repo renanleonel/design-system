@@ -13,17 +13,44 @@ import {
   UserCogIcon,
 } from "lucide-react"
 
-import { AppShell } from "@/components/blocks/app-shell/app-shell"
+import {
+  AppShell,
+  type SidebarMotion,
+} from "@/components/blocks/app-shell/app-shell"
 import { Toaster } from "@/components/ui/sonner"
-import { useSearchParams } from "@/hooks/use-url-state"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { setSearchParams, useSearchParams } from "@/hooks/use-url-state"
+
+const MOTIONS: { value: SidebarMotion; label: string; hint: string }[] = [
+  {
+    value: "ease-out",
+    label: "Ease out",
+    hint: "Drag the edge: under 160px it snaps to icons. Labels fade in 0.16s while the width glides over 0.4s.",
+  },
+  {
+    value: "cascade",
+    label: "Cascade",
+    hint: "Follows your drag. Past 160px the labels drift left and fade from the top down; it settles to icons when you let go.",
+  },
+  {
+    value: "scrub",
+    label: "Scrub",
+    hint: "Follows your drag. Labels fade as you narrow the sidebar, and it settles to icons when you let go.",
+  },
+]
 
 /** Wires the router-agnostic AppShell to Next.js (Link, pathname, push). */
 export function DemoShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
+  const params = useSearchParams()
   // ?sidebar=default shows the original rail (labels unmount, icons center).
-  const variant =
-    useSearchParams().get("sidebar") === "default" ? "default" : "fade"
+  const variant = params.get("sidebar") === "default" ? "default" : "fade"
+  const motion = (
+    MOTIONS.some((m) => m.value === params.get("motion"))
+      ? params.get("motion")
+      : "cascade"
+  ) as SidebarMotion
   return (
     <>
       <AppShell
@@ -87,9 +114,31 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
           { label: "Docs", href: "/blocks", icon: <BookOpenIcon /> },
         ]}
         variant={variant}
+        motion={motion}
       >
         {children}
       </AppShell>
+      {variant === "fade" && (
+        <div className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-2 rounded-2xl bg-popover p-2 shadow-popover md:flex">
+          <p className="max-w-80 px-2 pt-1 text-center text-xs text-muted-foreground">
+            {MOTIONS.find((m) => m.value === motion)?.hint}
+          </p>
+          <Tabs
+            value={motion}
+            onValueChange={(v) =>
+              setSearchParams({ motion: v === "cascade" ? null : String(v) })
+            }
+          >
+            <TabsList variant="segmented" aria-label="Sidebar motion">
+              {MOTIONS.map((m) => (
+                <TabsTrigger key={m.value} value={m.value}>
+                  {m.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        </div>
+      )}
       <Toaster />
     </>
   )
