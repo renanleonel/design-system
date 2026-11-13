@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "registry:gen": "node scripts/gen-registry.mjs",
     "registry:build": "node scripts/gen-registry.mjs && shadcn build",
     "check:contrast": "node scripts/check-contrast.mjs",
