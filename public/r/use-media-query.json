@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-media-query",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-media-query.ts",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\n/**\n * Subscribes to a media query with `useSyncExternalStore` (no effect, no tearing).\n * The server snapshot is `false`, so components render their desktop form first;\n * overlays are closed on load, so the switch never shows.\n */\nexport function useMediaQuery(query: string) {\n  return React.useSyncExternalStore(\n    (onChange) => {\n      const list = window.matchMedia(query)\n      list.addEventListener(\"change\", onChange)\n      return () => list.removeEventListener(\"change\", onChange)\n    },\n    () => window.matchMedia(query).matches,\n    () => false\n  )\n}\n\n/** Below Tailwind's `sm` (640px): dialogs and popovers become bottom sheets. */\nexport const MOBILE_QUERY = \"(max-width: 639px)\"\nexport const useIsMobile = () => useMediaQuery(MOBILE_QUERY)\n\n/** Touch-first devices: selects use the native picker. */\nexport const useIsTouch = () => useMediaQuery(\"(pointer: coarse)\")\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

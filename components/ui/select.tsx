@@ -5,7 +5,90 @@ import { Select as SelectPrimitive } from "@base-ui/react/select"
 import { cn } from "cn"
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
 
-const Select = SelectPrimitive.Root
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
+import { useIsTouch } from "@/hooks/use-media-query"
+
+type Item<Value> = { label: React.ReactNode; value: Value }
+
+function toItemList<Value>(items: unknown): Item<Value>[] {
+  if (Array.isArray(items)) return items as Item<Value>[]
+  return Object.entries((items ?? {}) as Record<string, React.ReactNode>).map(
+    ([value, label]) => ({ value: value as Value, label })
+  )
+}
+
+/**
+ * On touch devices a single select with `items` renders the platform's native
+ * picker (interaction.md: native controls on mobile); its children are ignored
+ * there. `native` forces it on (`true`) or off (`false`). In native mode, pass
+ * `id` / `aria-label` / `placeholder` here, since the trigger isn't rendered.
+ */
+function Select<Value, Multiple extends boolean | undefined = false>({
+  native = "touch",
+  id,
+  placeholder,
+  "aria-label": ariaLabel,
+  ...props
+}: SelectPrimitive.Root.Props<Value, Multiple> & {
+  native?: boolean | "touch"
+  id?: string
+  placeholder?: string
+  "aria-label"?: string
+}) {
+  const touch = useIsTouch()
+  const useNative =
+    (native === true || (native === "touch" && touch)) &&
+    props.items != null &&
+    !props.multiple
+
+  if (!useNative) return <SelectPrimitive.Root {...props} />
+
+  // Native options carry string values; map them back by index.
+  const list = toItemList<Value>(props.items)
+  const indexOf = (value: unknown) =>
+    list.findIndex((item) => item.value === value)
+  const selected = props.value !== undefined ? indexOf(props.value) : undefined
+  const initial =
+    props.defaultValue !== undefined ? indexOf(props.defaultValue) : undefined
+  // No match (e.g. a null value) selects the placeholder option.
+  const toOption = (index: number) => (index < 0 ? "" : String(index))
+
+  return (
+    <NativeSelect
+      id={id}
+      aria-label={ariaLabel}
+      name={props.name}
+      required={props.required}
+      disabled={props.disabled}
+      className="w-full"
+      value={selected === undefined ? undefined : toOption(selected)}
+      defaultValue={
+        initial === undefined
+          ? placeholder
+            ? ""
+            : undefined
+          : toOption(initial)
+      }
+      onChange={(event) => {
+        const item = list[Number(event.target.value)]
+        const change = props.onValueChange as
+          ((value: Value, details: never) => void) | undefined
+        if (item) change?.(item.value, undefined as never)
+      }}
+    >
+      {placeholder && (
+        <NativeSelectOption value="" disabled>
+          {placeholder}
+        </NativeSelectOption>
+      )}
+      {list.map((item, index) => (
+        <NativeSelectOption key={index} value={String(index)}>
+          {typeof item.label === "string" ? item.label : String(item.value)}
+        </NativeSelectOption>
+      ))}
+    </NativeSelect>
+  )
+}
 
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   return (
@@ -40,7 +123,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "flex w-fit items-center justify-between gap-1.5 rounded-control border border-input bg-transparent py-2 pr-2 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none focus-ring disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground data-[size=default]:h-control data-[size=sm]:h-control-sm data-[size=sm]:rounded-[min(var(--radius-md),10px)] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex w-fit items-center justify-between gap-1.5 rounded-control border border-input bg-transparent py-2 pr-2 pl-2.5 text-sm whitespace-nowrap focus-ring transition-colors outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground data-[size=default]:h-control data-[size=sm]:h-control-sm data-[size=sm]:rounded-[min(var(--radius-md),10px)] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -82,7 +165,10 @@ function SelectContent({
         <SelectPrimitive.Popup
           data-slot="select-content"
           data-align-trigger={alignItemWithTrigger}
-          className={cn("motion-popover relative isolate z-50 max-h-(--available-height) w-(--anchor-width) min-w-36 overflow-x-hidden overflow-y-auto rounded-lg bg-popover text-popover-foreground shadow-popover", className )}
+          className={cn(
+            "relative isolate z-50 max-h-(--available-height) w-(--anchor-width) min-w-36 motion-popover overflow-x-hidden overflow-y-auto rounded-lg bg-popover text-popover-foreground shadow-popover",
+            className
+          )}
           {...props}
         >
           <SelectScrollUpButton />
@@ -161,8 +247,7 @@ function SelectScrollUpButton({
       )}
       {...props}
     >
-      <ChevronUpIcon
-      />
+      <ChevronUpIcon />
     </SelectPrimitive.ScrollUpArrow>
   )
 }
@@ -180,8 +265,7 @@ function SelectScrollDownButton({
       )}
       {...props}
     >
-      <ChevronDownIcon
-      />
+      <ChevronDownIcon />
     </SelectPrimitive.ScrollDownArrow>
   )
 }

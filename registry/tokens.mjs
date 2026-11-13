@@ -85,8 +85,13 @@ const STARTING = "&[data-starting-style], &[data-ending-style]"
 // media queries live at the top level of `css` and act through variables.
 const popup = (duration, scale, origin) => ({
   "transform-origin": origin,
-  transition: `opacity var(${duration}) var(--ds-ease-out), transform var(${duration}) var(--ds-ease-out)`,
-  [STARTING]: { opacity: "0", transform: `scale(var(--ds-motion-scale, ${scale}))` },
+  // --ds-motion-y / --ds-motion-ease let a component turn the popup into a bottom
+  // sheet on mobile (slide up from 100%, drawer curve) without another utility.
+  transition: `opacity var(${duration}) var(--ds-motion-ease, var(--ds-ease-out)), transform var(${duration}) var(--ds-motion-ease, var(--ds-ease-out))`,
+  [STARTING]: {
+    opacity: "0",
+    transform: `translateY(var(--ds-motion-y, 0)) scale(var(--ds-motion-scale, ${scale}))`,
+  },
 })
 
 // Extra CSS: utilities components use, and base-layer browser polish.
@@ -118,6 +123,7 @@ export const css = {
     position: "relative",
     "&::after": { content: '""', position: "absolute" },
   },
+  // Touch: controls grow to the 44px target (interaction.md); xs/sm stay smaller and lean on hit-area.
   "@media (pointer: coarse)": {
     ".hit-area::after": {
       top: "50%",
@@ -125,6 +131,12 @@ export const css = {
       width: "max(100%, 2.75rem)",
       height: "max(100%, 2.75rem)",
       translate: "-50% -50%",
+    },
+    ":root": {
+      "--ds-control-h": "2.75rem",
+      "--ds-control-h-lg": "3rem",
+      "--ds-control-h-sm": "2.25rem",
+      "--ds-control-h-xs": "2rem",
     },
   },
   // Reduced motion: popups keep the fade, drop the scale.

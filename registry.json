@@ -36,6 +36,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/separator.json",
@@ -157,6 +158,12 @@
             "width": "max(100%, 2.75rem)",
             "height": "max(100%, 2.75rem)",
             "translate": "-50% -50%"
+          },
+          ":root": {
+            "--ds-control-h": "2.75rem",
+            "--ds-control-h-lg": "3rem",
+            "--ds-control-h-sm": "2.25rem",
+            "--ds-control-h-xs": "2rem"
           }
         },
         "@media (prefers-reduced-motion: reduce)": {
@@ -169,18 +176,18 @@
         },
         "@utility motion-popover": {
           "transform-origin": "var(--transform-origin)",
-          "transition": "opacity var(--ds-duration-popover) var(--ds-ease-out), transform var(--ds-duration-popover) var(--ds-ease-out)",
+          "transition": "opacity var(--ds-duration-popover) var(--ds-motion-ease, var(--ds-ease-out)), transform var(--ds-duration-popover) var(--ds-motion-ease, var(--ds-ease-out))",
           "&[data-starting-style], &[data-ending-style]": {
             "opacity": "0",
-            "transform": "scale(var(--ds-motion-scale, 0.95))"
+            "transform": "translateY(var(--ds-motion-y, 0)) scale(var(--ds-motion-scale, 0.95))"
           }
         },
         "@utility motion-tooltip": {
           "transform-origin": "var(--transform-origin)",
-          "transition": "opacity var(--ds-duration-tooltip) var(--ds-ease-out), transform var(--ds-duration-tooltip) var(--ds-ease-out)",
+          "transition": "opacity var(--ds-duration-tooltip) var(--ds-motion-ease, var(--ds-ease-out)), transform var(--ds-duration-tooltip) var(--ds-motion-ease, var(--ds-ease-out))",
           "&[data-starting-style], &[data-ending-style]": {
             "opacity": "0",
-            "transform": "scale(var(--ds-motion-scale, 0.97))"
+            "transform": "translateY(var(--ds-motion-y, 0)) scale(var(--ds-motion-scale, 0.97))"
           },
           "&[data-instant]": {
             "transition-duration": "0ms"
@@ -188,10 +195,10 @@
         },
         "@utility motion-modal": {
           "transform-origin": "center",
-          "transition": "opacity var(--ds-duration-modal) var(--ds-ease-out), transform var(--ds-duration-modal) var(--ds-ease-out)",
+          "transition": "opacity var(--ds-duration-modal) var(--ds-motion-ease, var(--ds-ease-out)), transform var(--ds-duration-modal) var(--ds-motion-ease, var(--ds-ease-out))",
           "&[data-starting-style], &[data-ending-style]": {
             "opacity": "0",
-            "transform": "scale(var(--ds-motion-scale, 0.96))"
+            "transform": "translateY(var(--ds-motion-y, 0)) scale(var(--ds-motion-scale, 0.96))"
           }
         },
         "@utility motion-backdrop": {
@@ -570,6 +577,18 @@
       ]
     },
     {
+      "name": "use-media-query",
+      "type": "registry:hook",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hooks/use-media-query.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "accordion",
       "type": "registry:ui",
       "dependencies": [
@@ -712,7 +731,9 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/drawer.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json"
       ],
       "files": [
         {
@@ -854,6 +875,21 @@
       ]
     },
     {
+      "name": "native-select",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/native-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "dependencies": [
@@ -876,7 +912,10 @@
         "cn",
         "lucide-react"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json"
+      ],
       "files": [
         {
           "path": "components/ui/select.tsx",
