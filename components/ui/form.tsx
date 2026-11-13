@@ -22,6 +22,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
   Field,
+  FieldContent,
   FieldDescription,
   FieldError,
   FieldLabel,
@@ -130,6 +131,8 @@ function FormField<
   required,
   orientation,
   className,
+  hideError = false,
+  describedBy: extraDescribedBy,
   render,
 }: {
   name: TName
@@ -139,6 +142,13 @@ function FormField<
   required?: boolean
   orientation?: React.ComponentProps<typeof Field>["orientation"]
   className?: string
+  /**
+   * Skip the error line when something else already shows the problem (e.g. a
+   * password requirements list that turns red); point to it with `describedBy`.
+   */
+  hideError?: boolean
+  /** Extra id(s) for aria-describedby, such as a requirements list. */
+  describedBy?: string
   render: (field: FieldControlProps<TValues, TName>) => React.ReactNode
 }) {
   const { control } = useFormContext<TValues>()
@@ -152,7 +162,11 @@ function FormField<
         const descriptionId = `${id}-description`
         const errorId = `${id}-error`
         const describedBy =
-          [description && descriptionId, fieldState.error && errorId]
+          [
+            description && descriptionId,
+            extraDescribedBy,
+            fieldState.error && !hideError && errorId,
+          ]
             .filter(Boolean)
             .join(" ") || undefined
         const labelNode = label && (
@@ -172,7 +186,31 @@ function FormField<
           "aria-invalid": fieldState.invalid || undefined,
           "aria-describedby": describedBy,
         })
-        const horizontal = orientation === "horizontal"
+        const descriptionNode = description && (
+          <FieldDescription id={descriptionId}>{description}</FieldDescription>
+        )
+        const errorNode = !hideError && (
+          <FieldError id={errorId} errors={[fieldState.error]} />
+        )
+
+        // Horizontal (checkbox, switch): control first, then label, description
+        // and error stacked beside it, so the error sits under its label.
+        if (orientation === "horizontal") {
+          return (
+            <Field
+              data-invalid={fieldState.invalid || undefined}
+              orientation="horizontal"
+              className={className}
+            >
+              {controlNode}
+              <FieldContent>
+                {labelNode}
+                {descriptionNode}
+                {errorNode}
+              </FieldContent>
+            </Field>
+          )
+        }
 
         return (
           <Field
@@ -180,14 +218,10 @@ function FormField<
             orientation={orientation}
             className={className}
           >
-            {horizontal ? controlNode : labelNode}
-            {horizontal ? labelNode : controlNode}
-            {description && (
-              <FieldDescription id={descriptionId}>
-                {description}
-              </FieldDescription>
-            )}
-            <FieldError id={errorId} errors={[fieldState.error]} />
+            {labelNode}
+            {controlNode}
+            {descriptionNode}
+            {errorNode}
           </Field>
         )
       }}

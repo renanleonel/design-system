@@ -1,11 +1,5 @@
-import { HexagonIcon } from "lucide-react"
-
-import { AuthLayout, ResetPasswordForm } from "@/components/blocks/auth/auth"
+import { ResetDemo } from "@/components/playground/auth-demo"
 
 export default function Page() {
-  return (
-    <AuthLayout logo={<HexagonIcon />} title="Reset your password">
-      <ResetPasswordForm signInHref="/blocks/sign-in" />
-    </AuthLayout>
-  )
+  return <ResetDemo />
 }

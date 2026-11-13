@@ -113,7 +113,7 @@ const columns: ColumnDef<Project>[] = [
   {
     accessorKey: "name",
     header: "Project",
-    meta: { label: "Project" },
+    meta: { label: "Project", grow: true },
     cell: ({ row }) => (
       <a
         href={`#${row.original.id}`}

@@ -50,10 +50,31 @@ const BLOCKS = [
   },
   {
     href: "/blocks/sign-up",
-    title: "Sign up and reset",
-    meta: "Live password rules · reset with inbox state",
+    title: "Sign up",
+    meta: "Google, live password rules, terms",
     icon: <UserPlusIcon />,
     tone: "orange",
+  },
+  {
+    href: "/blocks/sign-up?layout=image-right",
+    title: "Sign up · image right",
+    meta: "Split layout, media on the trailing side",
+    icon: <UserPlusIcon />,
+    tone: "orange",
+  },
+  {
+    href: "/blocks/sign-up?layout=image-left",
+    title: "Sign up · image left",
+    meta: "Split layout, media on the leading side",
+    icon: <UserPlusIcon />,
+    tone: "orange",
+  },
+  {
+    href: "/blocks/reset-password",
+    title: "Reset password",
+    meta: "Ends on a check-your-inbox state",
+    icon: <KeyRoundIcon />,
+    tone: "amber",
   },
 ] as const
 

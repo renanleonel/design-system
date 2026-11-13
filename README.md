@@ -23,7 +23,7 @@ Full screens on top of the components (see them at `/blocks`):
 | `data-table` | TanStack Table v8 with search, facet filters, sort and page in the URL; bulk actions; loading, empty, no-results and error states |
 | `settings` | Profile form, members with roles and invites, typed delete confirmation |
 | `billing` | Plans with monthly/yearly, usage meters, payment method, invoices |
-| `auth` | Sign in, sign up with live password rules, password reset |
+| `auth` | Sign in, sign up (centered, or split with media left/right), password reset, `GoogleButton` (Auth.js / Better Auth / Supabase), every form takes `onSubmit` |
 
 ```bash
 npx shadcn add $R/app-shell.json $R/data-table.json

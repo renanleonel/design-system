@@ -22,6 +22,8 @@ const ALL_PAGES = [
   "/blocks/billing",
   "/blocks/sign-in",
   "/blocks/sign-up",
+  "/blocks/sign-up?layout=image-right",
+  "/blocks/sign-up?layout=image-left",
   "/blocks/reset-password",
 ]
 const PAGES = process.env.AUDIT_PAGES

@@ -65,6 +65,11 @@ declare module "@tanstack/react-table" {
   interface ColumnMeta<TData, TValue> {
     /** Hidden below md, so phones keep the identity and status columns. */
     hideOnMobile?: boolean
+    /**
+     * Takes the leftover width and truncates its content, so the table always
+     * fits its container (one per table, usually the identity column).
+     */
+    grow?: boolean
     /** Numbers align to the trailing edge (layout.md). */
     align?: "start" | "end"
     /** Label for the sort button and screen readers. */
@@ -235,7 +240,8 @@ function DataTable<TData>({
   const cellClass = (row: { column: { columnDef: ColumnDef<TData> } }) =>
     cn(
       row.column.columnDef.meta?.hideOnMobile && "hidden md:table-cell",
-      row.column.columnDef.meta?.align === "end" && "text-end"
+      row.column.columnDef.meta?.align === "end" && "text-end",
+      row.column.columnDef.meta?.grow && "w-full max-w-0"
     )
 
   if (status === "ready" && data.length === 0 && emptyState)
