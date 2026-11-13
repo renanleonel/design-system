@@ -223,6 +223,27 @@ const TOP_PROJECTS = [
   { name: "mobile-gateway", requests: 87_000 },
 ]
 
+/**
+ * Round axis ticks (dataviz: clean numbers): 0 up to the first "nice" value
+ * above the max, in about `count` steps of 1, 2, 2.5 or 5 × 10^n.
+ */
+function niceTicks(max: number, count = 4) {
+  const raw = max / count
+  const magnitude = 10 ** Math.floor(Math.log10(raw || 1))
+  const step =
+    [1, 2, 2.5, 5, 10].map((m) => m * magnitude).find((s) => s >= raw) ??
+    magnitude * 10
+  const top = Math.ceil(max / step) * step
+  return Array.from({ length: Math.round(top / step) + 1 }, (_, i) => i * step)
+}
+
+const usd = (n: number) =>
+  n.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  })
+
 const compact = (n: number) =>
   n.toLocaleString("en-US", { notation: "compact", maximumFractionDigits: 1 })
 
@@ -250,6 +271,10 @@ export function DashboardPage() {
     [range.days]
   )
   const maxRequests = Math.max(...TOP_PROJECTS.map((p) => p.requests))
+  const revenueTicks = niceTicks(Math.max(...revenue.map((r) => r.revenue)))
+  const signupTicks = niceTicks(
+    Math.max(...signups.flatMap((s) => [s.organic, s.paid]))
+  )
 
   return (
     <div className="flex flex-col gap-6">
@@ -298,11 +323,18 @@ export function DashboardPage() {
                   tickLine={false}
                   axisLine={false}
                   width={44}
+                  domain={[0, revenueTicks.at(-1) ?? "auto"]}
+                  ticks={revenueTicks}
                   tickFormatter={(v: number) => `$${compact(v)}`}
                 />
                 <ChartTooltip
                   cursor={false}
-                  content={<ChartTooltipContent indicator="line" />}
+                  content={
+                    <ChartTooltipContent
+                      indicator="line"
+                      valueFormatter={(v) => usd(Number(v))}
+                    />
+                  }
                 />
                 <Area
                   dataKey="revenue"
@@ -329,7 +361,13 @@ export function DashboardPage() {
               <BarChart data={signups} barGap={2} margin={{ left: 0, right: 8, top: 8 }}>
                 <CartesianGrid vertical={false} />
                 <XAxis dataKey="week" tickLine={false} axisLine={false} tickMargin={8} />
-                <YAxis tickLine={false} axisLine={false} width={32} />
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  width={32}
+                  domain={[0, signupTicks.at(-1) ?? "auto"]}
+                  ticks={signupTicks}
+                />
                 <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
                 <ChartLegend content={<ChartLegendContent />} />
                 <Bar

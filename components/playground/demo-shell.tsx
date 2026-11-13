@@ -11,12 +11,14 @@ import {
   LayoutDashboardIcon,
   SettingsIcon,
   UserCogIcon,
+  XIcon,
 } from "lucide-react"
 
 import {
   AppShell,
   type SidebarMotion,
 } from "@/components/blocks/app-shell/app-shell"
+import { Button } from "@/components/ui/button"
 import { Toaster } from "@/components/ui/sonner"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { setSearchParams, useSearchParams } from "@/hooks/use-url-state"
@@ -119,8 +121,29 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
         {children}
       </AppShell>
       {variant === "fade" && params.get("chrome") !== "0" && (
-        <div className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-2 rounded-2xl bg-popover p-2 shadow-popover md:flex">
-          <p className="max-w-80 px-2 pt-1 text-center text-xs text-muted-foreground">
+        <div
+          role="region"
+          aria-label="Demo control"
+          className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-2 rounded-2xl bg-popover p-2 shadow-popover md:flex"
+        >
+          {/* Not part of the block: picks the AppShell `motion` prop for this demo. */}
+          <div className="flex w-full items-center justify-between gap-2 ps-2">
+            <span className="text-xs font-medium">
+              Demo · sidebar motion{" "}
+              <span className="font-normal text-muted-foreground">
+                (drag the sidebar edge)
+              </span>
+            </span>
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              aria-label="Hide demo control"
+              onClick={() => setSearchParams({ chrome: "0" })}
+            >
+              <XIcon />
+            </Button>
+          </div>
+          <p className="max-w-80 px-2 text-center text-xs text-muted-foreground">
             {MOTIONS.find((m) => m.value === motion)?.hint}
           </p>
           <Tabs
