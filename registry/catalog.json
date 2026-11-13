@@ -393,15 +393,20 @@
       "description": "A month grid for picking a day or a range (react-day-picker).",
       "notes": [
         "Arrow keys move by day, Page Up/Down by month.",
-        "Cells grow to 40px on touch screens."
+        "Cells grow to 40px on touch screens, shrinking to fit a 320px sheet.",
+        "Month and year pickers (`captionLayout=\"dropdown\"`) are our Select, not the browser's."
       ]
     },
     "date-picker": {
       "group": "Inputs",
       "title": "Date Picker",
-      "description": "A button that opens a calendar, for a single date or a range.",
+      "description": "A form field that opens a calendar, for a single date or a range.",
       "notes": [
+        "Looks and behaves like a Select; `clearable` adds a clear button for optional dates.",
         "A bottom sheet on phones; the range picker shows one month there and two elsewhere.",
+        "Ranges: the first click starts, the second ends and closes.",
+        "Forms: `name` submits ISO dates; `onBlur` fires when the calendar closes, so validation waits until then.",
+        "`captionLayout=\"dropdown\"` with `startMonth`/`endMonth` for far dates (birthdays).",
         "Labels use date-fns patterns (`dateFormat`)."
       ]
     },
