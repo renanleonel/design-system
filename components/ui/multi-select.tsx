@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { cn } from "cn"
 
 import {
   Combobox,
@@ -21,7 +22,8 @@ type Option = { value: string; label: string }
  * Pick several values as removable tags, with type-to-filter (interaction.md:
  * 8+ options want a searchable control). Values are plain strings; labels come
  * from `options`. Backspace in the empty input removes the last tag. The list
- * is virtualized, so thousands of options stay fast.
+ * is virtualized, so thousands of options stay fast. At rest, tags past
+ * `maxVisible` fold into a "+N" chip; focusing the field shows them all.
  */
 function MultiSelect({
   options,
@@ -29,6 +31,7 @@ function MultiSelect({
   defaultValue,
   onValueChange,
   placeholder = "Select…",
+  maxVisible = 3,
   emptyMessage = "No matches.",
   id,
   name,
@@ -43,6 +46,8 @@ function MultiSelect({
   defaultValue?: string[]
   onValueChange?: (value: string[]) => void
   placeholder?: string
+  /** Tags shown while the field is not focused; the rest fold into "+N". */
+  maxVisible?: number
   emptyMessage?: React.ReactNode
   id?: string
   name?: string
@@ -78,13 +83,38 @@ function MultiSelect({
       name={name}
       disabled={disabled}
     >
-      <ComboboxChips ref={anchor} className={className}>
+      <ComboboxChips ref={anchor} className={cn("group/chips", className)}>
         <ComboboxValue>
-          {(selected: Option[]) =>
-            selected.map((item) => (
-              <ComboboxChip key={item.value}>{item.label}</ComboboxChip>
-            ))
-          }
+          {(selected: Option[]) => {
+            const hidden = selected.slice(maxVisible)
+            return (
+              <>
+                {selected.map((item, i) => (
+                  <ComboboxChip
+                    key={item.value}
+                    className={cn(
+                      i >= maxVisible &&
+                        "group-[:not(:focus-within)]/chips:hidden"
+                    )}
+                  >
+                    {item.label}
+                  </ComboboxChip>
+                ))}
+                {hidden.length > 0 && (
+                  <span
+                    title={hidden.map((item) => item.label).join(", ")}
+                    className="flex h-[calc(--spacing(5.25))] items-center rounded-sm bg-muted px-1.5 text-xs font-medium text-muted-foreground tabular-nums group-focus-within/chips:hidden"
+                  >
+                    +{hidden.length}
+                    <span className="sr-only">
+                      {" "}
+                      more: {hidden.map((item) => item.label).join(", ")}
+                    </span>
+                  </span>
+                )}
+              </>
+            )
+          }}
         </ComboboxValue>
         <ComboboxChipsInput
           ref={ref}

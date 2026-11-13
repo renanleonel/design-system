@@ -23,6 +23,7 @@ import {
   useCursorPages,
   type CursorPage,
 } from "./infinite-table"
+import { initials } from "@/lib/utils"
 
 export type ActivityEvent = {
   id: string
@@ -51,7 +52,13 @@ const EVENTS = [
   "deploy.failed",
   "plan.changed",
 ]
-const ACTORS = ["Renan Leonel", "Ana Souza", "João Silva", "Pedro Santos", "API"]
+const ACTORS = [
+  "Renan Leonel",
+  "Ana Souza",
+  "João Silva",
+  "Pedro Santos",
+  "API",
+]
 
 // 1,240 deterministic events, newest first (same on server and client).
 const ALL_EVENTS: ActivityEvent[] = Array.from({ length: 1240 }, (_, i) => {
@@ -87,7 +94,9 @@ async function listEvents({
   failOnce?: { current: boolean } | null
 }): Promise<CursorPage<ActivityEvent>> {
   await new Promise((r) => setTimeout(r, delay))
-  const matches = level ? ALL_EVENTS.filter((e) => e.level === level) : ALL_EVENTS
+  const matches = level
+    ? ALL_EVENTS.filter((e) => e.level === level)
+    : ALL_EVENTS
   const start = cursor ? matches.findIndex((e) => e.id === cursor) + 1 : 0
   // ?demo=error: the third page fails once, so Retry has something to do.
   if (failOnce && start >= 80) {
@@ -144,12 +153,7 @@ const columns: ColumnDef<ActivityEvent>[] = [
         <span className="flex items-center gap-2">
           <Avatar size="sm" className="size-5">
             <AvatarFallback className="text-[10px]">
-              {name === "API"
-                ? "API"
-                : name
-                    .split(" ")
-                    .map((p) => p[0])
-                    .join("")}
+              {name === "API" ? "API" : initials(name)}
             </AvatarFallback>
           </Avatar>
           {name}

@@ -97,3 +97,30 @@ export function Disabled() {
     </Select>
   )
 }
+
+const WORST_ROLES = [
+  { label: "Owner", value: "owner" },
+  {
+    label: "Senior Product Design Engineer, Platform Infrastructure",
+    value: "spde",
+  },
+  { label: "Paramètres de confidentialité et de sécurité", value: "fr" },
+]
+
+/** Worst case: a selected value and options far longer than the trigger. */
+export function WorstCase() {
+  return (
+    <Select items={WORST_ROLES} defaultValue="spde" aria-label="Role">
+      <SelectTrigger className="w-48" aria-label="Role">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {WORST_ROLES.map((role) => (
+          <SelectItem key={role.value} value={role.value}>
+            {role.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}

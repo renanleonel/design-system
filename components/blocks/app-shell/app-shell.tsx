@@ -40,7 +40,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Hotkey } from "@/components/ui/hotkey"
-import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer"
 import {
   Tooltip,
   TooltipContent,
@@ -96,7 +96,7 @@ function instantly(change: () => void) {
  * motion keeps only the fade.
  */
 const FADE_LABEL =
-  "whitespace-nowrap opacity-[var(--sb-label-o,1)] transition-[opacity,filter,translate] duration-[var(--sb-dur,150ms)] ease-out delay-[calc(var(--sb-delay,0ms)_+_var(--i,0)*var(--sb-stagger,0ms))] group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:translate-x-[var(--sb-drift,-4px)] group-data-collapsed/sidebar:opacity-0 group-data-collapsed/sidebar:blur-[var(--sb-blur,2px)] in-data-ds-instant:transition-none motion-reduce:translate-x-0 motion-reduce:blur-none"
+  "whitespace-nowrap opacity-[var(--sb-label-o,1)] transition-[opacity,filter,translate] duration-[var(--sb-dur,150ms)] ease-out delay-[calc(var(--sb-delay,0ms)_+_min(var(--i,0),6)*var(--sb-stagger,0ms))] group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:translate-x-[var(--sb-drift,-4px)] group-data-collapsed/sidebar:opacity-0 group-data-collapsed/sidebar:blur-[var(--sb-blur,2px)] in-data-ds-instant:transition-none motion-reduce:translate-x-0 motion-reduce:blur-none motion-reduce:delay-0"
 
 export type SidebarMotion = "ease-out" | "cascade" | "scrub"
 
@@ -114,28 +114,39 @@ type LabelTiming = {
 }
 const EASE_OUT = "cubic-bezier(0.23, 1, 0.32, 1)"
 const EASE_IN_OUT = "cubic-bezier(0.77, 0, 0.175, 1)"
-const fadeOnly: LabelTiming = { delay: 0, stagger: 0, duration: 160, drift: 0, blur: 0 }
+const fadeOnly: LabelTiming = {
+  delay: 0,
+  stagger: 0,
+  duration: 160,
+  drift: 0,
+  blur: 0,
+}
 const SIDEBAR_MOTION: Record<
   SidebarMotion,
-  { out: LabelTiming; in: LabelTiming; width: { duration: number; ease: string } }
+  {
+    out: LabelTiming
+    in: LabelTiming
+    width: { duration: number; ease: string }
+  }
 > = {
-  // Labels fade in 0.16s while the width glides over 0.4s.
+  // Labels fade in 0.16s while the width glides over 0.2s.
   "ease-out": {
     out: fadeOnly,
-    in: { ...fadeOnly, delay: 120 },
-    width: { duration: 400, ease: EASE_OUT },
+    in: { ...fadeOnly, delay: 60 },
+    width: { duration: 200, ease: EASE_OUT },
   },
   // Labels drift left and fade from the top down; the width moves in one motion.
   cascade: {
-    out: { delay: 0, stagger: 25, duration: 160, drift: -8, blur: 2 },
-    in: { delay: 100, stagger: 25, duration: 200, drift: -8, blur: 2 },
-    width: { duration: 400, ease: EASE_IN_OUT },
+    // Stagger stops after 6 rows (FADE_LABEL), so in lands by ~300ms.
+    out: { delay: 0, stagger: 12, duration: 140, drift: -8, blur: 2 },
+    in: { delay: 40, stagger: 16, duration: 180, drift: -8, blur: 2 },
+    width: { duration: 220, ease: EASE_IN_OUT },
   },
   // While dragging, label opacity follows the width; toggles behave like ease-out.
   scrub: {
     out: fadeOnly,
-    in: { ...fadeOnly, delay: 120 },
-    width: { duration: 400, ease: EASE_OUT },
+    in: { ...fadeOnly, delay: 60 },
+    width: { duration: 200, ease: EASE_OUT },
   },
 }
 
@@ -160,7 +171,7 @@ function ResizeHandle({
   dragging: boolean
   onDragStart: () => void
   onDrag: (width: number) => void
-  onDragEnd: () => void
+  onDragEnd: (to?: number) => void
   onToggle: () => void
   onNudge: (delta: number) => void
 }) {
@@ -199,9 +210,20 @@ function ResizeHandle({
               origin.current = null
               if (dragging) onDragEnd()
             }}
+            onLostPointerCapture={() => {
+              // Only when capture is lost mid-drag (pointerup already cleaned up).
+              if (!origin.current) return
+              origin.current = null
+              if (dragging) onDragEnd()
+            }}
             onDoubleClick={onToggle}
             onKeyDown={(event) => {
-              if (event.key === "Enter") onToggle()
+              // Escape mid-drag puts the sidebar back where the drag began.
+              if (event.key === "Escape" && dragging && origin.current) {
+                const to = origin.current.width
+                origin.current = null
+                onDragEnd(to)
+              } else if (event.key === "Enter") onToggle()
               else if (event.key === "ArrowLeft") onNudge(-16)
               else if (event.key === "ArrowRight") onNudge(16)
               else return
@@ -222,9 +244,7 @@ const NAV_ROW =
   "flex h-control items-center gap-2.5 rounded-control px-2.5 text-sm text-sidebar-foreground/75 focus-ring transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground [&_svg]:size-4 [&_svg]:shrink-0"
 
 const indexStyle = (index?: number) =>
-  index === undefined
-    ? undefined
-    : ({ "--i": index } as React.CSSProperties)
+  index === undefined ? undefined : ({ "--i": index } as React.CSSProperties)
 
 function NavLink({
   item,
@@ -353,12 +373,11 @@ function NavGroup({
       <span className={cn("min-w-0 flex-1 truncate", fade && FADE_LABEL)}>
         {item.label}
       </span>
-      <ChevronRightIcon
-        className={cn(
-          "text-muted-foreground transition-[rotate,opacity,filter,translate] duration-200 ease-out group-data-panel-open/navtrigger:rotate-90",
-          fade && FADE_LABEL
-        )}
-      />
+      {/* The wrapper fades with the labels (staggered); the chevron itself
+          turns with the panel, on no delay. */}
+      <span className={cn("flex", fade && FADE_LABEL)}>
+        <ChevronRightIcon className="text-muted-foreground transition-[rotate] duration-200 ease-out group-data-panel-open/navtrigger:rotate-90 motion-reduce:transition-none" />
+      </span>
     </Collapsible.Trigger>
   )
   return (
@@ -375,7 +394,7 @@ function NavGroup({
       ) : (
         trigger
       )}
-      <Collapsible.Panel className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 group-data-collapsed/sidebar:h-0 in-data-ds-instant:transition-none motion-reduce:transition-none">
+      <Collapsible.Panel className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-out group-data-collapsed/sidebar:h-0 in-data-ds-instant:transition-none data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none">
         {/* The guide line sits under the parent's icon (row padding + half the icon). */}
         <div className="ms-4.5 flex flex-col gap-0.5 border-s border-sidebar-border ps-2 pt-0.5">
           {children.map((child, i) => (
@@ -417,7 +436,9 @@ function UserMenu({
         render={
           <button
             type="button"
-            aria-label={!fade && collapsed ? `Account: ${user.name}` : undefined}
+            aria-label={
+              !fade && collapsed ? `Account: ${user.name}` : undefined
+            }
             className={cn(
               "flex h-control-lg w-full items-center gap-2.5 rounded-control px-1.5 text-start text-sm focus-ring transition-colors hover:bg-sidebar-accent aria-expanded:bg-sidebar-accent",
               !fade && collapsed && "justify-center px-0"
@@ -536,8 +557,13 @@ function AppShell({
   const [collapsed, setCollapsed] = React.useState(defaultCollapsed)
   // Fade variant: the expanded width, and the live width while dragging.
   const [width, setWidth] = React.useState(defaultWidth)
-  const [dragWidth, setDragWidth] = React.useState<number | null>(null)
-  const dragging = dragWidth !== null
+  // Drag: React only tracks the discrete states (dragging, below the snap
+  // width). The width itself is written to `--sb-drag-w` on the aside every
+  // pointer move, so dragging never re-renders the shell.
+  const [dragging, setDragging] = React.useState(false)
+  const [dragBelowSnap, setDragBelowSnap] = React.useState(false)
+  const asideRef = React.useRef<HTMLElement>(null)
+  const dragWidth = React.useRef(0)
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [paletteOpen, setPaletteOpen] = React.useState(false)
   const items = [
@@ -712,17 +738,11 @@ function AppShell({
 
   // Fade variant: what the sidebar shows right now.
   const timing = SIDEBAR_MOTION[motion]
-  const belowSnap = dragging && dragWidth < SNAP
+  const belowSnap = dragging && dragBelowSnap
   // Ease out snaps to the rail as soon as the drag crosses 160px; cascade and
   // scrub keep following the pointer until it's released.
   const snapped = dragging && motion === "ease-out" && belowSnap
-  const shownWidth = dragging
-    ? snapped
-      ? RAIL
-      : dragWidth
-    : collapsed
-      ? RAIL
-      : width
+  const restingWidth = collapsed ? RAIL : width
   const labelsHidden = fade
     ? dragging
       ? motion === "scrub"
@@ -732,20 +752,44 @@ function AppShell({
     : collapsed
   const label = labelsHidden ? timing.out : timing.in
   const sidebarStyle = {
-    width: shownWidth,
-    transitionDuration: dragging && !snapped ? "0ms" : `${timing.width.duration}ms`,
+    // Snapped (ease-out below 160px) shows the rail; otherwise a drag's
+    // `--sb-drag-w` wins over the resting width.
+    width: snapped ? RAIL : `var(--sb-drag-w, ${restingWidth}px)`,
+    transitionDuration:
+      dragging && !snapped ? "0ms" : `${timing.width.duration}ms`,
     transitionTimingFunction: timing.width.ease,
     "--sb-delay": `${label.delay}ms`,
     "--sb-stagger": `${label.stagger}ms`,
     "--sb-dur": dragging && motion === "scrub" ? "0ms" : `${label.duration}ms`,
     "--sb-drift": `${label.drift}px`,
     "--sb-blur": `${label.blur}px`,
-    // Scrub: labels fade with the width between the rail and 160px.
-    "--sb-label-o":
-      dragging && motion === "scrub"
-        ? clamp((dragWidth - RAIL) / (SNAP - RAIL), 0, 1)
-        : 1,
   } as React.CSSProperties
+
+  const applyDrag = (next: number) => {
+    dragWidth.current = next
+    const el = asideRef.current
+    if (!el) return
+    el.style.setProperty("--sb-drag-w", `${next}px`)
+    // Scrub: labels fade with the width between the rail and 160px.
+    if (motion === "scrub")
+      el.style.setProperty(
+        "--sb-label-o",
+        String(clamp((next - RAIL) / (SNAP - RAIL), 0, 1))
+      )
+    setDragBelowSnap(next < SNAP)
+  }
+  const endDrag = (to?: number) => {
+    const final = to ?? dragWidth.current
+    asideRef.current?.style.removeProperty("--sb-drag-w")
+    asideRef.current?.style.removeProperty("--sb-label-o")
+    setDragging(false)
+    setDragBelowSnap(false)
+    if (final < SNAP) setCollapsed(true)
+    else {
+      setWidth(final)
+      setCollapsed(false)
+    }
+  }
 
   return (
     <AppShellContext value={context}>
@@ -756,6 +800,7 @@ function AppShell({
           className="flex min-h-dvh bg-sidebar text-sidebar-foreground"
         >
           <aside
+            ref={asideRef}
             data-slot="app-sidebar"
             data-collapsed={labelsHidden || undefined}
             data-motion={fade ? motion : undefined}
@@ -769,22 +814,21 @@ function AppShell({
             {sidebarBody(collapsed)}
             {fade && resizable && (
               <ResizeHandle
-                width={shownWidth}
+                width={restingWidth}
                 dragging={dragging}
-                onDragStart={() => setDragWidth(collapsed ? RAIL : width)}
-                onDrag={setDragWidth}
-                onDragEnd={() => {
-                  const final = dragWidth ?? width
-                  setDragWidth(null)
-                  if (final < SNAP) setCollapsed(true)
-                  else {
-                    setWidth(final)
-                    setCollapsed(false)
-                  }
+                onDragStart={() => {
+                  applyDrag(restingWidth)
+                  setDragging(true)
                 }}
+                onDrag={applyDrag}
+                onDragEnd={endDrag}
                 onToggle={() => toggleSidebar()}
                 onNudge={(delta) => {
-                  const next = clamp((collapsed ? RAIL : width) + delta, RAIL, MAX_WIDTH)
+                  const next = clamp(
+                    (collapsed ? RAIL : width) + delta,
+                    RAIL,
+                    MAX_WIDTH
+                  )
                   if (next < SNAP) setCollapsed(true)
                   else {
                     setWidth(next)
@@ -795,15 +839,19 @@ function AppShell({
             )}
           </aside>
 
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetContent
-              side="left"
-              className="w-72 gap-4 bg-sidebar p-3 text-sidebar-foreground"
-            >
-              <SheetTitle className="sr-only">Navigation</SheetTitle>
-              {sidebarBody(false, () => setMobileOpen(false))}
-            </SheetContent>
-          </Sheet>
+          {/* Phones: a left drawer that tracks the finger and swipes away. */}
+          <Drawer
+            open={mobileOpen}
+            onOpenChange={setMobileOpen}
+            swipeDirection="left"
+          >
+            <DrawerContent className="bg-sidebar text-sidebar-foreground [--drawer-bleed-background:var(--color-sidebar)] [--drawer-content-width:18rem]! md:hidden">
+              <DrawerTitle className="sr-only">Navigation</DrawerTitle>
+              <div className="flex min-h-0 flex-1 flex-col gap-4 p-3 ps-[calc(--spacing(3)+env(safe-area-inset-left))] pt-[calc(--spacing(3)+env(safe-area-inset-top))] pb-[calc(--spacing(3)+env(safe-area-inset-bottom))]">
+                {sidebarBody(false, () => setMobileOpen(false))}
+              </div>
+            </DrawerContent>
+          </Drawer>
 
           {/* A `fill` page (full-height table, board) pins the column to the
               viewport so only its own region scrolls, never the window too. */}
@@ -832,25 +880,27 @@ function AppShell({
                   heading={section.label ?? "Pages"}
                 >
                   {section.items
-                    .flatMap((item) => (item.items?.length ? item.items : [item]))
+                    .flatMap((item) =>
+                      item.items?.length ? item.items : [item]
+                    )
                     .map((item) => (
-                    <CommandItem
-                      key={item.href}
-                      value={item.label}
-                      onSelect={() => {
-                        setPaletteOpen(false)
-                        onNavigate(item.href)
-                      }}
-                    >
-                      {item.icon}
-                      {item.label}
-                      {item.hotkey && (
-                        <CommandShortcut>
-                          <Hotkey hotkey={item.hotkey} variant="text" />
-                        </CommandShortcut>
-                      )}
-                    </CommandItem>
-                  ))}
+                      <CommandItem
+                        key={item.href}
+                        value={item.label}
+                        onSelect={() => {
+                          setPaletteOpen(false)
+                          onNavigate(item.href)
+                        }}
+                      >
+                        {item.icon}
+                        {item.label}
+                        {item.hotkey && (
+                          <CommandShortcut>
+                            <Hotkey hotkey={item.hotkey} variant="text" />
+                          </CommandShortcut>
+                        )}
+                      </CommandItem>
+                    ))}
                 </CommandGroup>
               ))}
             </CommandList>

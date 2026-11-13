@@ -6,6 +6,7 @@ import { ChevronRightIcon, FileTextIcon, ShieldCheckIcon } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { IconTile } from "@/components/ui/icon-tile"
+import { initials } from "@/lib/utils"
 import {
   Item,
   ItemActions,
@@ -70,18 +71,51 @@ export function List() {
           <Item size="sm">
             <ItemMedia>
               <Avatar>
-                <AvatarFallback>
-                  {person.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </AvatarFallback>
+                <AvatarFallback>{initials(person.name)}</AvatarFallback>
               </Avatar>
             </ItemMedia>
             <ItemContent>
               <ItemTitle>{person.name}</ItemTitle>
               <ItemDescription>{person.email}</ItemDescription>
             </ItemContent>
+          </Item>
+        </React.Fragment>
+      ))}
+    </ItemGroup>
+  )
+}
+
+const WORST_PEOPLE = [
+  {
+    name: "Maria Eduarda dos Santos Albuquerque Cavalcanti",
+    email: "maria.eduarda.cavalcanti@northwind-industries-holdings.example.com",
+  },
+  { name: "Jo", email: "jo@a.test" },
+  { name: "王秀英", email: "wang.xiuying@example.com" },
+]
+
+/** Worst case: long compound names, an unbreakable email, a two-letter name and CJK, in a narrow column. */
+export function WorstCase() {
+  return (
+    <ItemGroup className="max-w-xs">
+      {WORST_PEOPLE.map((person, i) => (
+        <React.Fragment key={person.email}>
+          {i > 0 && <ItemSeparator />}
+          <Item size="sm">
+            <ItemMedia>
+              <Avatar>
+                <AvatarFallback>{initials(person.name)}</AvatarFallback>
+              </Avatar>
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>{person.name}</ItemTitle>
+              <ItemDescription>{person.email}</ItemDescription>
+            </ItemContent>
+            <ItemActions>
+              <Button variant="outline" size="sm">
+                Manage
+              </Button>
+            </ItemActions>
           </Item>
         </React.Fragment>
       ))}

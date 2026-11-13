@@ -39,6 +39,8 @@ const ALL_PAGES = [
   "/blocks/server-error",
   "/blocks/inbox",
   "/blocks/settings",
+  "/blocks/settings?data=worst",
+  "/blocks/settings?data=one",
   "/blocks/settings/general",
   "/blocks/billing",
   "/blocks/sign-in",
@@ -48,7 +50,9 @@ const ALL_PAGES = [
   "/blocks/reset-password",
 ]
 // AUDIT_SHARD=2/4 audits every 4th page starting at the 2nd (CI runs 4 in parallel).
-const [shard, shards] = (process.env.AUDIT_SHARD ?? "1/1").split("/").map(Number)
+const [shard, shards] = (process.env.AUDIT_SHARD ?? "1/1")
+  .split("/")
+  .map(Number)
 const PAGES = (
   process.env.AUDIT_PAGES ? process.env.AUDIT_PAGES.split(",") : ALL_PAGES
 ).filter((_, i) => i % shards === shard - 1)
@@ -125,7 +129,11 @@ function staticChecks(tolerance) {
     )
   // Content clipped by a container that fits (a scrolling code line) is fine.
   const clipped = (el) => {
-    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement)
+    for (
+      let a = el.parentElement;
+      a && a !== document.body;
+      a = a.parentElement
+    )
       if (
         getComputedStyle(a).overflowX !== "visible" &&
         a.getBoundingClientRect().right <= window.innerWidth + 1

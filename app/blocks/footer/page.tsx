@@ -1,5 +1,4 @@
 import { DemoFooter } from "@/components/playground/demo-footer"
-import { Toaster } from "@/components/ui/sonner"
 
 export default function Page() {
   return (
@@ -11,7 +10,6 @@ export default function Page() {
         </p>
       </main>
       <DemoFooter />
-      <Toaster />
     </div>
   )
 }

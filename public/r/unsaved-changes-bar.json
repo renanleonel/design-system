@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "unsaved-changes-bar",
+  "title": "Unsaved Changes Bar",
+  "description": "A floating Discard / Save bar that rises in once a form has edits.",
+  "dependencies": [
+    "cn@^0.5.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/unsaved-changes-bar.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"cn\"\n\nimport { Button } from \"@/components/ui/button\"\n\n/**\n * A floating bar for pages that save as a whole (settings): it rises in once\n * something changed, with Discard and Save (Mod+S) beside the edits instead of\n * at the top of the page. Place it last inside the `<form>`: Save submits it.\n * While open, leaving the page asks first.\n */\nfunction UnsavedChangesBar({\n  open,\n  onDiscard,\n  saving = false,\n  message = \"You have unsaved changes\",\n  saveLabel = \"Save changes\",\n  className,\n}: {\n  /** Usually `form.formState.isDirty`. */\n  open: boolean\n  onDiscard: () => void\n  /** Busy state on Save (`form.formState.isSubmitting`). */\n  saving?: boolean\n  message?: React.ReactNode\n  saveLabel?: React.ReactNode\n  className?: string\n}) {\n  // Subscription only: warn before closing the tab with edits pending.\n  React.useEffect(() => {\n    if (!open) return\n    const warn = (e: BeforeUnloadEvent) => e.preventDefault()\n    window.addEventListener(\"beforeunload\", warn)\n    return () => window.removeEventListener(\"beforeunload\", warn)\n  }, [open])\n\n  return (\n    <div\n      data-slot=\"unsaved-changes-bar\"\n      className={cn(\n        \"pointer-events-none sticky bottom-4 z-30 flex justify-center\",\n        className\n      )}\n    >\n      <div\n        role=\"region\"\n        aria-label=\"Unsaved changes\"\n        data-open={open || undefined}\n        inert={!open}\n        className=\"pointer-events-auto flex max-w-full translate-y-2 flex-wrap items-center gap-2 rounded-xl bg-popover p-1.5 ps-3 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-150 ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-200 data-open:ease-out\"\n      >\n        <p role=\"status\" className=\"me-2 font-medium\">\n          {open ? message : null}\n        </p>\n        <div className=\"ms-auto flex items-center gap-1.5\">\n          <Button\n            type=\"button\"\n            variant=\"ghost\"\n            size=\"sm\"\n            disabled={saving}\n            onClick={onDiscard}\n          >\n            Discard\n          </Button>\n          <Button\n            type=\"submit\"\n            size=\"sm\"\n            loading={saving}\n            hotkey={open ? \"Mod+S\" : undefined}\n          >\n            {saveLabel}\n          </Button>\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport { UnsavedChangesBar }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

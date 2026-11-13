@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-list",
+  "title": "Settings List",
+  "description": "One row per setting: title and description beside the control, hairline dividers, stacked when narrow.",
+  "dependencies": [
+    "cn@^0.5.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/settings-list.tsx",
+      "content": "import * as React from \"react\"\nimport { cn } from \"cn\"\n\nimport { Label } from \"@/components/ui/label\"\n\n/**\n * A flat list of settings: one row per setting, separated by hairlines, no\n * cards. Rows lay out by the list's own width (container query), so it works\n * beside a sidebar. For grouped forms (profile, members) use sections with\n * cards instead.\n */\nfunction SettingsList({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"settings-list\"\n      className={cn(\"@container/settings flex flex-col divide-y\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * One setting: title and description on the leading side, the control in a\n * fixed-width column on the trailing side; stacked when narrow. Short controls\n * (buttons, swatches) keep their size; inputs and selects with `w-full` fill\n * the column.\n *\n * Name the control: `htmlFor` makes the title its `<label>`; for a group\n * (radios, swatches, several fields) give the group `aria-labelledby={labelId}`.\n * `descriptionId` goes on the control's `aria-describedby`.\n */\nfunction SettingsRow({\n  label,\n  description,\n  badge,\n  htmlFor,\n  labelId,\n  descriptionId,\n  className,\n  children,\n}: {\n  label: React.ReactNode\n  description?: React.ReactNode\n  /** Status or plan marker beside the title (a `Badge`). */\n  badge?: React.ReactNode\n  htmlFor?: string\n  labelId?: string\n  descriptionId?: string\n  className?: string\n  children: React.ReactNode\n}) {\n  return (\n    <div\n      data-slot=\"settings-row\"\n      className={cn(\n        \"grid grid-cols-[minmax(0,1fr)] gap-x-10 gap-y-3 py-5 first:pt-0 last:pb-0 @2xl/settings:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]\",\n        className\n      )}\n    >\n      <div className=\"flex min-w-0 flex-col gap-1\">\n        <div className=\"flex flex-wrap items-center gap-x-2 gap-y-1\">\n          {htmlFor ? (\n            <Label id={labelId} htmlFor={htmlFor} className=\"font-medium\">\n              {label}\n            </Label>\n          ) : (\n            <p id={labelId} className=\"text-sm leading-snug font-medium\">\n              {label}\n            </p>\n          )}\n          {badge}\n        </div>\n        {description && (\n          <p id={descriptionId} className=\"text-sm text-muted-foreground\">\n            {description}\n          </p>\n        )}\n      </div>\n      {/* justify-items-start: buttons keep their width, w-full controls fill. */}\n      <div className=\"grid min-w-0 content-start justify-items-start gap-2 *:max-w-full\">\n        {children}\n      </div>\n    </div>\n  )\n}\n\nexport { SettingsList, SettingsRow }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

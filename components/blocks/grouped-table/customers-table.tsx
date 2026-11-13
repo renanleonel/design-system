@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { toastUndo } from "@/components/ui/sonner"
 import { GroupedTable, type GroupOption } from "./grouped-table"
+import { initials } from "@/lib/utils"
 
 export type Customer = {
   id: string
@@ -50,7 +51,10 @@ const RATING_TONE = {
 } as const
 const SIZES = ["1-10", "11-100", "100-199", "200-500", "500-1000"]
 const OWNERS = ["Renan Leonel", "Ana Souza", "João Silva", "Pedro Santos"]
-const TAG_TONE: Record<string, "blue" | "purple" | "orange" | "green" | "amber"> = {
+const TAG_TONE: Record<
+  string,
+  "blue" | "purple" | "orange" | "green" | "amber"
+> = {
   B2B: "blue",
   B2C: "purple",
   Enterprise: "orange",
@@ -138,12 +142,6 @@ const usd = new Intl.NumberFormat("en-US", {
   notation: "compact",
   maximumFractionDigits: 1,
 })
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .slice(0, 2)
-    .map((p) => p[0])
-    .join("")
 
 const columns: ColumnDef<Customer>[] = [
   {
@@ -288,46 +286,50 @@ export function CustomersTable({ className }: { className?: string }) {
         return (
           <>
             <DropdownMenu>
-              <DropdownMenuTrigger render={<Button variant="ghost" size="sm" />}>
+              <DropdownMenuTrigger
+                render={<Button variant="ghost" size="sm" />}
+              >
                 <GaugeIcon data-icon="inline-start" />
                 Rating
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top">
                 <DropdownMenuGroup>
-                <DropdownMenuLabel>Set rating</DropdownMenuLabel>
-                {RATINGS.map((rating) => (
-                  <DropdownMenuItem
-                    key={rating}
-                    onClick={() => {
-                      update(ids, { rating })
-                      toast(`${count(ids.size)} rated ${rating}`)
-                    }}
-                  >
-                    {rating}
-                  </DropdownMenuItem>
-                ))}
+                  <DropdownMenuLabel>Set rating</DropdownMenuLabel>
+                  {RATINGS.map((rating) => (
+                    <DropdownMenuItem
+                      key={rating}
+                      onClick={() => {
+                        update(ids, { rating })
+                        toast(`${count(ids.size)} rated ${rating}`)
+                      }}
+                    >
+                      {rating}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
-              <DropdownMenuTrigger render={<Button variant="ghost" size="sm" />}>
+              <DropdownMenuTrigger
+                render={<Button variant="ghost" size="sm" />}
+              >
                 <UserRoundIcon data-icon="inline-start" />
                 Owner
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top">
                 <DropdownMenuGroup>
-                <DropdownMenuLabel>Assign to</DropdownMenuLabel>
-                {OWNERS.map((owner) => (
-                  <DropdownMenuItem
-                    key={owner}
-                    onClick={() => {
-                      update(ids, { owner })
-                      toast(`${count(ids.size)} assigned to ${owner}`)
-                    }}
-                  >
-                    {owner}
-                  </DropdownMenuItem>
-                ))}
+                  <DropdownMenuLabel>Assign to</DropdownMenuLabel>
+                  {OWNERS.map((owner) => (
+                    <DropdownMenuItem
+                      key={owner}
+                      onClick={() => {
+                        update(ids, { owner })
+                        toast(`${count(ids.size)} assigned to ${owner}`)
+                      }}
+                    >
+                      {owner}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -357,7 +359,9 @@ export function CustomersTable({ className }: { className?: string }) {
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label={allFavorite ? "Remove from favorites" : "Add to favorites"}
+              aria-label={
+                allFavorite ? "Remove from favorites" : "Add to favorites"
+              }
               aria-pressed={allFavorite}
               onClick={() => {
                 setFavorites((prev) => {
@@ -374,7 +378,11 @@ export function CustomersTable({ className }: { className?: string }) {
                 )
               }}
             >
-              <StarIcon className={allFavorite ? "fill-current text-tone-amber" : undefined} />
+              <StarIcon
+                className={
+                  allFavorite ? "fill-current text-tone-amber" : undefined
+                }
+              />
             </Button>
             <Button
               variant="ghost"

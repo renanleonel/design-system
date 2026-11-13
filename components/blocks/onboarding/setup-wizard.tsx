@@ -100,9 +100,24 @@ const ROLES = [
 ]
 
 const PLANS = [
-  { value: "hobby", label: "Hobby", price: "Free", description: "3 projects, 1 seat" },
-  { value: "pro", label: "Pro", price: "$24 / seat", description: "Unlimited projects, previews, audit log" },
-  { value: "enterprise", label: "Enterprise", price: "Custom", description: "SSO, SLA and a success manager" },
+  {
+    value: "hobby",
+    label: "Hobby",
+    price: "Free",
+    description: "3 projects, 1 seat",
+  },
+  {
+    value: "pro",
+    label: "Pro",
+    price: "$24 / seat",
+    description: "Unlimited projects, previews, audit log",
+  },
+  {
+    value: "enterprise",
+    label: "Enterprise",
+    price: "Custom",
+    description: "SSO, SLA and a success manager",
+  },
 ]
 
 // --- Pieces ----------------------------------------------------------------------
@@ -162,10 +177,18 @@ function Stepper({
   )
 }
 
-function StepHeader({ title, description }: { title: string; description: string }) {
+function StepHeader({
+  title,
+  description,
+}: {
+  title: string
+  description: string
+}) {
   return (
     <div className="flex flex-col gap-1">
-      <h1 className="font-heading text-2xl font-semibold tracking-tight">{title}</h1>
+      <h1 className="font-heading text-2xl font-semibold tracking-tight">
+        {title}
+      </h1>
       <p className="text-muted-foreground">{description}</p>
     </div>
   )
@@ -268,7 +291,12 @@ function WorkspaceStep({
         label="Data region"
         description="Where your data is stored. Pick the one closest to your users."
         render={({ value, onChange, id, ...field }) => (
-          <Select items={REGIONS} value={value} onValueChange={onChange} id={id}>
+          <Select
+            items={REGIONS}
+            value={value}
+            onValueChange={onChange}
+            id={id}
+          >
             <SelectTrigger id={id} className="w-full" {...field}>
               <SelectValue />
             </SelectTrigger>
@@ -379,16 +407,21 @@ function PlanStep({
             {PLANS.map((plan) => (
               <label
                 key={plan.value}
-                className="flex cursor-pointer items-center gap-3 rounded-xl p-4 shadow-border transition-shadow hover:shadow-border-hover has-data-checked:ring-2 has-data-checked:ring-primary has-data-checked:shadow-none"
+                className="flex cursor-pointer items-center gap-3 rounded-xl p-4 shadow-border transition-shadow hover:shadow-border-hover has-data-checked:shadow-none has-data-checked:ring-2 has-data-checked:ring-primary"
               >
-                <RadioGroupItem value={plan.value} id={plan.value === value ? id : undefined} />
+                <RadioGroupItem
+                  value={plan.value}
+                  id={plan.value === value ? id : undefined}
+                />
                 <span className="min-w-0 flex-1">
                   <span className="block font-medium">{plan.label}</span>
                   <span className="block text-sm text-muted-foreground">
                     {plan.description}
                   </span>
                 </span>
-                <span className="text-sm font-medium tabular-nums">{plan.price}</span>
+                <span className="text-sm font-medium tabular-nums">
+                  {plan.price}
+                </span>
               </label>
             ))}
           </RadioGroup>
@@ -424,7 +457,13 @@ export function SetupWizard({
   const [direction, setDirection] = React.useState<1 | -1>(1)
 
   // Derive the step during render: never past the first unfinished one.
-  const completed = values.workspace ? (values.team ? (values.plan ? 3 : 2) : 1) : 0
+  const completed = values.workspace
+    ? values.team
+      ? values.plan
+        ? 3
+        : 2
+      : 1
+    : 0
   const requested = STEPS.findIndex((s) => s.id === stepParam)
   const index =
     stepParam === "done" && completed === 3
@@ -432,8 +471,15 @@ export function SetupWizard({
       : Math.min(requested === -1 ? 0 : requested, completed)
   const step: StepId = index === 3 ? "done" : STEPS[index].id
 
+  // Slide direction follows the step change itself, so browser Back/Forward
+  // (which never call `go`) slide the right way too.
+  const [shownIndex, setShownIndex] = React.useState(index)
+  if (index !== shownIndex) {
+    setShownIndex(index)
+    setDirection(index > shownIndex ? 1 : -1)
+  }
+
   const go = (next: number) => {
-    setDirection(next >= index ? 1 : -1)
     setSearchParams(
       { step: next === 0 ? null : next === 3 ? "done" : STEPS[next].id },
       "push"
@@ -455,7 +501,7 @@ export function SetupWizard({
         <div
           key={step}
           style={{ "--dir": direction } as React.CSSProperties}
-          className="w-full max-w-lg transition-[opacity,translate] duration-300 ease-out starting:translate-x-[calc(var(--dir)*1rem)] starting:opacity-0 motion-reduce:transition-none"
+          className="w-full max-w-lg transition-[opacity,translate] duration-300 ease-out motion-reduce:transition-opacity motion-reduce:delay-0 starting:translate-x-[calc(var(--dir)*1rem)] starting:opacity-0"
         >
           {step === "workspace" && (
             <WorkspaceStep
@@ -471,7 +517,10 @@ export function SetupWizard({
               defaults={teamInput}
               onBack={() => go(0)}
               onNext={(team) => {
-                setTeamInput({ emails: team.emails.join("\n"), role: team.role })
+                setTeamInput({
+                  emails: team.emails.join("\n"),
+                  role: team.role,
+                })
                 setValues((v) => ({ ...v, team }))
                 go(2)
               }}
@@ -502,7 +551,11 @@ export function SetupWizard({
                     : "Next, create your first project. You can invite your team any time from Settings."
                 }
               />
-              <Button size="lg" render={<a href={continueHref} />} nativeButton={false}>
+              <Button
+                size="lg"
+                render={<a href={continueHref} />}
+                nativeButton={false}
+              >
                 Go to dashboard
               </Button>
             </div>

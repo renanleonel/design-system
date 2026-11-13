@@ -49,8 +49,10 @@ function DataItem({
       )}
       {...props}
     >
-      <dt className="text-sm text-muted-foreground">{label}</dt>
-      <dd className="truncate text-base font-medium tabular-nums">
+      <dt className="text-sm text-muted-foreground group-data-[layout=stack]/data-list:max-w-1/2 group-data-[layout=stack]/data-list:shrink-0">
+        {label}
+      </dt>
+      <dd className="min-w-0 text-base font-medium tabular-nums group-data-[layout=stack]/data-list:text-end">
         {children}
       </dd>
     </div>

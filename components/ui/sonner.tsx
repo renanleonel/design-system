@@ -17,29 +17,32 @@ const Toaster = ({ ...props }: ToasterProps) => {
     <Sonner
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
+      // The icon carries the status in its tone; the surface stays neutral.
       icons={{
-        success: <CircleCheckIcon className="size-4" />,
-        info: <InfoIcon className="size-4" />,
-        warning: <TriangleAlertIcon className="size-4" />,
-        error: <OctagonXIcon className="size-4" />,
+        success: <CircleCheckIcon className="size-4 text-tone-green" />,
+        info: <InfoIcon className="size-4 text-tone-blue" />,
+        warning: <TriangleAlertIcon className="size-4 text-tone-amber" />,
+        error: <OctagonXIcon className="size-4 text-tone-red" />,
         loading: <Loader2Icon className="size-4 animate-spin" />,
       }}
       style={
         {
           "--normal-bg": "var(--popover)",
           "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
+          // One elevation per surface: the popover shadow, no border.
+          "--normal-border": "transparent",
           "--border-radius": "var(--radius)",
         } as React.CSSProperties
       }
+      // viewport-fit=cover: clear the notch and home indicator on phones.
+      mobileOffset={{
+        top: "calc(16px + env(safe-area-inset-top))",
+        bottom: "calc(16px + env(safe-area-inset-bottom))",
+      }}
       // interaction.md: >= 5s, paused on hover/focus/hidden tab (sonner does both),
       // and a toast with an action stays long enough to use it.
       duration={6000}
-      toastOptions={{
-        classNames: {
-          toast: "cn-toast",
-        },
-      }}
+      toastOptions={{ classNames: { toast: "shadow-popover!" } }}
       {...props}
     />
   )

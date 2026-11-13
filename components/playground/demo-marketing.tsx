@@ -34,11 +34,14 @@ import {
 } from "@/components/blocks/pricing/pricing"
 import { DemoFooter } from "@/components/playground/demo-footer"
 import { Button } from "@/components/ui/button"
-import { Toaster } from "@/components/ui/sonner"
 import { useUrlState } from "@/hooks/use-url-state"
 
 /** Header and footer around the marketing demos, wired to Next.js. */
-export function DemoMarketingFrame({ children }: { children: React.ReactNode }) {
+export function DemoMarketingFrame({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const pathname = usePathname()
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
@@ -64,7 +67,6 @@ export function DemoMarketingFrame({ children }: { children: React.ReactNode }) 
       />
       <main className="flex flex-1 flex-col">{children}</main>
       <DemoFooter />
-      <Toaster />
     </div>
   )
 }
@@ -120,21 +122,80 @@ export function DemoLanding() {
         title="Everything between the commit and the customer"
         description="Fewer tools to wire together, and nothing to babysit."
         features={[
-          { icon: <GitBranchIcon />, tone: "blue", title: "Preview every branch", description: "A live URL for every pull request, with comments right on the page." },
-          { icon: <GaugeIcon />, tone: "green", title: "Fast by default", description: "Edge caching and image optimization without a config file." },
-          { icon: <ShieldCheckIcon />, tone: "purple", title: "Secure from day one", description: "SSO, audit logs and least-privilege roles on every plan that needs them." },
-          { icon: <KeyboardIcon />, tone: "amber", title: "Keyboard first", description: "Command palette, hotkeys for every action, and nothing hidden behind hover." },
-          { icon: <PaletteIcon />, tone: "orange", title: "Your brand, everywhere", description: "Themes from one file: colors, radius and density follow through." },
-          { icon: <LayersIcon />, tone: "gray", title: "Grows with you", description: "From a side project to an enterprise rollout on the same stack." },
+          {
+            icon: <GitBranchIcon />,
+            tone: "blue",
+            title: "Preview every branch",
+            description:
+              "A live URL for every pull request, with comments right on the page.",
+          },
+          {
+            icon: <GaugeIcon />,
+            tone: "green",
+            title: "Fast by default",
+            description:
+              "Edge caching and image optimization without a config file.",
+          },
+          {
+            icon: <ShieldCheckIcon />,
+            tone: "purple",
+            title: "Secure from day one",
+            description:
+              "SSO, audit logs and least-privilege roles on every plan that needs them.",
+          },
+          {
+            icon: <KeyboardIcon />,
+            tone: "amber",
+            title: "Keyboard first",
+            description:
+              "Command palette, hotkeys for every action, and nothing hidden behind hover.",
+          },
+          {
+            icon: <PaletteIcon />,
+            tone: "orange",
+            title: "Your brand, everywhere",
+            description:
+              "Themes from one file: colors, radius and density follow through.",
+          },
+          {
+            icon: <LayersIcon />,
+            tone: "gray",
+            title: "Grows with you",
+            description:
+              "From a side project to an enterprise rollout on the same stack.",
+          },
         ]}
       />
       <Testimonials
         title="Teams ship more and worry less"
         items={[
-          { quote: "We went from weekly releases to shipping several times a day, and our incident count went down.", name: "Marta Silva", role: "VP Engineering, Northwind", initials: "MS" },
-          { quote: "Previews changed how design reviews work here. Nobody waits for staging anymore.", name: "Pedro Almeida", role: "Design lead, Layerly", initials: "PA" },
-          { quote: "The audit log alone got us through our SOC 2 review.", name: "Beatriz Costa", role: "Security, Boxed", initials: "BC" },
-          { quote: "Setup took an afternoon. Migrating our twelve services took a week.", name: "Lucas Ferreira", role: "Platform, Triangle", initials: "LF" },
+          {
+            quote:
+              "We went from weekly releases to shipping several times a day, and our incident count went down.",
+            name: "Marta Silva",
+            role: "VP Engineering, Northwind",
+            initials: "MS",
+          },
+          {
+            quote:
+              "Previews changed how design reviews work here. Nobody waits for staging anymore.",
+            name: "Pedro Almeida",
+            role: "Design lead, Layerly",
+            initials: "PA",
+          },
+          {
+            quote: "The audit log alone got us through our SOC 2 review.",
+            name: "Beatriz Costa",
+            role: "Security, Boxed",
+            initials: "BC",
+          },
+          {
+            quote:
+              "Setup took an afternoon. Migrating our twelve services took a week.",
+            name: "Lucas Ferreira",
+            role: "Platform, Triangle",
+            initials: "LF",
+          },
         ]}
       />
       <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-6">
@@ -142,11 +203,18 @@ export function DemoLanding() {
           <h2 className="font-heading text-3xl font-semibold tracking-tight">
             Pricing
           </h2>
-          <PeriodToggle value={period} onValueChange={setPeriod} yearlyDiscount={0.2} />
+          <PeriodToggle
+            value={period}
+            onValueChange={setPeriod}
+            yearlyDiscount={0.2}
+          />
         </div>
         <PricingPlans plans={SAMPLE_PLANS} period={period} className="w-full" />
       </section>
-      <PricingFaq items={SAMPLE_FAQ} className="mx-auto w-full max-w-6xl px-6" />
+      <PricingFaq
+        items={SAMPLE_FAQ}
+        className="mx-auto w-full max-w-6xl px-6"
+      />
       <CtaBand
         className="mx-auto w-full max-w-6xl px-6"
         title="Ship your next project this week"

@@ -48,7 +48,7 @@ export function EmptyStateCard({
               <div
                 key={i}
                 className={cn(
-                  "flex aspect-[4/3] items-center justify-center overflow-hidden rounded-lg bg-muted/70 transition-[opacity,translate] duration-500 ease-out starting:translate-y-1.5 starting:opacity-0 motion-reduce:transition-none [&_svg]:size-7 [&_svg]:text-muted-foreground",
+                  "flex aspect-[4/3] items-center justify-center overflow-hidden rounded-lg bg-muted/70 transition-[opacity,translate] duration-500 ease-out motion-reduce:transition-opacity motion-reduce:delay-0 starting:translate-y-1.5 starting:opacity-0 [&_svg]:size-7 [&_svg]:text-muted-foreground",
                   i === 1 && "delay-75",
                   i === 2 && "delay-150",
                   i === 3 && "delay-200"

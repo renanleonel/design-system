@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { IconTile } from "@/components/ui/icon-tile"
 
 const ENTER =
-  "transition-[opacity,translate] duration-500 ease-out starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none"
+  "transition-[opacity,translate] duration-500 ease-out starting:translate-y-2 starting:opacity-0 motion-reduce:transition-opacity motion-reduce:delay-0"
 
 /**
  * The opening section: an announcement pill, a balanced headline, one line of

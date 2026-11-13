@@ -48,7 +48,7 @@ Every sidebar that resizes or collapses (app shell, docs nav, settings sub-nav, 
 
 - Labels stay mounted; icons keep one position in both states (left-aligned, not centered).
 - The edge is a resize handle (drag, double-click, Enter, arrows); under 160px it settles to the icon rail.
-- `motion` sets how labels leave: `ease-out` (snap, 0.16s fade, 0.4s width), `cascade` (drift left, fade top-down via `--i`), `scrub` (opacity follows drag width). Timings live in `SIDEBAR_MOTION` as CSS variables.
+- `motion` sets how labels leave: `ease-out` (snap, 0.16s fade, 0.2s width), `cascade` (drift left, fade top-down via `--i`, stagger capped at 6 rows, ~0.3s total), `scrub` (opacity follows drag width). Timings live in `SIDEBAR_MOTION` as CSS variables.
 - `variant="classic"` exists only for the old rail.
 
 ## Demo routes

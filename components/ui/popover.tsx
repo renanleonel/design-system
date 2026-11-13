@@ -27,7 +27,7 @@ function PopoverContent({
   return (
     <PopoverPrimitive.Portal>
       {/* Below 640px the popover is a bottom sheet over a dimmed page. */}
-      <PopoverPrimitive.Backdrop className="fixed inset-0 z-50 bg-black/10 motion-backdrop sm:hidden" />
+      <PopoverPrimitive.Backdrop className="fixed inset-0 z-50 bg-black/10 motion-backdrop [--ds-duration-modal:300ms] sm:hidden" />
       <PopoverPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}

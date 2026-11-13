@@ -21,7 +21,6 @@ import {
   type SidebarMotion,
 } from "@/components/blocks/app-shell/app-shell"
 import { Button } from "@/components/ui/button"
-import { Toaster } from "@/components/ui/sonner"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { setSearchParams, useSearchParams } from "@/hooks/use-url-state"
 
@@ -29,7 +28,7 @@ const MOTIONS: { value: SidebarMotion; label: string; hint: string }[] = [
   {
     value: "ease-out",
     label: "Ease out",
-    hint: "Drag the edge: under 160px it snaps to icons. Labels fade in 0.16s while the width glides over 0.4s.",
+    hint: "Drag the edge: under 160px it snaps to icons. Labels fade in 0.16s while the width glides over 0.2s.",
   },
   {
     value: "cascade",
@@ -178,7 +177,6 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
           </Tabs>
         </div>
       )}
-      <Toaster />
     </>
   )
 }

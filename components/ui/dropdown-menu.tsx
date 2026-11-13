@@ -41,7 +41,7 @@ function DropdownMenuContent({
   return (
     <MenuPrimitive.Portal>
       {/* Below 640px the menu is a bottom sheet over a dimmed page. */}
-      <MenuPrimitive.Backdrop className="fixed inset-0 z-50 bg-black/10 motion-backdrop sm:hidden" />
+      <MenuPrimitive.Backdrop className="fixed inset-0 z-50 bg-black/10 motion-backdrop [--ds-duration-modal:300ms] sm:hidden" />
       <MenuPrimitive.Positioner
         className="isolate z-50 outline-none max-sm:fixed! max-sm:inset-x-0! max-sm:top-auto! max-sm:bottom-0! max-sm:transform-none!"
         align={align}
@@ -52,7 +52,7 @@ function DropdownMenuContent({
         <MenuPrimitive.Popup
           data-slot="dropdown-menu-content"
           className={cn(
-            "z-50 max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(var(--anchor-width),8rem)] motion-popover overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-popover outline-none max-sm:max-h-[80dvh]! max-sm:w-full! max-sm:max-w-none! max-sm:origin-bottom! max-sm:rounded-t-xl max-sm:rounded-b-none max-sm:pb-[max(0.5rem,env(safe-area-inset-bottom))] max-sm:[--ds-duration-popover:300ms] max-sm:[--ds-motion-ease:var(--ds-ease-drawer)] max-sm:[--ds-motion-scale:1] max-sm:[--ds-motion-y:100%] data-closed:overflow-hidden",
+            "z-50 max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(var(--anchor-width),8rem)] motion-popover overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg bg-popover p-1 text-popover-foreground shadow-popover outline-none max-sm:max-h-[80dvh]! max-sm:w-full! max-sm:max-w-none! max-sm:origin-bottom! max-sm:rounded-t-xl max-sm:rounded-b-none max-sm:pb-[max(0.5rem,env(safe-area-inset-bottom))] max-sm:[--ds-duration-popover:300ms] max-sm:[--ds-motion-ease:var(--ds-ease-drawer)] max-sm:[--ds-motion-scale:1] max-sm:[--ds-motion-y:100%] data-closed:overflow-hidden",
             className
           )}
           {...props}

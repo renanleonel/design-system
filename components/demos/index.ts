@@ -45,12 +45,14 @@ import * as ratingDemos from "./rating"
 import * as resizableDemos from "./resizable"
 import * as selectDemos from "./select"
 import * as separatorDemos from "./separator"
+import * as settingsListDemos from "./settings-list"
 import * as sheetDemos from "./sheet"
 import * as skeletonDemos from "./skeleton"
 import * as sliderDemos from "./slider"
 import * as sonnerDemos from "./sonner"
 import * as sortableDemos from "./sortable"
 import * as spinnerDemos from "./spinner"
+import * as swatchPickerDemos from "./swatch-picker"
 import * as switchDemos from "./switch"
 import * as tableDemos from "./table"
 import * as tabsDemos from "./tabs"
@@ -58,11 +60,13 @@ import * as textareaDemos from "./textarea"
 import * as themeToggleDemos from "./theme-toggle"
 import * as timeInputDemos from "./time-input"
 import * as timelineDemos from "./timeline"
+import * as timezoneSelectDemos from "./timezone-select"
 import * as toggleGroupDemos from "./toggle-group"
 import * as toggleDemos from "./toggle"
 import * as tokenInputDemos from "./token-input"
 import * as tooltipDemos from "./tooltip"
 import * as treeDemos from "./tree"
+import * as unsavedChangesBarDemos from "./unsaved-changes-bar"
 import * as virtualListDemos from "./virtual-list"
 
 export const demos: Record<string, Record<string, ComponentType>> = {
@@ -110,12 +114,14 @@ export const demos: Record<string, Record<string, ComponentType>> = {
   "resizable": resizableDemos,
   "select": selectDemos,
   "separator": separatorDemos,
+  "settings-list": settingsListDemos,
   "sheet": sheetDemos,
   "skeleton": skeletonDemos,
   "slider": sliderDemos,
   "sonner": sonnerDemos,
   "sortable": sortableDemos,
   "spinner": spinnerDemos,
+  "swatch-picker": swatchPickerDemos,
   "switch": switchDemos,
   "table": tableDemos,
   "tabs": tabsDemos,
@@ -123,10 +129,12 @@ export const demos: Record<string, Record<string, ComponentType>> = {
   "theme-toggle": themeToggleDemos,
   "time-input": timeInputDemos,
   "timeline": timelineDemos,
+  "timezone-select": timezoneSelectDemos,
   "toggle-group": toggleGroupDemos,
   "toggle": toggleDemos,
   "token-input": tokenInputDemos,
   "tooltip": tooltipDemos,
   "tree": treeDemos,
+  "unsaved-changes-bar": unsavedChangesBarDemos,
   "virtual-list": virtualListDemos,
 }

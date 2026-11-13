@@ -32,7 +32,7 @@ export function FeatureIntro({
   className?: string
 }) {
   const enter =
-    "transition-[opacity,translate] duration-500 ease-out starting:translate-y-2 starting:opacity-0 motion-reduce:transition-none"
+    "transition-[opacity,translate] duration-500 ease-out starting:translate-y-2 starting:opacity-0 motion-reduce:transition-opacity motion-reduce:delay-0"
   return (
     <section
       data-slot="feature-intro"
@@ -44,13 +44,13 @@ export function FeatureIntro({
       {/* Column grid, fading out toward the bottom. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[repeating-linear-gradient(90deg,var(--border)_0_1px,transparent_1px_3rem)] opacity-50 [mask-image:linear-gradient(to_bottom,black,transparent_75%)]"
+        className="absolute inset-0 -z-10 bg-[repeating-linear-gradient(90deg,var(--border)_0_1px,transparent_1px_3rem)] [mask-image:linear-gradient(to_bottom,black,transparent_75%)] opacity-50"
       />
       {art && (
         <div
           aria-hidden
           className={cn(
-            "pointer-events-none absolute -top-6 -right-10 -z-10 w-[min(36rem,70%)] delay-100 starting:scale-95 sm:-right-6",
+            "pointer-events-none absolute -top-6 -right-10 -z-10 w-[min(36rem,70%)] delay-100 sm:-right-6 starting:scale-95",
             enter,
             "transition-[opacity,translate,scale]"
           )}
@@ -91,41 +91,56 @@ export function FeatureIntro({
 
 /**
  * Sample art for FeatureIntro: soft-lit shapes in the chart palette, drawn in
- * CSS (swap for your own renders). Each piece settles in a few ms apart.
+ * CSS (swap for your own renders). Static: FeatureIntro gives any `art` one
+ * entrance, so the pieces don't animate a second time inside it.
  */
 export function IntroArt() {
-  const piece =
-    "absolute transition-[opacity,translate,rotate] duration-700 ease-out starting:translate-y-4 starting:opacity-0 motion-reduce:transition-none"
+  const piece = "absolute"
   const light =
     "radial-gradient(circle at 30% 25%, oklch(1 0 0 / 0.75), transparent 45%)"
   return (
     <div className="relative aspect-[4/3] w-full">
       <span
-        className={cn(piece, "top-[8%] left-[8%] h-[52%] w-[34%] rotate-[-12deg] rounded-[40%_40%_18%_18%] shadow-xl")}
+        className={cn(
+          piece,
+          "top-[8%] left-[8%] h-[52%] w-[34%] rotate-[-12deg] rounded-[40%_40%_18%_18%] shadow-xl"
+        )}
         style={{
           background: `${light}, linear-gradient(160deg, var(--ds-chart-4), var(--ds-chart-2) 45%, var(--ds-chart-7))`,
         }}
       />
       <span
-        className={cn(piece, "top-[2%] left-[52%] size-[22%] rotate-[18deg] rounded-[28%] shadow-lg delay-75")}
+        className={cn(
+          piece,
+          "top-[2%] left-[52%] size-[22%] rotate-[18deg] rounded-[28%] shadow-lg"
+        )}
         style={{
           background: `${light}, linear-gradient(135deg, var(--ds-chart-3), oklch(0.35 0.06 200))`,
         }}
       />
       <span
-        className={cn(piece, "top-[10%] right-[2%] h-[38%] w-[24%] rotate-[14deg] rounded-[32%] opacity-90 shadow-xl delay-150")}
+        className={cn(
+          piece,
+          "top-[10%] right-[2%] h-[38%] w-[24%] rotate-[14deg] rounded-[32%] opacity-90 shadow-xl"
+        )}
         style={{
           background: `${light}, linear-gradient(180deg, var(--ds-chart-1), oklch(0.35 0.15 262))`,
         }}
       />
       <span
-        className={cn(piece, "top-[52%] left-[44%] size-[24%] rotate-[-8deg] rounded-[30%] shadow-lg delay-200")}
+        className={cn(
+          piece,
+          "top-[52%] left-[44%] size-[24%] rotate-[-8deg] rounded-[30%] shadow-lg"
+        )}
         style={{
           background: `${light}, linear-gradient(140deg, var(--ds-chart-6), oklch(0.35 0.12 145))`,
         }}
       />
       <span
-        className={cn(piece, "top-[46%] right-[-4%] h-[44%] w-[32%] rounded-[45%_45%_38%_38%] shadow-xl delay-300")}
+        className={cn(
+          piece,
+          "top-[46%] right-[-4%] h-[44%] w-[32%] rounded-[45%_45%_38%_38%] shadow-xl"
+        )}
         style={{
           background: `${light}, linear-gradient(170deg, var(--ds-chart-4), oklch(0.5 0.12 55))`,
         }}

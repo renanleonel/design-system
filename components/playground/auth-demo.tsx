@@ -11,7 +11,6 @@ import {
   SignUpForm,
 } from "@/components/blocks/auth/auth"
 import { ReleasesPanel } from "@/components/examples/releases-panel"
-import { Toaster } from "@/components/ui/sonner"
 import { useSearchParams } from "@/hooks/use-url-state"
 
 // Demo wiring: replace these with your auth library calls.
@@ -76,7 +75,6 @@ export function SignInDemo() {
           }}
         />
       </AuthLayout>
-      <Toaster />
     </>
   )
 }
@@ -104,7 +102,6 @@ export function SignUpDemo() {
           }}
         />
       </AuthLayout>
-      <Toaster />
     </>
   )
 }

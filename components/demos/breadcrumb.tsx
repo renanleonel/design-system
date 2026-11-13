@@ -56,3 +56,30 @@ export function Collapsed() {
     </Breadcrumb>
   )
 }
+
+/** Worst case: long page names at phone width. */
+export function WorstCase() {
+  return (
+    <Breadcrumb className="max-w-72">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#workspace">
+            Northwind Industries Holdings
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#settings">
+            Benachrichtigungseinstellungen
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>
+            Q3 Board Deck — FINAL (revised) v12.pdf
+          </BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  )
+}

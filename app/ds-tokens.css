@@ -159,7 +159,7 @@
     --ds-motion-scale: 1;
   }
 }
-:root[data-ds-instant] :is(.motion-popover, .motion-tooltip, .motion-modal, .motion-backdrop, [data-slot=sheet-content]) {
+:root[data-ds-instant] :is(.motion-popover, .motion-tooltip, .motion-modal, .motion-backdrop, [data-slot=sheet-content], [data-slot=drawer-popup], [data-slot=drawer-overlay]) {
   transition-duration: 0ms;
 }
 @utility motion-popover {
@@ -169,6 +169,9 @@
     opacity: 0;
     transform: translateY(var(--ds-motion-y, 0)) scale(var(--ds-motion-scale, 0.95));
   }
+  &[data-ending-style] {
+    transition-duration: calc(var(--ds-duration-popover) * 0.75);
+  }
 }
 @utility motion-tooltip {
   transform-origin: var(--transform-origin);
@@ -176,6 +179,9 @@
   &[data-starting-style], &[data-ending-style] {
     opacity: 0;
     transform: translateY(var(--ds-motion-y, 0)) scale(var(--ds-motion-scale, 0.97));
+  }
+  &[data-ending-style] {
+    transition-duration: calc(var(--ds-duration-tooltip) * 0.75);
   }
   &[data-instant] {
     transition-duration: 0ms;
@@ -187,6 +193,9 @@
   &[data-starting-style], &[data-ending-style] {
     opacity: 0;
     transform: translateY(var(--ds-motion-y, 0)) scale(var(--ds-motion-scale, 0.96));
+  }
+  &[data-ending-style] {
+    transition-duration: calc(var(--ds-duration-modal) * 0.75);
   }
 }
 @keyframes ds-appear {
@@ -205,13 +214,18 @@
   &[data-starting-style], &[data-ending-style] {
     opacity: 0;
   }
+  &[data-ending-style] {
+    transition-duration: calc(var(--ds-duration-modal) * 0.75);
+  }
 }
 @layer base {
-  button, [role=button], a, input, label, select, summary, textarea {
+  button, [role=button], a, input, label, select, summary, textarea, [role=menuitem], [role=menuitemcheckbox], [role=menuitemradio], [role=option], [role=tab], [role=switch] {
     touch-action: manipulation;
   }
   html {
     -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   body {
     overflow-wrap: anywhere;

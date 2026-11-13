@@ -57,3 +57,22 @@ export function Disabled() {
     />
   )
 }
+
+/** Worst case: a long pasted list with an unbreakable email and an invalid entry. */
+export function WorstCase() {
+  return (
+    <TokenInput
+      defaultValue={[
+        "maria.eduarda.cavalcanti@northwind-industries-holdings.example.com",
+        "jo@a.test",
+        "first.last+billing-notifications@example.com",
+        "joao.pedro@acme",
+        "ana.souza@acme.dev",
+        "lucas.costa@acme.dev",
+      ]}
+      validate={(t) => (EMAIL.test(t) ? undefined : "not a valid email")}
+      aria-label="Invite by email"
+      className="max-w-xs"
+    />
+  )
+}

@@ -27,3 +27,18 @@ export function Stack() {
     </div>
   )
 }
+
+/** Worst case: a long value, a large amount and a missing one in a narrow card. */
+export function WorstCase() {
+  return (
+    <div className="w-full max-w-xs rounded-xl p-4 shadow-border">
+      <DataList layout="stack">
+        <DataItem label="Região">
+          sa-east-1 (São Paulo) · failover us-east-2
+        </DataItem>
+        <DataItem label="Custo mensal">{"R$ 12.345.678,90"}</DataItem>
+        <DataItem label="Responsável">—</DataItem>
+      </DataList>
+    </div>
+  )
+}

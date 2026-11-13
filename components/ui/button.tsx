@@ -83,6 +83,13 @@ function Button({
   // while it fades out instead of freezing.
   const [spinning, setSpinning] = React.useState(loading)
   if (loading && !spinning) setSpinning(true)
+  // Fallback unmount when the collapse never transitions (hidden button,
+  // reduced motion, or loading toggled before paint): no stray spinner loop.
+  React.useEffect(() => {
+    if (loading || !spinning) return
+    const timer = setTimeout(() => setSpinning(false), 300)
+    return () => clearTimeout(timer)
+  }, [loading, spinning])
 
   return (
     <ButtonPrimitive
@@ -106,7 +113,7 @@ function Button({
             setSpinning(false)
           }
         }}
-        className="-me-(--btn-gap) grid grid-cols-[0fr] opacity-0 transition-[grid-template-columns,opacity,margin-inline-end] duration-200 ease-out group-aria-busy/button:me-0 group-aria-busy/button:grid-cols-[1fr] group-aria-busy/button:opacity-100"
+        className="-me-(--btn-gap) grid grid-cols-[0fr] opacity-0 transition-[grid-template-columns,opacity,margin-inline-end] duration-200 ease-out group-aria-busy/button:me-0 group-aria-busy/button:grid-cols-[1fr] group-aria-busy/button:opacity-100 motion-reduce:transition-none"
       >
         <span className="flex min-w-0 overflow-hidden">
           {spinning && <Spinner role={undefined} aria-label={undefined} />}

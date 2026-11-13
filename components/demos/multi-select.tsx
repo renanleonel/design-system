@@ -72,3 +72,22 @@ export function ManyOptions() {
     />
   )
 }
+
+/** Worst case: every option selected, plus one long label, in a narrow trigger. */
+export function WorstCase() {
+  const options = [
+    ...TAGS,
+    {
+      label: "Customer feedback from enterprise onboarding",
+      value: "feedback",
+    },
+  ]
+  return (
+    <MultiSelect
+      options={options}
+      defaultValue={options.map((o) => o.value)}
+      aria-label="Tags"
+      className="w-60"
+    />
+  )
+}

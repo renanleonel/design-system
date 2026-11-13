@@ -21,7 +21,12 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field"
@@ -41,6 +46,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { toastUndo } from "@/components/ui/sonner"
+import { useIsMobile } from "@/hooks/use-media-query"
+import { initials } from "@/lib/utils"
 
 const ROLES = [
   { label: "Owner", value: "owner" },
@@ -157,11 +164,10 @@ function ProfileForm() {
   )
 }
 
-type Member = {
+export type Member = {
   id: string
   name: string
   email: string
-  initials: string
   role: string
   pending?: boolean
 }
@@ -171,28 +177,24 @@ const MEMBERS: Member[] = [
     id: "m1",
     name: "Renan Leonel",
     email: "renan@acme.dev",
-    initials: "RL",
     role: "owner",
   },
   {
     id: "m2",
     name: "Ana Souza",
     email: "ana@acme.dev",
-    initials: "AS",
     role: "admin",
   },
   {
     id: "m3",
     name: "João Silva",
     email: "joao@acme.dev",
-    initials: "JS",
     role: "member",
   },
   {
     id: "m4",
     name: "pedro.santos@partner.io",
     email: "pedro.santos@partner.io",
-    initials: "PS",
     role: "viewer",
     pending: true,
   },
@@ -284,8 +286,18 @@ function InviteDialog({
   )
 }
 
-function Members() {
-  const [members, setMembers] = React.useState(MEMBERS)
+function Members({ initial }: { initial: Member[] }) {
+  const [members, setMembers] = React.useState(initial)
+  // Phones hide the role select; the row's menu carries the role instead.
+  const mobile = useIsMobile()
+  const changeRole = (member: Member, role: string) => {
+    setMembers((list) =>
+      list.map((x) => (x.id === member.id ? { ...x, role } : x))
+    )
+    toast.success(
+      `${member.name} is now ${ROLES.find((r) => r.value === role)?.label.toLowerCase()}`
+    )
+  }
   const remove = (member: Member) => {
     const before = members
     setMembers((list) => list.filter((m) => m.id !== member.id))
@@ -305,7 +317,6 @@ function Members() {
                 id: email,
                 name: email,
                 email,
-                initials: email.slice(0, 2).toUpperCase(),
                 role,
                 pending: true,
               },
@@ -318,31 +329,38 @@ function Members() {
           <li key={m.id} className="flex items-center gap-3 px-4 py-3">
             <Avatar>
               <AvatarFallback className="bg-tone-blue-soft text-xs font-medium text-tone-blue">
-                {m.initials}
+                {initials(m.name)}
               </AvatarFallback>
             </Avatar>
             <div className="min-w-0 flex-1">
               <p className="flex items-center gap-2 font-medium">
-                <span className="truncate">{m.name}</span>
+                <span className="truncate" title={m.name}>
+                  {m.name}
+                </span>
                 {m.pending && <Badge tone="amber">Invited</Badge>}
               </p>
-              <p className="truncate text-sm text-muted-foreground">
-                {m.email}
-              </p>
+              {/* Phones show the role here (the select is hidden); an invite
+                  without a name already shows its email above. */}
+              {(mobile || m.name !== m.email) && (
+                <p
+                  className="truncate text-sm text-muted-foreground"
+                  title={m.email}
+                >
+                  {mobile && (
+                    <span className="text-foreground">
+                      {ROLES.find((r) => r.value === m.role)?.label}
+                      {m.name !== m.email && " · "}
+                    </span>
+                  )}
+                  {m.name !== m.email && m.email}
+                </p>
+              )}
             </div>
             <Select
               items={ROLES}
               value={m.role}
               disabled={m.role === "owner"}
-              onValueChange={(role) => {
-                if (!role) return
-                setMembers((list) =>
-                  list.map((x) => (x.id === m.id ? { ...x, role } : x))
-                )
-                toast.success(
-                  `${m.name} is now ${ROLES.find((r) => r.value === role)?.label.toLowerCase()}`
-                )
-              }}
+              onValueChange={(role) => role && changeRole(m, role)}
               aria-label={`Role for ${m.name}`}
             >
               <SelectTrigger
@@ -377,6 +395,24 @@ function Members() {
                 <MoreHorizontalIcon />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {mobile && (
+                  <>
+                    <DropdownMenuGroup>
+                      <DropdownMenuLabel>Role</DropdownMenuLabel>
+                      <DropdownMenuRadioGroup
+                        value={m.role}
+                        onValueChange={(role) => changeRole(m, role)}
+                      >
+                        {ROLES.slice(1).map((r) => (
+                          <DropdownMenuRadioItem key={r.value} value={r.value}>
+                            {r.label}
+                          </DropdownMenuRadioItem>
+                        ))}
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
                 {m.pending && (
                   <DropdownMenuItem>Resend invite</DropdownMenuItem>
                 )}
@@ -462,7 +498,13 @@ function DeleteWorkspace({ workspace }: { workspace: string }) {
   )
 }
 
-export function SettingsPage({ workspace = "Acme" }: { workspace?: string }) {
+export function SettingsPage({
+  workspace = "Acme",
+  members = MEMBERS,
+}: {
+  workspace?: string
+  members?: Member[]
+}) {
   return (
     <div className="flex flex-col gap-8">
       <SettingsSection
@@ -475,7 +517,7 @@ export function SettingsPage({ workspace = "Acme" }: { workspace?: string }) {
         title="Members"
         description="Who can access this workspace and what they can change."
       >
-        <Members />
+        <Members initial={members} />
       </SettingsSection>
       <SettingsSection
         title="Danger zone"

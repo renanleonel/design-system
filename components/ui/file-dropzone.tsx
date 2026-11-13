@@ -85,7 +85,10 @@ function FileDropzone({
     const errors: { name: string; reason: string }[] = []
     for (const file of incoming) {
       if (!matchesAccept(file, accept))
-        errors.push({ name: file.name, reason: "This file type isn't allowed." })
+        errors.push({
+          name: file.name,
+          reason: "This file type isn't allowed.",
+        })
       else if (maxSize && file.size > maxSize)
         errors.push({
           name: file.name,
@@ -96,7 +99,13 @@ function FileDropzone({
     let next = multiple ? [...files, ...accepted] : accepted.slice(0, 1)
     if (maxFiles && next.length > maxFiles) {
       for (const file of next.slice(maxFiles))
-        errors.push({ name: file.name, reason: `Only ${maxFiles} files allowed.` })
+        errors.push({
+          name: file.name,
+          reason:
+            maxFiles === 1
+              ? "Only 1 file allowed."
+              : `Only ${maxFiles} files allowed.`,
+        })
       next = next.slice(0, maxFiles)
     }
     setRejected(errors)
@@ -106,7 +115,10 @@ function FileDropzone({
   const dragging = dragDepth > 0 && !disabled
 
   return (
-    <div data-slot="file-dropzone" className={cn("flex flex-col gap-3", className)}>
+    <div
+      data-slot="file-dropzone"
+      className={cn("flex flex-col gap-3", className)}
+    >
       <button
         type="button"
         id={id}
@@ -126,7 +138,7 @@ function FileDropzone({
           setDragDepth(0)
           if (!disabled) add([...e.dataTransfer.files])
         }}
-        className="group/dropzone flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-input px-6 py-8 text-center focus-ring transition-[border-color,background-color] duration-150 ease-out hover:border-foreground/25 hover:bg-muted/40 disabled:cursor-not-allowed disabled:opacity-50 data-invalid:border-destructive data-dragging:border-primary data-dragging:bg-primary/5"
+        className="group/dropzone flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-input px-6 py-8 text-center focus-ring transition-[border-color,background-color] duration-150 ease-out hover:border-foreground/25 hover:bg-muted/40 disabled:cursor-not-allowed disabled:opacity-50 data-dragging:border-primary data-dragging:bg-primary/5 data-invalid:border-destructive"
       >
         <span className="flex size-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition-[scale,color] duration-150 ease-out group-data-dragging/dropzone:scale-110 group-data-dragging/dropzone:text-primary motion-reduce:transition-none">
           <UploadIcon className="size-4" />
@@ -155,7 +167,10 @@ function FileDropzone({
               className="flex items-center gap-3 rounded-lg bg-card py-1.5 ps-3 pe-1.5 shadow-border"
             >
               <FileIcon className="size-4 shrink-0 text-muted-foreground" />
-              <span className="min-w-0 flex-1 truncate text-sm" title={file.name}>
+              <span
+                className="min-w-0 flex-1 truncate text-sm"
+                title={file.name}
+              >
                 {file.name}
               </span>
               <span className="shrink-0 text-xs text-muted-foreground tabular-nums">

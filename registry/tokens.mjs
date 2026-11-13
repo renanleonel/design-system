@@ -27,7 +27,9 @@ export const tones = {
   },
 }
 const toneVars = (mode) =>
-  Object.fromEntries(Object.entries(tones[mode]).map(([k, v]) => [`ds-tone-${k}`, v]))
+  Object.fromEntries(
+    Object.entries(tones[mode]).map(([k, v]) => [`ds-tone-${k}`, v])
+  )
 
 // Categorical chart series (dataviz skill's validated palette): assign in this
 // order, never cycled. The same hues across every theme, stepped per mode, and
@@ -35,8 +37,26 @@ const toneVars = (mode) =>
 // dE >= 8.4). Light slots 3-5 are under 3:1 on white, so charts always ship a
 // legend and a tooltip.
 export const chart = {
-  light: ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"],
-  dark: ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"],
+  light: [
+    "#2a78d6",
+    "#eb6834",
+    "#1baf7a",
+    "#eda100",
+    "#e87ba4",
+    "#008300",
+    "#6250d6",
+    "#e34948",
+  ],
+  dark: [
+    "#3987e5",
+    "#d95926",
+    "#199e70",
+    "#c98500",
+    "#d55181",
+    "#008300",
+    "#9085e9",
+    "#e66767",
+  ],
 }
 const chartVars = (mode) =>
   Object.fromEntries(chart[mode].map((v, i) => [`ds-chart-${i + 1}`, v]))
@@ -83,9 +103,12 @@ export const root = {
   "shadow-2xs": "0 1px rgb(0 0 0 / 0.05)",
   "shadow-xs": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
   "shadow-sm": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-  "shadow-md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-  "shadow-lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-  "shadow-xl": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+  "shadow-md":
+    "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+  "shadow-lg":
+    "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  "shadow-xl":
+    "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
   "shadow-2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
 }
 
@@ -97,8 +120,10 @@ export const dark = {
   "ds-panel-bg": "var(--background)",
   "ds-shadow-border": "0 0 0 1px oklch(1 0 0 / 0.08)",
   "ds-shadow-border-hover": "0 0 0 1px oklch(1 0 0 / 0.13)",
-  "ds-shadow-popover": "0 0 0 1px oklch(1 0 0 / 0.1), 0 8px 24px -4px oklch(0 0 0 / 0.5)",
-  "ds-shadow-modal": "0 0 0 1px oklch(1 0 0 / 0.1), 0 24px 48px -12px oklch(0 0 0 / 0.6)",
+  "ds-shadow-popover":
+    "0 0 0 1px oklch(1 0 0 / 0.1), 0 8px 24px -4px oklch(0 0 0 / 0.5)",
+  "ds-shadow-modal":
+    "0 0 0 1px oklch(1 0 0 / 0.1), 0 24px 48px -12px oklch(0 0 0 / 0.6)",
 }
 
 // @theme inline: exposes tokens as Tailwind utilities.
@@ -108,9 +133,19 @@ export const theme = {
   "spacing-control-xs": "var(--ds-control-h-xs)",
   "spacing-control-lg": "var(--ds-control-h-lg)",
   "radius-control": "var(--ds-radius-control)",
-  ...Object.fromEntries(Object.keys(tones.light).map((k) => [`color-tone-${k}`, `var(--ds-tone-${k})`])),
+  ...Object.fromEntries(
+    Object.keys(tones.light).map((k) => [
+      `color-tone-${k}`,
+      `var(--ds-tone-${k})`,
+    ])
+  ),
   "color-panel": "var(--ds-panel-bg)",
-  ...Object.fromEntries(chart.light.map((_, i) => [`color-series-${i + 1}`, `var(--ds-chart-${i + 1})`])),
+  ...Object.fromEntries(
+    chart.light.map((_, i) => [
+      `color-series-${i + 1}`,
+      `var(--ds-chart-${i + 1})`,
+    ])
+  ),
   // Opaque tints (tone mixed onto the card) for overlapping things like avatar stacks,
   // where a translucent tint would let the avatar underneath show through.
   ...Object.fromEntries(
@@ -150,6 +185,10 @@ const popup = (duration, scale, origin) => ({
   [STARTING]: {
     opacity: "0",
     transform: `translateY(var(--ds-motion-y, 0)) scale(var(--ds-motion-scale, ${scale}))`,
+  },
+  // Exits run at 3/4 of the entrance (as the bulk bar does: 200ms in, 150ms out).
+  "&[data-ending-style]": {
+    "transition-duration": `calc(var(${duration}) * 0.75)`,
   },
 })
 
@@ -201,9 +240,13 @@ export const css = {
   // Reduced motion: popups keep the fade, drop the scale.
   [REDUCED]: { ":root": { "--ds-motion-scale": "1" } },
   // Opened from a hotkey (pressInstantly): no entrance motion, keyboard actions are instant.
-  ":root[data-ds-instant] :is(.motion-popover, .motion-tooltip, .motion-modal, .motion-backdrop, [data-slot=sheet-content])":
+  ":root[data-ds-instant] :is(.motion-popover, .motion-tooltip, .motion-modal, .motion-backdrop, [data-slot=sheet-content], [data-slot=drawer-popup], [data-slot=drawer-overlay])":
     { "transition-duration": "0ms" },
-  "@utility motion-popover": popup("--ds-duration-popover", "0.95", "var(--transform-origin)"),
+  "@utility motion-popover": popup(
+    "--ds-duration-popover",
+    "0.95",
+    "var(--transform-origin)"
+  ),
   "@utility motion-tooltip": {
     ...popup("--ds-duration-tooltip", "0.97", "var(--transform-origin)"),
     // Once one tooltip is open, neighbours open instantly.
@@ -215,17 +258,25 @@ export const css = {
   // avoid a flash of loading). Pure CSS: no timer, no effect.
   "@keyframes ds-appear": { from: { opacity: "0" }, to: { opacity: "1" } },
   "@utility appear-delayed": {
-    animation: "ds-appear 150ms var(--ds-ease-out) var(--ds-appear-delay, 200ms) both",
+    animation:
+      "ds-appear 150ms var(--ds-ease-out) var(--ds-appear-delay, 200ms) both",
   },
   "@utility motion-backdrop": {
     transition: "opacity var(--ds-duration-modal) var(--ds-ease-out)",
     [STARTING]: { opacity: "0" },
+    "&[data-ending-style]": {
+      "transition-duration": "calc(var(--ds-duration-modal) * 0.75)",
+    },
   },
   "@layer base": {
-    "button, [role=button], a, input, label, select, summary, textarea": {
-      "touch-action": "manipulation",
+    // No double-tap-zoom delay on anything tappable, incl. Base UI's div rows.
+    "button, [role=button], a, input, label, select, summary, textarea, [role=menuitem], [role=menuitemcheckbox], [role=menuitemradio], [role=option], [role=tab], [role=switch]":
+      { "touch-action": "manipulation" },
+    html: {
+      "-webkit-tap-highlight-color": "transparent",
+      "-webkit-text-size-adjust": "100%",
+      "text-size-adjust": "100%",
     },
-    html: { "-webkit-tap-highlight-color": "transparent" },
     // Line breaks (typography.md): no lone last word in running text, even
     // two-line headings. Scoped to text elements, not `*`: the cost grows with
     // text that re-lays out constantly, so streaming / editable regions
@@ -247,7 +298,8 @@ export const css = {
     'button:not(:disabled):not([aria-disabled="true"]), :is([role="button"], [role="checkbox"], [role="switch"], [role="radio"], [role="tab"]):not([aria-disabled="true"]):not([data-disabled]), summary, label:has(input:not(:disabled)), label[for]:not([data-disabled])':
       { cursor: "pointer" },
     "::selection": {
-      "background-color": "color-mix(in oklch, var(--primary) 25%, transparent)",
+      "background-color":
+        "color-mix(in oklch, var(--primary) 25%, transparent)",
     },
   },
 }
