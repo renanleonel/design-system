@@ -1902,6 +1902,36 @@
       ]
     },
     {
+      "name": "marketing",
+      "type": "registry:block",
+      "title": "Landing page",
+      "description": "Marketing header (sheet on mobile, theme and language), hero with a framed product preview, logo cloud, feature grid and testimonials.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/language-select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sheet.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-toggle.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/marketing/marketing-header.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/marketing/marketing-header.tsx"
+        },
+        {
+          "path": "components/blocks/marketing/sections.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/marketing/sections.tsx"
+        }
+      ]
+    },
+    {
       "name": "notifications",
       "type": "registry:block",
       "title": "Notifications",
@@ -1946,6 +1976,31 @@
           "path": "components/blocks/onboarding/feature-intro.tsx",
           "type": "registry:component",
           "target": "components/blocks/onboarding/feature-intro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "pricing",
+      "type": "registry:block",
+      "title": "Pricing page",
+      "description": "Monthly/yearly plans with the saving inline, a comparison table that becomes a plan picker on phones, FAQ and a closing call to action.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/accordion.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/pricing/pricing.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/pricing/pricing.tsx"
         }
       ]
     },

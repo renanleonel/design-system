@@ -118,7 +118,7 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
       >
         {children}
       </AppShell>
-      {variant === "fade" && (
+      {variant === "fade" && params.get("chrome") !== "0" && (
         <div className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-2 rounded-2xl bg-popover p-2 shadow-popover md:flex">
           <p className="max-w-80 px-2 pt-1 text-center text-xs text-muted-foreground">
             {MOTIONS.find((m) => m.value === motion)?.hint}

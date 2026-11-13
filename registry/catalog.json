@@ -467,6 +467,20 @@
   },
   "blocks": [
     {
+      "id": "landing",
+      "registry": "marketing",
+      "title": "Landing page",
+      "description": "Marketing header (sheet on mobile, theme and language), hero with a framed product preview, logo cloud, feature grid and testimonials.",
+      "src": "/blocks/landing"
+    },
+    {
+      "id": "pricing",
+      "registry": "pricing",
+      "title": "Pricing page",
+      "description": "Monthly/yearly plans with the saving inline, a comparison table that becomes a plan picker on phones, FAQ and a closing call to action.",
+      "src": "/blocks/pricing"
+    },
+    {
       "id": "dashboard",
       "registry": "dashboard",
       "title": "Dashboard",
