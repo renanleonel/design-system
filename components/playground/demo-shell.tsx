@@ -44,8 +44,8 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
   const params = useSearchParams()
-  // ?sidebar=default shows the original rail (labels unmount, icons center).
-  const variant = params.get("sidebar") === "default" ? "default" : "fade"
+  // ?sidebar=classic shows the old rail (labels unmount, icons center).
+  const variant = params.get("sidebar") === "classic" ? "classic" : "fade"
   const motion = (
     MOTIONS.some((m) => m.value === params.get("motion"))
       ? params.get("motion")

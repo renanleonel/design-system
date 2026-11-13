@@ -479,7 +479,9 @@ function UserMenu({
  * The frame every app page sits in: a tinted sidebar and the page on an inset
  * white surface (nested surfaces, docs/COMPOSITION.md).
  *
- * - Desktop: the sidebar collapses to an icon rail (Mod+B), labels move to tooltips.
+ * - Desktop: drag the edge to resize; under 160px (or Mod+B) it settles to an
+ *   icon rail with tooltips. Labels leave per `motion` (ease-out, cascade,
+ *   scrub) and the icons never move.
  * - Mobile (< md): the sidebar becomes a sheet opened from the header.
  * - Mod+K opens a command palette over every nav item; each item can have its
  *   own sequence hotkey (G then P).
@@ -498,7 +500,7 @@ function AppShell({
   settingsHref,
   onSignOut,
   defaultCollapsed = false,
-  variant = "default",
+  variant = "fade",
   motion = "cascade",
   resizable = true,
   defaultWidth = 256,
@@ -514,8 +516,12 @@ function AppShell({
   settingsHref?: string
   onSignOut?: () => void
   defaultCollapsed?: boolean
-  /** `fade`: labels fade and blur out before the rail closes; icons never move. */
-  variant?: "default" | "fade"
+  /**
+   * `fade` (the DS standard for resizable sidebars): labels stay mounted and
+   * leave per `motion`, the edge resizes, icons never move. `classic`: the old
+   * rail (labels unmount, icons center), no resizing.
+   */
+  variant?: "fade" | "classic"
   /** Fade variant: how the labels leave and return (see SIDEBAR_MOTION). */
   motion?: SidebarMotion
   /** Fade variant: drag the trailing edge to resize; under 160px it settles to icons. */

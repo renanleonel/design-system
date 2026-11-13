@@ -477,7 +477,7 @@
       "id": "app-shell",
       "registry": "app-shell",
       "title": "App shell",
-      "description": "Collapsible sidebar (variant=\"fade\": labels fade and blur out, icons never move), nested groups, Mod+K palette, G-then-key navigation, a sheet on mobile.",
+      "description": "Resizable sidebar (drag the edge; under 160px it settles to icons) with ease-out, cascade or scrub label motion, nested groups, Mod+K palette, G-then-key navigation, a sheet on mobile.",
       "src": "/blocks/projects"
     },
     {
