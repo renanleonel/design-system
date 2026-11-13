@@ -171,6 +171,11 @@ export const css = {
     // two-line headings. Scoped to text elements, not `*`: the cost grows with
     // text that re-lays out constantly, so streaming / editable regions
     // (`data-streaming`, contenteditable) fall back to plain wrapping.
+    // Worst-case data (edge-cases.md): an unbroken 50-char word or URL must not
+    // widen its card. `anywhere` (unlike break-word) also shrinks min-content, so
+    // grid and flex children stay inside their track. Tables and code opt out.
+    body: { "overflow-wrap": "anywhere" },
+    "table, pre, code, kbd": { "overflow-wrap": "normal" },
     "h1, h2, h3, h4, h5, h6": { "text-wrap": "balance" },
     "p, li, dd, figcaption, blockquote": { "text-wrap": "pretty" },
     "[data-streaming], [data-streaming] *, [contenteditable], [contenteditable] *":

@@ -11,7 +11,8 @@
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
     "registry:gen": "node scripts/gen-registry.mjs",
-    "registry:build": "node scripts/gen-registry.mjs \\&\\& shadcn build"
+    "registry:build": "node scripts/gen-registry.mjs \\&\\& shadcn build",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

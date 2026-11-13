@@ -85,7 +85,7 @@ function Form<TValues extends FieldValues, TOutput = TValues>({
       <form
         noValidate
         data-slot="form"
-        className={cn("grid gap-6", className)}
+        className={cn("grid grid-cols-[minmax(0,1fr)] gap-6", className)}
         onSubmit={(event) => {
           if (form.formState.isSubmitting) {
             event.preventDefault()
