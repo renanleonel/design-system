@@ -1,0 +1,852 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "renan",
+  "homepage": "https://github.com/renanleonel/design-system",
+  "items": [
+    {
+      "name": "base",
+      "type": "registry:base",
+      "title": "renan/ui",
+      "description": "Everything: tokens, default theme, utils and all components.",
+      "config": {
+        "style": "base-nova",
+        "iconLibrary": "lucide",
+        "tailwind": {
+          "baseColor": "neutral",
+          "cssVariables": true
+        }
+      },
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tokens.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/accordion.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert-dialog.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/card.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/checkbox.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/command.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dialog.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/drawer.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/field.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/separator.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sheet.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/skeleton.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/switch.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
+      ]
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "dependencies": [
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "tokens",
+      "type": "registry:style",
+      "title": "Design tokens",
+      "description": "Layer-2 tokens (control size, control radius, shadows) on top of the shadcn theme contract.",
+      "cssVars": {
+        "theme": {
+          "spacing-control": "var(--ds-control-h)",
+          "spacing-control-sm": "var(--ds-control-h-sm)",
+          "spacing-control-xs": "var(--ds-control-h-xs)",
+          "spacing-control-lg": "var(--ds-control-h-lg)",
+          "radius-control": "var(--ds-radius-control)",
+          "shadow-2xs": "var(--shadow-2xs)",
+          "shadow-xs": "var(--shadow-xs)",
+          "shadow-sm": "var(--shadow-sm)",
+          "shadow-md": "var(--shadow-md)",
+          "shadow-lg": "var(--shadow-lg)",
+          "shadow-xl": "var(--shadow-xl)",
+          "shadow-2xl": "var(--shadow-2xl)"
+        },
+        "light": {
+          "ds-control-h": "2rem",
+          "ds-control-h-sm": "1.75rem",
+          "ds-control-h-xs": "1.5rem",
+          "ds-control-h-lg": "2.25rem",
+          "ds-radius-control": "var(--radius)",
+          "ds-duration": "150ms",
+          "shadow-2xs": "0 1px rgb(0 0 0 / 0.05)",
+          "shadow-xs": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+          "shadow-sm": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+          "shadow-md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+          "shadow-lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+          "shadow-xl": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+          "shadow-2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)"
+        }
+      }
+    },
+    {
+      "type": "registry:theme",
+      "css": {
+        "@layer base": {
+          "body": {
+            "letter-spacing": "var(--tracking-normal)"
+          }
+        }
+      },
+      "cssVars": {
+        "theme": {
+          "font-sans": "Geist, sans-serif",
+          "font-mono": "\"Fira Code\", \"Courier New\", monospace",
+          "font-serif": "\"Lora\", Georgia, serif",
+          "radius": "0.5rem",
+          "tracking-tighter": "calc(var(--tracking-normal) - 0.05em)",
+          "tracking-tight": "calc(var(--tracking-normal) - 0.025em)",
+          "tracking-wide": "calc(var(--tracking-normal) + 0.025em)",
+          "tracking-wider": "calc(var(--tracking-normal) + 0.05em)",
+          "tracking-widest": "calc(var(--tracking-normal) + 0.1em)"
+        },
+        "light": {
+          "background": "oklch(0.9777 0.0041 301.4256)",
+          "foreground": "oklch(0.3651 0.0325 287.0807)",
+          "card": "oklch(1.0000 0 0)",
+          "card-foreground": "oklch(0.3651 0.0325 287.0807)",
+          "popover": "oklch(1.0000 0 0)",
+          "popover-foreground": "oklch(0.3651 0.0325 287.0807)",
+          "primary": "oklch(0.6104 0.0767 299.7335)",
+          "primary-foreground": "oklch(0.9777 0.0041 301.4256)",
+          "secondary": "oklch(0.8957 0.0265 300.2416)",
+          "secondary-foreground": "oklch(0.3651 0.0325 287.0807)",
+          "muted": "oklch(0.8906 0.0139 299.7754)",
+          "muted-foreground": "oklch(0.5288 0.0375 290.7895)",
+          "accent": "oklch(0.7889 0.0802 359.9375)",
+          "accent-foreground": "oklch(0.3394 0.0441 1.7583)",
+          "destructive": "oklch(0.6332 0.1578 22.6734)",
+          "destructive-foreground": "oklch(0.9777 0.0041 301.4256)",
+          "border": "oklch(0.8447 0.0226 300.1421)",
+          "input": "oklch(0.9329 0.0124 301.2783)",
+          "ring": "oklch(0.6104 0.0767 299.7335)",
+          "chart-1": "oklch(0.6104 0.0767 299.7335)",
+          "chart-2": "oklch(0.7889 0.0802 359.9375)",
+          "chart-3": "oklch(0.7321 0.0749 169.8670)",
+          "chart-4": "oklch(0.8540 0.0882 76.8292)",
+          "chart-5": "oklch(0.7857 0.0645 258.0839)",
+          "radius": "0.5rem",
+          "sidebar": "oklch(0.9554 0.0082 301.3541)",
+          "sidebar-foreground": "oklch(0.3651 0.0325 287.0807)",
+          "sidebar-primary": "oklch(0.6104 0.0767 299.7335)",
+          "sidebar-primary-foreground": "oklch(0.9777 0.0041 301.4256)",
+          "sidebar-accent": "oklch(0.7889 0.0802 359.9375)",
+          "sidebar-accent-foreground": "oklch(0.3394 0.0441 1.7583)",
+          "sidebar-border": "oklch(0.8719 0.0198 302.1690)",
+          "sidebar-ring": "oklch(0.6104 0.0767 299.7335)",
+          "font-sans": "Geist, sans-serif",
+          "font-serif": "\"Lora\", Georgia, serif",
+          "font-mono": "\"Fira Code\", \"Courier New\", monospace",
+          "shadow-color": "hsl(0 0% 0%)",
+          "shadow-opacity": "0.06",
+          "shadow-blur": "5px",
+          "shadow-spread": "1px",
+          "shadow-offset-x": "1px",
+          "shadow-offset-y": "2px",
+          "letter-spacing": "0em",
+          "spacing": "0.25rem",
+          "shadow-2xs": "1px 2px 5px 1px hsl(0 0% 0% / 0.03)",
+          "shadow-xs": "1px 2px 5px 1px hsl(0 0% 0% / 0.03)",
+          "shadow-sm": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 1px 2px 0px hsl(0 0% 0% / 0.06)",
+          "shadow": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 1px 2px 0px hsl(0 0% 0% / 0.06)",
+          "shadow-md": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 2px 4px 0px hsl(0 0% 0% / 0.06)",
+          "shadow-lg": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 4px 6px 0px hsl(0 0% 0% / 0.06)",
+          "shadow-xl": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 8px 10px 0px hsl(0 0% 0% / 0.06)",
+          "shadow-2xl": "1px 2px 5px 1px hsl(0 0% 0% / 0.15)",
+          "tracking-normal": "0em"
+        },
+        "dark": {
+          "background": "oklch(0.2166 0.0215 292.8474)",
+          "foreground": "oklch(0.9053 0.0245 293.5570)",
+          "card": "oklch(0.2544 0.0301 292.7315)",
+          "card-foreground": "oklch(0.9053 0.0245 293.5570)",
+          "popover": "oklch(0.2544 0.0301 292.7315)",
+          "popover-foreground": "oklch(0.9053 0.0245 293.5570)",
+          "primary": "oklch(0.7058 0.0777 302.0489)",
+          "primary-foreground": "oklch(0.2166 0.0215 292.8474)",
+          "secondary": "oklch(0.4604 0.0472 295.5578)",
+          "secondary-foreground": "oklch(0.9053 0.0245 293.5570)",
+          "muted": "oklch(0.2560 0.0320 294.8380)",
+          "muted-foreground": "oklch(0.6974 0.0282 300.0614)",
+          "accent": "oklch(0.3181 0.0321 308.6149)",
+          "accent-foreground": "oklch(0.8391 0.0692 2.6681)",
+          "destructive": "oklch(0.6875 0.1420 21.4566)",
+          "destructive-foreground": "oklch(0.2166 0.0215 292.8474)",
+          "border": "oklch(0.3063 0.0359 293.3367)",
+          "input": "oklch(0.2847 0.0346 291.2726)",
+          "ring": "oklch(0.7058 0.0777 302.0489)",
+          "chart-1": "oklch(0.7058 0.0777 302.0489)",
+          "chart-2": "oklch(0.8391 0.0692 2.6681)",
+          "chart-3": "oklch(0.7321 0.0749 169.8670)",
+          "chart-4": "oklch(0.8540 0.0882 76.8292)",
+          "chart-5": "oklch(0.7857 0.0645 258.0839)",
+          "radius": "0.5rem",
+          "sidebar": "oklch(0.1985 0.0200 293.6639)",
+          "sidebar-foreground": "oklch(0.9053 0.0245 293.5570)",
+          "sidebar-primary": "oklch(0.7058 0.0777 302.0489)",
+          "sidebar-primary-foreground": "oklch(0.2166 0.0215 292.8474)",
+          "sidebar-accent": "oklch(0.3181 0.0321 308.6149)",
+          "sidebar-accent-foreground": "oklch(0.8391 0.0692 2.6681)",
+          "sidebar-border": "oklch(0.2847 0.0346 291.2726)",
+          "sidebar-ring": "oklch(0.7058 0.0777 302.0489)",
+          "font-sans": "Geist, sans-serif",
+          "font-serif": "\"Lora\", Georgia, serif",
+          "font-mono": "\"Fira Code\", \"Courier New\", monospace",
+          "shadow-color": "hsl(0 0% 0%)",
+          "shadow-opacity": "0.06",
+          "shadow-blur": "5px",
+          "shadow-spread": "1px",
+          "shadow-offset-x": "1px",
+          "shadow-offset-y": "2px",
+          "letter-spacing": "0em",
+          "spacing": "0.25rem",
+          "shadow-2xs": "1px 2px 5px 1px hsl(0 0% 0% / 0.03)",
+          "shadow-xs": "1px 2px 5px 1px hsl(0 0% 0% / 0.03)",
+          "shadow-sm": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 1px 2px 0px hsl(0 0% 0% / 0.06)",
+          "shadow": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 1px 2px 0px hsl(0 0% 0% / 0.06)",
+          "shadow-md": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 2px 4px 0px hsl(0 0% 0% / 0.06)",
+          "shadow-lg": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 4px 6px 0px hsl(0 0% 0% / 0.06)",
+          "shadow-xl": "1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 8px 10px 0px hsl(0 0% 0% / 0.06)",
+          "shadow-2xl": "1px 2px 5px 1px hsl(0 0% 0% / 0.15)"
+        }
+      },
+      "name": "theme-amethyst-haze"
+    },
+    {
+      "type": "registry:theme",
+      "css": {
+        "@layer base": {
+          "body": {
+            "letter-spacing": "var(--tracking-normal)"
+          }
+        }
+      },
+      "cssVars": {
+        "theme": {
+          "font-sans": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+          "font-mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "font-serif": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+          "radius": "0.5rem",
+          "tracking-tighter": "calc(var(--tracking-normal) - 0.05em)",
+          "tracking-tight": "calc(var(--tracking-normal) - 0.025em)",
+          "tracking-wide": "calc(var(--tracking-normal) + 0.025em)",
+          "tracking-wider": "calc(var(--tracking-normal) + 0.05em)",
+          "tracking-widest": "calc(var(--tracking-normal) + 0.1em)"
+        },
+        "light": {
+          "background": "oklch(0.9821 0 0)",
+          "foreground": "oklch(0.2435 0 0)",
+          "card": "oklch(0.9911 0 0)",
+          "card-foreground": "oklch(0.2435 0 0)",
+          "popover": "oklch(0.9911 0 0)",
+          "popover-foreground": "oklch(0.2435 0 0)",
+          "primary": "oklch(0.4341 0.0392 41.9938)",
+          "primary-foreground": "oklch(1.0000 0 0)",
+          "secondary": "oklch(0.9200 0.0651 74.3695)",
+          "secondary-foreground": "oklch(0.3499 0.0685 40.8288)",
+          "muted": "oklch(0.9521 0 0)",
+          "muted-foreground": "oklch(0.5032 0 0)",
+          "accent": "oklch(0.9310 0 0)",
+          "accent-foreground": "oklch(0.2435 0 0)",
+          "destructive": "oklch(0.6271 0.1936 33.3390)",
+          "destructive-foreground": "oklch(1.0000 0 0)",
+          "border": "oklch(0.8822 0 0)",
+          "input": "oklch(0.8822 0 0)",
+          "ring": "oklch(0.4341 0.0392 41.9938)",
+          "chart-1": "oklch(0.4341 0.0392 41.9938)",
+          "chart-2": "oklch(0.9200 0.0651 74.3695)",
+          "chart-3": "oklch(0.9310 0 0)",
+          "chart-4": "oklch(0.9367 0.0523 75.5009)",
+          "chart-5": "oklch(0.4338 0.0437 41.6746)",
+          "radius": "0.5rem",
+          "sidebar": "oklch(0.9881 0 0)",
+          "sidebar-foreground": "oklch(0.2645 0 0)",
+          "sidebar-primary": "oklch(0.3250 0 0)",
+          "sidebar-primary-foreground": "oklch(0.9881 0 0)",
+          "sidebar-accent": "oklch(0.9761 0 0)",
+          "sidebar-accent-foreground": "oklch(0.3250 0 0)",
+          "sidebar-border": "oklch(0.9401 0 0)",
+          "sidebar-ring": "oklch(0.7731 0 0)",
+          "font-sans": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+          "font-serif": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+          "font-mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "shadow-color": "oklch(0 0 0)",
+          "shadow-opacity": "0.1",
+          "shadow-blur": "3px",
+          "shadow-spread": "0px",
+          "shadow-offset-x": "0",
+          "shadow-offset-y": "1px",
+          "letter-spacing": "0em",
+          "spacing": "0.25rem",
+          "shadow-2xs": "0 1px 3px 0px hsl(0 0% 0% / 0.05)",
+          "shadow-xs": "0 1px 3px 0px hsl(0 0% 0% / 0.05)",
+          "shadow-sm": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10)",
+          "shadow": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10)",
+          "shadow-md": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10)",
+          "shadow-lg": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10)",
+          "shadow-xl": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10)",
+          "shadow-2xl": "0 1px 3px 0px hsl(0 0% 0% / 0.25)",
+          "tracking-normal": "0em"
+        },
+        "dark": {
+          "background": "oklch(0.1776 0 0)",
+          "foreground": "oklch(0.9491 0 0)",
+          "card": "oklch(0.2134 0 0)",
+          "card-foreground": "oklch(0.9491 0 0)",
+          "popover": "oklch(0.2134 0 0)",
+          "popover-foreground": "oklch(0.9491 0 0)",
+          "primary": "oklch(0.9247 0.0524 66.1732)",
+          "primary-foreground": "oklch(0.2029 0.0240 200.1962)",
+          "secondary": "oklch(0.3163 0.0190 63.6992)",
+          "secondary-foreground": "oklch(0.9247 0.0524 66.1732)",
+          "muted": "oklch(0.2520 0 0)",
+          "muted-foreground": "oklch(0.7699 0 0)",
+          "accent": "oklch(0.2850 0 0)",
+          "accent-foreground": "oklch(0.9491 0 0)",
+          "destructive": "oklch(0.6271 0.1936 33.3390)",
+          "destructive-foreground": "oklch(1.0000 0 0)",
+          "border": "oklch(0.2351 0.0115 91.7467)",
+          "input": "oklch(0.4017 0 0)",
+          "ring": "oklch(0.9247 0.0524 66.1732)",
+          "chart-1": "oklch(0.9247 0.0524 66.1732)",
+          "chart-2": "oklch(0.3163 0.0190 63.6992)",
+          "chart-3": "oklch(0.2850 0 0)",
+          "chart-4": "oklch(0.3481 0.0219 67.0001)",
+          "chart-5": "oklch(0.9245 0.0533 67.0855)",
+          "radius": "0.5rem",
+          "sidebar": "oklch(0.2103 0.0059 285.8852)",
+          "sidebar-foreground": "oklch(0.9674 0.0013 286.3752)",
+          "sidebar-primary": "oklch(0.4882 0.2172 264.3763)",
+          "sidebar-primary-foreground": "oklch(1.0000 0 0)",
+          "sidebar-accent": "oklch(0.2739 0.0055 286.0326)",
+          "sidebar-accent-foreground": "oklch(0.9674 0.0013 286.3752)",
+          "sidebar-border": "oklch(0.2739 0.0055 286.0326)",
+          "sidebar-ring": "oklch(0.8711 0.0055 286.2860)",
+          "font-sans": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+          "font-serif": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+          "font-mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "shadow-color": "oklch(0 0 0)",
+          "shadow-opacity": "0.1",
+          "shadow-blur": "3px",
+          "shadow-spread": "0px",
+          "shadow-offset-x": "0",
+          "shadow-offset-y": "1px",
+          "letter-spacing": "0em",
+          "spacing": "0.25rem",
+          "shadow-2xs": "0 1px 3px 0px hsl(0 0% 0% / 0.05)",
+          "shadow-xs": "0 1px 3px 0px hsl(0 0% 0% / 0.05)",
+          "shadow-sm": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10)",
+          "shadow": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10)",
+          "shadow-md": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10)",
+          "shadow-lg": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10)",
+          "shadow-xl": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10)",
+          "shadow-2xl": "0 1px 3px 0px hsl(0 0% 0% / 0.25)"
+        }
+      },
+      "name": "theme-caffeine"
+    },
+    {
+      "type": "registry:theme",
+      "cssVars": {
+        "light": {
+          "radius": "0.625rem",
+          "background": "oklch(1 0 0)",
+          "foreground": "oklch(0.145 0 0)",
+          "card": "oklch(1 0 0)",
+          "card-foreground": "oklch(0.145 0 0)",
+          "popover": "oklch(1 0 0)",
+          "popover-foreground": "oklch(0.145 0 0)",
+          "primary": "oklch(0.205 0 0)",
+          "primary-foreground": "oklch(0.985 0 0)",
+          "secondary": "oklch(0.97 0 0)",
+          "secondary-foreground": "oklch(0.205 0 0)",
+          "muted": "oklch(0.97 0 0)",
+          "muted-foreground": "oklch(0.556 0 0)",
+          "accent": "oklch(0.97 0 0)",
+          "accent-foreground": "oklch(0.205 0 0)",
+          "destructive": "oklch(0.577 0.245 27.325)",
+          "border": "oklch(0.922 0 0)",
+          "input": "oklch(0.922 0 0)",
+          "ring": "oklch(0.708 0 0)",
+          "chart-1": "oklch(0.87 0 0)",
+          "chart-2": "oklch(0.556 0 0)",
+          "chart-3": "oklch(0.439 0 0)",
+          "chart-4": "oklch(0.371 0 0)",
+          "chart-5": "oklch(0.269 0 0)",
+          "sidebar": "oklch(0.985 0 0)",
+          "sidebar-foreground": "oklch(0.145 0 0)",
+          "sidebar-primary": "oklch(0.205 0 0)",
+          "sidebar-primary-foreground": "oklch(0.985 0 0)",
+          "sidebar-accent": "oklch(0.97 0 0)",
+          "sidebar-accent-foreground": "oklch(0.205 0 0)",
+          "sidebar-border": "oklch(0.922 0 0)",
+          "sidebar-ring": "oklch(0.708 0 0)"
+        },
+        "dark": {
+          "background": "oklch(0.145 0 0)",
+          "foreground": "oklch(0.985 0 0)",
+          "card": "oklch(0.205 0 0)",
+          "card-foreground": "oklch(0.985 0 0)",
+          "popover": "oklch(0.205 0 0)",
+          "popover-foreground": "oklch(0.985 0 0)",
+          "primary": "oklch(0.922 0 0)",
+          "primary-foreground": "oklch(0.205 0 0)",
+          "secondary": "oklch(0.269 0 0)",
+          "secondary-foreground": "oklch(0.985 0 0)",
+          "muted": "oklch(0.269 0 0)",
+          "muted-foreground": "oklch(0.708 0 0)",
+          "accent": "oklch(0.269 0 0)",
+          "accent-foreground": "oklch(0.985 0 0)",
+          "destructive": "oklch(0.704 0.191 22.216)",
+          "border": "oklch(1 0 0 / 10%)",
+          "input": "oklch(1 0 0 / 15%)",
+          "ring": "oklch(0.556 0 0)",
+          "chart-1": "oklch(0.87 0 0)",
+          "chart-2": "oklch(0.556 0 0)",
+          "chart-3": "oklch(0.439 0 0)",
+          "chart-4": "oklch(0.371 0 0)",
+          "chart-5": "oklch(0.269 0 0)",
+          "sidebar": "oklch(0.205 0 0)",
+          "sidebar-foreground": "oklch(0.985 0 0)",
+          "sidebar-primary": "oklch(0.488 0.243 264.376)",
+          "sidebar-primary-foreground": "oklch(0.985 0 0)",
+          "sidebar-accent": "oklch(0.269 0 0)",
+          "sidebar-accent-foreground": "oklch(0.985 0 0)",
+          "sidebar-border": "oklch(1 0 0 / 10%)",
+          "sidebar-ring": "oklch(0.556 0 0)"
+        }
+      },
+      "name": "theme-neutral"
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "dependencies": [
+        "cmdk",
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dialog.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "dependencies": [
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/separator.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "dependencies": [
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react",
+        "next-themes",
+        "sonner"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/sonner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
