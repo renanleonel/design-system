@@ -417,7 +417,7 @@ function UserMenu({
         render={
           <button
             type="button"
-            aria-label={`Account: ${user.name}`}
+            aria-label={!fade && collapsed ? `Account: ${user.name}` : undefined}
             className={cn(
               "flex h-control-lg w-full items-center gap-2.5 rounded-control px-1.5 text-start text-sm focus-ring transition-colors hover:bg-sidebar-accent aria-expanded:bg-sidebar-accent",
               !fade && collapsed && "justify-center px-0"

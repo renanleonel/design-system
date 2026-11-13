@@ -237,12 +237,17 @@ function DataTable<TData>({
     setSearchParams({ sort: next, page: null })
   }
 
-  const cellClass = (row: { column: { columnDef: ColumnDef<TData> } }) =>
+  const cellClass = (row: {
+    column: { id: string; columnDef: ColumnDef<TData> }
+  }) =>
     cn(
       // Follows the table's own width, not the viewport: beside a sidebar a
       // tablet-sized screen still has a phone-sized table.
       row.column.columnDef.meta?.hideOnMobile && "hidden @2xl/table:table-cell",
       row.column.columnDef.meta?.align === "end" && "text-end",
+      // 24px clear around the 16px checkbox (WCAG 2.5.8): the next column's
+      // sort button would otherwise sit 10px from its center.
+      row.column.id === "select" && "pe-4!",
       // Takes the spare width and truncates, but never below 10rem; past that
       // the table scrolls sideways instead of overlapping cells.
       row.column.columnDef.meta?.grow && "w-full max-w-0 min-w-40"
@@ -365,7 +370,7 @@ function DataTable<TData>({
                         key={header.id}
                         className={cn(
                           cellClass(header),
-                          header.id === "select" && "w-10"
+                          header.id === "select" && "w-12"
                         )}
                         aria-sort={
                           dir === "asc"

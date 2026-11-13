@@ -28,7 +28,9 @@ export function WithBadge() {
   return (
     <Avatar size="lg">
       <AvatarFallback>GH</AvatarFallback>
-      <AvatarBadge className="bg-tone-green" aria-label="Online" />
+      <AvatarBadge className="bg-tone-green">
+        <span className="sr-only">Online</span>
+      </AvatarBadge>
     </Avatar>
   )
 }

@@ -120,14 +120,16 @@ export function SiteHeader({
           <Button
             variant="outline"
             onClick={() => setSearchOpen(true)}
-            aria-label="Search"
+            aria-keyshortcuts="Control+K Meta+K"
             // Not justify-between: Button's (empty) spinner slot is a flex item
             // too and would take a share of the space. Push the hotkey instead.
             className="w-9 justify-center bg-muted/40 px-0 text-muted-foreground sm:w-56 sm:justify-start sm:px-2.5"
           >
             <SearchIcon />
-            <span className="hidden sm:inline">Search docs…</span>
-            <Hotkey hotkey="Mod+K" className="ms-auto hidden sm:flex" />
+            <span className="sr-only sm:not-sr-only">Search docs…</span>
+            <span aria-hidden className="ms-auto hidden sm:flex">
+              <Hotkey hotkey="Mod+K" />
+            </span>
           </Button>
           <Button
             variant="ghost"

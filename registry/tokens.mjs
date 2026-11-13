@@ -8,22 +8,22 @@
 // lifts lightness. One meaning per tone across a product (e.g. green = live).
 export const tones = {
   light: {
-    gray: "oklch(0.5 0.01 260)",
-    blue: "oklch(0.5 0.17 262)",
-    green: "oklch(0.5 0.11 158)",
-    amber: "oklch(0.52 0.11 70)",
-    orange: "oklch(0.55 0.16 42)",
-    red: "oklch(0.53 0.19 25)",
-    purple: "oklch(0.5 0.19 318)",
+    gray: "oklch(0.46 0.01 260)",
+    blue: "oklch(0.47 0.17 262)",
+    green: "oklch(0.45 0.11 158)",
+    amber: "oklch(0.47 0.11 70)",
+    orange: "oklch(0.48 0.16 42)",
+    red: "oklch(0.48 0.19 25)",
+    purple: "oklch(0.49 0.19 318)",
   },
   dark: {
     gray: "oklch(0.82 0.01 260)",
-    blue: "oklch(0.82 0.1 262)",
+    blue: "oklch(0.83 0.1 262)",
     green: "oklch(0.82 0.11 158)",
-    amber: "oklch(0.82 0.11 75)",
+    amber: "oklch(0.83 0.11 75)",
     orange: "oklch(0.83 0.11 50)",
     red: "oklch(0.84 0.1 22)",
-    purple: "oklch(0.82 0.11 318)",
+    purple: "oklch(0.84 0.11 318)",
   },
 }
 const toneVars = (mode) =>

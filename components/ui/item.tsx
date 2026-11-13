@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
@@ -6,17 +8,22 @@ import { cn } from "cn"
 
 import { Separator } from "@/components/ui/separator"
 
+/** Items directly inside an ItemGroup (role="list") are its list items. */
+const InGroupContext = React.createContext(false)
+
 function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      role="list"
-      data-slot="item-group"
-      className={cn(
-        "group/item-group flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2",
-        className
-      )}
-      {...props}
-    />
+    <InGroupContext value={true}>
+      <div
+        role="list"
+        data-slot="item-group"
+        className={cn(
+          "group/item-group flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2",
+          className
+        )}
+        {...props}
+      />
+    </InGroupContext>
   )
 }
 
@@ -27,6 +34,7 @@ function ItemSeparator({
   return (
     <Separator
       data-slot="item-separator"
+      aria-hidden
       orientation="horizontal"
       className={cn("my-2", className)}
       {...props}
@@ -63,10 +71,12 @@ function Item({
   render,
   ...props
 }: useRender.ComponentProps<"div"> & VariantProps<typeof itemVariants>) {
+  const inGroup = React.useContext(InGroupContext)
   return useRender({
     defaultTagName: "div",
     props: mergeProps<"div">(
       {
+        role: inGroup ? "listitem" : undefined,
         className: cn(itemVariants({ variant, size, className })),
       },
       props

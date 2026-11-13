@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { ChevronRightIcon, FileTextIcon, ShieldCheckIcon } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -64,7 +65,7 @@ export function List() {
   return (
     <ItemGroup className="max-w-md">
       {PEOPLE.map((person, i) => (
-        <div key={person.email}>
+        <React.Fragment key={person.email}>
           {i > 0 && <ItemSeparator />}
           <Item size="sm">
             <ItemMedia>
@@ -82,7 +83,7 @@ export function List() {
               <ItemDescription>{person.email}</ItemDescription>
             </ItemContent>
           </Item>
-        </div>
+        </React.Fragment>
       ))}
     </ItemGroup>
   )

@@ -14,6 +14,7 @@ function Slider({
   value,
   min = 0,
   max = 100,
+  "aria-label": ariaLabel,
   ...props
 }: SliderPrimitive.Root.Props) {
   const values = Array.isArray(value)
@@ -48,6 +49,15 @@ function Slider({
             data-slot="slider-thumb"
             key={index}
             index={index}
+            // The label belongs on each thumb's input (that's what gets focus).
+            getAriaLabel={
+              ariaLabel
+                ? (i) =>
+                    values.length > 1
+                      ? `${ariaLabel}, ${i === 0 ? "minimum" : "maximum"}`
+                      : ariaLabel
+                : undefined
+            }
             className="relative block size-4 shrink-0 rounded-full border border-primary bg-background shadow-border transition-[scale] duration-150 ease-out select-none after:absolute after:-inset-2 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-(--ds-focus-ring) data-disabled:pointer-events-none data-dragging:scale-110 motion-reduce:transition-none pointer-coarse:after:-inset-3.5"
           />
         ))}

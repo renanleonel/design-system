@@ -123,7 +123,7 @@ export function LogoCloud({
           <li
             key={item.name}
             title={item.name}
-            className="text-muted-foreground opacity-70 grayscale transition-[opacity,filter] duration-200 hover:opacity-100 hover:grayscale-0"
+            className="text-muted-foreground grayscale transition-[color,filter] duration-200 hover:text-foreground hover:grayscale-0"
           >
             {item.logo}
           </li>

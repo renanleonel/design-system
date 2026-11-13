@@ -20,7 +20,7 @@ export async function CodeBlock({
     <figure
       data-slot="code-block"
       className={cn(
-        "group/code relative overflow-hidden rounded-xl bg-muted/40 shadow-border",
+        "group/code relative overflow-hidden rounded-xl bg-card shadow-border",
         className
       )}
     >
@@ -31,7 +31,10 @@ export async function CodeBlock({
       )}
       <CopyButton value={code} className="absolute top-1.5 right-1.5 z-10" />
       <div
-        className="docs-code max-h-[32rem] overflow-auto py-3.5 text-[0.8125rem] leading-relaxed"
+        tabIndex={0}
+        role="region"
+        aria-label={title ? `Code: ${title}` : "Code"}
+        className="docs-code max-h-[32rem] overflow-auto focus-ring-inset py-3.5 text-[0.8125rem] leading-relaxed"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </figure>

@@ -113,10 +113,12 @@ function Control({
 }
 
 function Picker({
+  label,
   items,
   value,
   onValueChange,
 }: {
+  label: string
   items: { label: string; value: string }[]
   value: string
   onValueChange: (value: string) => void
@@ -127,7 +129,7 @@ function Picker({
       value={value}
       onValueChange={(v) => v && onValueChange(v)}
     >
-      <SelectTrigger className="w-40">
+      <SelectTrigger className="w-40" aria-label={label}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
@@ -198,6 +200,7 @@ export function Playground({ themes }: { themes: string[] }) {
           <div className="flex flex-wrap items-end gap-4 rounded-xl bg-muted/40 p-4 shadow-border">
             <Control label="Theme">
               <Picker
+                label="Theme"
                 items={themes.map((t) => ({ label: t, value: t }))}
                 value={theme}
                 onValueChange={changeTheme}
@@ -205,6 +208,7 @@ export function Playground({ themes }: { themes: string[] }) {
             </Control>
             <Control label="Control radius">
               <Picker
+                label="Control radius"
                 items={RADII}
                 value={radius}
                 onValueChange={changeRadius}
@@ -212,6 +216,7 @@ export function Playground({ themes }: { themes: string[] }) {
             </Control>
             <Control label="Density">
               <Picker
+                label="Density"
                 items={DENSITIES}
                 value={density}
                 onValueChange={changeDensity}

@@ -10,6 +10,7 @@
 //        AUDIT_URL=http://localhost:3000 pnpm audit:ui   (audits a running server)
 import { execSync, spawn } from "node:child_process"
 import { readFileSync } from "node:fs"
+import AxeBuilder from "@axe-core/playwright"
 import { chromium } from "playwright"
 
 // AUDIT_PAGES=/blocks/projects,/examples limits the run to some pages.
@@ -43,15 +44,33 @@ const ALL_PAGES = [
   "/blocks/sign-up?layout=image-left",
   "/blocks/reset-password",
 ]
-const PAGES = process.env.AUDIT_PAGES
-  ? process.env.AUDIT_PAGES.split(",")
-  : ALL_PAGES
+// AUDIT_SHARD=2/4 audits every 4th page starting at the 2nd (CI runs 4 in parallel).
+const [shard, shards] = (process.env.AUDIT_SHARD ?? "1/1").split("/").map(Number)
+const PAGES = (
+  process.env.AUDIT_PAGES ? process.env.AUDIT_PAGES.split(",") : ALL_PAGES
+).filter((_, i) => i % shards === shard - 1)
 const VIEWPORTS = [
   { name: "mobile", width: 320, height: 800 },
   { name: "desktop", width: 1280, height: 900 },
 ]
 const SCHEMES = ["light", "dark"]
 const TOLERANCE = 0.5
+
+// Accessibility (axe-core, WCAG 2.2 A/AA), desktop only (structure doesn't
+// change with the viewport; contrast does with the theme, so both schemes).
+// Iframes are skipped: the pages they show are audited on their own.
+async function a11yChecks(page) {
+  // Let entrance fades finish so contrast isn't measured mid-animation.
+  await page.waitForTimeout(600)
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .exclude("iframe")
+    .analyze()
+  return violations.map((v) => {
+    const target = v.nodes[0]?.target.join(" ") ?? ""
+    return `a11y ${v.id}: ${v.help} (${v.nodes.length}x, e.g. ${target.slice(0, 80)})`
+  })
+}
 
 let server
 async function baseUrl() {
@@ -238,6 +257,7 @@ try {
 
         const where = `${path} · ${vp.name} · ${scheme}`
         const issues = [...(await page.evaluate(staticChecks, TOLERANCE))]
+        if (vp.name === "desktop") issues.push(...(await a11yChecks(page)))
         if (vp.name === "desktop") {
           issues.push(...(await selectChecks(page)))
           // Dialogs: open each, audit inside, close.

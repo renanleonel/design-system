@@ -33,7 +33,10 @@ export function InstallCommand({ command }: { command: string }) {
             value={r.id}
             className="flex items-center gap-1 pe-1.5"
           >
-            <pre className="min-w-0 flex-1 overflow-x-auto py-3 ps-4 [scrollbar-width:none] font-mono text-[0.8125rem]">
+            <pre
+              tabIndex={0}
+              aria-label="Install command"
+              className="min-w-0 flex-1 overflow-x-auto rounded-sm focus-ring-inset py-3 ps-4 [scrollbar-width:none] font-mono text-[0.8125rem]">
               <code>{full}</code>
             </pre>
             <CopyButton value={full} className="shrink-0" />

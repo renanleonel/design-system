@@ -147,15 +147,26 @@ for (const file of readdirSync("registry/themes").filter((f) =>
     readFileSync(`registry/themes/${file}`, "utf8")
   )
   for (const mode of ["light", "dark"]) {
-    const card = parse(
-      { ...cssVars.light, ...(mode === "dark" ? cssVars.dark : {}) }.card
-    )
+    const vars = { ...cssVars.light, ...(mode === "dark" ? cssVars.dark : {}) }
+    const card = parse(vars.card)
     if (!card) continue
+    // Every surface a pill sits on: card, page, muted, and a hovered table row
+    // (muted at 50% over the page).
+    const background = parse(vars.background) ?? card
+    const muted = parse(vars.muted) ?? card
+    const surfaces = {
+      card,
+      background,
+      muted,
+      "row hover": blend(muted, background, 0.5),
+    }
     const bad = Object.entries(tones[mode])
-      .map(([name, value]) => [
-        name,
-        ratio(parse(value), blend(parse(value), card, 0.12)),
-      ])
+      .flatMap(([name, value]) =>
+        Object.entries(surfaces).map(([surface, bg]) => [
+          `${name} on ${surface}`,
+          ratio(parse(value), blend(parse(value), bg, 0.12)),
+        ])
+      )
       .filter(([, r]) => r < 4.5)
     if (bad.length) {
       failures += bad.length
