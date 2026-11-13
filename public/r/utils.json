@@ -7,7 +7,7 @@
   "files": [
     {
       "path": "lib/utils.ts",
-      "content": "export { cn } from \"cn\"\n",
+      "content": "import * as React from \"react\"\n\nexport { cn } from \"cn\"\n\n/**\n * Optical centering (typography.md): wraps bare text children in a span whose\n * box is trimmed to cap height and baseline (`text-box`), so `items-center`\n * puts icons on the text's visual center instead of the font's line box, for\n * any font. Elements pass through untouched. Use it where a label never\n * truncates (buttons, badges, menu rows): trimmed boxes clip under overflow.\n */\nexport function opticalText(children: React.ReactNode) {\n  return React.Children.map(children, (child) =>\n    typeof child === \"string\" || typeof child === \"number\"\n      ? React.createElement(\n          \"span\",\n          {\n            \"data-slot\": \"label\",\n            className: \"[text-box:trim-both_cap_alphabetic]\",\n          },\n          child\n        )\n      : child\n  )\n}\n",
       "type": "registry:lib"
     }
   ],

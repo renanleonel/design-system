@@ -3,6 +3,8 @@ import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
+import { opticalText } from "@/lib/utils"
+
 const badgeVariants = cva(
   "group/badge inline-flex w-fit max-w-full shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent font-medium whitespace-nowrap tabular-nums focus-ring transition-colors has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none",
   {
@@ -48,6 +50,7 @@ function Badge({
   tone,
   size,
   render,
+  children,
   ...props
 }: useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants>) {
   return useRender({
@@ -59,6 +62,7 @@ function Badge({
           badgeVariants({ variant: tone ? "plain" : variant, tone, size }),
           className
         ),
+        children: opticalText(children),
       },
       props
     ),

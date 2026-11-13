@@ -186,7 +186,7 @@ function ActionRow({
           </IconTile>
           <SelectValue className="font-medium" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent alignItemWithTrigger={false}>
           {ACTIONS.map((a) => (
             <SelectItem key={a.value} value={a.value}>
               {a.icon}

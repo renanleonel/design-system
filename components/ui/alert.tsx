@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
 const alertVariants = cva(
-  "group/alert relative grid w-full gap-0.5 rounded-lg border px-2.5 py-2 text-left text-sm has-data-[slot=alert-action]:relative has-data-[slot=alert-action]:pr-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2 *:[svg]:row-span-2 *:[svg]:translate-y-0.5 *:[svg]:text-current *:[svg:not([class*='size-'])]:size-4",
+  "group/alert relative grid w-full gap-0.5 rounded-lg border px-2.5 py-2 text-left text-sm has-data-[slot=alert-action]:grid-cols-[minmax(0,1fr)_auto] has-data-[slot=alert-action]:items-center has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2 has-[>svg]:has-data-[slot=alert-action]:grid-cols-[auto_minmax(0,1fr)_auto] *:[svg]:translate-y-0.5 *:[svg]:text-current has-data-[slot=alert-action]:*:[svg]:translate-y-0 has-data-[slot=alert-title]:*:[svg]:row-span-2 *:[svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -13,13 +13,13 @@ const alertVariants = cva(
       },
       // Inline callout: tinted fill, no border, the tone carries the meaning.
       tone: {
-        gray: "bg-tone-gray/10 text-tone-gray *:data-[slot=alert-description]:text-tone-gray border-transparent",
-        blue: "bg-tone-blue/10 text-tone-blue *:data-[slot=alert-description]:text-tone-blue border-transparent",
+        gray: "border-transparent bg-tone-gray/10 text-tone-gray *:data-[slot=alert-description]:text-tone-gray",
+        blue: "border-transparent bg-tone-blue/10 text-tone-blue *:data-[slot=alert-description]:text-tone-blue",
         green:
-          "bg-tone-green/10 text-tone-green *:data-[slot=alert-description]:text-tone-green border-transparent",
+          "border-transparent bg-tone-green/10 text-tone-green *:data-[slot=alert-description]:text-tone-green",
         amber:
-          "bg-tone-amber/10 text-tone-amber *:data-[slot=alert-description]:text-tone-amber border-transparent",
-        red: "bg-tone-red/10 text-tone-red *:data-[slot=alert-description]:text-tone-red border-transparent",
+          "border-transparent bg-tone-amber/10 text-tone-amber *:data-[slot=alert-description]:text-tone-amber",
+        red: "border-transparent bg-tone-red/10 text-tone-red *:data-[slot=alert-description]:text-tone-red",
       },
     },
     defaultVariants: {
@@ -77,7 +77,10 @@ function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="alert-action"
-      className={cn("absolute top-2 right-2", className)}
+      className={cn(
+        "col-end-[-1] row-start-1 self-center group-has-data-[slot=alert-title]/alert:row-span-2",
+        className
+      )}
       {...props}
     />
   )

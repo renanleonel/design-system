@@ -8,6 +8,7 @@ import type { RegisterableHotkey } from "@tanstack/react-hotkeys"
 
 import { Hotkey } from "@/components/ui/hotkey"
 import { Spinner } from "@/components/ui/spinner"
+import { opticalText } from "@/lib/utils"
 import {
   mergeRefs,
   toAriaKeyShortcuts,
@@ -111,7 +112,7 @@ function Button({
           {spinning && <Spinner role={undefined} aria-label={undefined} />}
         </span>
       </span>
-      {children}
+      {opticalText(children)}
       {hotkey && showHotkey && (
         <Hotkey
           hotkey={hotkey}

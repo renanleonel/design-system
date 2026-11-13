@@ -29,10 +29,10 @@ type Tone = "blue" | "green" | "orange" | "purple"
 
 // Full class names (Tailwind can't see classes built from template strings).
 const AVATAR_TONE: Record<Tone, string> = {
-  blue: "bg-tone-blue/15 text-tone-blue",
-  green: "bg-tone-green/15 text-tone-green",
-  orange: "bg-tone-orange/15 text-tone-orange",
-  purple: "bg-tone-purple/15 text-tone-purple",
+  blue: "bg-tone-blue-soft text-tone-blue",
+  green: "bg-tone-green-soft text-tone-green",
+  orange: "bg-tone-orange-soft text-tone-orange",
+  purple: "bg-tone-purple-soft text-tone-purple",
 }
 
 const PEOPLE: Record<string, Tone> = {
@@ -44,7 +44,7 @@ const PEOPLE: Record<string, Tone> = {
 
 function People({ initials }: { initials: string[] }) {
   return (
-    <AvatarGroup>
+    <AvatarGroup className="-space-x-1">
       {initials.map((i) => (
         <Avatar key={i} className="ring-2 ring-card">
           <AvatarFallback

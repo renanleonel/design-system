@@ -96,6 +96,14 @@ export const theme = {
   "radius-control": "var(--ds-radius-control)",
   ...Object.fromEntries(Object.keys(tones.light).map((k) => [`color-tone-${k}`, `var(--ds-tone-${k})`])),
   "color-panel": "var(--ds-panel-bg)",
+  // Opaque tints (tone mixed onto the card) for overlapping things like avatar stacks,
+  // where a translucent tint would let the avatar underneath show through.
+  ...Object.fromEntries(
+    Object.keys(tones.light).map((k) => [
+      `color-tone-${k}-soft`,
+      `color-mix(in oklch, var(--ds-tone-${k}) 16%, var(--card))`,
+    ])
+  ),
   "ease-out": "var(--ds-ease-out)",
   "ease-in-out": "var(--ds-ease-in-out)",
   "ease-drawer": "var(--ds-ease-drawer)",

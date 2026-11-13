@@ -14,6 +14,9 @@ How to build cards, panels and dialogs that look considered, using only renan/ui
 - **Few edges.** The header title, card content and footer text share one leading edge (`PanelHeader` pads by tray + card padding for this). Trailing items (pills, amounts, counts, chevrons) share one trailing edge. Check by drawing a vertical line in the screenshot.
 - **Row anatomy, always in this order:** leading visual (`IconTile` / avatar) → title + meta (`min-w-0 flex-1`, both `truncate`) → trailing status (`Badge tone`) → trailing value (`tabular-nums`, `text-end`).
 - **Nothing reserves invisible space** at a row's end (e.g. a hidden check icon); it breaks the trailing edge.
+- **Selects open over their trigger** by aligning the selected item's text with the trigger's text; this is exact only when both have the same leading content. A trigger with a leading visual (icon tile, avatar) uses `<SelectContent alignItemWithTrigger={false}>` so the popup drops below with matching edges.
+- **Icons and text center optically,** not by line box: `Button`, `Badge` and menu rows wrap their text in a `text-box`-trimmed span (`opticalText` in `lib/utils`). Use it in any new component that puts an icon beside a label that never truncates.
+- **Overlapping avatars use opaque tints** (`bg-tone-*-soft`), and initials overlap less than photos (`-space-x-1`).
 - **Grids over flex math;** a single shrinkable column on mobile (`grid-cols-[minmax(0,1fr)]`).
 
 ## 3. Type (few sizes, one weight step)

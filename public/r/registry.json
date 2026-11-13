@@ -94,6 +94,13 @@
           "color-tone-red": "var(--ds-tone-red)",
           "color-tone-purple": "var(--ds-tone-purple)",
           "color-panel": "var(--ds-panel-bg)",
+          "color-tone-gray-soft": "color-mix(in oklch, var(--ds-tone-gray) 16%, var(--card))",
+          "color-tone-blue-soft": "color-mix(in oklch, var(--ds-tone-blue) 16%, var(--card))",
+          "color-tone-green-soft": "color-mix(in oklch, var(--ds-tone-green) 16%, var(--card))",
+          "color-tone-amber-soft": "color-mix(in oklch, var(--ds-tone-amber) 16%, var(--card))",
+          "color-tone-orange-soft": "color-mix(in oklch, var(--ds-tone-orange) 16%, var(--card))",
+          "color-tone-red-soft": "color-mix(in oklch, var(--ds-tone-red) 16%, var(--card))",
+          "color-tone-purple-soft": "color-mix(in oklch, var(--ds-tone-purple) 16%, var(--card))",
           "ease-out": "var(--ds-ease-out)",
           "ease-in-out": "var(--ds-ease-in-out)",
           "ease-drawer": "var(--ds-ease-drawer)",
@@ -724,7 +731,9 @@
         "class-variance-authority",
         "cn"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json"
+      ],
       "files": [
         {
           "path": "components/ui/badge.tsx",
@@ -744,7 +753,8 @@
       "registryDependencies": [
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
-        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json"
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json"
       ],
       "files": [
         {
@@ -881,7 +891,8 @@
       ],
       "registryDependencies": [
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
-        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json"
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json"
       ],
       "files": [
         {

@@ -11,7 +11,8 @@ const iconTileVariants = cva(
     variants: {
       tone: {
         neutral: "bg-muted text-foreground",
-        inverse: "bg-foreground text-background",
+        inverse:
+          "bg-foreground text-background dark:bg-muted dark:text-foreground dark:shadow-border",
         gray: "bg-tone-gray/12 text-tone-gray",
         blue: "bg-tone-blue/12 text-tone-blue",
         green: "bg-tone-green/12 text-tone-green",
