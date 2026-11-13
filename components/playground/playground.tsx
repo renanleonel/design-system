@@ -191,7 +191,15 @@ export function Playground({ themes }: { themes: string[] }) {
           <div className="mx-auto flex max-w-5xl flex-wrap items-end gap-4 px-4 py-3">
             <div className="mr-auto">
               <h1 className="font-heading text-base font-semibold">renan/ui</h1>
-              <p className="text-xs text-muted-foreground">Theme playground</p>
+              <p className="text-xs text-muted-foreground">
+                Theme playground ·{" "}
+                <a
+                  href="/examples"
+                  className="underline underline-offset-4 hover:text-foreground"
+                >
+                  Examples
+                </a>
+              </p>
             </div>
             <Control label="Theme">
               <Picker
