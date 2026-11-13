@@ -33,6 +33,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/field.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
@@ -40,6 +41,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sheet.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/skeleton.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/switch.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
@@ -72,6 +74,13 @@
           "spacing-control-xs": "var(--ds-control-h-xs)",
           "spacing-control-lg": "var(--ds-control-h-lg)",
           "radius-control": "var(--ds-radius-control)",
+          "ease-out": "var(--ds-ease-out)",
+          "ease-in-out": "var(--ds-ease-in-out)",
+          "ease-drawer": "var(--ds-ease-drawer)",
+          "shadow-border": "var(--ds-shadow-border)",
+          "shadow-border-hover": "var(--ds-shadow-border-hover)",
+          "shadow-popover": "var(--ds-shadow-popover)",
+          "shadow-modal": "var(--ds-shadow-modal)",
           "shadow-2xs": "var(--shadow-2xs)",
           "shadow-xs": "var(--shadow-xs)",
           "shadow-sm": "var(--shadow-sm)",
@@ -86,7 +95,19 @@
           "ds-control-h-xs": "1.5rem",
           "ds-control-h-lg": "2.25rem",
           "ds-radius-control": "var(--radius)",
-          "ds-duration": "150ms",
+          "ds-focus-ring": "var(--ring)",
+          "ds-ease-out": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ds-ease-in-out": "cubic-bezier(0.77, 0, 0.175, 1)",
+          "ds-ease-drawer": "cubic-bezier(0.32, 0.72, 0, 1)",
+          "ds-duration-press": "160ms",
+          "ds-duration-tooltip": "125ms",
+          "ds-duration-popover": "200ms",
+          "ds-duration-modal": "250ms",
+          "ds-duration-drawer": "500ms",
+          "ds-shadow-border": "0 0 0 1px oklch(0 0 0 / 0.06), 0 1px 2px -1px oklch(0 0 0 / 0.06), 0 2px 4px 0 oklch(0 0 0 / 0.04)",
+          "ds-shadow-border-hover": "0 0 0 1px oklch(0 0 0 / 0.08), 0 1px 2px -1px oklch(0 0 0 / 0.08), 0 2px 4px 0 oklch(0 0 0 / 0.06)",
+          "ds-shadow-popover": "0 0 0 1px oklch(0 0 0 / 0.08), 0 2px 4px -1px oklch(0 0 0 / 0.06), 0 8px 24px -4px oklch(0 0 0 / 0.12)",
+          "ds-shadow-modal": "0 0 0 1px oklch(0 0 0 / 0.08), 0 4px 8px -2px oklch(0 0 0 / 0.06), 0 24px 48px -12px oklch(0 0 0 / 0.2)",
           "shadow-2xs": "0 1px rgb(0 0 0 / 0.05)",
           "shadow-xs": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
           "shadow-sm": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
@@ -94,6 +115,105 @@
           "shadow-lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
           "shadow-xl": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
           "shadow-2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)"
+        },
+        "dark": {
+          "ds-shadow-border": "0 0 0 1px oklch(1 0 0 / 0.08)",
+          "ds-shadow-border-hover": "0 0 0 1px oklch(1 0 0 / 0.13)",
+          "ds-shadow-popover": "0 0 0 1px oklch(1 0 0 / 0.1), 0 8px 24px -4px oklch(0 0 0 / 0.5)",
+          "ds-shadow-modal": "0 0 0 1px oklch(1 0 0 / 0.1), 0 24px 48px -12px oklch(0 0 0 / 0.6)"
+        }
+      },
+      "css": {
+        "@utility focus-ring": {
+          "&:focus-visible": {
+            "outline": "2px solid var(--ds-focus-ring)",
+            "outline-offset": "2px"
+          }
+        },
+        "@utility focus-ring-inset": {
+          "&:focus-visible": {
+            "outline": "2px solid var(--ds-focus-ring)",
+            "outline-offset": "-2px"
+          }
+        },
+        "@utility motion-press": {
+          "transition": "transform var(--ds-duration-press) var(--ds-ease-out), background-color var(--ds-duration-press) ease, color var(--ds-duration-press) ease, box-shadow var(--ds-duration-press) ease",
+          "&:active:not(:disabled):not([aria-disabled=true]):not([data-disabled])": {
+            "transform": "scale(0.97)"
+          }
+        },
+        "@utility hit-area": {
+          "position": "relative",
+          "@media (pointer: coarse)": {
+            "&::after": {
+              "content": "\"\"",
+              "position": "absolute",
+              "top": "50%",
+              "left": "50%",
+              "width": "max(100%, 2.75rem)",
+              "height": "max(100%, 2.75rem)",
+              "translate": "-50% -50%"
+            }
+          }
+        },
+        "@utility motion-popover": {
+          "transform-origin": "var(--transform-origin)",
+          "transition": "opacity var(--ds-duration-popover) var(--ds-ease-out), transform var(--ds-duration-popover) var(--ds-ease-out)",
+          "&[data-starting-style], &[data-ending-style]": {
+            "opacity": "0",
+            "transform": "scale(0.95)"
+          },
+          "@media (prefers-reduced-motion: reduce)": {
+            "&[data-starting-style], &[data-ending-style]": {
+              "transform": "none"
+            }
+          }
+        },
+        "@utility motion-tooltip": {
+          "transform-origin": "var(--transform-origin)",
+          "transition": "opacity var(--ds-duration-tooltip) var(--ds-ease-out), transform var(--ds-duration-tooltip) var(--ds-ease-out)",
+          "&[data-starting-style], &[data-ending-style]": {
+            "opacity": "0",
+            "transform": "scale(0.97)"
+          },
+          "@media (prefers-reduced-motion: reduce)": {
+            "&[data-starting-style], &[data-ending-style]": {
+              "transform": "none"
+            }
+          },
+          "&[data-instant]": {
+            "transition-duration": "0ms"
+          }
+        },
+        "@utility motion-modal": {
+          "transform-origin": "center",
+          "transition": "opacity var(--ds-duration-modal) var(--ds-ease-out), transform var(--ds-duration-modal) var(--ds-ease-out)",
+          "&[data-starting-style], &[data-ending-style]": {
+            "opacity": "0",
+            "transform": "scale(0.96)"
+          },
+          "@media (prefers-reduced-motion: reduce)": {
+            "&[data-starting-style], &[data-ending-style]": {
+              "transform": "none"
+            }
+          }
+        },
+        "@utility motion-backdrop": {
+          "transition": "opacity var(--ds-duration-modal) var(--ds-ease-out)",
+          "&[data-starting-style], &[data-ending-style]": {
+            "opacity": "0"
+          }
+        },
+        "@layer base": {
+          "button, [role=button], a, input, label, select, summary, textarea": {
+            "touch-action": "manipulation"
+          },
+          "html": {
+            "-webkit-tap-highlight-color": "transparent"
+          },
+          "::selection": {
+            "background-color": "color-mix(in oklch, var(--primary) 25%, transparent)"
+          }
         }
       }
     },
@@ -385,7 +505,7 @@
           "destructive": "oklch(0.577 0.245 27.325)",
           "border": "oklch(0.922 0 0)",
           "input": "oklch(0.922 0 0)",
-          "ring": "oklch(0.708 0 0)",
+          "ring": "oklch(0.556 0 0)",
           "chart-1": "oklch(0.87 0 0)",
           "chart-2": "oklch(0.556 0 0)",
           "chart-3": "oklch(0.439 0 0)",
@@ -418,7 +538,7 @@
           "destructive": "oklch(0.704 0.191 22.216)",
           "border": "oklch(1 0 0 / 10%)",
           "input": "oklch(1 0 0 / 15%)",
-          "ring": "oklch(0.556 0 0)",
+          "ring": "oklch(0.708 0 0)",
           "chart-1": "oklch(0.87 0 0)",
           "chart-2": "oklch(0.556 0 0)",
           "chart-3": "oklch(0.439 0 0)",
@@ -508,7 +628,9 @@
         "class-variance-authority",
         "cn"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json"
+      ],
       "files": [
         {
           "path": "components/ui/button.tsx",
@@ -667,6 +789,20 @@
       ]
     },
     {
+      "name": "kbd",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "label",
       "type": "registry:ui",
       "dependencies": [
@@ -770,6 +906,21 @@
       "files": [
         {
           "path": "components/ui/sonner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "dependencies": [
+        "cn",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/spinner.tsx",
           "type": "registry:ui"
         }
       ]
