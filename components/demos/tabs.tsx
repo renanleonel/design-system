@@ -14,7 +14,7 @@ export function Default() {
         3 deployments this week.
       </TabsContent>
       <TabsContent value="activity" className="pt-3 text-sm text-muted-foreground">
-        Ada merged #412.
+        Ana merged #412.
       </TabsContent>
       <TabsContent value="settings" className="pt-3 text-sm text-muted-foreground">
         Builds run on every push.

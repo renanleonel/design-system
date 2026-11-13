@@ -43,7 +43,7 @@ export function Default() {
         name="name"
         label="Name"
         required
-        render={(field) => <Input placeholder="Ada Lovelace" {...field} />}
+        render={(field) => <Input placeholder="Ana Souza" {...field} />}
       />
       <FormField
         name="email"

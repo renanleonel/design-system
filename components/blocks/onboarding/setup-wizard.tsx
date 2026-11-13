@@ -312,7 +312,7 @@ function TeamStep({
           <Textarea
             rows={4}
             spellCheck={false}
-            placeholder={"ana@acme.com\nmarco@acme.com"}
+            placeholder={"ana@acme.com\njoao@acme.com"}
             {...field}
           />
         )}

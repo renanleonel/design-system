@@ -51,7 +51,7 @@ const EVENTS = [
   "deploy.failed",
   "plan.changed",
 ]
-const ACTORS = ["Ana Kowalski", "Marco Lima", "Jia Tan", "Rui Santos", "API"]
+const ACTORS = ["Renan Leonel", "Ana Souza", "João Silva", "Pedro Santos", "API"]
 
 // 1,240 deterministic events, newest first (same on server and client).
 const ALL_EVENTS: ActivityEvent[] = Array.from({ length: 1240 }, (_, i) => {
@@ -79,12 +79,14 @@ async function listEvents({
   cursor,
   level,
   failOnce,
+  delay = 700,
 }: {
   cursor: string | null
   level: string | null
+  delay?: number
   failOnce?: { current: boolean } | null
 }): Promise<CursorPage<ActivityEvent>> {
-  await new Promise((r) => setTimeout(r, 700))
+  await new Promise((r) => setTimeout(r, delay))
   const matches = level ? ALL_EVENTS.filter((e) => e.level === level) : ALL_EVENTS
   const start = cursor ? matches.findIndex((e) => e.id === cursor) + 1 : 0
   // ?demo=error: the third page fails once, so Retry has something to do.
@@ -201,7 +203,7 @@ export function ActivityLog({ className }: { className?: string }) {
       </Tabs>
       {/* A new filter is a new list: the key resets the loaded pages. */}
       <EventsList
-        key={level ?? "all"}
+        key={`${level}:${params.get("demo")}`}
         level={level}
         demo={params.get("demo")}
         className={className}
@@ -229,6 +231,7 @@ function EventsList({
             cursor,
             level,
             failOnce: demo === "error" && !failed.current ? failed : null,
+            delay: demo === "slow" ? 4000 : 700,
           }),
     [level, demo]
   )

@@ -119,7 +119,7 @@ const SERVICES: {
     meta: "staging · 12 min ago",
     icon: <SearchIcon />,
     tone: "blue",
-    people: ["AK", "ML", "JT"],
+    people: ["RL", "AS", "PS"],
     status: { label: "Building", tone: "blue" },
   },
   {
@@ -127,7 +127,7 @@ const SERVICES: {
     meta: "canary · 5% traffic",
     icon: <ShieldCheckIcon />,
     tone: "purple",
-    people: ["RS", "ML"],
+    people: ["JS", "AS"],
     status: { label: "In 2 h", tone: "purple" },
   },
   {
@@ -135,7 +135,7 @@ const SERVICES: {
     meta: "Not scheduled",
     icon: <ServerIcon />,
     tone: "orange",
-    people: ["JT"],
+    people: ["PS"],
     status: { label: "Draft", tone: "orange" },
   },
 ]
@@ -166,7 +166,7 @@ export function ReleasesPanel() {
                 v2.14.0 · Checkout redesign
               </p>
               <p className="truncate text-sm text-muted-foreground">
-                Promoted by Ana Kowalski
+                Promoted by Renan Leonel
               </p>
             </div>
             <Badge tone="green" size="md">
@@ -184,7 +184,7 @@ export function ReleasesPanel() {
           <div className="mt-auto flex flex-col gap-4">
             <TearLine />
             <div className="flex items-center gap-3">
-              <People initials={["AK", "ML", "RS"]} />
+              <People initials={["RL", "AS", "JS"]} />
               <div className="min-w-0 flex-1">
                 <p className="font-medium">3 reviewers</p>
                 <p className="flex items-center gap-1 text-sm text-tone-green">

@@ -144,9 +144,9 @@ function AuthShowcase({
   preview,
   quote = "We moved our whole release process over in an afternoon. The team hasn't looked back.",
   author = {
-    name: "Marta Reyes",
+    name: "Juliana Alves",
     role: "Head of Engineering, Northwind",
-    initials: "MR",
+    initials: "JA",
   },
   stats = [
     { value: "4,200+", label: "teams" },

@@ -22,8 +22,8 @@ export default function CustomersPage() {
           </Button>
         }
       />
-      <AppShellContent>
-        <CustomersTable className="h-[calc(100dvh-10.5rem)]" />
+      <AppShellContent fill>
+        <CustomersTable className="min-h-0 flex-1" />
       </AppShellContent>
     </>
   )

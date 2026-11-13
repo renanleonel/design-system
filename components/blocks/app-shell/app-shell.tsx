@@ -805,10 +805,12 @@ function AppShell({
             </SheetContent>
           </Sheet>
 
-          <div className="flex min-w-0 flex-1 flex-col md:py-2 md:pe-2">
+          {/* A `fill` page (full-height table, board) pins the column to the
+              viewport so only its own region scrolls, never the window too. */}
+          <div className="flex min-w-0 flex-1 flex-col has-data-fill:h-dvh md:py-2 md:pe-2">
             <main
               id="main"
-              className="flex min-h-full flex-1 flex-col bg-background text-foreground md:rounded-xl md:shadow-border"
+              className="flex min-h-full flex-1 flex-col bg-background text-foreground has-data-fill:min-h-0 has-data-fill:overflow-y-auto md:rounded-xl md:shadow-border"
             >
               {children}
             </main>
@@ -929,11 +931,25 @@ function AppShellHeader({
  * Page body with the standard gutter, sharing the header's leading edge.
  * Narrow pages add a max width (`max-w-4xl`) but stay start-aligned, never centered.
  */
-function AppShellContent({ className, ...props }: React.ComponentProps<"div">) {
+/**
+ * The page body. `fill` makes it take exactly the height left under the
+ * header (for a table or board that scrolls inside itself); without it the
+ * window scrolls.
+ */
+function AppShellContent({
+  className,
+  fill,
+  ...props
+}: React.ComponentProps<"div"> & { fill?: boolean }) {
   return (
     <div
       data-slot="app-shell-content"
-      className={cn("flex w-full flex-col gap-6 p-4 md:p-6", className)}
+      data-fill={fill || undefined}
+      className={cn(
+        "flex w-full flex-col gap-6 p-4 md:p-6",
+        fill && "min-h-0 flex-1",
+        className
+      )}
       {...props}
     />
   )

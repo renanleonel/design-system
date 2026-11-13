@@ -31,7 +31,7 @@ export function Default() {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="dialog-name">Name</FieldLabel>
-            <Input id="dialog-name" defaultValue="Ada Lovelace" />
+            <Input id="dialog-name" defaultValue="Renan Leonel" />
           </Field>
           <Field>
             <FieldLabel htmlFor="dialog-handle">Handle</FieldLabel>

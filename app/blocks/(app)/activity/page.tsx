@@ -7,15 +7,16 @@ import {
 import { ActivityLog } from "@/components/blocks/infinite-table/activity-log"
 
 export default function ActivityPage() {
-  // ?demo=error fails the third page once; ?demo=empty returns nothing.
+  // ?demo=error fails the third page once, ?demo=slow takes 4s a page,
+  // ?demo=empty returns nothing.
   return (
     <>
       <AppShellHeader
         title="Activity"
         description="Every event in your workspace, newest first"
       />
-      <AppShellContent>
-        <ActivityLog className="h-[calc(100dvh-13rem)]" />
+      <AppShellContent fill>
+        <ActivityLog className="min-h-0 flex-1" />
       </AppShellContent>
     </>
   )

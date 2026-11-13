@@ -132,9 +132,9 @@ export function DemoLanding() {
         title="Teams ship more and worry less"
         items={[
           { quote: "We went from weekly releases to shipping several times a day, and our incident count went down.", name: "Marta Silva", role: "VP Engineering, Northwind", initials: "MS" },
-          { quote: "Previews changed how design reviews work here. Nobody waits for staging anymore.", name: "Jonas Berg", role: "Design lead, Layerly", initials: "JB" },
-          { quote: "The audit log alone got us through our SOC 2 review.", name: "Priya Nair", role: "Security, Boxed", initials: "PN" },
-          { quote: "Setup took an afternoon. Migrating our twelve services took a week.", name: "Tom Okafor", role: "Platform, Triangle", initials: "TO" },
+          { quote: "Previews changed how design reviews work here. Nobody waits for staging anymore.", name: "Pedro Almeida", role: "Design lead, Layerly", initials: "PA" },
+          { quote: "The audit log alone got us through our SOC 2 review.", name: "Beatriz Costa", role: "Security, Boxed", initials: "BC" },
+          { quote: "Setup took an afternoon. Migrating our twelve services took a week.", name: "Lucas Ferreira", role: "Platform, Triangle", initials: "LF" },
         ]}
       />
       <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-6">

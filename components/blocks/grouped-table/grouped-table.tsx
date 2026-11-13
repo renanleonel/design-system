@@ -103,8 +103,8 @@ function calculate(values: unknown[], calc: Calc) {
  * A spreadsheet-style table split into groups. The column header, each group's
  * band and the calculation footer stay pinned while the body scrolls; groups
  * collapse; row numbers run across groups. Group and sort live in the URL
- * (`?group=`, `?sort=`). Give it a height (`className="h-[600px]"`) so the
- * body scrolls inside it.
+ * (`?group=`, `?sort=`). Give it a height (`className="h-[600px]"`, or
+ * `flex-1 min-h-0` inside `AppShellContent fill`) so the body scrolls inside it.
  */
 function GroupedTable<TData>({
   columns: userColumns,
@@ -254,7 +254,7 @@ function GroupedTable<TData>({
         </p>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-auto overscroll-contain rounded-lg bg-card shadow-border">
+      <div className="relative min-h-0 flex-1 overflow-auto overscroll-contain rounded-lg bg-card shadow-border">
         {/* border-separate: sticky cells keep their borders while scrolling. */}
         <table className="w-full border-separate border-spacing-0 text-sm">
           <thead>

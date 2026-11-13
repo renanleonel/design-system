@@ -57,8 +57,8 @@ export function AsLink() {
 }
 
 const PEOPLE = [
-  { name: "Ada Lovelace", email: "ada@acme.com" },
-  { name: "Grace Hopper", email: "grace@acme.com" },
+  { name: "Ana Souza", email: "ana@acme.com" },
+  { name: "João Silva", email: "joao@acme.com" },
 ]
 
 export function List() {

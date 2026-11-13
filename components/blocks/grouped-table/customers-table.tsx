@@ -49,7 +49,7 @@ const RATING_TONE = {
   "Very bad": "red",
 } as const
 const SIZES = ["1-10", "11-100", "100-199", "200-500", "500-1000"]
-const OWNERS = ["Ana Kowalski", "Marco Lima", "Jia Tan", "Rui Santos"]
+const OWNERS = ["Renan Leonel", "Ana Souza", "João Silva", "Pedro Santos"]
 const TAG_TONE: Record<string, "blue" | "purple" | "orange" | "green" | "amber"> = {
   B2B: "blue",
   B2C: "purple",
@@ -108,7 +108,7 @@ const COMPANIES: [string, string, string][] = [
   ["Formosa Semiconductors", "Taipei", "TW"],
   ["Polaris Cloud", "Stockholm", "SE"],
 ]
-const FOUNDERS = ["Veronica Han", "John Harry", "Lily Sinh Katty"]
+const FOUNDERS = ["Maria Oliveira", "Lucas Costa", "Beatriz Lima"]
 
 // Deterministic sample data (same on server and client).
 export const SAMPLE_CUSTOMERS: Customer[] = COMPANIES.map(

@@ -84,7 +84,8 @@ export function useCursorPages<T>(
  * The header stays pinned; the next page starts loading 600px before the end,
  * so scrolling rarely waits. Loading, failure and the end each get a row, and a
  * "Load more" button stands in for scrolling (keyboard, screen readers). Give
- * it a height so it scrolls inside (`className="h-[600px]"`).
+ * it a height so it scrolls inside (`className="h-[600px]"`, or `flex-1 min-h-0`
+ * inside `AppShellContent fill`).
  */
 function InfiniteTable<TData>({
   columns,
@@ -131,6 +132,11 @@ function InfiniteTable<TData>({
   const sentinel = React.useCallback(
     (el: HTMLTableRowElement | null) => {
       if (!el || !canLoad) return
+      // Nothing loaded yet: start now (the skeleton pushes this row out of view).
+      if (rows.length === 0) {
+        fetchNextPage()
+        return
+      }
       const io = new IntersectionObserver(
         ([entry]) => entry.isIntersecting && fetchNextPage(),
         { root: scroller.current, rootMargin: "0px 0px 600px 0px" }
@@ -139,7 +145,6 @@ function InfiniteTable<TData>({
       return () => io.disconnect()
     },
     // rows.length: re-observe after each page lands.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [canLoad, fetchNextPage, rows.length]
   )
 
@@ -181,7 +186,12 @@ function InfiniteTable<TData>({
           const past = e.currentTarget.scrollTop > 400
           if (past !== scrolled) setScrolled(past)
         }}
-        className="h-full overflow-auto overscroll-contain rounded-lg bg-card shadow-border"
+        className={cn(
+          // relative: absolutely positioned bits (sr-only text) stay inside the clip.
+          "relative h-full overscroll-contain rounded-lg bg-card shadow-border",
+          // First load: skeleton rows fill any height, clipped, never scrollable.
+          firstLoad ? "overflow-hidden" : "overflow-auto"
+        )}
       >
         <table className="w-full border-separate border-spacing-0 text-sm">
           <thead>
@@ -208,7 +218,7 @@ function InfiniteTable<TData>({
             {table.getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
-                className="hover:bg-muted/50 starting:opacity-0 transition-opacity duration-200 ease-out motion-reduce:transition-none"
+                className="hover:bg-muted/50"
               >
                 {row.getVisibleCells().map((cell) => (
                   <td
@@ -221,7 +231,7 @@ function InfiniteTable<TData>({
               </tr>
             ))}
 
-            {(firstLoad || isFetchingNextPage) && skeletonRows(firstLoad ? 12 : 3)}
+            {(firstLoad || isFetchingNextPage) && skeletonRows(firstLoad ? 40 : 3)}
 
             <tr ref={sentinel}>
               <td colSpan={span} className="h-14 px-3 text-center">

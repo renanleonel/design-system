@@ -59,7 +59,7 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
     <>
       <AppShell
         workspace={{ name: "Acme", plan: "Pro plan", logo: <HexagonIcon /> }}
-        user={{ name: "Ana Kowalski", email: "ana@acme.dev", initials: "AK" }}
+        user={{ name: "Renan Leonel", email: "renan@acme.dev", initials: "RL" }}
         currentPath={pathname}
         linkComponent={Link}
         onNavigate={(href) => router.push(href)}

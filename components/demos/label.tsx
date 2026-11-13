@@ -8,7 +8,7 @@ export function Default() {
   return (
     <div className="flex w-full max-w-xs flex-col gap-2">
       <Label htmlFor="label-name">Full name</Label>
-      <Input id="label-name" placeholder="Ada Lovelace" />
+      <Input id="label-name" placeholder="Ana Souza" />
     </div>
   )
 }

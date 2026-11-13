@@ -210,10 +210,10 @@ function sampleData(days: number) {
 }
 
 const ACTIVITY = [
-  { who: "Ana Kowalski", initials: "AK", what: "deployed acme-web to production", when: "4 min ago" },
-  { who: "Marco Lima", initials: "ML", what: "invited 3 people to Growth", when: "1 h ago" },
-  { who: "Rui Santos", initials: "RS", what: "upgraded the workspace to Pro", when: "3 h ago" },
-  { who: "Jade Tan", initials: "JT", what: "archived checkout-v1", when: "Yesterday" },
+  { who: "Renan Leonel", initials: "RL", what: "deployed acme-web to production", when: "4 min ago" },
+  { who: "Ana Souza", initials: "AS", what: "invited 3 people to Growth", when: "1 h ago" },
+  { who: "João Silva", initials: "JS", what: "upgraded the workspace to Pro", when: "3 h ago" },
+  { who: "Pedro Santos", initials: "PS", what: "archived checkout-v1", when: "Yesterday" },
 ]
 
 const TOP_PROJECTS = [

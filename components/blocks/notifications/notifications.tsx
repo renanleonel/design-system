@@ -60,10 +60,10 @@ const KIND: Record<
 
 export const SAMPLE_NOTIFICATIONS: Notification[] = [
   { id: "n1", kind: "mention", title: "Ana mentioned you in Q3 roadmap", body: "“@renan can you check the billing numbers before Friday?”", time: "4 min ago", read: false },
-  { id: "n2", kind: "review", title: "Marco requested your review on #412", body: "Add usage meters to the billing page", time: "32 min ago", read: false },
+  { id: "n2", kind: "review", title: "João requested your review on #412", body: "Add usage meters to the billing page", time: "32 min ago", read: false },
   { id: "n3", kind: "deploy", title: "acme-web deployed to production", body: "Build 1f3a9c2 finished in 48s", time: "1 h ago", read: false },
-  { id: "n4", kind: "invite", title: "Jade joined the Growth team", time: "3 h ago", read: true },
-  { id: "n5", kind: "review", title: "Rui approved #407", body: "Sortable conditions in the rule dialog", time: "Yesterday", read: true },
+  { id: "n4", kind: "invite", title: "Pedro joined the Growth team", time: "3 h ago", read: true },
+  { id: "n5", kind: "review", title: "Maria approved #407", body: "Sortable conditions in the rule dialog", time: "Yesterday", read: true },
   { id: "n6", kind: "deploy", title: "billing-api deployed to staging", time: "Yesterday", read: true },
 ]
 

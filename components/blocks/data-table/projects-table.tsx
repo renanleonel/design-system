@@ -49,10 +49,10 @@ const STATUS = {
 } as const
 
 const OWNERS = [
-  { name: "Ana Kowalski", initials: "AK" },
-  { name: "Marco Lima", initials: "ML" },
-  { name: "Rui Santos", initials: "RS" },
-  { name: "Jia Tan", initials: "JT" },
+  { name: "Renan Leonel", initials: "RL" },
+  { name: "Ana Souza", initials: "AS" },
+  { name: "João Silva", initials: "JS" },
+  { name: "Pedro Santos", initials: "PS" },
 ]
 const NAMES = [
   "Checkout redesign",

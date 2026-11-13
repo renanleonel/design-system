@@ -108,8 +108,8 @@ const profileSchema = z.object({
 function ProfileForm() {
   const form = useZodForm(profileSchema, {
     defaultValues: {
-      name: "Ana Kowalski",
-      email: "ana@acme.dev",
+      name: "Renan Leonel",
+      email: "renan@acme.dev",
       handle: "ana",
     },
   })
@@ -169,30 +169,30 @@ type Member = {
 const MEMBERS: Member[] = [
   {
     id: "m1",
-    name: "Ana Kowalski",
-    email: "ana@acme.dev",
-    initials: "AK",
+    name: "Renan Leonel",
+    email: "renan@acme.dev",
+    initials: "RL",
     role: "owner",
   },
   {
     id: "m2",
-    name: "Marco Lima",
-    email: "marco@acme.dev",
-    initials: "ML",
+    name: "Ana Souza",
+    email: "ana@acme.dev",
+    initials: "AS",
     role: "admin",
   },
   {
     id: "m3",
-    name: "Rui Santos",
-    email: "rui@acme.dev",
-    initials: "RS",
+    name: "João Silva",
+    email: "joao@acme.dev",
+    initials: "JS",
     role: "member",
   },
   {
     id: "m4",
     name: "jia.tan@partner.io",
     email: "jia.tan@partner.io",
-    initials: "JT",
+    initials: "PS",
     role: "viewer",
     pending: true,
   },

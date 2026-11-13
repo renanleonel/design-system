@@ -35,7 +35,7 @@ export function Default() {
           <InputOTPSlot index={5} />
         </InputOTPGroup>
       </InputOTP>
-      <FieldDescription>We sent it to ada@acme.com.</FieldDescription>
+      <FieldDescription>We sent it to renan@acme.com.</FieldDescription>
     </Field>
   )
 }
