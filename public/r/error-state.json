@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-state",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/error-state.tsx",
+      "content": "\"use client\"\n\nimport { CircleAlertIcon, RotateCwIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport {\n  Empty,\n  EmptyContent,\n  EmptyDescription,\n  EmptyHeader,\n  EmptyMedia,\n  EmptyTitle,\n} from \"@/components/ui/empty\"\n\n/**\n * A region that failed to load (interaction.md: say what failed, keep the rest\n * of the screen usable, offer retry). Render it per section, not per page.\n */\nfunction ErrorState({\n  title = \"Couldn't load this\",\n  description = \"Check your connection and try again.\",\n  onRetry,\n  retrying = false,\n  requestId,\n  className,\n}: {\n  title?: React.ReactNode\n  description?: React.ReactNode\n  onRetry?: () => void\n  retrying?: boolean\n  /** Shown small so support can trace a 5xx. */\n  requestId?: string\n  className?: string\n}) {\n  return (\n    <Empty data-slot=\"error-state\" role=\"alert\" className={className}>\n      <EmptyHeader>\n        <EmptyMedia variant=\"icon\" className=\"text-destructive\">\n          <CircleAlertIcon />\n        </EmptyMedia>\n        <EmptyTitle>{title}</EmptyTitle>\n        <EmptyDescription>{description}</EmptyDescription>\n      </EmptyHeader>\n      {(onRetry || requestId) && (\n        <EmptyContent>\n          {onRetry && (\n            <Button variant=\"outline\" onClick={onRetry} loading={retrying}>\n              <RotateCwIcon data-icon=\"inline-start\" />\n              Try again\n            </Button>\n          )}\n          {requestId && (\n            <p className=\"font-mono text-xs text-muted-foreground tabular-nums\">\n              Request ID {requestId}\n            </p>\n          )}\n        </EmptyContent>\n      )}\n    </Empty>\n  )\n}\n\nexport { ErrorState }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

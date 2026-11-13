@@ -8,7 +8,7 @@
   "files": [
     {
       "path": "components/ui/skeleton.tsx",
-      "content": "import { cn } from \"cn\"\n\nfunction Skeleton({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"skeleton\"\n      className={cn(\"animate-pulse rounded-md bg-muted\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Skeleton }\n",
+      "content": "import { cn } from \"cn\"\n\n/** A placeholder block. Shape it like the content it stands in for. */\nfunction Skeleton({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"skeleton\"\n      aria-hidden\n      className={cn(\n        \"animate-pulse rounded-md bg-muted motion-reduce:animate-none\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/**\n * Wraps the skeletons of one loading region. Names what is loading for screen\n * readers, and appears only after 200ms, so fast responses never flash a\n * skeleton (`delay={false}` shows it at once).\n */\nfunction SkeletonGroup({\n  label,\n  delay = true,\n  className,\n  children,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  /** e.g. \"Loading your projects\" */\n  label: string\n  delay?: boolean\n}) {\n  return (\n    <div\n      data-slot=\"skeleton-group\"\n      role=\"status\"\n      aria-busy\n      className={cn(delay && \"appear-delayed\", className)}\n      {...props}\n    >\n      <span className=\"sr-only\">{label}</span>\n      {children}\n    </div>\n  )\n}\n\nexport { Skeleton, SkeletonGroup }\n",
       "type": "registry:ui"
     }
   ],

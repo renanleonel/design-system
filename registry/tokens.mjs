@@ -152,6 +152,12 @@ export const css = {
   },
   // Modals are not anchored to a trigger: they stay centered.
   "@utility motion-modal": popup("--ds-duration-modal", "0.96", "center"),
+  // Loading placeholders appear only if loading outlasts ~200ms (interaction.md:
+  // avoid a flash of loading). Pure CSS: no timer, no effect.
+  "@keyframes ds-appear": { from: { opacity: "0" }, to: { opacity: "1" } },
+  "@utility appear-delayed": {
+    animation: "ds-appear 150ms var(--ds-ease-out) var(--ds-appear-delay, 200ms) both",
+  },
   "@utility motion-backdrop": {
     transition: "opacity var(--ds-duration-modal) var(--ds-ease-out)",
     [STARTING]: { opacity: "0" },
@@ -161,6 +167,14 @@ export const css = {
       "touch-action": "manipulation",
     },
     html: { "-webkit-tap-highlight-color": "transparent" },
+    // Line breaks (typography.md): no lone last word in running text, even
+    // two-line headings. Scoped to text elements, not `*`: the cost grows with
+    // text that re-lays out constantly, so streaming / editable regions
+    // (`data-streaming`, contenteditable) fall back to plain wrapping.
+    "h1, h2, h3, h4, h5, h6": { "text-wrap": "balance" },
+    "p, li, dd, figcaption, blockquote": { "text-wrap": "pretty" },
+    "[data-streaming], [data-streaming] *, [contenteditable], [contenteditable] *":
+      { "text-wrap": "wrap" },
     // Focusing the first invalid field scrolls it clear of a sticky header.
     "input, select, textarea, button, [role=combobox]": {
       "scroll-margin-block": "var(--ds-scroll-offset, 5rem)",

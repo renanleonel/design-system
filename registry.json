@@ -32,6 +32,8 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dialog.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/drawer.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/error-state.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/field.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/form.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
@@ -205,6 +207,17 @@
             "transform": "translateY(var(--ds-motion-y, 0)) scale(var(--ds-motion-scale, 0.96))"
           }
         },
+        "@keyframes ds-appear": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@utility appear-delayed": {
+          "animation": "ds-appear 150ms var(--ds-ease-out) var(--ds-appear-delay, 200ms) both"
+        },
         "@utility motion-backdrop": {
           "transition": "opacity var(--ds-duration-modal) var(--ds-ease-out)",
           "&[data-starting-style], &[data-ending-style]": {
@@ -217,6 +230,15 @@
           },
           "html": {
             "-webkit-tap-highlight-color": "transparent"
+          },
+          "h1, h2, h3, h4, h5, h6": {
+            "text-wrap": "balance"
+          },
+          "p, li, dd, figcaption, blockquote": {
+            "text-wrap": "pretty"
+          },
+          "[data-streaming], [data-streaming] *, [contenteditable], [contenteditable] *": {
+            "text-wrap": "wrap"
           },
           "input, select, textarea, button, [role=combobox]": {
             "scroll-margin-block": "var(--ds-scroll-offset, 5rem)"
@@ -814,6 +836,38 @@
       "files": [
         {
           "path": "components/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "dependencies": [
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "error-state",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/error-state.tsx",
           "type": "registry:ui"
         }
       ]

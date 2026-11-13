@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import { MoonIcon, PlusIcon, SunIcon } from "lucide-react"
 
 import { CreateProjectCard } from "@/components/playground/create-project"
+import { StatesDemo } from "@/components/playground/states-demo"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -448,6 +449,7 @@ export function Playground({ themes }: { themes: string[] }) {
               </Accordion>
             </CardContent>
           </Card>
+          <StatesDemo />
         </main>
         <Toaster />
       </div>
