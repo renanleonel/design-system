@@ -146,6 +146,9 @@ export const css = {
       "touch-action": "manipulation",
     },
     html: { "-webkit-tap-highlight-color": "transparent" },
+    // Everything pressable shows a pointer; disabled and busy controls don't.
+    'button:not(:disabled):not([aria-disabled="true"]), [role="button"]:not([aria-disabled="true"]), summary, label:has(input:not(:disabled))':
+      { cursor: "pointer" },
     "::selection": {
       "background-color": "color-mix(in oklch, var(--primary) 25%, transparent)",
     },
