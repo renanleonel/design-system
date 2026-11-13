@@ -495,6 +495,20 @@
       "src": "/blocks/projects"
     },
     {
+      "id": "grouped-table",
+      "registry": "grouped-table",
+      "title": "Grouped table",
+      "description": "Rows in collapsible groups with pinned header, group bands and a calculation footer; continuous row numbers, group selection and a floating bulk-action bar.",
+      "src": "/blocks/customers"
+    },
+    {
+      "id": "infinite-table",
+      "registry": "infinite-table",
+      "title": "Infinite table",
+      "description": "Cursor pagination that loads ahead as you scroll: skeleton rows, inline retry, an end marker, a Load more fallback and back to top.",
+      "src": "/blocks/activity"
+    },
+    {
       "id": "notifications",
       "registry": "notifications",
       "title": "Notifications",

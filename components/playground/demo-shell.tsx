@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import {
+  ActivityIcon,
   BookOpenIcon,
   CreditCardIcon,
   FolderKanbanIcon,
@@ -11,6 +12,7 @@ import {
   LayoutDashboardIcon,
   SettingsIcon,
   UserCogIcon,
+  UsersIcon,
   XIcon,
 } from "lucide-react"
 
@@ -84,6 +86,18 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
                 href: "/blocks/projects",
                 icon: <FolderKanbanIcon />,
                 hotkey: ["G", "P"],
+              },
+              {
+                label: "Customers",
+                href: "/blocks/customers",
+                icon: <UsersIcon />,
+                hotkey: ["G", "C"],
+              },
+              {
+                label: "Activity",
+                href: "/blocks/activity",
+                icon: <ActivityIcon />,
+                hotkey: ["G", "A"],
               },
             ],
           },
