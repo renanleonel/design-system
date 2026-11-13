@@ -239,9 +239,13 @@ function DataTable<TData>({
 
   const cellClass = (row: { column: { columnDef: ColumnDef<TData> } }) =>
     cn(
-      row.column.columnDef.meta?.hideOnMobile && "hidden md:table-cell",
+      // Follows the table's own width, not the viewport: beside a sidebar a
+      // tablet-sized screen still has a phone-sized table.
+      row.column.columnDef.meta?.hideOnMobile && "hidden @2xl/table:table-cell",
       row.column.columnDef.meta?.align === "end" && "text-end",
-      row.column.columnDef.meta?.grow && "w-full max-w-0"
+      // Takes the spare width and truncates, but never below 10rem; past that
+      // the table scrolls sideways instead of overlapping cells.
+      row.column.columnDef.meta?.grow && "w-full max-w-0 min-w-40"
     )
 
   if (status === "ready" && data.length === 0 && emptyState)
@@ -336,7 +340,7 @@ function DataTable<TData>({
         </div>
       )}
 
-      <div className="overflow-hidden rounded-lg shadow-border">
+      <div className="@container/table overflow-hidden rounded-lg shadow-border">
         {status === "error" ? (
           <ErrorState
             title={`Couldn't load ${noun.other}`}
