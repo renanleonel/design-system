@@ -1,3 +1,4 @@
+import { DemoFooter } from "@/components/playground/demo-footer"
 import { SiteHeader } from "@/components/docs/site-header"
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -11,6 +12,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
         <main id="main" className="flex flex-1 flex-col">
           {children}
         </main>
+        <DemoFooter />
       </div>
       <Toaster />
     </TooltipProvider>

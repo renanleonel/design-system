@@ -32,6 +32,7 @@ import * as inputDemos from "./input"
 import * as itemDemos from "./item"
 import * as kbdDemos from "./kbd"
 import * as labelDemos from "./label"
+import * as languageSelectDemos from "./language-select"
 import * as multiSelectDemos from "./multi-select"
 import * as nativeSelectDemos from "./native-select"
 import * as paginationDemos from "./pagination"
@@ -51,6 +52,7 @@ import * as switchDemos from "./switch"
 import * as tableDemos from "./table"
 import * as tabsDemos from "./tabs"
 import * as textareaDemos from "./textarea"
+import * as themeToggleDemos from "./theme-toggle"
 import * as toggleGroupDemos from "./toggle-group"
 import * as toggleDemos from "./toggle"
 import * as tooltipDemos from "./tooltip"
@@ -87,6 +89,7 @@ export const demos: Record<string, Record<string, ComponentType>> = {
   "item": itemDemos,
   "kbd": kbdDemos,
   "label": labelDemos,
+  "language-select": languageSelectDemos,
   "multi-select": multiSelectDemos,
   "native-select": nativeSelectDemos,
   "pagination": paginationDemos,
@@ -106,6 +109,7 @@ export const demos: Record<string, Record<string, ComponentType>> = {
   "table": tableDemos,
   "tabs": tabsDemos,
   "textarea": textareaDemos,
+  "theme-toggle": themeToggleDemos,
   "toggle-group": toggleGroupDemos,
   "toggle": toggleDemos,
   "tooltip": tooltipDemos,

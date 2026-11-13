@@ -4,8 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useHotkey } from "@tanstack/react-hotkeys"
-import { useTheme } from "next-themes"
-import { MenuIcon, MoonIcon, SearchIcon, SunIcon } from "lucide-react"
+import { MenuIcon, SearchIcon } from "lucide-react"
 
 import { DocsNav } from "@/components/docs/docs-nav"
 import { Button } from "@/components/ui/button"
@@ -19,6 +18,7 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import { Hotkey } from "@/components/ui/hotkey"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import {
   Sheet,
   SheetContent,
@@ -51,7 +51,6 @@ export function SiteHeader({
 }) {
   const pathname = usePathname()
   const router = useRouter()
-  const { resolvedTheme, setTheme } = useTheme()
   const [searchOpen, setSearchOpen] = React.useState(false)
   const [menuOpen, setMenuOpen] = React.useState(false)
   useHotkey("Mod+K", () => setSearchOpen((open) => !open))
@@ -139,18 +138,7 @@ export function SiteHeader({
           >
             <GitHubIcon className="size-4" />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Toggle dark mode"
-            onClick={() =>
-              setTheme(resolvedTheme === "dark" ? "light" : "dark")
-            }
-          >
-            {/* CSS picks the icon: resolvedTheme is unknown during SSR. */}
-            <SunIcon className="hidden dark:block" />
-            <MoonIcon className="dark:hidden" />
-          </Button>
+          <ThemeToggle hotkey="Shift+D" />
         </div>
       </div>
 

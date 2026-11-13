@@ -37,6 +37,7 @@
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/item.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/language-select.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/multi-select.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/pagination.json",
@@ -56,6 +57,7 @@
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-toggle.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"

@@ -28,6 +28,7 @@ const ALL_PAGES = [
   "/blocks/onboarding",
   "/blocks/onboarding?variant=card",
   "/blocks/projects",
+  "/blocks/footer",
   "/blocks/not-found",
   "/blocks/server-error",
   "/blocks/inbox",

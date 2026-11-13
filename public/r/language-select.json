@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "language-select",
+  "title": "Language Select",
+  "description": "Pick the interface language, each name in its own language and script.",
+  "dependencies": [
+    "cn@^0.5.2",
+    "lucide-react@^1.72.0"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/language-select.tsx",
+      "content": "\"use client\"\n\nimport { cn } from \"cn\"\nimport { LanguagesIcon } from \"lucide-react\"\n\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from \"@/components/ui/select\"\n\nexport type Language = {\n  /** BCP 47 tag, e.g. \"pt-BR\". */\n  value: string\n  /** The language's own name (\"Português\"), so people find theirs. */\n  label: string\n}\n\nexport const LANGUAGES: Language[] = [\n  { value: \"en\", label: \"English\" },\n  { value: \"pt-BR\", label: \"Português (Brasil)\" },\n  { value: \"es\", label: \"Español\" },\n  { value: \"fr\", label: \"Français\" },\n  { value: \"de\", label: \"Deutsch\" },\n  { value: \"ja\", label: \"日本語\" },\n]\n\n/**\n * Pick the interface language. Names are written in their own language and\n * script, each option carries its `lang` so screen readers pronounce it, and\n * touch devices get the native picker. Wire `onValueChange` to your i18n\n * router (next-intl, i18next…).\n */\nexport function LanguageSelect({\n  value,\n  defaultValue = \"en\",\n  onValueChange,\n  languages = LANGUAGES,\n  compact = false,\n  className,\n}: {\n  value?: string\n  defaultValue?: string\n  onValueChange?: (value: string) => void\n  languages?: Language[]\n  /** Icon and code only (\"EN\"), for tight headers. */\n  compact?: boolean\n  className?: string\n}) {\n  return (\n    <Select\n      items={languages}\n      value={value}\n      defaultValue={defaultValue}\n      onValueChange={(v) => v && onValueChange?.(v as string)}\n      aria-label=\"Language\"\n    >\n      <SelectTrigger\n        size=\"sm\"\n        aria-label=\"Language\"\n        className={cn(compact ? \"w-auto\" : \"w-44\", className)}\n      >\n        <LanguagesIcon className=\"size-4 text-muted-foreground\" />\n        <SelectValue>\n          {(current: string) => {\n            const language = languages.find((l) => l.value === current)\n            return compact\n              ? current.split(\"-\")[0].toUpperCase()\n              : (language?.label ?? current)\n          }}\n        </SelectValue>\n      </SelectTrigger>\n      {/* The leading icon would shift a popup aligned to the value text: open below. */}\n      <SelectContent alignItemWithTrigger={false}>\n        {languages.map((language) => (\n          <SelectItem\n            key={language.value}\n            value={language.value}\n            lang={language.value}\n          >\n            {language.label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

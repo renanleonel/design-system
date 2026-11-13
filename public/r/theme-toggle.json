@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-toggle",
+  "title": "Theme Toggle",
+  "description": "Light and dark in one button, or system / light / dark as a segmented switch.",
+  "dependencies": [
+    "@tanstack/react-hotkeys@0.25.0",
+    "cn@^0.5.2",
+    "lucide-react@^1.72.0",
+    "next-themes@^0.4.6"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/theme-toggle.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"cn\"\nimport { MonitorIcon, MoonIcon, SunIcon } from \"lucide-react\"\nimport { useTheme } from \"next-themes\"\nimport type { RegisterableHotkey } from \"@tanstack/react-hotkeys\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\n/**\n * Light/dark in one button. Which icon shows is decided by CSS (`.dark`), not\n * by `resolvedTheme`, which is unknown during SSR, so there is no hydration\n * flash. The icons swap with a quick rotate-and-fade; with a `hotkey` the\n * switch is instant, like every keyboard action.\n */\nfunction ThemeToggle({\n  hotkey,\n  className,\n}: {\n  hotkey?: RegisterableHotkey\n  className?: string\n}) {\n  const { resolvedTheme, setTheme } = useTheme()\n  const icon =\n    \"absolute size-4 transition-[opacity,rotate,scale] duration-200 ease-out in-data-ds-instant:transition-none motion-reduce:transition-none\"\n  return (\n    <Button\n      variant=\"ghost\"\n      size=\"icon\"\n      aria-label=\"Toggle dark mode\"\n      hotkey={hotkey}\n      onClick={() => setTheme(resolvedTheme === \"dark\" ? \"light\" : \"dark\")}\n      className={cn(\"relative\", className)}\n    >\n      <SunIcon\n        className={cn(icon, \"scale-50 -rotate-90 opacity-0 dark:scale-100 dark:rotate-0 dark:opacity-100\")}\n      />\n      <MoonIcon\n        className={cn(icon, \"dark:scale-50 dark:rotate-90 dark:opacity-0\")}\n      />\n    </Button>\n  )\n}\n\nconst noop = () => () => {}\n/** True after hydration: the stored theme only exists in the browser. */\nconst useMounted = () =>\n  React.useSyncExternalStore(\n    noop,\n    () => true,\n    () => false\n  )\n\nconst MODES = [\n  { value: \"system\", label: \"System\", icon: <MonitorIcon /> },\n  { value: \"light\", label: \"Light\", icon: <SunIcon /> },\n  { value: \"dark\", label: \"Dark\", icon: <MoonIcon /> },\n]\n\n/**\n * System / light / dark as a joined segmented control, for settings pages and\n * footers. Shows nothing selected until mounted (the stored choice is only\n * known in the browser), then the saved one.\n */\nfunction ThemeSwitcher({\n  showLabels = false,\n  className,\n}: {\n  showLabels?: boolean\n  className?: string\n}) {\n  const { theme, setTheme } = useTheme()\n  const mounted = useMounted()\n  return (\n    <ToggleGroup\n      variant=\"outline\"\n      size=\"sm\"\n      spacing={0}\n      value={mounted && theme ? [theme] : []}\n      onValueChange={(value) => value[0] && setTheme(value[0])}\n      aria-label=\"Theme\"\n      className={className}\n    >\n      {MODES.map((mode) => (\n        <ToggleGroupItem\n          key={mode.value}\n          value={mode.value}\n          aria-label={showLabels ? undefined : mode.label}\n        >\n          {mode.icon}\n          {showLabels && mode.label}\n        </ToggleGroupItem>\n      ))}\n    </ToggleGroup>\n  )\n}\n\nexport { ThemeSwitcher, ThemeToggle }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

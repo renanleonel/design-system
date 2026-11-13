@@ -50,6 +50,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/item.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/language-select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/multi-select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/pagination.json",
@@ -69,6 +70,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-toggle.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
@@ -1302,6 +1304,25 @@
       ]
     },
     {
+      "name": "language-select",
+      "type": "registry:ui",
+      "title": "Language Select",
+      "description": "Pick the interface language, each name in its own language and script.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/language-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "multi-select",
       "type": "registry:ui",
       "title": "Multi Select",
@@ -1637,6 +1658,28 @@
       ]
     },
     {
+      "name": "theme-toggle",
+      "type": "registry:ui",
+      "title": "Theme Toggle",
+      "description": "Light and dark in one button, or system / light / dark as a segmented switch.",
+      "dependencies": [
+        "@tanstack/react-hotkeys@0.25.0",
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0",
+        "next-themes@^0.4.6"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/theme-toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "toggle-group",
       "type": "registry:ui",
       "title": "Toggle Group",
@@ -1933,6 +1976,30 @@
           "path": "components/blocks/settings/settings-page.tsx",
           "type": "registry:component",
           "target": "components/blocks/settings/settings-page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "site-footer",
+      "type": "registry:block",
+      "title": "Site footer",
+      "description": "Brand, link columns, newsletter, then copyright, status, language and theme. Reflows with its container.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0",
+        "sonner@^2.0.8"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/language-select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-toggle.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/site-footer/site-footer.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/site-footer/site-footer.tsx"
         }
       ]
     }

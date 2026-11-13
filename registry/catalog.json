@@ -445,6 +445,24 @@
         "Two or more series always get a legend; every chart gets a tooltip.",
         "One y-axis per chart: two measures of different scale go in two charts."
       ]
+    },
+    "theme-toggle": {
+      "group": "Inputs",
+      "title": "Theme Toggle",
+      "description": "Light and dark in one button, or system / light / dark as a segmented switch.",
+      "notes": [
+        "Built on next-themes (`ThemeProvider attribute=\"class\"`).",
+        "The toggle picks its icon with CSS, so there is no flash or hydration mismatch; with a `hotkey` it switches instantly."
+      ]
+    },
+    "language-select": {
+      "group": "Inputs",
+      "title": "Language Select",
+      "description": "Pick the interface language, each name in its own language and script.",
+      "notes": [
+        "Options carry `lang`, so screen readers pronounce each name correctly.",
+        "`compact` shows an icon and the code (EN) for headers and footers."
+      ]
     }
   },
   "blocks": [
@@ -538,6 +556,13 @@
       "title": "Reset password",
       "description": "Ends on a check-your-inbox state.",
       "src": "/blocks/reset-password"
+    },
+    {
+      "id": "footer",
+      "registry": "site-footer",
+      "title": "Site footer",
+      "description": "Brand, link columns, newsletter, then copyright, status, language and theme. Reflows with its container.",
+      "src": "/blocks/footer"
     },
     {
       "id": "not-found",
