@@ -137,7 +137,9 @@ export function Playground({ themes }: { themes: string[] }) {
             aria-label="Toggle dark mode"
             onClick={() => setMode(resolvedTheme === "dark" ? "light" : "dark")}
           >
-            {resolvedTheme === "dark" ? <SunIcon /> : <MoonIcon />}
+            {/* CSS picks the icon: resolvedTheme is unknown during SSR. */}
+            <SunIcon className="hidden dark:block" />
+            <MoonIcon className="dark:hidden" />
           </Button>
         </div>
       </header>

@@ -13,6 +13,9 @@ function ThemeProvider({
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange
+      // The inline script runs from the server HTML. On the client React 19 warns about
+      // rendering <script>, so mark it as a data block there (never executed anyway).
+      scriptProps={typeof window === "undefined" ? undefined : { type: "application/json" }}
       {...props}
     >
       <ThemeHotkey />
