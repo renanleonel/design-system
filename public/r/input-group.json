@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "input-group",
+  "title": "Input Group",
+  "description": "An input with leading or trailing addons: icons, text, buttons.",
   "dependencies": [
     "class-variance-authority@^0.7.1",
     "cn@^0.5.2"

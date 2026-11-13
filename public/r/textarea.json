@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "textarea",
+  "title": "Textarea",
+  "description": "Multi-line text that grows with its content.",
   "dependencies": [
     "cn@^0.5.2"
   ],

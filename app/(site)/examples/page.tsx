@@ -1,11 +1,8 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 
 import { ReleasesPanel } from "@/components/examples/releases-panel"
 import { RuleDialog } from "@/components/examples/rule-dialog"
 import { SearchPalette } from "@/components/examples/search-palette"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = { title: "Examples · renan/ui" }
 
@@ -35,24 +32,19 @@ function Section({
 
 export default function ExamplesPage() {
   return (
-    <TooltipProvider>
-      <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-16 px-4 py-12">
+    <>
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-16 px-4 py-12">
         <header className="flex items-end justify-between gap-4">
           <div>
-            <h1 className="font-heading text-2xl font-semibold tracking-tight">
+            <h1 className="font-heading text-3xl font-semibold tracking-tight">
               Examples
             </h1>
             <p className="text-sm text-muted-foreground">
-              Compositions built only from renan/ui parts. See
-              docs/COMPOSITION.md.
+              Compositions built only from renan/ui parts, following
+              docs/COMPOSITION.md. Start a new card, dialog or palette from the
+              closest one.
             </p>
           </div>
-          <Link
-            href="/"
-            className="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-          >
-            Playground
-          </Link>
         </header>
         <Section
           title="Panel"
@@ -72,8 +64,7 @@ export default function ExamplesPage() {
         >
           <SearchPalette />
         </Section>
-      </main>
-      <Toaster />
-    </TooltipProvider>
+      </div>
+    </>
   )
 }

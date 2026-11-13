@@ -1,0 +1,367 @@
+{
+  "$comment": "Docs metadata. Feeds the docs site (sidebar, pages, search) and the registry item descriptions. Every registry:ui item needs an entry and a demo in components/demos/<name>.tsx.",
+  "groups": ["Inputs", "Forms", "Overlays", "Feedback", "Display", "Layout"],
+  "components": {
+    "button": {
+      "group": "Inputs",
+      "title": "Button",
+      "description": "Actions with press feedback, a smooth loading state and an optional hotkey.",
+      "notes": [
+        "`loading` keeps the label, slides a spinner in and blocks clicks while keeping focus.",
+        "`hotkey=\"Mod+S\"` presses the button from anywhere; `showHotkey` renders the key caps.",
+        "Icon-only buttons need an `aria-label`; the hit area grows to 44px on touch screens."
+      ]
+    },
+    "input": {
+      "group": "Inputs",
+      "title": "Input",
+      "description": "Single-line text field sized by the control tokens.",
+      "notes": [
+        "16px text on touch screens so iOS never zooms on focus.",
+        "Pair with `Field` or `FormField` for label, description and error."
+      ]
+    },
+    "input-group": {
+      "group": "Inputs",
+      "title": "Input Group",
+      "description": "An input with leading or trailing addons: icons, text, buttons.",
+      "notes": [
+        "Addons align with `inline-start`, `inline-end`, `block-start` or `block-end`.",
+        "Clicking an addon focuses the input."
+      ]
+    },
+    "textarea": {
+      "group": "Inputs",
+      "title": "Textarea",
+      "description": "Multi-line text that grows with its content.",
+      "notes": ["Grows with `field-sizing: content`; cap it with `max-h-*`."]
+    },
+    "select": {
+      "group": "Inputs",
+      "title": "Select",
+      "description": "Pick one option from a list. The popup lines its selected item up with the trigger.",
+      "notes": [
+        "On touch screens, a select with `items` renders the native picker.",
+        "The chevron flips while the popup is open.",
+        "Type to jump to an option; Home and End go to the ends."
+      ]
+    },
+    "native-select": {
+      "group": "Inputs",
+      "title": "Native Select",
+      "description": "The platform select, styled like the rest of the controls.",
+      "notes": ["Best on mobile and for long, plain lists."]
+    },
+    "combobox": {
+      "group": "Inputs",
+      "title": "Combobox",
+      "description": "Type to filter a list and pick one value.",
+      "notes": [
+        "Use it once a list has 8 or more options.",
+        "Arrow keys move, Enter picks, Escape closes."
+      ]
+    },
+    "multi-select": {
+      "group": "Inputs",
+      "title": "Multi Select",
+      "description": "Pick several values as removable tags, with type-to-filter.",
+      "notes": [
+        "Backspace in the empty input removes the last tag.",
+        "Values are plain strings; labels come from `options`."
+      ]
+    },
+    "checkbox": {
+      "group": "Inputs",
+      "title": "Checkbox",
+      "description": "On, off or mixed. The whole label toggles it.",
+      "notes": [
+        "`indeterminate` shows a dash, for a parent of partly selected rows.",
+        "The hit area extends past the box, so small checkboxes stay easy to tap."
+      ]
+    },
+    "switch": {
+      "group": "Inputs",
+      "title": "Switch",
+      "description": "A setting that applies immediately when toggled.",
+      "notes": ["Use a checkbox instead when the change waits for a Save button."]
+    },
+    "label": {
+      "group": "Forms",
+      "title": "Label",
+      "description": "Names a control. Clicking it focuses or toggles the control.",
+      "notes": []
+    },
+    "field": {
+      "group": "Forms",
+      "title": "Field",
+      "description": "Label, control, description and error laid out together, vertically or horizontally.",
+      "notes": [
+        "`orientation=\"horizontal\"` puts checkboxes and switches beside their label.",
+        "`FieldSet` and `FieldLegend` group related fields."
+      ]
+    },
+    "form": {
+      "group": "Forms",
+      "title": "Form",
+      "description": "react-hook-form and zod wired to fields: validation on blur, then live; a banner for server errors.",
+      "notes": [
+        "`useZodForm(schema)` validates on blur, then on every change.",
+        "Errors thrown from `onSubmit` become a banner at the top of the form.",
+        "Double submits are blocked while a submit is pending; the first invalid field takes focus."
+      ]
+    },
+    "dialog": {
+      "group": "Overlays",
+      "title": "Dialog",
+      "description": "A modal window. Becomes a bottom drawer on phones.",
+      "notes": [
+        "Below 640px it renders as a drawer you can swipe down; opt out with `responsive={false}`.",
+        "Focus is trapped inside and returns to the trigger on close."
+      ]
+    },
+    "alert-dialog": {
+      "group": "Overlays",
+      "title": "Alert Dialog",
+      "description": "Asks for confirmation before a destructive action.",
+      "notes": [
+        "Prefer undo over confirmation for reversible actions (see Toast).",
+        "Clicking outside doesn't dismiss it."
+      ]
+    },
+    "drawer": {
+      "group": "Overlays",
+      "title": "Drawer",
+      "description": "A panel that slides in from an edge and follows your finger.",
+      "notes": ["Swipe in its direction to dismiss; the backdrop fades with the drag."]
+    },
+    "sheet": {
+      "group": "Overlays",
+      "title": "Sheet",
+      "description": "A side panel for filters, details and navigation.",
+      "notes": ["`side` can be `top`, `right`, `bottom` or `left`."]
+    },
+    "popover": {
+      "group": "Overlays",
+      "title": "Popover",
+      "description": "Rich content anchored to a trigger. A bottom sheet on phones.",
+      "notes": ["Scales in from its trigger; Escape or a click outside closes it."]
+    },
+    "dropdown-menu": {
+      "group": "Overlays",
+      "title": "Dropdown Menu",
+      "description": "A list of actions, with hotkeys, checkboxes, radios and submenus.",
+      "notes": [
+        "Items accept a `hotkey` that works while the menu is closed.",
+        "A bottom sheet on phones."
+      ]
+    },
+    "tooltip": {
+      "group": "Overlays",
+      "title": "Tooltip",
+      "description": "A short label for an icon or a hint, with an optional hotkey.",
+      "notes": [
+        "Opens after 400ms; moving between tooltips is instant.",
+        "Never put essential information only in a tooltip: touch screens can't hover."
+      ]
+    },
+    "command": {
+      "group": "Overlays",
+      "title": "Command",
+      "description": "A searchable list of commands, inline or as a Mod+K palette.",
+      "notes": ["Arrow keys move, Enter runs, Escape closes the dialog."]
+    },
+    "alert": {
+      "group": "Feedback",
+      "title": "Alert",
+      "description": "An inline message, as a bordered card or a tinted callout.",
+      "notes": ["`tone` makes a borderless tinted callout; an `AlertAction` sits on the trailing edge."]
+    },
+    "badge": {
+      "group": "Feedback",
+      "title": "Badge",
+      "description": "Status pills and counts in seven contrast-checked tones.",
+      "notes": ["`tone` replaces the variant's colors with a tint of the tone."]
+    },
+    "sonner": {
+      "group": "Feedback",
+      "title": "Toast",
+      "description": "Transient notifications, including undo for reversible actions.",
+      "notes": [
+        "Toasts stay 6s and pause on hover, focus or a hidden tab.",
+        "`toastUndo(message, { onUndo })` runs the action now and offers to revert it for 10s."
+      ]
+    },
+    "skeleton": {
+      "group": "Feedback",
+      "title": "Skeleton",
+      "description": "Placeholders shaped like the content that is loading.",
+      "notes": [
+        "`SkeletonGroup` announces the loading state once and appears after 200ms, so fast responses never flash."
+      ]
+    },
+    "spinner": {
+      "group": "Feedback",
+      "title": "Spinner",
+      "description": "An indeterminate progress indicator.",
+      "notes": ["Prefer a skeleton for content and `Button loading` for actions."]
+    },
+    "empty": {
+      "group": "Feedback",
+      "title": "Empty",
+      "description": "What a region shows when there is nothing in it yet, and how to fill it.",
+      "notes": []
+    },
+    "error-state": {
+      "group": "Feedback",
+      "title": "Error State",
+      "description": "A region that failed to load: what failed, a retry, and a request ID for support.",
+      "notes": ["Render it per section, so the rest of the screen stays usable."]
+    },
+    "card": {
+      "group": "Display",
+      "title": "Card",
+      "description": "A surface with a header, content and footer.",
+      "notes": ["`size=\"sm\"` tightens the spacing."]
+    },
+    "panel": {
+      "group": "Display",
+      "title": "Panel",
+      "description": "A tinted tray holding white cards with concentric corners.",
+      "notes": ["Card radii follow `--ds-panel-radius` minus `--ds-panel-pad`, so corners stay parallel."]
+    },
+    "item": {
+      "group": "Display",
+      "title": "Item",
+      "description": "A row with media, title, description and actions.",
+      "notes": ["Render it as a link or button with `render` to make the whole row clickable."]
+    },
+    "data-list": {
+      "group": "Display",
+      "title": "Data List",
+      "description": "Label and value pairs that reflow with their container.",
+      "notes": ["`layout=\"row\"` spreads short pairs across a line; `stack` lists them."]
+    },
+    "icon-tile": {
+      "group": "Display",
+      "title": "Icon Tile",
+      "description": "An icon on a tinted square: the leading visual of rows, dialogs and results.",
+      "notes": []
+    },
+    "avatar": {
+      "group": "Display",
+      "title": "Avatar",
+      "description": "A user's picture with initials as fallback, alone or stacked.",
+      "notes": []
+    },
+    "kbd": {
+      "group": "Display",
+      "title": "Kbd",
+      "description": "A key cap.",
+      "notes": []
+    },
+    "hotkey": {
+      "group": "Display",
+      "title": "Hotkey",
+      "description": "Shows a shortcut for the user's platform: Mod+K reads ⌘K on macOS and Ctrl K elsewhere.",
+      "notes": ["Hidden on touch screens, where there is no keyboard."]
+    },
+    "table": {
+      "group": "Display",
+      "title": "Table",
+      "description": "Semantic table parts. For sorting, filters and pages use the Data Table block.",
+      "notes": []
+    },
+    "accordion": {
+      "group": "Layout",
+      "title": "Accordion",
+      "description": "Stacked sections that expand one or several at a time.",
+      "notes": ["The panel height animates; reduced motion keeps only a fade."]
+    },
+    "tabs": {
+      "group": "Layout",
+      "title": "Tabs",
+      "description": "Switch between views, as pills, a line or a sliding segmented control.",
+      "notes": ["Arrow keys move between tabs."]
+    },
+    "separator": {
+      "group": "Layout",
+      "title": "Separator",
+      "description": "A thin rule between content.",
+      "notes": []
+    },
+    "sortable": {
+      "group": "Layout",
+      "title": "Sortable",
+      "description": "A list you reorder by dragging, or with the keyboard.",
+      "notes": [
+        "Keyboard: focus a handle, Space to lift, arrows to move, Space to drop, Escape to cancel.",
+        "Moves are announced to screen readers; works inside dialogs."
+      ]
+    }
+  },
+  "blocks": [
+    {
+      "id": "app-shell",
+      "registry": "app-shell",
+      "title": "App shell",
+      "description": "Collapsible sidebar, Mod+K palette, G-then-key navigation, and a sheet on mobile.",
+      "src": "/blocks/inbox"
+    },
+    {
+      "id": "data-table",
+      "registry": "data-table",
+      "title": "Data table",
+      "description": "Search, filters, sort and pages kept in the URL, bulk actions and every loading state.",
+      "src": "/blocks/projects"
+    },
+    {
+      "id": "settings",
+      "registry": "settings",
+      "title": "Settings",
+      "description": "Profile form, members and roles, and a delete confirmed by typing the name.",
+      "src": "/blocks/settings"
+    },
+    {
+      "id": "billing",
+      "registry": "billing",
+      "title": "Pricing and billing",
+      "description": "Monthly or yearly plans, usage meters and invoices.",
+      "src": "/blocks/billing"
+    },
+    {
+      "id": "sign-in",
+      "registry": "auth",
+      "title": "Sign in",
+      "description": "Google and SSO, email and password, and a banner for server errors.",
+      "src": "/blocks/sign-in"
+    },
+    {
+      "id": "sign-up",
+      "registry": "auth",
+      "title": "Sign up",
+      "description": "Live password rules and terms.",
+      "src": "/blocks/sign-up"
+    },
+    {
+      "id": "sign-up-image-right",
+      "registry": "auth",
+      "title": "Sign up, image right",
+      "description": "Split layout with the media on the trailing side.",
+      "src": "/blocks/sign-up?layout=image-right"
+    },
+    {
+      "id": "sign-up-image-left",
+      "registry": "auth",
+      "title": "Sign up, image left",
+      "description": "Split layout with the media on the leading side.",
+      "src": "/blocks/sign-up?layout=image-left"
+    },
+    {
+      "id": "reset-password",
+      "registry": "auth",
+      "title": "Reset password",
+      "description": "Ends on a check-your-inbox state.",
+      "src": "/blocks/reset-password"
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "kbd",
+  "title": "Kbd",
+  "description": "A key cap.",
   "dependencies": [
     "cn@^0.5.2"
   ],

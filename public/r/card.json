@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "card",
+  "title": "Card",
+  "description": "A surface with a header, content and footer.",
   "dependencies": [
     "cn@^0.5.2"
   ],

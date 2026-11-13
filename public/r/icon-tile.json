@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "icon-tile",
+  "title": "Icon Tile",
+  "description": "An icon on a tinted square: the leading visual of rows, dialogs and results.",
   "dependencies": [
     "class-variance-authority@^0.7.1",
     "cn@^0.5.2"

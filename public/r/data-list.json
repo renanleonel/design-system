@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "data-list",
+  "title": "Data List",
+  "description": "Label and value pairs that reflow with their container.",
   "dependencies": [
     "cn@^0.5.2"
   ],

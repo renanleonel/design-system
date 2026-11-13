@@ -9,11 +9,19 @@
 // Usage: pnpm build && pnpm audit:ui            (starts `next start` on :3210)
 //        AUDIT_URL=http://localhost:3000 pnpm audit:ui   (audits a running server)
 import { execSync, spawn } from "node:child_process"
+import { readFileSync } from "node:fs"
 import { chromium } from "playwright"
 
 // AUDIT_PAGES=/blocks/projects,/examples limits the run to some pages.
+// Every component docs page, from the registry.
+const COMPONENT_PAGES = JSON.parse(readFileSync("registry.json", "utf8"))
+  .items.filter((i) => i.type === "registry:ui")
+  .map((i) => `/components/${i.name}`)
 const ALL_PAGES = [
   "/",
+  "/components",
+  ...COMPONENT_PAGES,
+  "/themes",
   "/examples",
   "/blocks",
   "/blocks/projects",
@@ -84,8 +92,19 @@ function staticChecks(tolerance) {
     issues.push(
       `page scrolls horizontally (${doc.scrollWidth} > ${doc.clientWidth})`
     )
+  // Content clipped by a container that fits (a scrolling code line) is fine.
+  const clipped = (el) => {
+    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement)
+      if (
+        getComputedStyle(a).overflowX !== "visible" &&
+        a.getBoundingClientRect().right <= window.innerWidth + 1
+      )
+        return true
+    return false
+  }
   for (const el of document.querySelectorAll("main *")) {
     if (el.closest("[aria-hidden=true]")) continue
+    if (clipped(el)) continue
     const r = el.getBoundingClientRect()
     if (
       r.width &&

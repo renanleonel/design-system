@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form",
+  "title": "Form",
+  "description": "react-hook-form and zod wired to fields: validation on blur, then live; a banner for server errors.",
   "dependencies": [
     "@hookform/resolvers@^7.0.6",
     "cn@^0.5.2",

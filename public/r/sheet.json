@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "sheet",
+  "title": "Sheet",
+  "description": "A side panel for filters, details and navigation.",
   "dependencies": [
     "@base-ui/react@^1.9.0",
     "cn@^0.5.2",

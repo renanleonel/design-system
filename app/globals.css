@@ -128,3 +128,18 @@
     @apply font-sans;
     }
 }
+/* Docs code blocks: shiki emits both themes as variables (defaultColor: false). */
+.docs-code pre {
+  background: transparent !important;
+  padding-inline: 1rem 3rem;
+  font-family: var(--font-mono);
+  width: max-content;
+  min-width: 100%;
+  overflow-wrap: normal;
+}
+.docs-code span {
+  color: var(--shiki-light);
+}
+.dark .docs-code span {
+  color: var(--shiki-dark);
+}

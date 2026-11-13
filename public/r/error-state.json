@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "error-state",
+  "title": "Error State",
+  "description": "A region that failed to load: what failed, a retry, and a request ID for support.",
   "dependencies": [
     "lucide-react@^1.72.0"
   ],

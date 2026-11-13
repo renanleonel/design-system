@@ -108,6 +108,8 @@ function Sortable<T>({
       coordinateGetter: sortableKeyboardCoordinates,
     })
   )
+  // A stable id: dnd-kit's own counter differs between server and client.
+  const contextId = React.useId()
   const ids = items.map(getId)
   const label = (id: UniqueIdentifier) => {
     const item = items.find((i) => getId(i) === id)
@@ -137,6 +139,7 @@ function Sortable<T>({
 
   return (
     <DndContext
+      id={contextId}
       sensors={sensors}
       collisionDetection={closestCenter}
       modifiers={[restrictToVerticalAxis, restrictToParentElement]}

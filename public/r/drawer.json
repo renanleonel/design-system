@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "drawer",
+  "title": "Drawer",
+  "description": "A panel that slides in from an edge and follows your finger.",
   "dependencies": [
     "@base-ui/react@^1.9.0",
     "cn@^0.5.2"

@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "spinner",
+  "title": "Spinner",
+  "description": "An indeterminate progress indicator.",
   "dependencies": [
     "cn@^0.5.2",
     "lucide-react@^1.72.0"

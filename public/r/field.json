@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "field",
+  "title": "Field",
+  "description": "Label, control, description and error laid out together, vertically or horizontally.",
   "dependencies": [
     "class-variance-authority@^0.7.1",
     "cn@^0.5.2"

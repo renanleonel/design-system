@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "table",
+  "title": "Table",
+  "description": "Semantic table parts. For sorting, filters and pages use the Data Table block.",
   "dependencies": [
     "cn@^0.5.2"
   ],

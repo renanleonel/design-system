@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "popover",
+  "title": "Popover",
+  "description": "Rich content anchored to a trigger. A bottom sheet on phones.",
   "dependencies": [
     "@base-ui/react@^1.9.0",
     "cn@^0.5.2"

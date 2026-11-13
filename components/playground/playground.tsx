@@ -1,9 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { useTheme } from "next-themes"
 import { toast } from "sonner"
-import { MoonIcon, PlusIcon, SunIcon } from "lucide-react"
+import { PlusIcon } from "lucide-react"
 
 import { CreateProjectCard } from "@/components/playground/create-project"
 import { StatesDemo } from "@/components/playground/states-demo"
@@ -38,7 +37,6 @@ import {
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Toaster } from "@/components/ui/sonner"
 import {
   Accordion,
   AccordionContent,
@@ -169,7 +167,6 @@ export function Playground({ themes }: { themes: string[] }) {
   )
   const [radius, setRadius] = React.useState(RADII[0].value)
   const [density, setDensity] = React.useState(DENSITIES[1].value)
-  const { resolvedTheme, setTheme: setMode } = useTheme()
 
   const changeTheme = (value: string) => {
     setTheme(value)
@@ -186,21 +183,19 @@ export function Playground({ themes }: { themes: string[] }) {
 
   return (
     <TooltipProvider>
-      <div className="min-h-svh bg-background text-foreground">
-        <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur">
-          <div className="mx-auto flex max-w-5xl flex-wrap items-end gap-4 px-4 py-3">
-            <div className="mr-auto">
-              <h1 className="font-heading text-base font-semibold">renan/ui</h1>
-              <p className="text-xs text-muted-foreground">
-                Theme playground ·{" "}
-                <a
-                  href="/examples"
-                  className="underline underline-offset-4 hover:text-foreground"
-                >
-                  Examples
-                </a>
-              </p>
-            </div>
+      <div className="bg-background text-foreground">
+        <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 pt-10">
+          <div className="flex flex-col gap-2">
+            <h1 className="font-heading text-3xl font-semibold tracking-tight">
+              Themes
+            </h1>
+            <p className="max-w-prose text-muted-foreground">
+              Every component reads the shadcn theme variables plus a few
+              layer-2 tokens. Swap a tweakcn theme, the control radius or the
+              density and watch everything follow.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-end gap-4 rounded-xl bg-muted/40 p-4 shadow-border">
             <Control label="Theme">
               <Picker
                 items={themes.map((t) => ({ label: t, value: t }))}
@@ -222,22 +217,10 @@ export function Playground({ themes }: { themes: string[] }) {
                 onValueChange={changeDensity}
               />
             </Control>
-            <Button
-              variant="outline"
-              size="icon"
-              aria-label="Toggle dark mode"
-              onClick={() =>
-                setMode(resolvedTheme === "dark" ? "light" : "dark")
-              }
-            >
-              {/* CSS picks the icon: resolvedTheme is unknown during SSR. */}
-              <SunIcon className="hidden dark:block" />
-              <MoonIcon className="dark:hidden" />
-            </Button>
           </div>
-        </header>
+        </div>
 
-        <main className="mx-auto grid max-w-5xl gap-6 px-4 py-8 md:grid-cols-2">
+        <div className="mx-auto grid max-w-5xl gap-6 px-4 py-8 md:grid-cols-2">
           <Card className="md:col-span-2">
             <CardHeader>
               <CardTitle>Buttons</CardTitle>
@@ -458,8 +441,7 @@ export function Playground({ themes }: { themes: string[] }) {
             </CardContent>
           </Card>
           <StatesDemo />
-        </main>
-        <Toaster />
+        </div>
       </div>
     </TooltipProvider>
   )

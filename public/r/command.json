@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "command",
+  "title": "Command",
+  "description": "A searchable list of commands, inline or as a Mod+K palette.",
   "dependencies": [
     "cmdk@^1.1.1",
     "cn@^0.5.2",

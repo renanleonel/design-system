@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "hotkey",
+  "title": "Hotkey",
+  "description": "Shows a shortcut for the user's platform: Mod+K reads ⌘K on macOS and Ctrl K elsewhere.",
   "dependencies": [
     "@tanstack/react-hotkeys@0.25.0",
     "cn@^0.5.2"

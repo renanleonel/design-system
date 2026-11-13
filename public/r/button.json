@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "button",
+  "title": "Button",
+  "description": "Actions with press feedback, a smooth loading state and an optional hotkey.",
   "dependencies": [
     "@base-ui/react@^1.9.0",
     "@tanstack/react-hotkeys@0.25.0",

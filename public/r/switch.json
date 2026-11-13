@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "switch",
+  "title": "Switch",
+  "description": "A setting that applies immediately when toggled.",
   "dependencies": [
     "@base-ui/react@^1.9.0",
     "cn@^0.5.2"

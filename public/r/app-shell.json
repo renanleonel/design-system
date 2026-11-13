@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "app-shell",
+  "title": "App shell",
+  "description": "Collapsible sidebar, Mod+K palette, G-then-key navigation, and a sheet on mobile.",
   "dependencies": [
     "@tanstack/react-hotkeys@0.25.0",
     "cn@^0.5.2",

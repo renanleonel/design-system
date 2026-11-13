@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "data-table",
+  "title": "Data table",
+  "description": "Search, filters, sort and pages kept in the URL, bulk actions and every loading state.",
   "dependencies": [
     "@tanstack/react-table@^8.21.3",
     "cn@^0.5.2",

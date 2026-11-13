@@ -47,10 +47,11 @@ npx shadcn add $R/app-shell.json $R/data-table.json
 ## Develop
 
 ```bash
-pnpm dev              # playground at / (theme, radius and density switchers)
+pnpm dev              # docs site: / home, /components, /blocks, /examples, /themes
 pnpm registry:build   # regenerate registry.json + app/ds-tokens.css, then public/r
 ```
 
 - Components live in `components/ui`; each file becomes a registry item automatically (deps are read from imports).
+- Each component needs an entry in `registry/catalog.json` (group, description, notes) and a demo file in `components/demos/<name>.tsx`, where every `export function` is a story (Storybook CSF style) shown with its code on `/components/<name>`.
 - Themes live in `registry/themes/*.json`; drop a tweakcn theme JSON there to add one.
 - Commit `public/r` — consumers install from it.

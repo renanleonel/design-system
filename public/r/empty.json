@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "empty",
+  "title": "Empty",
+  "description": "What a region shows when there is nothing in it yet, and how to fill it.",
   "dependencies": [
     "class-variance-authority@^0.7.1",
     "cn@^0.5.2"

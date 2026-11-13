@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "badge",
+  "title": "Badge",
+  "description": "Status pills and counts in seven contrast-checked tones.",
   "dependencies": [
     "@base-ui/react@^1.9.0",
     "class-variance-authority@^0.7.1",

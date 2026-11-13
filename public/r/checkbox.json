@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "checkbox",
+  "title": "Checkbox",
+  "description": "On, off or mixed. The whole label toggles it.",
   "dependencies": [
     "@base-ui/react@^1.9.0",
     "cn@^0.5.2",

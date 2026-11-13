@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "multi-select",
+  "title": "Multi Select",
+  "description": "Pick several values as removable tags, with type-to-filter.",
   "dependencies": [],
   "registryDependencies": [
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/combobox.json"

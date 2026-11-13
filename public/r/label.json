@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "label",
+  "title": "Label",
+  "description": "Names a control. Clicking it focuses or toggles the control.",
   "dependencies": [
     "cn@^0.5.2"
   ],

@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "native-select",
+  "title": "Native Select",
+  "description": "The platform select, styled like the rest of the controls.",
   "dependencies": [
     "cn@^0.5.2",
     "lucide-react@^1.72.0"

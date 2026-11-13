@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "accordion",
+  "title": "Accordion",
+  "description": "Stacked sections that expand one or several at a time.",
   "dependencies": [
     "@base-ui/react@^1.9.0",
     "cn@^0.5.2",

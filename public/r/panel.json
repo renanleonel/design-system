@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "panel",
+  "title": "Panel",
+  "description": "A tinted tray holding white cards with concentric corners.",
   "dependencies": [
     "cn@^0.5.2"
   ],

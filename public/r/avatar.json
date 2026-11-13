@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar",
+  "title": "Avatar",
+  "description": "A user's picture with initials as fallback, alone or stacked.",
   "dependencies": [
     "@base-ui/react@^1.9.0",
     "cn@^0.5.2"
