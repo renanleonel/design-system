@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Types, lint, contrast, registry, build, UI audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - name: Contrast (every theme and tone, light and dark)
+        run: pnpm check:contrast
+
+      - name: Registry is up to date
+        run: |
+          pnpm registry:build
+          git diff --exit-code -- registry.json public/r app/ds-tokens.css \
+            || (echo "::error::Run 'pnpm registry:build' and commit the result." && exit 1)
+
+      - run: pnpm build
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: UI audit (alignment, overflow, popups, names, console)
+        run: pnpm audit:ui
+
+  registry-install:
+    name: Registry installs into a fresh project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm registry:build
+
+      # shadcn rewrites registry CSS when installing (it once broke nested @media);
+      # install the local registry into a new app and build it.
+      - name: Install the registry into a new Next app
+        working-directory: ${{ runner.temp }}
+        run: |
+          npx -y shadcn@4.23.0 init -t next -b base -p nova -n consumer --no-monorepo -y
+          mkdir consumer/r
+          cp "$GITHUB_WORKSPACE"/public/r/*.json consumer/r/
+          sed -i 's#https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/#./r/#g' consumer/r/*.json
+          cd consumer
+          npx -y shadcn@4.23.0 add ./r/base.json -y --overwrite
+      - name: Build the consumer
+        working-directory: ${{ runner.temp }}/consumer
+        run: npx next build
