@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "multi-select",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/combobox.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/multi-select.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport {\n  Combobox,\n  ComboboxChip,\n  ComboboxChips,\n  ComboboxChipsInput,\n  ComboboxContent,\n  ComboboxEmpty,\n  ComboboxItem,\n  ComboboxList,\n  ComboboxValue,\n  useComboboxAnchor,\n} from \"@/components/ui/combobox\"\n\ntype Option = { value: string; label: string }\n\n/**\n * Pick several values as removable tags, with type-to-filter (interaction.md:\n * 8+ options want a searchable control). Values are plain strings; labels come\n * from `options`. Backspace in the empty input removes the last tag.\n */\nfunction MultiSelect({\n  options,\n  value,\n  defaultValue,\n  onValueChange,\n  placeholder = \"Select…\",\n  emptyMessage = \"No matches.\",\n  id,\n  name,\n  disabled,\n  className,\n  ref,\n  onBlur,\n  ...aria\n}: {\n  options: Option[]\n  value?: string[]\n  defaultValue?: string[]\n  onValueChange?: (value: string[]) => void\n  placeholder?: string\n  emptyMessage?: React.ReactNode\n  id?: string\n  name?: string\n  disabled?: boolean\n  className?: string\n  /** Forwarded to the text input, so a form can focus it on error. */\n  ref?: React.Ref<HTMLInputElement>\n  onBlur?: React.FocusEventHandler<HTMLInputElement>\n  \"aria-invalid\"?: boolean | \"true\" | \"false\"\n  \"aria-describedby\"?: string\n}) {\n  const anchor = useComboboxAnchor()\n  const byValue = (values: string[] | undefined) =>\n    values?.map(\n      (v) => options.find((o) => o.value === v) ?? { value: v, label: v }\n    )\n\n  return (\n    <Combobox\n      multiple\n      items={options}\n      value={byValue(value)}\n      defaultValue={byValue(defaultValue)}\n      onValueChange={(items: Option[]) =>\n        onValueChange?.(items.map((item) => item.value))\n      }\n      itemToStringLabel={(item: Option) => item.label}\n      itemToStringValue={(item: Option) => item.value}\n      isItemEqualToValue={(a: Option, b: Option) => a.value === b.value}\n      name={name}\n      disabled={disabled}\n    >\n      <ComboboxChips ref={anchor} className={className}>\n        <ComboboxValue>\n          {(selected: Option[]) =>\n            selected.map((item) => (\n              <ComboboxChip key={item.value}>{item.label}</ComboboxChip>\n            ))\n          }\n        </ComboboxValue>\n        <ComboboxChipsInput\n          ref={ref}\n          id={id}\n          placeholder={placeholder}\n          onBlur={onBlur}\n          {...aria}\n        />\n      </ComboboxChips>\n      <ComboboxContent anchor={anchor}>\n        <ComboboxEmpty>{emptyMessage}</ComboboxEmpty>\n        <ComboboxList>\n          {(item: Option) => (\n            <ComboboxItem key={item.value} value={item}>\n              {item.label}\n            </ComboboxItem>\n          )}\n        </ComboboxList>\n      </ComboboxContent>\n    </Combobox>\n  )\n}\n\nexport { MultiSelect, type Option as MultiSelectOption }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

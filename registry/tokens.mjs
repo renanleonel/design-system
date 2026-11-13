@@ -161,6 +161,10 @@ export const css = {
       "touch-action": "manipulation",
     },
     html: { "-webkit-tap-highlight-color": "transparent" },
+    // Focusing the first invalid field scrolls it clear of a sticky header.
+    "input, select, textarea, button, [role=combobox]": {
+      "scroll-margin-block": "var(--ds-scroll-offset, 5rem)",
+    },
     // Everything pressable shows a pointer; disabled and busy controls don't.
     'button:not(:disabled):not([aria-disabled="true"]), [role="button"]:not([aria-disabled="true"]), summary, label:has(input:not(:disabled))':
       { cursor: "pointer" },

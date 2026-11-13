@@ -5,6 +5,7 @@ import { useTheme } from "next-themes"
 import { toast } from "sonner"
 import { MoonIcon, PlusIcon, SunIcon } from "lucide-react"
 
+import { CreateProjectCard } from "@/components/playground/create-project"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -15,7 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
   DialogContent,
@@ -25,12 +25,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
+import { Field, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -270,49 +265,7 @@ export function Playground({ themes }: { themes: string[] }) {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Create project</CardTitle>
-              <CardDescription>
-                Form controls share one height and radius.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <FieldGroup>
-                <Field>
-                  <FieldLabel htmlFor="name">Name</FieldLabel>
-                  <Input id="name" placeholder="Acme dashboard" />
-                  <FieldDescription>
-                    Shown to everyone on your team.
-                  </FieldDescription>
-                </Field>
-                <Field>
-                  <FieldLabel>Plan</FieldLabel>
-                  <Picker
-                    items={[
-                      { label: "Hobby", value: "hobby" },
-                      { label: "Pro", value: "pro" },
-                      { label: "Enterprise", value: "enterprise" },
-                    ]}
-                    value="pro"
-                    onValueChange={() => {}}
-                  />
-                </Field>
-                <Field orientation="horizontal">
-                  <Checkbox id="terms" defaultChecked />
-                  <FieldLabel htmlFor="terms">
-                    Send me product updates
-                  </FieldLabel>
-                </Field>
-              </FieldGroup>
-            </CardContent>
-            <CardFooter className="justify-end gap-2">
-              <Button variant="ghost">Cancel</Button>
-              <Button onClick={() => toast.success("Project created")}>
-                Create
-              </Button>
-            </CardFooter>
-          </Card>
+          <CreateProjectCard />
 
           <Card>
             <CardHeader>
