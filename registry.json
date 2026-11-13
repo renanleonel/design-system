@@ -144,16 +144,23 @@
         },
         "@utility hit-area": {
           "position": "relative",
-          "@media (pointer: coarse)": {
-            "&::after": {
-              "content": "\"\"",
-              "position": "absolute",
-              "top": "50%",
-              "left": "50%",
-              "width": "max(100%, 2.75rem)",
-              "height": "max(100%, 2.75rem)",
-              "translate": "-50% -50%"
-            }
+          "&::after": {
+            "content": "\"\"",
+            "position": "absolute"
+          }
+        },
+        "@media (pointer: coarse)": {
+          ".hit-area::after": {
+            "top": "50%",
+            "left": "50%",
+            "width": "max(100%, 2.75rem)",
+            "height": "max(100%, 2.75rem)",
+            "translate": "-50% -50%"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ":root": {
+            "--ds-motion-scale": "1"
           }
         },
         "@utility motion-popover": {
@@ -161,12 +168,7 @@
           "transition": "opacity var(--ds-duration-popover) var(--ds-ease-out), transform var(--ds-duration-popover) var(--ds-ease-out)",
           "&[data-starting-style], &[data-ending-style]": {
             "opacity": "0",
-            "transform": "scale(0.95)"
-          },
-          "@media (prefers-reduced-motion: reduce)": {
-            "&[data-starting-style], &[data-ending-style]": {
-              "transform": "none"
-            }
+            "transform": "scale(var(--ds-motion-scale, 0.95))"
           }
         },
         "@utility motion-tooltip": {
@@ -174,12 +176,7 @@
           "transition": "opacity var(--ds-duration-tooltip) var(--ds-ease-out), transform var(--ds-duration-tooltip) var(--ds-ease-out)",
           "&[data-starting-style], &[data-ending-style]": {
             "opacity": "0",
-            "transform": "scale(0.97)"
-          },
-          "@media (prefers-reduced-motion: reduce)": {
-            "&[data-starting-style], &[data-ending-style]": {
-              "transform": "none"
-            }
+            "transform": "scale(var(--ds-motion-scale, 0.97))"
           },
           "&[data-instant]": {
             "transition-duration": "0ms"
@@ -190,12 +187,7 @@
           "transition": "opacity var(--ds-duration-modal) var(--ds-ease-out), transform var(--ds-duration-modal) var(--ds-ease-out)",
           "&[data-starting-style], &[data-ending-style]": {
             "opacity": "0",
-            "transform": "scale(0.96)"
-          },
-          "@media (prefers-reduced-motion: reduce)": {
-            "&[data-starting-style], &[data-ending-style]": {
-              "transform": "none"
-            }
+            "transform": "scale(var(--ds-motion-scale, 0.96))"
           }
         },
         "@utility motion-backdrop": {

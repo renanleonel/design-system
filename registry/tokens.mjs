@@ -81,11 +81,12 @@ const STARTING = "&[data-starting-style], &[data-ending-style]"
 
 // Popup motion for Base UI parts (they set data-starting-style / data-ending-style).
 // Transitions, not keyframes, so a reopen mid-close retargets instead of restarting.
+// NOTE: shadcn's CSS writer only handles one nesting level inside @utility, so
+// media queries live at the top level of `css` and act through variables.
 const popup = (duration, scale, origin) => ({
   "transform-origin": origin,
   transition: `opacity var(${duration}) var(--ds-ease-out), transform var(${duration}) var(--ds-ease-out)`,
-  [STARTING]: { opacity: "0", transform: `scale(${scale})` },
-  [REDUCED]: { [STARTING]: { transform: "none" } },
+  [STARTING]: { opacity: "0", transform: `scale(var(--ds-motion-scale, ${scale}))` },
 })
 
 // Extra CSS: utilities components use, and base-layer browser polish.
@@ -115,18 +116,19 @@ export const css = {
   // via a pseudo-element so the visual size doesn't change.
   "@utility hit-area": {
     position: "relative",
-    "@media (pointer: coarse)": {
-      "&::after": {
-        content: '""',
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        width: "max(100%, 2.75rem)",
-        height: "max(100%, 2.75rem)",
-        translate: "-50% -50%",
-      },
+    "&::after": { content: '""', position: "absolute" },
+  },
+  "@media (pointer: coarse)": {
+    ".hit-area::after": {
+      top: "50%",
+      left: "50%",
+      width: "max(100%, 2.75rem)",
+      height: "max(100%, 2.75rem)",
+      translate: "-50% -50%",
     },
   },
+  // Reduced motion: popups keep the fade, drop the scale.
+  [REDUCED]: { ":root": { "--ds-motion-scale": "1" } },
   "@utility motion-popover": popup("--ds-duration-popover", "0.95", "var(--transform-origin)"),
   "@utility motion-tooltip": {
     ...popup("--ds-duration-tooltip", "0.97", "var(--transform-origin)"),
