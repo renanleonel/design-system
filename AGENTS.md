@@ -18,4 +18,12 @@ A shadcn registry on Base UI. Rules come from the `frontend-design` and `animate
 - **Elevation:** one per role: `shadow-border` (cards), `shadow-popover` (menus, popovers, selects), `shadow-modal` (dialogs, sheets). Never a border plus a shadow on the same surface.
 - **Motion:** `motion-press` on pressables, `motion-popover` / `motion-tooltip` / `motion-modal` / `motion-backdrop` on Base UI popups. Transitions only (no `animate-in` keyframes), `transform`/`opacity` only, never `transition-all`, never `scale(0)`. Reduced motion keeps fades, drops movement. Nothing animates on keyboard-shortcut actions.
 - **States:** every control covers hover, focus-visible, active, disabled, loading (`Button loading`), invalid.
+- **As few `useEffect`s as possible.** Use one only when there's no other way: subscribing to something outside React (a DOM/window event, a third-party store) with cleanup. Before writing one, reach for, in order:
+  1. Derive during render (computed values, no state).
+  2. CSS: data attributes, `group-*` / `has-*` variants, transitions (e.g. `Button` loading is pure CSS width animation).
+  3. The event handler that caused the change (including writes to `document`).
+  4. Adjust state during render when a prop changes (`if (prop && !state) setState(true)`).
+  5. DOM events like `onTransitionEnd` / `onAnimationEnd` for "after the animation" logic, never `setTimeout` in an effect.
+  6. `useSyncExternalStore` for external stores, a `key` to reset state.
+  Never `setState` synchronously inside an effect, and never an effect to sync one piece of state from another.
 - **Token CSS (`css` in `registry/tokens.mjs`):** shadcn's CSS writer handles only one nesting level inside `@utility`. Put `@media` at the top level and act through variables or plain selectors (see `hit-area`, `--ds-motion-scale`). Verify a change by installing `public/r/tokens.json` into a fresh project and building it.

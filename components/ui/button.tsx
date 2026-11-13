@@ -44,20 +44,6 @@ const buttonVariants = cva(
   }
 )
 
-// Keeps a value true for `ms` after it turns false, so exit transitions can finish.
-function useLinger(value: boolean, ms: number) {
-  const [lingering, setLingering] = React.useState(value)
-  React.useEffect(() => {
-    if (value) {
-      setLingering(true)
-      return
-    }
-    const id = setTimeout(() => setLingering(false), ms)
-    return () => clearTimeout(id)
-  }, [value, ms])
-  return value || lingering
-}
-
 function Button({
   className,
   variant = "default",
@@ -71,8 +57,11 @@ function Button({
     /** Busy state: keeps the label, slides a spinner in, blocks clicks, keeps focus. */
     loading?: boolean
   }) {
-  // Spin through the collapse too, so the spinner never freezes while fading out.
-  const spinning = useLinger(loading, 200)
+  // The spinner mounts as soon as loading starts (state adjusted during render, no
+  // effect) and unmounts when the collapse transition ends, so it keeps spinning
+  // while it fades out instead of freezing.
+  const [spinning, setSpinning] = React.useState(loading)
+  if (loading && !spinning) setSpinning(true)
 
   return (
     <ButtonPrimitive
@@ -88,6 +77,11 @@ function Button({
       <span
         data-slot="button-spinner"
         aria-hidden
+        onTransitionEnd={(event) => {
+          if (!loading && event.propertyName === "grid-template-columns") {
+            setSpinning(false)
+          }
+        }}
         className="-me-(--btn-gap) grid grid-cols-[0fr] opacity-0 transition-[grid-template-columns,opacity,margin-inline-end] duration-200 ease-out group-aria-busy/button:me-0 group-aria-busy/button:grid-cols-[1fr] group-aria-busy/button:opacity-100"
       >
         <span className="flex min-w-0 overflow-hidden">

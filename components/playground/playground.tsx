@@ -93,16 +93,15 @@ const DENSITIES = [
   { label: "Comfortable", value: "2.5rem" },
 ]
 
-function useRootAttr(name: string, value: string) {
-  React.useEffect(() => {
-    document.documentElement.setAttribute(name, value)
-  }, [name, value])
-}
+// Theme and tokens live on <html> so portaled popups get them too. Written from the
+// change handlers (not an effect); the initial values match the CSS defaults.
+const root = () => document.documentElement
 
-function useRootVar(name: string, value: string) {
-  React.useEffect(() => {
-    document.documentElement.style.setProperty(name, value)
-  }, [name, value])
+function applyDensity(density: string) {
+  root().style.setProperty("--ds-control-h", density)
+  root().style.setProperty("--ds-control-h-sm", `calc(${density} - 0.25rem)`)
+  root().style.setProperty("--ds-control-h-xs", `calc(${density} - 0.5rem)`)
+  root().style.setProperty("--ds-control-h-lg", `calc(${density} + 0.25rem)`)
 }
 
 function Control({
@@ -175,12 +174,18 @@ export function Playground({ themes }: { themes: string[] }) {
   const [density, setDensity] = React.useState(DENSITIES[1].value)
   const { resolvedTheme, setTheme: setMode } = useTheme()
 
-  useRootAttr("data-ds-theme", theme)
-  useRootVar("--ds-radius-control", radius)
-  useRootVar("--ds-control-h", density)
-  useRootVar("--ds-control-h-sm", `calc(${density} - 0.25rem)`)
-  useRootVar("--ds-control-h-xs", `calc(${density} - 0.5rem)`)
-  useRootVar("--ds-control-h-lg", `calc(${density} + 0.25rem)`)
+  const changeTheme = (value: string) => {
+    setTheme(value)
+    root().setAttribute("data-ds-theme", value)
+  }
+  const changeRadius = (value: string) => {
+    setRadius(value)
+    root().style.setProperty("--ds-radius-control", value)
+  }
+  const changeDensity = (value: string) => {
+    setDensity(value)
+    applyDensity(value)
+  }
 
   return (
     <TooltipProvider>
@@ -195,17 +200,21 @@ export function Playground({ themes }: { themes: string[] }) {
               <Picker
                 items={themes.map((t) => ({ label: t, value: t }))}
                 value={theme}
-                onValueChange={setTheme}
+                onValueChange={changeTheme}
               />
             </Control>
             <Control label="Control radius">
-              <Picker items={RADII} value={radius} onValueChange={setRadius} />
+              <Picker
+                items={RADII}
+                value={radius}
+                onValueChange={changeRadius}
+              />
             </Control>
             <Control label="Density">
               <Picker
                 items={DENSITIES}
                 value={density}
-                onValueChange={setDensity}
+                onValueChange={changeDensity}
               />
             </Control>
             <Button
