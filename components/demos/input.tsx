@@ -49,6 +49,17 @@ export function Disabled() {
   )
 }
 
+export function Clearable() {
+  return (
+    <Input
+      clearable
+      defaultValue="Quarterly report"
+      aria-label="Document title"
+      className="max-w-xs"
+    />
+  )
+}
+
 export function File() {
   return <Input type="file" aria-label="Upload" className="max-w-xs" />
 }

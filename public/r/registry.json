@@ -894,7 +894,8 @@
         "react-day-picker@^10.0.2"
       ],
       "registryDependencies": [
-        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json"
       ],
       "files": [
         {
@@ -1017,7 +1018,7 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "Date Picker",
-      "description": "A button that opens a calendar, for a single date or a range.",
+      "description": "A form field that opens a calendar, for a single date or a range.",
       "dependencies": [
         "cn@^0.5.2",
         "date-fns@^4.4.0",
@@ -1281,9 +1282,13 @@
       "description": "Single-line text field sized by the control tokens.",
       "dependencies": [
         "@base-ui/react@^1.9.0",
-        "cn@^0.5.2"
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json"
+      ],
       "files": [
         {
           "path": "components/ui/input.tsx",

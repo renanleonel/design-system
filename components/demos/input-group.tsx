@@ -50,7 +50,10 @@ export function WithButton() {
         <InputGroupButton
           size="icon-xs"
           aria-label={copied ? "Copied" : "Copy"}
-          onClick={() => {
+          // The check is a confirmation, not a control: no hover, no pointer.
+          className={copied ? "pointer-events-none" : undefined}
+          onClick={async () => {
+            await navigator.clipboard.writeText("sk_live_51Hq…9fA")
             setCopied(true)
             setTimeout(() => setCopied(false), 1500)
           }}

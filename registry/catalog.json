@@ -25,6 +25,8 @@
       "description": "Single-line text field sized by the control tokens.",
       "notes": [
         "16px text on touch screens so iOS never zooms on focus.",
+        "`clearable` adds an X while there's a value; it fires `onChange` like typing, then `onClear`.",
+        "`type=\"file\"` shows the picked file's name instead of the browser's \"Choose File\" button, with an X to unselect.",
         "Pair with `Field` or `FormField` for label, description and error."
       ]
     },
