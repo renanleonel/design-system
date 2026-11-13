@@ -449,10 +449,24 @@
   },
   "blocks": [
     {
+      "id": "dashboard",
+      "registry": "dashboard",
+      "title": "Dashboard",
+      "description": "KPI tiles with sparklines, revenue and signup charts, activity and top projects; the range lives in the URL.",
+      "src": "/blocks/dashboard"
+    },
+    {
       "id": "app-shell",
       "registry": "app-shell",
       "title": "App shell",
       "description": "Collapsible sidebar, Mod+K palette, G-then-key navigation, and a sheet on mobile.",
+      "src": "/blocks/projects"
+    },
+    {
+      "id": "notifications",
+      "registry": "notifications",
+      "title": "Notifications",
+      "description": "A bell menu with unread count (Shift+N) and a full feed with mark as read and archive with undo.",
       "src": "/blocks/inbox"
     },
     {
@@ -510,6 +524,20 @@
       "title": "Reset password",
       "description": "Ends on a check-your-inbox state.",
       "src": "/blocks/reset-password"
+    },
+    {
+      "id": "not-found",
+      "registry": "error-pages",
+      "title": "Not found",
+      "description": "404, 403, 500 and maintenance pages with the way out.",
+      "src": "/blocks/not-found"
+    },
+    {
+      "id": "server-error",
+      "registry": "error-pages",
+      "title": "Server error",
+      "description": "Retry and a request ID for support.",
+      "src": "/blocks/server-error"
     }
   ]
 }

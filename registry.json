@@ -1774,6 +1774,32 @@
       ]
     },
     {
+      "name": "dashboard",
+      "type": "registry:block",
+      "title": "Dashboard",
+      "description": "KPI tiles with sparklines, revenue and signup charts, activity and top projects; the range lives in the URL.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0",
+        "recharts@3.8.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/card.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/chart.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/dashboard/dashboard-page.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard/dashboard-page.tsx"
+        }
+      ]
+    },
+    {
       "name": "data-table",
       "type": "registry:block",
       "title": "Data table",
@@ -1808,6 +1834,52 @@
           "path": "components/blocks/data-table/projects-table.tsx",
           "type": "registry:component",
           "target": "components/blocks/data-table/projects-table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "error-pages",
+      "type": "registry:block",
+      "title": "Not found",
+      "description": "404, 403, 500 and maintenance pages with the way out.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/error-pages/error-page.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/error-pages/error-page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "notifications",
+      "type": "registry:block",
+      "title": "Notifications",
+      "description": "A bell menu with unread count (Shift+N) and a full feed with mark as read and archive with undo.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/notifications/notifications.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/notifications/notifications.tsx"
         }
       ]
     },

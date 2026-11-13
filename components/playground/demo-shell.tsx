@@ -8,6 +8,7 @@ import {
   FolderKanbanIcon,
   HexagonIcon,
   InboxIcon,
+  LayoutDashboardIcon,
   SettingsIcon,
 } from "lucide-react"
 
@@ -31,6 +32,12 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
         sections={[
           {
             items: [
+              {
+                label: "Dashboard",
+                href: "/blocks/dashboard",
+                icon: <LayoutDashboardIcon />,
+                hotkey: ["G", "D"],
+              },
               {
                 label: "Inbox",
                 href: "/blocks/inbox",

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-pages",
+  "title": "Not found",
+  "description": "404, 403, 500 and maintenance pages with the way out.",
+  "dependencies": [
+    "cn@^0.5.2",
+    "lucide-react@^1.72.0"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/error-pages/error-page.tsx",
+      "content": "import { cn } from \"cn\"\nimport { ArrowLeftIcon, LifeBuoyIcon, RotateCwIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\ntype Variant = \"not-found\" | \"forbidden\" | \"server-error\" | \"maintenance\"\n\nconst COPY: Record<Variant, { code: string; title: string; description: string }> = {\n  \"not-found\": {\n    code: \"404\",\n    title: \"This page doesn't exist\",\n    description:\n      \"The link may be broken, or the page was moved or deleted. Check the address, or head back home.\",\n  },\n  forbidden: {\n    code: \"403\",\n    title: \"You don't have access\",\n    description:\n      \"This belongs to a workspace you're not a member of. Ask an admin to invite you, or switch accounts.\",\n  },\n  \"server-error\": {\n    code: \"500\",\n    title: \"Something went wrong on our side\",\n    description:\n      \"It's not you. We've been notified and are looking into it. Try again in a moment.\",\n  },\n  maintenance: {\n    code: \"503\",\n    title: \"Down for scheduled maintenance\",\n    description:\n      \"We're upgrading the database and will be back by 14:00 UTC. Your data is safe.\",\n  },\n}\n\n/**\n * Full-page errors: what happened, whose fault it is, and the way out. Pass\n * `onRetry` for transient failures and `requestId` so support can trace a 5xx.\n * Links are plain `<a>` (or your router's Link via `render`).\n */\nexport function ErrorPage({\n  variant,\n  title,\n  description,\n  homeHref = \"/\",\n  supportHref,\n  onRetry,\n  requestId,\n  className,\n}: {\n  variant: Variant\n  title?: string\n  description?: string\n  homeHref?: string\n  supportHref?: string\n  onRetry?: () => void\n  requestId?: string\n  className?: string\n}) {\n  const copy = COPY[variant]\n  return (\n    <main\n      className={cn(\n        \"flex min-h-dvh flex-col items-center justify-center bg-background px-4 py-16 text-center\",\n        className\n      )}\n    >\n      <div className=\"flex max-w-md flex-col items-center gap-4\">\n        <p\n          aria-hidden\n          className=\"bg-linear-to-b from-foreground to-foreground/20 bg-clip-text font-heading text-8xl leading-none font-semibold tracking-tighter text-transparent tabular-nums\"\n        >\n          {copy.code}\n        </p>\n        <h1 className=\"font-heading text-2xl font-semibold tracking-tight\">\n          <span className=\"sr-only\">Error {copy.code}: </span>\n          {title ?? copy.title}\n        </h1>\n        <p className=\"text-muted-foreground\">{description ?? copy.description}</p>\n        <div className=\"mt-2 flex flex-wrap justify-center gap-2\">\n          {onRetry && (\n            <Button onClick={onRetry}>\n              <RotateCwIcon data-icon=\"inline-start\" />\n              Try again\n            </Button>\n          )}\n          <Button\n            variant={onRetry ? \"outline\" : \"default\"}\n            render={<a href={homeHref} />}\n            nativeButton={false}\n          >\n            <ArrowLeftIcon data-icon=\"inline-start\" />\n            Back home\n          </Button>\n          {supportHref && (\n            <Button\n              variant=\"ghost\"\n              render={<a href={supportHref} />}\n              nativeButton={false}\n            >\n              <LifeBuoyIcon data-icon=\"inline-start\" />\n              Contact support\n            </Button>\n          )}\n        </div>\n        {requestId && (\n          <p className=\"mt-4 font-mono text-xs text-muted-foreground tabular-nums\">\n            Request ID {requestId}\n          </p>\n        )}\n      </div>\n    </main>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "components/blocks/error-pages/error-page.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

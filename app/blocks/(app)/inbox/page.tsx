@@ -1,38 +1,41 @@
 "use client"
 
-import { CheckCheckIcon } from "lucide-react"
-
 import {
   AppShellContent,
   AppShellHeader,
 } from "@/components/blocks/app-shell/app-shell"
 import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/ui/empty"
+  NotificationsFeed,
+  NotificationsMenu,
+  SAMPLE_NOTIFICATIONS,
+  useNotifications,
+} from "@/components/blocks/notifications/notifications"
 
 export default function Page() {
+  const n = useNotifications(SAMPLE_NOTIFICATIONS)
   return (
     <>
       <AppShellHeader
         title="Inbox"
-        description="Mentions, reviews and assignments"
+        description="Mentions, reviews and deploys"
+        actions={
+          <NotificationsMenu
+            items={n.items}
+            unread={n.unread}
+            onMarkRead={n.markRead}
+            onMarkAllRead={n.markAllRead}
+          />
+        }
       />
-      <AppShellContent className="flex-1 justify-center">
-        <Empty>
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <CheckCheckIcon />
-            </EmptyMedia>
-            <EmptyTitle>You&apos;re all caught up</EmptyTitle>
-            <EmptyDescription>
-              New mentions and review requests show up here.
-            </EmptyDescription>
-          </EmptyHeader>
-        </Empty>
+      <AppShellContent>
+        <NotificationsFeed
+          items={n.items}
+          archived={n.archived}
+          unread={n.unread}
+          onMarkRead={n.markRead}
+          onMarkAllRead={n.markAllRead}
+          onArchive={n.archive}
+        />
       </AppShellContent>
     </>
   )
