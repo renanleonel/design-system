@@ -290,6 +290,27 @@ try {
           }
         }
         if (vp.name === "desktop") {
+          // Dropdown menus: open each (up to 12 per page). Rendering their
+          // content must not throw (e.g. a label outside its group).
+          const menus = page.locator(
+            // Skips menus inside hidden, inert regions (a bulk bar with no selection).
+            "[data-slot=dropdown-menu-trigger]:visible:not([disabled]):not([data-disabled]):not([inert] *)"
+          )
+          const count = Math.min(await menus.count(), 12)
+          for (let i = 0; i < count; i++) {
+            try {
+              await menus.nth(i).click({ timeout: 3000 })
+            } catch (error) {
+              const reason = error.message.split("\n")[0]
+              issues.push(`menu #${i} could not be opened: ${reason}`)
+              continue
+            }
+            await page.waitForTimeout(250)
+            await page.keyboard.press("Escape")
+            await page.waitForTimeout(250)
+          }
+        }
+        if (vp.name === "desktop") {
           // Command palette (Mod+K), on pages that have one: opening it must not throw.
           await page.keyboard.press("Control+K")
           await page.waitForTimeout(400)

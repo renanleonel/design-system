@@ -932,7 +932,8 @@ function AppShellHeader({
  * Narrow pages add a max width (`max-w-4xl`) but stay start-aligned, never centered.
  */
 /**
- * The page body. `fill` makes it take exactly the height left under the
+ * The page body. Cap reading-width pages with a class (`max-w-4xl`); they
+ * center in the space beside the sidebar. `fill` makes it take exactly the height left under the
  * header (for a table or board that scrolls inside itself); without it the
  * window scrolls.
  */
@@ -946,7 +947,8 @@ function AppShellContent({
       data-slot="app-shell-content"
       data-fill={fill || undefined}
       className={cn(
-        "flex w-full flex-col gap-6 p-4 md:p-6",
+        // mx-auto: a page that caps its width (max-w-4xl) sits centered.
+        "mx-auto flex w-full flex-col gap-6 p-4 md:p-6",
         fill && "min-h-0 flex-1",
         className
       )}

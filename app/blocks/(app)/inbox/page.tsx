@@ -27,7 +27,7 @@ export default function Page() {
           />
         }
       />
-      <AppShellContent>
+      <AppShellContent className="max-w-3xl">
         <NotificationsFeed
           items={n.items}
           archived={n.archived}

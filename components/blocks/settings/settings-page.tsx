@@ -110,7 +110,7 @@ function ProfileForm() {
     defaultValues: {
       name: "Renan Leonel",
       email: "renan@acme.dev",
-      handle: "ana",
+      handle: "renan",
     },
   })
   return (
@@ -190,8 +190,8 @@ const MEMBERS: Member[] = [
   },
   {
     id: "m4",
-    name: "jia.tan@partner.io",
-    email: "jia.tan@partner.io",
+    name: "pedro.santos@partner.io",
+    email: "pedro.santos@partner.io",
     initials: "PS",
     role: "viewer",
     pending: true,

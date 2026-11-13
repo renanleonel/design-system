@@ -62,9 +62,22 @@ function DropdownMenuContent({
   )
 }
 
+/** True inside a Group or RadioGroup, where a label can name the group. */
+const InGroupContext = React.createContext(false)
+
 function DropdownMenuGroup({ ...props }: MenuPrimitive.Group.Props) {
-  return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />
+  return (
+    <InGroupContext value={true}>
+      <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />
+    </InGroupContext>
+  )
 }
+
+/**
+ * A heading in the menu. Inside `DropdownMenuGroup` / `DropdownMenuRadioGroup`
+ * it labels the group for screen readers; anywhere else it's a plain heading
+ * (Base UI's GroupLabel throws outside a group).
+ */
 
 function DropdownMenuLabel({
   className,
@@ -73,14 +86,28 @@ function DropdownMenuLabel({
 }: MenuPrimitive.GroupLabel.Props & {
   inset?: boolean
 }) {
+  const inGroup = React.useContext(InGroupContext)
+  const classes = cn(
+    "px-1.5 py-1 text-xs font-medium text-muted-foreground data-inset:pl-7",
+    typeof className === "string" ? className : undefined
+  )
+  if (!inGroup) {
+    const rest = { ...props }
+    delete rest.render
+    return (
+      <div
+        data-slot="dropdown-menu-label"
+        data-inset={inset}
+        className={classes}
+        {...(rest as React.ComponentProps<"div">)}
+      />
+    )
+  }
   return (
     <MenuPrimitive.GroupLabel
       data-slot="dropdown-menu-label"
       data-inset={inset}
-      className={cn(
-        "px-1.5 py-1 text-xs font-medium text-muted-foreground data-inset:pl-7",
-        className
-      )}
+      className={classes}
       {...props}
     />
   )
@@ -216,10 +243,12 @@ function DropdownMenuCheckboxItem({
 
 function DropdownMenuRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props) {
   return (
-    <MenuPrimitive.RadioGroup
-      data-slot="dropdown-menu-radio-group"
-      {...props}
-    />
+    <InGroupContext value={true}>
+      <MenuPrimitive.RadioGroup
+        data-slot="dropdown-menu-radio-group"
+        {...props}
+      />
+    </InGroupContext>
   )
 }
 
