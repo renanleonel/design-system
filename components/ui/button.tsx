@@ -29,6 +29,9 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive [--ds-focus-ring:var(--destructive)] hover:bg-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30",
         link: "text-primary underline-offset-4 hover:underline",
+        // White surface with the ring shadow: secondary actions on a tray.
+        surface:
+          "bg-card text-foreground shadow-border hover:shadow-border-hover aria-expanded:shadow-border-hover",
       },
       size: {
         default:

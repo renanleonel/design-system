@@ -122,4 +122,22 @@ for (const file of readdirSync("registry/themes").filter((f) => f.endsWith(".jso
   }
   if (FIX) writeFileSync(path, JSON.stringify(theme, null, 2) + "\n")
 }
+// Tones: text in the tone on a 12% tint of itself over the card (Badge tone, pills).
+const { tones } = await import("../registry/tokens.mjs")
+const blend = (fg, bg, alpha) => fg.map((c, i) => c * alpha + bg[i] * (1 - alpha))
+for (const file of readdirSync("registry/themes").filter((f) => f.endsWith(".json"))) {
+  const { cssVars } = JSON.parse(readFileSync(`registry/themes/${file}`, "utf8"))
+  for (const mode of ["light", "dark"]) {
+    const card = parse({ ...cssVars.light, ...(mode === "dark" ? cssVars.dark : {}) }.card)
+    if (!card) continue
+    const bad = Object.entries(tones[mode])
+      .map(([name, value]) => [name, ratio(parse(value), blend(parse(value), card, 0.12))])
+      .filter(([, r]) => r < 4.5)
+    if (bad.length) {
+      failures += bad.length
+      bad.forEach(([n, r]) => console.log(`  ✗ tone ${n} (${file} / ${mode}): ${r.toFixed(2)}`))
+    }
+  }
+}
+console.log(failures ? `${failures} failing pairs` : "tones ok")
 process.exit(failures ? 1 : 0)

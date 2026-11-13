@@ -3,8 +3,39 @@
 // Defaults derive from the shadcn contract (--radius, --ring...), so any theme
 // works untouched; a project overrides only what it wants.
 
+// Category tones: status pills, icon tiles, markers. Saturated enough to read as
+// text on their own 12% tint (checked by scripts/check-contrast.mjs); dark mode
+// lifts lightness. One meaning per tone across a product (e.g. green = live).
+export const tones = {
+  light: {
+    gray: "oklch(0.5 0.01 260)",
+    blue: "oklch(0.5 0.17 262)",
+    green: "oklch(0.5 0.11 158)",
+    amber: "oklch(0.52 0.11 70)",
+    orange: "oklch(0.55 0.16 42)",
+    red: "oklch(0.53 0.19 25)",
+    purple: "oklch(0.5 0.19 318)",
+  },
+  dark: {
+    gray: "oklch(0.82 0.01 260)",
+    blue: "oklch(0.82 0.1 262)",
+    green: "oklch(0.82 0.11 158)",
+    amber: "oklch(0.82 0.11 75)",
+    orange: "oklch(0.83 0.11 50)",
+    red: "oklch(0.84 0.1 22)",
+    purple: "oklch(0.82 0.11 318)",
+  },
+}
+const toneVars = (mode) =>
+  Object.fromEntries(Object.entries(tones[mode]).map(([k, v]) => [`ds-tone-${k}`, v]))
+
 // :root values. Everything is prefixed --ds-* except shadcn-compatible names.
 export const root = {
+  ...toneVars("light"),
+  // Nested surfaces (Panel): a tray holds cards; card radius = tray radius - padding.
+  "ds-panel-radius": "calc(var(--radius) * 2.4)",
+  "ds-panel-pad": "0.5rem",
+  "ds-panel-bg": "color-mix(in oklch, var(--muted) 65%, var(--background))",
   // Size and shape
   "ds-control-h": "2rem",
   "ds-control-h-sm": "1.75rem",
@@ -47,6 +78,9 @@ export const root = {
 
 // .dark overrides. Dark mode: depth shadows vanish, so a single white ring carries the edge.
 export const dark = {
+  ...toneVars("dark"),
+  // Dark: elevation reads as lightness, so the tray sits below its cards.
+  "ds-panel-bg": "var(--background)",
   "ds-shadow-border": "0 0 0 1px oklch(1 0 0 / 0.08)",
   "ds-shadow-border-hover": "0 0 0 1px oklch(1 0 0 / 0.13)",
   "ds-shadow-popover": "0 0 0 1px oklch(1 0 0 / 0.1), 0 8px 24px -4px oklch(0 0 0 / 0.5)",
@@ -60,6 +94,8 @@ export const theme = {
   "spacing-control-xs": "var(--ds-control-h-xs)",
   "spacing-control-lg": "var(--ds-control-h-lg)",
   "radius-control": "var(--ds-radius-control)",
+  ...Object.fromEntries(Object.keys(tones.light).map((k) => [`color-tone-${k}`, `var(--ds-tone-${k})`])),
+  "color-panel": "var(--ds-panel-bg)",
   "ease-out": "var(--ds-ease-out)",
   "ease-in-out": "var(--ds-ease-in-out)",
   "ease-drawer": "var(--ds-ease-drawer)",
