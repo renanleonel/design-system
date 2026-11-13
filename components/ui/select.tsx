@@ -171,11 +171,11 @@ function SelectContent({
           )}
           {...props}
         >
-          <SelectScrollUpButton />
+          {/* No scroll arrows: they scroll on hover, so resting the pointer
+              near an edge runs the list away. The list scrolls natively. */}
           <SelectPrimitive.List className="p-1">
             {children}
           </SelectPrimitive.List>
-          <SelectScrollDownButton />
         </SelectPrimitive.Popup>
       </SelectPrimitive.Positioner>
     </SelectPrimitive.Portal>
