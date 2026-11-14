@@ -21,6 +21,7 @@ Next.js 16 (App Router, Turbopack) · React 19 · Tailwind v4 · Base UI · shad
 | `components/examples/` | Reference compositions, shown live on the home page | yes |
 | `components/docs/`, `components/playground/` | Docs-site-only code; not published | yes |
 | `app/(site)/` | Docs site: `/`, `/components`, `/blocks`, `/themes`, `/themes/builder` | yes |
+| `app/mcp/` | Read-only design-system MCP endpoint at `/mcp`: `route.ts` (tools), `data.ts` (reads `public/r`, catalog, changelog, `docs/`, demos; files traced via `outputFileTracingIncludes`). Not published | yes |
 | `app/blocks/` | Demo routes rendering each block; `(app)` group wraps pages in `AppShell` | yes |
 | `scripts/` | `gen-registry`, `check-contrast`, `audit-ui`, `axe-detail` | yes |
 | `registry/changelog.json`, `registry/size-budget.json` | Per-item dated change entries; per-item gzip and dependency budgets | yes |
