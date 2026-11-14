@@ -22,16 +22,6 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandShortcut,
-} from "@/components/ui/command"
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -40,6 +30,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Hotkey } from "@/components/ui/hotkey"
+import {
+  CommandPalette,
+  type PaletteCommand,
+} from "@/components/blocks/command-palette/command-palette"
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer"
 import {
   Tooltip,
@@ -100,7 +94,7 @@ function instantly(change: () => void) {
  * motion keeps only the fade.
  */
 const FADE_LABEL =
-  "whitespace-nowrap opacity-[var(--sb-label-o,1)] transition-[opacity,filter,translate] duration-[var(--sb-dur,150ms)] ease-out delay-[calc(var(--sb-delay,0ms)_+_min(var(--i,0),6)*var(--sb-stagger,0ms))] group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:translate-x-[var(--sb-drift,-4px)] group-data-collapsed/sidebar:opacity-0 group-data-collapsed/sidebar:blur-[var(--sb-blur,2px)] in-data-ds-instant:transition-none motion-reduce:translate-x-0 motion-reduce:blur-none motion-reduce:delay-0"
+  "whitespace-nowrap opacity-[var(--sb-label-o,1)] transition-[opacity,filter,translate] duration-[var(--sb-dur,150ms)] ease-out delay-[calc(var(--sb-delay,0ms)_+_min(var(--i,0),6)*var(--sb-stagger,0ms))] group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:translate-x-[var(--sb-drift,-4px)] group-data-collapsed/sidebar:rtl:translate-x-[calc(var(--sb-drift,-4px)*-1)] group-data-collapsed/sidebar:opacity-0 group-data-collapsed/sidebar:blur-[var(--sb-blur,2px)] in-data-ds-instant:transition-none motion-reduce:translate-x-0 motion-reduce:blur-none motion-reduce:delay-0"
 
 export type SidebarMotion = "ease-out" | "cascade" | "scrub"
 
@@ -201,7 +195,9 @@ function ResizeHandle({
             onPointerMove={(event) => {
               const start = origin.current
               if (!start) return
-              const dx = event.clientX - start.x
+              // The handle is on the sidebar's trailing edge: in RTL, moving left widens it.
+              const flip = getComputedStyle(event.currentTarget).direction === "rtl" ? -1 : 1
+              const dx = (event.clientX - start.x) * flip
               if (!dragging && Math.abs(dx) < 3) return
               if (!dragging) onDragStart()
               onDrag(clamp(start.width + dx, RAIL, MAX_WIDTH))
@@ -228,18 +224,22 @@ function ResizeHandle({
                 origin.current = null
                 onDragEnd(to)
               } else if (event.key === "Enter") onToggle()
-              else if (event.key === "ArrowLeft") onNudge(-16)
-              else if (event.key === "ArrowRight") onNudge(16)
+              else if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+                // Arrows follow the screen: in RTL the sidebar's edge faces left.
+                const rtl = getComputedStyle(event.currentTarget).direction === "rtl"
+                const toward = event.key === "ArrowRight" ? 1 : -1
+                onNudge(16 * toward * (rtl ? -1 : 1))
+              }
               else return
               event.preventDefault()
             }}
-            className="group/handle absolute inset-y-0 right-0 z-10 w-2 cursor-col-resize touch-none outline-none select-none focus-visible:[&>span]:opacity-100"
+            className="group/handle absolute inset-y-0 end-0 z-10 w-2 cursor-col-resize touch-none outline-none select-none focus-visible:[&>span]:opacity-100"
           >
-            <span className="absolute inset-y-0 right-0 w-0.5 bg-primary opacity-0 transition-opacity duration-150 group-hover/handle:opacity-100 group-data-dragging/handle:opacity-100" />
+            <span className="absolute inset-y-0 end-0 w-0.5 bg-primary opacity-0 transition-opacity duration-(--ds-duration-press) group-hover/handle:opacity-100 group-data-dragging/handle:opacity-100" />
           </div>
         }
       />
-      <TooltipContent side="right">Drag to resize sidebar</TooltipContent>
+      <TooltipContent side="inline-end">Drag to resize sidebar</TooltipContent>
     </Tooltip>
   )
 }
@@ -304,7 +304,7 @@ function NavLink({
     return (
       <Tooltip disabled={!collapsed}>
         <TooltipTrigger render={link} />
-        <TooltipContent side="right" hotkey={item.hotkey}>
+        <TooltipContent side="inline-end" hotkey={item.hotkey}>
           {item.label}
         </TooltipContent>
       </Tooltip>
@@ -313,7 +313,7 @@ function NavLink({
   return (
     <Tooltip>
       <TooltipTrigger render={link} />
-      <TooltipContent side="right" hotkey={item.hotkey}>
+      <TooltipContent side="inline-end" hotkey={item.hotkey}>
         {item.label}
       </TooltipContent>
     </Tooltip>
@@ -380,7 +380,7 @@ function NavGroup({
       {/* The wrapper fades with the labels (staggered); the chevron itself
           turns with the panel, on no delay. */}
       <span className={cn("flex", fade && FADE_LABEL)}>
-        <ChevronRightIcon className="text-muted-foreground transition-[rotate] duration-200 ease-out group-data-panel-open/navtrigger:rotate-90 motion-reduce:transition-none" />
+        <ChevronRightIcon className="text-muted-foreground rtl:-scale-x-100 transition-[rotate] duration-(--ds-duration-popover) ease-out group-data-panel-open/navtrigger:rotate-90 motion-reduce:transition-none" />
       </span>
     </Collapsible.Trigger>
   )
@@ -393,12 +393,12 @@ function NavGroup({
       {fade ? (
         <Tooltip disabled={!collapsed}>
           <TooltipTrigger render={trigger} />
-          <TooltipContent side="right">{item.label}</TooltipContent>
+          <TooltipContent side="inline-end">{item.label}</TooltipContent>
         </Tooltip>
       ) : (
         trigger
       )}
-      <Collapsible.Panel className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-out group-data-collapsed/sidebar:h-0 in-data-ds-instant:transition-none data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none">
+      <Collapsible.Panel className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-(--ds-duration-popover) ease-out group-data-collapsed/sidebar:h-0 in-data-ds-instant:transition-none data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none">
         {/* The guide line sits under the parent's icon (row padding + half the icon). */}
         <div className="ms-4.5 flex flex-col gap-0.5 border-s border-sidebar-border ps-2 pt-0.5">
           {children.map((child, i) => (
@@ -473,7 +473,7 @@ function UserMenu({
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        side={collapsed ? "right" : "top"}
+        side={collapsed ? "inline-end" : "top"}
         align="start"
         className="min-w-56"
       >
@@ -716,52 +716,25 @@ function SidebarBody({
   )
 }
 
-/** Mod+K: every nav page, with its sequence hotkey. */
-function NavPalette({
-  open,
-  onOpenChange,
-  sections,
-  onNavigate,
-}: {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  sections: NavSection[]
+/** Default `onNavigate`; module-level so its identity is stable across renders. */
+function assignLocation(href: string) {
+  window.location.assign(href)
+}
+
+/** Mod+K: every nav page (with its sequence hotkey), then any extra commands. */
+function navCommands(
+  sections: NavSection[],
   onNavigate: (href: string) => void
-}) {
-  return (
-    <CommandDialog open={open} onOpenChange={onOpenChange} title="Go to">
-      <Command>
-        <CommandInput placeholder="Go to…" />
-        <CommandList>
-          <CommandEmpty>No pages match.</CommandEmpty>
-          {sections.map((section) => (
-            <CommandGroup
-              key={sectionKey(section)}
-              heading={section.label ?? "Pages"}
-            >
-              {leaves(section.items).map((item) => (
-                <CommandItem
-                  key={item.href}
-                  value={item.label}
-                  onSelect={() => {
-                    onOpenChange(false)
-                    onNavigate(item.href)
-                  }}
-                >
-                  {item.icon}
-                  {item.label}
-                  {item.hotkey && (
-                    <CommandShortcut>
-                      <Hotkey hotkey={item.hotkey} variant="text" />
-                    </CommandShortcut>
-                  )}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          ))}
-        </CommandList>
-      </Command>
-    </CommandDialog>
+): PaletteCommand[] {
+  return sections.flatMap((section) =>
+    leaves(section.items).map((item) => ({
+      id: `nav:${item.href}`,
+      label: item.label,
+      group: section.label ?? "Pages",
+      icon: item.icon,
+      shortcut: item.hotkey,
+      onSelect: () => onNavigate(item.href),
+    }))
   )
 }
 
@@ -881,8 +854,8 @@ function useSidebarDrag({
  *   icon rail with tooltips. Labels leave per `motion` (ease-out, cascade,
  *   scrub) and the icons never move.
  * - Mobile (< md): the sidebar becomes a sheet opened from the header.
- * - Mod+K opens a command palette over every nav item; each item can have its
- *   own sequence hotkey (G then P).
+ * - Mod+K opens the command-palette block over every nav item plus any
+ *   `commands`; each item can have its own sequence hotkey (G then P).
  * - Router-agnostic: pass `currentPath`, and `linkComponent` / `onNavigate`
  *   from your router (defaults to plain links).
  *
@@ -894,7 +867,7 @@ function AppShell({
   user,
   currentPath,
   linkComponent: Link = "a" as unknown as LinkComponent,
-  onNavigate = (href) => window.location.assign(href),
+  onNavigate = assignLocation,
   settingsHref,
   onSignOut,
   defaultCollapsed = false,
@@ -903,6 +876,7 @@ function AppShell({
   resizable = true,
   defaultWidth = 256,
   footerItems,
+  commands,
   children,
 }: {
   workspace: Workspace
@@ -928,6 +902,8 @@ function AppShell({
   defaultWidth?: number
   /** Pinned above the account menu (Settings, Help…). */
   footerItems?: NavItem[]
+  /** Extra Mod+K commands after the nav pages (actions, nested pages). */
+  commands?: PaletteCommand[]
   children: React.ReactNode
 }) {
   const fade = variant === "fade"
@@ -947,6 +923,10 @@ function AppShell({
     ...(footerItems ?? []),
   ])
   const activeHref = activeHrefFor(items, currentPath)
+  const paletteCommands = React.useMemo(
+    () => [...navCommands(sections, onNavigate), ...(commands ?? [])],
+    [sections, onNavigate, commands]
+  )
 
   const toggleSidebar = React.useCallback((fromKeyboard = false) => {
     const change = () => setCollapsed((c) => !c)
@@ -1006,7 +986,7 @@ function AppShell({
             style={fade ? drag.style : undefined}
             className={cn(
               "group/sidebar sticky top-0 hidden h-dvh shrink-0 flex-col gap-4 overflow-hidden p-3 transition-[width] in-data-ds-instant:transition-none motion-reduce:transition-none md:flex",
-              !fade && "duration-200 ease-in-out",
+              !fade && "duration-(--ds-duration-popover) ease-in-out",
               !fade && (collapsed ? "w-16" : "w-64")
             )}
           >
@@ -1024,11 +1004,11 @@ function AppShell({
             )}
           </aside>
 
-          {/* Phones: a left drawer that tracks the finger and swipes away. */}
+          {/* Phones: a start-side drawer that tracks the finger and swipes away. */}
           <Drawer
             open={mobileOpen}
             onOpenChange={setMobileOpen}
-            swipeDirection="left"
+            swipeDirection="inline-start"
           >
             <DrawerContent className="bg-sidebar text-sidebar-foreground [--drawer-bleed-background:var(--color-sidebar)] [--drawer-content-width:18rem]! md:hidden">
               <DrawerTitle className="sr-only">Navigation</DrawerTitle>
@@ -1054,11 +1034,15 @@ function AppShell({
           </div>
         </div>
 
-        <NavPalette
+        <CommandPalette
           open={paletteOpen}
           onOpenChange={setPaletteOpen}
-          sections={sections}
-          onNavigate={onNavigate}
+          // The shell registers Mod+K itself (it also opens from the sidebar).
+          hotkey={null}
+          commands={paletteCommands}
+          recentKey="ds-app-shell-palette-recent"
+          placeholder="Go to a page or run a command…"
+          title="Go to"
         />
       </TooltipProvider>
     </AppShellContext>

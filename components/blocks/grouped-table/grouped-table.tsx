@@ -330,7 +330,7 @@ function Band<TData>({
           <ChevronRightIcon
             aria-hidden
             className={cn(
-              "size-4 text-muted-foreground transition-transform duration-150 ease-out motion-reduce:transition-none rtl:-scale-x-100",
+              "size-4 text-muted-foreground transition-transform duration-(--ds-duration-press) ease-out motion-reduce:transition-none rtl:-scale-x-100",
               open && "rotate-90 rtl:-rotate-90"
             )}
           />
@@ -579,7 +579,7 @@ function FloatingBulkBar<TData>({
         aria-label="Bulk actions"
         data-open={selected.length > 0 || undefined}
         inert={selected.length === 0}
-        className="pointer-events-auto flex max-w-full translate-y-2 items-center gap-1 overflow-x-auto [scrollbar-width:none] rounded-xl bg-popover p-1.5 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-150 ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-200 data-open:ease-out"
+        className="pointer-events-auto flex max-w-full translate-y-2 items-center gap-1 overflow-x-auto [scrollbar-width:none] rounded-xl bg-popover p-1.5 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-(--ds-duration-press) ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-(--ds-duration-popover) data-open:ease-out"
       >
         <span className="ps-2 pe-1 font-medium whitespace-nowrap tabular-nums">
           {count === 1 ? `1 ${noun.one} selected` : `${count} ${noun.other} selected`}

@@ -106,7 +106,7 @@ function PanelCard({
       className={cn(
         "relative flex min-w-0 flex-col gap-4 rounded-[calc(var(--ds-panel-radius)-var(--ds-panel-pad))] bg-card p-(--ds-card-pad) text-card-foreground shadow-border",
         interactive &&
-          "transition-shadow duration-150 ease-out hover:shadow-border-hover",
+          "transition-shadow duration-(--ds-duration-press) ease-out hover:shadow-border-hover",
         className
       )}
       {...props}

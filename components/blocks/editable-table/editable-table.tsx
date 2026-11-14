@@ -325,7 +325,16 @@ export function EditableTable<Row>({
     const here = { r: Number(td.dataset.r), c: Number(td.dataset.c) }
     const mod = e.ctrlKey || e.metaKey
     const last = { r: rows.length - 1, c: columns.length - 1 }
-    const move = moveFor(e.key, here, last, mod)
+    // Arrows follow the screen: in RTL, ArrowLeft goes to the next column.
+    const rtl = getComputedStyle(td).direction === "rtl"
+    const key = rtl
+      ? e.key === "ArrowLeft"
+        ? "ArrowRight"
+        : e.key === "ArrowRight"
+          ? "ArrowLeft"
+          : e.key
+      : e.key
+    const move = moveFor(key, here, last, mod)
     if (move) {
       e.preventDefault()
       focusCell(move)

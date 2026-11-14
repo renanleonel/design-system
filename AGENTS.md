@@ -30,5 +30,5 @@ The `frontend-design` and `animate` skills are the origin of these rules; `datav
 ## Hard guardrails
 
 - Components read theme vars and `--ds-*` tokens only; raw colors, sizes and durations stay out of `components/`.
-- Generated files are rebuilt with `pnpm registry:build`, never hand-edited: `registry.json`, `app/ds-tokens.css`, `components/demos/index.ts`, `public/r/`. Commit their output with the change.
+- Generated files are rebuilt with `pnpm registry:build`, never hand-edited: `registry.json`, `app/ds-tokens.css`, `components/demos/index.ts`, `public/llms.txt`, `public/llms-full.txt`, `public/tokens/`, `public/r/`. Commit their output with the change.
 - Done means the full check chain in [`docs/WORKFLOWS.md`](docs/WORKFLOWS.md#checks-before-pushing) passes; CI runs the same chain.

@@ -433,7 +433,7 @@ function TreeRow({
         >
           <ChevronRightIcon
             className={cn(
-              "transition-transform duration-150 ease-out motion-reduce:transition-none rtl:-scale-x-100",
+              "transition-transform duration-(--ds-duration-press) ease-out motion-reduce:transition-none rtl:-scale-x-100",
               row.open && "rotate-90 rtl:-rotate-90"
             )}
           />

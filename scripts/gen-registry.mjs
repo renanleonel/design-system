@@ -36,6 +36,9 @@ function analyze(path) {
     else if (spec === "@/lib/utils") registryDependencies.add(ref("utils"))
     else if (spec.startsWith("@/hooks/"))
       registryDependencies.add(ref(basename(spec)))
+    // A block that builds on another block (app-shell → command-palette).
+    else if (spec.startsWith("@/components/blocks/"))
+      registryDependencies.add(ref(spec.split("/")[3]))
     else if (!spec.startsWith(".") && !spec.startsWith("@/")) {
       const pkg = pkgName(spec)
       if (!IGNORED_DEPS.has(pkg)) dependencies.add(pkg)

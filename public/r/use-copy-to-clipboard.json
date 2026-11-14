@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-copy-to-clipboard",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-copy-to-clipboard.ts",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\n/** How long `copied` stays true after a successful copy. */\nexport const COPIED_RESET_MS = 1500\n\n/**\n * Copies text to the clipboard and reports it:\n *\n * ```tsx\n * const { copy, copied, error } = useCopyToClipboard()\n * <button onClick={() => copy(url)}>{copied ? \"Copied\" : \"Copy\"}</button>\n * ```\n *\n * `copy` resolves `true` on success and `false` when the Clipboard API is\n * missing (insecure context, old browser) or the browser refuses (permission,\n * no user gesture); it never throws. `copied` resets after `resetAfter` ms;\n * `error` holds the failure until the next attempt or `reset()`. `copy` and\n * `reset` are stable, and the pending timer is dropped on unmount.\n */\nexport function useCopyToClipboard({\n  resetAfter = COPIED_RESET_MS,\n}: {\n  /** Milliseconds until `copied` goes back to false. */\n  resetAfter?: number\n} = {}) {\n  const [copied, setCopied] = React.useState(false)\n  const [error, setError] = React.useState<Error | null>(null)\n  const timer = React.useRef<ReturnType<typeof setTimeout>>(undefined)\n  const delay = React.useRef(resetAfter)\n  React.useLayoutEffect(() => {\n    delay.current = resetAfter\n  })\n\n  // Cleanup only: a timer is outside React.\n  React.useEffect(() => () => clearTimeout(timer.current), [])\n\n  const reset = React.useCallback(() => {\n    clearTimeout(timer.current)\n    setCopied(false)\n    setError(null)\n  }, [])\n\n  const copy = React.useCallback(async (text: string) => {\n    clearTimeout(timer.current)\n    try {\n      if (typeof navigator === \"undefined\" || !navigator.clipboard?.writeText)\n        throw new Error(\"Clipboard is not available in this browser.\")\n      await navigator.clipboard.writeText(text)\n    } catch (cause) {\n      setCopied(false)\n      setError(cause instanceof Error ? cause : new Error(\"Couldn't copy.\"))\n      return false\n    }\n    setError(null)\n    setCopied(true)\n    timer.current = setTimeout(() => setCopied(false), delay.current)\n    return true\n  }, [])\n\n  return { copy, copied, error, reset }\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

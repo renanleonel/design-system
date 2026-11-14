@@ -180,6 +180,42 @@
         "A bottom sheet on phones."
       ]
     },
+    "context-menu": {
+      "group": "Overlays",
+      "title": "Context Menu",
+      "description": "A menu at the pointer on right click or long press, styled like the dropdown menu.",
+      "notes": [
+        "Rows (items, checkboxes, radios, submenus, hotkeys) are the dropdown menu's, so both look identical.",
+        "Keep every action reachable another way: touch and some browsers never open it."
+      ]
+    },
+    "menubar": {
+      "group": "Overlays",
+      "title": "Menubar",
+      "description": "A row of menus for application commands, with arrow-key movement between them.",
+      "notes": [
+        "Once one menu is open, hovering a neighbour opens it.",
+        "Rows are the dropdown menu's."
+      ]
+    },
+    "navigation-menu": {
+      "group": "Overlays",
+      "title": "Navigation Menu",
+      "description": "Site navigation: triggers open panels of links in one shared popup that resizes between them.",
+      "notes": [
+        "A top-level link uses `NavigationMenuLink` with `navigationMenuTriggerClassName`; `active` marks the current page.",
+        "Panels are full width on phones."
+      ]
+    },
+    "preview-card": {
+      "group": "Overlays",
+      "title": "Preview Card",
+      "description": "A link that previews its destination on hover or focus.",
+      "notes": [
+        "The trigger stays a real link; touch screens follow it and never show the card.",
+        "Never put essential information only in the card."
+      ]
+    },
     "tooltip": {
       "group": "Overlays",
       "title": "Tooltip",
@@ -297,6 +333,46 @@
       "description": "A user's picture with initials as fallback, alone or stacked.",
       "notes": []
     },
+    "avatar-group": {
+      "group": "Display",
+      "title": "Avatar group",
+      "description": "Overlapping avatars built from a list of people, with a +N chip that lists the rest.",
+      "notes": [
+        "Exports `AvatarStack`; `avatar.tsx` keeps `AvatarGroup` for composing avatars by hand.",
+        "`max` sets how many show; the +N chip opens a popover (touch and keyboard friendly) with everyone else, capped at 100 rows.",
+        "Each avatar is named for screen readers and carries the name as a hover title."
+      ]
+    },
+    "stepper": {
+      "group": "Display",
+      "title": "Stepper",
+      "description": "Progress through a multi-step flow, horizontal or vertical, with complete, current, upcoming and error states.",
+      "notes": [
+        "`value` is the zero-based current step; controlled with `onValueChange` or uncontrolled with `defaultValue`.",
+        "`clickable` turns steps into buttons; `disabled` locks one.",
+        "Horizontal switches to a stack when the stepper is narrower than 32rem (container query), so it fits 320px."
+      ]
+    },
+    "copy-button": {
+      "group": "Inputs",
+      "title": "Copy button",
+      "description": "An icon button that copies a value and confirms with a check, a tooltip and a screen-reader announcement.",
+      "notes": [
+        "Built on `useCopyToClipboard`, which resolves `false` instead of throwing when the Clipboard API is unavailable.",
+        "`value` can be a function, read at click time.",
+        "Name what is copied with `label` (\"Copy API key\")."
+      ]
+    },
+    "inline-edit": {
+      "group": "Inputs",
+      "title": "Inline edit",
+      "description": "Text that becomes an input on click: Enter or blur saves, Escape cancels, with validation and optimistic async saves.",
+      "notes": [
+        "Saves optimistically; if `onSubmit` throws the text rolls back and a toast offers Retry (needs a `Toaster`).",
+        "`validate` returns a message to keep the field open with the error under it.",
+        "Controlled (`value`) or uncontrolled (`defaultValue`); the value changes after `onSubmit` resolves."
+      ]
+    },
     "kbd": {
       "group": "Display",
       "title": "Kbd",
@@ -317,7 +393,49 @@
       "description": "Semantic table parts. For sorting, filters and pages use the Data Table block.",
       "notes": []
     },
-    "accordion": {
+    "collapsible": {
+      "group": "Layout",
+      "title": "Collapsible",
+      "description": "A single section that shows or hides its content from a trigger.",
+      "notes": [
+        "Unstyled trigger: pass a Button through render. Use an accordion for several related sections.",
+        "The panel height animates like the accordion; reduced motion keeps only a fade."
+      ]
+    },
+    "scroll-area": {
+      "group": "Layout",
+      "title": "Scroll area",
+      "description": "A scrolling region with overlay scrollbars that match the theme.",
+      "notes": [
+        "Give it a height or max-height; orientation picks the scrollbars and fade softens edges that still have content beyond them.",
+        "The viewport is focusable so keyboard users can scroll it; name it with viewportProps aria-label."
+      ]
+    },
+    "number-field": {
+      "group": "Inputs",
+      "title": "Number field",
+      "description": "A numeric input with decrement and increment buttons, locale formatting and optional drag-to-scrub.",
+      "notes": [
+        "format takes Intl.NumberFormat options (currency, percent, unit); the value stays a plain number.",
+        "Arrows step by step, Shift by largeStep, Alt by smallStep. Min and max clamp on blur."
+      ]
+    },
+    "meter": {
+      "group": "Feedback",
+      "title": "Meter",
+      "description": "A value within a known range, such as storage used or seats taken.",
+      "notes": [
+        "For task progress use Progress. Tone takes the same colors as Badge; choose it from the value (green, amber, red)."
+      ]
+    },
+    "toolbar": {
+      "group": "Layout",
+      "title": "Toolbar",
+      "description": "A row of related actions with one tab stop and arrow-key navigation.",
+      "notes": [
+        "Buttons take Button's variants and sizes. Left and right arrows move between items; Tab leaves the toolbar."
+      ]
+    },    "accordion": {
       "group": "Layout",
       "title": "Accordion",
       "description": "Stacked sections that expand one or several at a time.",
@@ -519,6 +637,26 @@
         "`allowHalf` makes each star two targets, so picks and arrows step by 0.5."
       ]
     },
+    "color-picker": {
+      "group": "Inputs",
+      "title": "Color Picker",
+      "description": "A color field that opens a saturation and hue area, an optional opacity slider, a hex input and preset swatches.",
+      "notes": [
+        "The value is lowercase hex: `#rrggbb`, or `#rrggbbaa` with `alpha`.",
+        "Invalid hex typed into the input never reaches `onValueChange`; it shows an error and reverts on blur.",
+        "Presets reuse `SwatchPicker`; the area and sliders are react-colorful's and keyboard operable."
+      ]
+    },
+    "carousel": {
+      "group": "Display",
+      "title": "Carousel",
+      "description": "A swipeable set of slides with arrows, dots, keyboard control, vertical and RTL support (embla).",
+      "notes": [
+        "Compose `CarouselContent` > `CarouselItem`, then `CarouselPrevious`, `CarouselNext` and `CarouselDots`; pass options through `opts`.",
+        "Arrow keys move while focus is inside (Up/Down when vertical, mirrored in RTL); reduced motion turns every move into a jump.",
+        "Slides are named \"2 of 5\" with `aria-roledescription=\"slide\"`; override with `aria-label` on the item."
+      ]
+    },
     "tree": {
       "group": "Display",
       "title": "Tree",
@@ -661,6 +799,39 @@
       "src": "/blocks/inbox"
     },
     {
+      "id": "inbox",
+      "registry": "inbox",
+      "title": "Mail inbox",
+      "description": "Resizable list and detail with a thread and reply composer; multi-select with archive, read and label actions, J/K/E/X keys, search and folder in the URL, a virtualized list, and list-to-detail navigation on phones.",
+      "src": "/blocks/mail"
+    },
+    {
+      "id": "activity-feed",
+      "registry": "activity-feed",
+      "title": "Activity feed",
+      "description": "A day-grouped timeline of comments, status changes, assignments, uploads and mentions: filter by type in the URL, collapsed runs of similar events, relative times with the exact moment in a tooltip, and infinite loading.",
+      "src": "/blocks/feed"
+    },
+    {
+      "id": "schedule",
+      "registry": "schedule",
+      "title": "Schedule",
+      "description": "Month, week and day calendar: overlapping events side by side, all-day and multi-day banners, a current-time line, click-to-create, and an agenda list on narrow screens. View and date live in the URL; week start and formats follow the locale.",
+      "src": "/blocks/schedule"
+    },
+    {
+      "id": "assistant",
+      "registry": "ai-chat",
+      "title": "AI chat",
+      "description": "Streaming answers with Markdown and copyable code, collapsible tool calls, copy, regenerate and feedback, auto-scroll that lets go when you scroll up, and a composer with attachments and Stop.",
+      "src": "/blocks/assistant",
+      "variants": [
+        { "label": "Chat", "src": "/blocks/assistant" },
+        { "label": "Streaming", "src": "/blocks/assistant?data=streaming" },
+        { "label": "Error", "src": "/blocks/assistant?data=error" }
+      ]
+    },
+    {
       "id": "setup",
       "registry": "onboarding",
       "title": "Setup wizard",
@@ -701,6 +872,13 @@
       "title": "Editable table",
       "description": "Cells edit in place and save one at a time: optimistic updates, a spinner per saving cell, rollback with Retry on error, and spreadsheet keys.",
       "src": "/blocks/deals"
+    },
+    {
+      "id": "board",
+      "registry": "kanban",
+      "title": "Kanban board",
+      "description": "Columns with WIP limits and cards you drag between them or reorder, by pointer, touch or keyboard. Optimistic moves with rollback and Retry, a context menu, a details sheet and assignee and label filters in the URL.",
+      "src": "/blocks/board"
     },
     {
       "id": "settings",
@@ -769,6 +947,20 @@
       "title": "Server error",
       "description": "Retry and a request ID for support.",
       "src": "/blocks/server-error"
+    },
+    {
+      "id": "files",
+      "registry": "file-manager",
+      "title": "File manager",
+      "description": "Folder tree, breadcrumb, grid and list views, multi-select, context menu, rename, move, upload with progress and a storage meter. Virtualized for thousands of files.",
+      "src": "/blocks/files"
+    },
+    {
+      "id": "command-palette",
+      "registry": "command-palette",
+      "title": "Command palette",
+      "description": "Mod+K palette with groups, recent items, nested pages, async search and keyboard hints.",
+      "src": "/blocks/command-palette"
     }
   ]
 }

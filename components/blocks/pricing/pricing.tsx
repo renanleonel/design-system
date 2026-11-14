@@ -131,7 +131,7 @@ export function PricingPlans({
                   <p className="flex items-baseline gap-1.5">
                     <span
                       key={`${plan.id}-${period}`}
-                      className="font-heading text-4xl font-semibold tracking-tight tabular-nums transition-[opacity,translate] duration-200 ease-out motion-reduce:transition-none starting:translate-y-1 starting:opacity-0"
+                      className="font-heading text-4xl font-semibold tracking-tight tabular-nums transition-[opacity,translate] duration-(--ds-duration-popover) ease-out motion-reduce:transition-none starting:translate-y-1 starting:opacity-0"
                     >
                       {usd(price)}
                     </span>

@@ -1,0 +1,482 @@
+{
+  "accordion": {
+    "gzip": 980,
+    "deps": 4
+  },
+  "activity-feed": {
+    "gzip": 7730,
+    "deps": 3
+  },
+  "ai-chat": {
+    "gzip": 11560,
+    "deps": 3
+  },
+  "alert": {
+    "gzip": 1070,
+    "deps": 3
+  },
+  "alert-dialog": {
+    "gzip": 1410,
+    "deps": 3
+  },
+  "app-shell": {
+    "gzip": 11790,
+    "deps": 5
+  },
+  "auth": {
+    "gzip": 6670,
+    "deps": 4
+  },
+  "avatar": {
+    "gzip": 930,
+    "deps": 3
+  },
+  "avatar-group": {
+    "gzip": 2010,
+    "deps": 0
+  },
+  "badge": {
+    "gzip": 1190,
+    "deps": 4
+  },
+  "base": {
+    "gzip": 30,
+    "deps": 0
+  },
+  "billing": {
+    "gzip": 3410,
+    "deps": 5
+  },
+  "breadcrumb": {
+    "gzip": 890,
+    "deps": 4
+  },
+  "button": {
+    "gzip": 2630,
+    "deps": 5
+  },
+  "calendar": {
+    "gzip": 3420,
+    "deps": 5
+  },
+  "card": {
+    "gzip": 850,
+    "deps": 2
+  },
+  "carousel": {
+    "gzip": 3670,
+    "deps": 5
+  },
+  "chart": {
+    "gzip": 3930,
+    "deps": 3
+  },
+  "checkbox": {
+    "gzip": 830,
+    "deps": 4
+  },
+  "collapsible": {
+    "gzip": 660,
+    "deps": 3
+  },
+  "color-picker": {
+    "gzip": 3600,
+    "deps": 4
+  },
+  "combobox": {
+    "gzip": 4640,
+    "deps": 5
+  },
+  "command": {
+    "gzip": 1670,
+    "deps": 4
+  },
+  "command-palette": {
+    "gzip": 5090,
+    "deps": 4
+  },
+  "context-menu": {
+    "gzip": 1000,
+    "deps": 3
+  },
+  "copy-button": {
+    "gzip": 1560,
+    "deps": 3
+  },
+  "dashboard": {
+    "gzip": 6230,
+    "deps": 4
+  },
+  "data-list": {
+    "gzip": 890,
+    "deps": 2
+  },
+  "data-table": {
+    "gzip": 9130,
+    "deps": 5
+  },
+  "date-picker": {
+    "gzip": 3950,
+    "deps": 5
+  },
+  "dialog": {
+    "gzip": 2080,
+    "deps": 4
+  },
+  "drawer": {
+    "gzip": 3130,
+    "deps": 3
+  },
+  "dropdown-menu": {
+    "gzip": 3000,
+    "deps": 5
+  },
+  "editable-table": {
+    "gzip": 8690,
+    "deps": 3
+  },
+  "empty": {
+    "gzip": 820,
+    "deps": 3
+  },
+  "error-pages": {
+    "gzip": 1610,
+    "deps": 3
+  },
+  "error-state": {
+    "gzip": 850,
+    "deps": 2
+  },
+  "field": {
+    "gzip": 1940,
+    "deps": 3
+  },
+  "file-dropzone": {
+    "gzip": 2970,
+    "deps": 3
+  },
+  "file-manager": {
+    "gzip": 20216,
+    "deps": 6
+  },
+  "form": {
+    "gzip": 3210,
+    "deps": 6
+  },
+  "grouped-table": {
+    "gzip": 13690,
+    "deps": 6
+  },
+  "hotkey": {
+    "gzip": 1000,
+    "deps": 3
+  },
+  "icon-tile": {
+    "gzip": 810,
+    "deps": 3
+  },
+  "inbox": {
+    "gzip": 12740,
+    "deps": 4
+  },
+  "infinite-table": {
+    "gzip": 8440,
+    "deps": 6
+  },
+  "inline-edit": {
+    "gzip": 2790,
+    "deps": 4
+  },
+  "input": {
+    "gzip": 3230,
+    "deps": 4
+  },
+  "input-group": {
+    "gzip": 1770,
+    "deps": 3
+  },
+  "input-otp": {
+    "gzip": 1140,
+    "deps": 4
+  },
+  "item": {
+    "gzip": 1750,
+    "deps": 4
+  },
+  "kanban": {
+    "gzip": 14660,
+    "deps": 7
+  },
+  "kbd": {
+    "gzip": 460,
+    "deps": 2
+  },
+  "label": {
+    "gzip": 350,
+    "deps": 2
+  },
+  "language-select": {
+    "gzip": 1330,
+    "deps": 3
+  },
+  "marketing": {
+    "gzip": 4110,
+    "deps": 3
+  },
+  "menubar": {
+    "gzip": 1390,
+    "deps": 3
+  },
+  "meter": {
+    "gzip": 1090,
+    "deps": 4
+  },
+  "multi-select": {
+    "gzip": 1920,
+    "deps": 2
+  },
+  "native-select": {
+    "gzip": 1400,
+    "deps": 3
+  },
+  "navigation-menu": {
+    "gzip": 1730,
+    "deps": 4
+  },
+  "notifications": {
+    "gzip": 3970,
+    "deps": 3
+  },
+  "number-field": {
+    "gzip": 1940,
+    "deps": 4
+  },
+  "onboarding": {
+    "gzip": 10130,
+    "deps": 4
+  },
+  "pagination": {
+    "gzip": 1490,
+    "deps": 3
+  },
+  "panel": {
+    "gzip": 1550,
+    "deps": 2
+  },
+  "password-input": {
+    "gzip": 1070,
+    "deps": 2
+  },
+  "popover": {
+    "gzip": 1090,
+    "deps": 3
+  },
+  "preview-card": {
+    "gzip": 780,
+    "deps": 3
+  },
+  "pricing": {
+    "gzip": 5830,
+    "deps": 3
+  },
+  "progress": {
+    "gzip": 640,
+    "deps": 3
+  },
+  "radio-group": {
+    "gzip": 800,
+    "deps": 3
+  },
+  "rating": {
+    "gzip": 2030,
+    "deps": 4
+  },
+  "resizable": {
+    "gzip": 1040,
+    "deps": 3
+  },
+  "schedule": {
+    "gzip": 17290,
+    "deps": 5
+  },
+  "scroll-area": {
+    "gzip": 1230,
+    "deps": 3
+  },
+  "select": {
+    "gzip": 3350,
+    "deps": 4
+  },
+  "separator": {
+    "gzip": 320,
+    "deps": 3
+  },
+  "settings": {
+    "gzip": 7540,
+    "deps": 5
+  },
+  "settings-list": {
+    "gzip": 1250,
+    "deps": 2
+  },
+  "sheet": {
+    "gzip": 1560,
+    "deps": 4
+  },
+  "site-footer": {
+    "gzip": 2770,
+    "deps": 4
+  },
+  "skeleton": {
+    "gzip": 650,
+    "deps": 2
+  },
+  "slider": {
+    "gzip": 1320,
+    "deps": 3
+  },
+  "sonner": {
+    "gzip": 1120,
+    "deps": 4
+  },
+  "sortable": {
+    "gzip": 3950,
+    "deps": 7
+  },
+  "spinner": {
+    "gzip": 280,
+    "deps": 3
+  },
+  "stepper": {
+    "gzip": 2500,
+    "deps": 3
+  },
+  "swatch-picker": {
+    "gzip": 1550,
+    "deps": 4
+  },
+  "switch": {
+    "gzip": 780,
+    "deps": 3
+  },
+  "table": {
+    "gzip": 760,
+    "deps": 2
+  },
+  "tabs": {
+    "gzip": 1690,
+    "deps": 4
+  },
+  "textarea": {
+    "gzip": 480,
+    "deps": 2
+  },
+  "theme-amethyst-haze": {
+    "gzip": 1240,
+    "deps": 0
+  },
+  "theme-caffeine": {
+    "gzip": 1350,
+    "deps": 0
+  },
+  "theme-neutral": {
+    "gzip": 510,
+    "deps": 0
+  },
+  "theme-toggle": {
+    "gzip": 1400,
+    "deps": 5
+  },
+  "time-input": {
+    "gzip": 5140,
+    "deps": 3
+  },
+  "timeline": {
+    "gzip": 1360,
+    "deps": 2
+  },
+  "timezone-select": {
+    "gzip": 2090,
+    "deps": 2
+  },
+  "toggle": {
+    "gzip": 1310,
+    "deps": 4
+  },
+  "toggle-group": {
+    "gzip": 1040,
+    "deps": 4
+  },
+  "token-input": {
+    "gzip": 3020,
+    "deps": 3
+  },
+  "tokens": {
+    "gzip": 2590,
+    "deps": 0
+  },
+  "toolbar": {
+    "gzip": 910,
+    "deps": 4
+  },
+  "tooltip": {
+    "gzip": 2070,
+    "deps": 4
+  },
+  "tree": {
+    "gzip": 6020,
+    "deps": 4
+  },
+  "tree-select": {
+    "gzip": 3810,
+    "deps": 3
+  },
+  "unsaved-changes-bar": {
+    "gzip": 1310,
+    "deps": 2
+  },
+  "use-controllable-state": {
+    "gzip": 860,
+    "deps": 0
+  },
+  "use-copy-to-clipboard": {
+    "gzip": 1070,
+    "deps": 0
+  },
+  "use-debounce": {
+    "gzip": 1350,
+    "deps": 0
+  },
+  "use-hotkey-press": {
+    "gzip": 1040,
+    "deps": 2
+  },
+  "use-intersection": {
+    "gzip": 1000,
+    "deps": 0
+  },
+  "use-local-storage": {
+    "gzip": 1500,
+    "deps": 0
+  },
+  "use-media-query": {
+    "gzip": 600,
+    "deps": 0
+  },
+  "use-mounted": {
+    "gzip": 370,
+    "deps": 0
+  },
+  "use-url-state": {
+    "gzip": 1170,
+    "deps": 0
+  },
+  "utils": {
+    "gzip": 1380,
+    "deps": 2
+  },
+  "virtual-list": {
+    "gzip": 1590,
+    "deps": 3
+  }
+}

@@ -46,7 +46,7 @@ export function Hero({
             )}
           >
             {announcement.label}
-            <ChevronRightIcon className="size-3.5 text-muted-foreground transition-transform duration-150 ease-out group-hover/pill:translate-x-0.5" />
+            <ChevronRightIcon className="size-3.5 text-muted-foreground transition-transform duration-(--ds-duration-press) ease-out group-hover/pill:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover/pill:-translate-x-0.5" />
           </a>
         )}
         <h1
@@ -123,7 +123,7 @@ export function LogoCloud({
           <li
             key={item.name}
             title={item.name}
-            className="text-muted-foreground grayscale transition-[color,filter] duration-200 hover:text-foreground hover:grayscale-0"
+            className="text-muted-foreground grayscale transition-[color,filter] duration-(--ds-duration-popover) hover:text-foreground hover:grayscale-0"
           >
             {item.logo}
           </li>

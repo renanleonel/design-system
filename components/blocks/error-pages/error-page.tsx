@@ -88,7 +88,7 @@ export function ErrorPage({
             render={<a href={homeHref} />}
             nativeButton={false}
           >
-            <ArrowLeftIcon data-icon="inline-start" />
+            <ArrowLeftIcon data-icon="inline-start" className="rtl:rotate-180" />
             Back home
           </Button>
           {supportHref && (

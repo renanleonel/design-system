@@ -1,0 +1,144 @@
+# renanleonel/ui
+
+> A shadcn registry on Base UI: accessible, themeable components, hooks and full-screen blocks for React and Next.js. Install an item with `npx shadcn add <url>`, or `npx shadcn add @renanleonel/<name>` after registering the namespace (see README).
+
+## Base
+
+- [renanleonel/ui](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/base.json): Everything: tokens, default theme, utils and all components.
+
+## Styles
+
+- [Design tokens](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tokens.json): Layer-2 tokens (control size, control radius, shadows) on top of the shadcn theme contract.
+
+## Themes
+
+- [theme-amethyst-haze](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-amethyst-haze.json)
+- [theme-caffeine](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-caffeine.json)
+- [theme-neutral](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-neutral.json)
+
+## Libraries
+
+- [utils](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json)
+
+## Hooks
+
+- [use-controllable-state](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-controllable-state.json)
+- [use-copy-to-clipboard](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-copy-to-clipboard.json)
+- [use-debounce](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-debounce.json)
+- [use-hotkey-press](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json)
+- [use-intersection](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-intersection.json)
+- [use-local-storage](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-local-storage.json)
+- [use-media-query](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json)
+- [use-mounted](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-mounted.json)
+- [use-url-state](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json)
+
+## Components
+
+- [Accordion](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/accordion.json): Stacked sections that expand one or several at a time.
+- [Alert](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert.json): An inline message, as a bordered card or a tinted callout.
+- [Alert Dialog](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert-dialog.json): Asks for confirmation before a destructive action.
+- [Avatar](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json): A user's picture with initials as fallback, alone or stacked.
+- [Avatar group](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar-group.json): Overlapping avatars built from a list of people, with a +N chip that lists the rest.
+- [Badge](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json): Status pills and counts in seven contrast-checked tones.
+- [Breadcrumb](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/breadcrumb.json): Where this page sits in the hierarchy, with links back up.
+- [Button](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json): Actions with press feedback, a smooth loading state and an optional hotkey.
+- [Calendar](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/calendar.json): A month grid for picking a day or a range (react-day-picker).
+- [Card](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/card.json): A surface with a header, content and footer.
+- [Carousel](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/carousel.json): A swipeable set of slides with arrows, dots, keyboard control, vertical and RTL support (embla).
+- [Chart](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/chart.json): Recharts with a validated categorical palette, DS tooltips and legends.
+- [Checkbox](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/checkbox.json): On, off or mixed. The whole label toggles it.
+- [Collapsible](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/collapsible.json): A single section that shows or hides its content from a trigger.
+- [Color Picker](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/color-picker.json): A color field that opens a saturation and hue area, an optional opacity slider, a hex input and preset swatches.
+- [Combobox](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/combobox.json): Type to filter a list and pick one value.
+- [Command](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/command.json): A searchable list of commands, inline or as a Mod+K palette.
+- [Context Menu](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/context-menu.json): A menu at the pointer on right click or long press, styled like the dropdown menu.
+- [Copy button](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/copy-button.json): An icon button that copies a value and confirms with a check, a tooltip and a screen-reader announcement.
+- [Data List](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/data-list.json): Label and value pairs that reflow with their container.
+- [Date Picker](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/date-picker.json): A form field that opens a calendar, for a single date, a range, or a date and time.
+- [Dialog](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dialog.json): A modal window. Becomes a bottom drawer on phones.
+- [Drawer](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/drawer.json): A panel that slides in from an edge and follows your finger.
+- [Dropdown Menu](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json): A list of actions, with hotkeys, checkboxes, radios and submenus.
+- [Empty](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json): What a region shows when there is nothing in it yet, and how to fill it.
+- [Error State](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/error-state.json): A region that failed to load: what failed, a retry, and a request ID for support.
+- [Field](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/field.json): Label, control, description and error laid out together, vertically or horizontally.
+- [File Dropzone](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/file-dropzone.json): Drop files or browse, with type and size limits and a removable list.
+- [Form](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/form.json): react-hook-form and zod wired to fields: validation on blur, then live; a banner for server errors.
+- [Hotkey](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json): Shows a shortcut for the user's platform: Mod+K reads ⌘K on macOS and Ctrl K elsewhere.
+- [Icon Tile](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json): An icon on a tinted square: the leading visual of rows, dialogs and results.
+- [Inline edit](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/inline-edit.json): Text that becomes an input on click: Enter or blur saves, Escape cancels, with validation and optimistic async saves.
+- [Input](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json): Single-line text field sized by the control tokens.
+- [Input Group](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json): An input with leading or trailing addons: icons, text, buttons.
+- [Input OTP](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-otp.json): One-time codes for 2FA and email verification.
+- [Item](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/item.json): A row with media, title, description and actions.
+- [Kbd](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json): A key cap.
+- [Label](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json): Names a control. Clicking it focuses or toggles the control.
+- [Language Select](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/language-select.json): Pick the interface language, each name in its own language and script.
+- [Menubar](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/menubar.json): A row of menus for application commands, with arrow-key movement between them.
+- [Meter](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/meter.json): A value within a known range, such as storage used or seats taken.
+- [Multi Select](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/multi-select.json): Pick several values as removable tags, with type-to-filter.
+- [Native Select](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json): The platform select, styled like the rest of the controls.
+- [Navigation Menu](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/navigation-menu.json): Site navigation: triggers open panels of links in one shared popup that resizes between them.
+- [Number field](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/number-field.json): A numeric input with decrement and increment buttons, locale formatting and optional drag-to-scrub.
+- [Pagination](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/pagination.json): Links between pages of results.
+- [Panel](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/panel.json): A tinted tray holding white cards with concentric corners.
+- [Password Input](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/password-input.json): A password field with a show/hide toggle and a Caps Lock warning.
+- [Popover](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json): Rich content anchored to a trigger. A bottom sheet on phones.
+- [Preview Card](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/preview-card.json): A link that previews its destination on hover or focus.
+- [Progress](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/progress.json): How far along a task is.
+- [Radio Group](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/radio-group.json): Pick exactly one of a few visible options.
+- [Rating](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/rating.json): A star rating: a radio group when interactive, an image with fractions when read-only.
+- [Resizable](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/resizable.json): Panels split by draggable, keyboard-operable handles.
+- [Scroll area](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/scroll-area.json): A scrolling region with overlay scrollbars that match the theme.
+- [Select](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json): Pick one option from a list. The popup lines its selected item up with the trigger.
+- [Separator](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/separator.json): A thin rule between content.
+- [Settings List](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/settings-list.json): One row per setting: title and description beside the control, hairline dividers, stacked when narrow.
+- [Sheet](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sheet.json): A side panel for filters, details and navigation.
+- [Skeleton](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/skeleton.json): Placeholders shaped like the content that is loading.
+- [Slider](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/slider.json): Pick a value or a range by dragging.
+- [Toast](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json): Transient notifications, including undo for reversible actions.
+- [Sortable](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sortable.json): A list you reorder by dragging, or with the keyboard.
+- [Spinner](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json): An indeterminate progress indicator.
+- [Stepper](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/stepper.json): Progress through a multi-step flow, horizontal or vertical, with complete, current, upcoming and error states.
+- [Swatch Picker](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/swatch-picker.json): Pick one color from a row of swatches: accent colors, labels, themes.
+- [Switch](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/switch.json): A setting that applies immediately when toggled.
+- [Table](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json): Semantic table parts. For sorting, filters and pages use the Data Table block.
+- [Tabs](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json): Switch between views, as pills, a line or a sliding segmented control.
+- [Textarea](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json): Multi-line text that grows with its content.
+- [Theme Toggle](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/theme-toggle.json): Light and dark in one button, or system / light / dark as a segmented switch.
+- [Time Input](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/time-input.json): A time of day, typed in the browser's segmented field or picked from a styled list; plus a start–end range as one field.
+- [Timeline](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/timeline.json): A vertical history of events with tone markers: audit logs, order status, deploys.
+- [Timezone Select](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/timezone-select.json): Search every IANA time zone by city, region or offset; virtualized.
+- [Toggle](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json): A button that stays pressed: bold on, bold off.
+- [Toggle Group](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json): A row of toggles, single or multiple choice: alignment, view modes, filters.
+- [Token Input](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/token-input.json): Free-form values as removable tokens: emails, keywords, domains.
+- [Toolbar](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toolbar.json): A row of related actions with one tab stop and arrow-key navigation.
+- [Tooltip](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json): A short label for an icon or a hint, with an optional hotkey.
+- [Tree](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree.json): A virtualized file-explorer tree with keyboard navigation, selection and filtering.
+- [Tree Select](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree-select.json): A select whose options are a searchable tree; pick one node or check several.
+- [Unsaved Changes Bar](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/unsaved-changes-bar.json): A floating Discard / Save bar that rises in once a form has edits.
+- [Virtual List](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/virtual-list.json): A scrolling list that renders only the items in view, for feeds and logs.
+
+## Blocks
+
+- [Activity feed](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/activity-feed.json): A day-grouped timeline of comments, status changes, assignments, uploads and mentions: filter by type in the URL, collapsed runs of similar events, relative times with the exact moment in a tooltip, and infinite loading.
+- [AI chat](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/ai-chat.json): Streaming answers with Markdown and copyable code, collapsible tool calls, copy, regenerate and feedback, auto-scroll that lets go when you scroll up, and a composer with attachments and Stop.
+- [App shell](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/app-shell.json): Resizable sidebar (drag the edge; under 160px it settles to icons) with ease-out, cascade or scrub label motion, nested groups, Mod+K palette, G-then-key navigation, a sheet on mobile.
+- [Sign in](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/auth.json): Google and SSO, email and password, and a banner for server errors.
+- [Pricing and billing](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/billing.json): Monthly or yearly plans, usage meters and invoices.
+- [Command palette](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/command-palette.json): Mod+K palette with groups, recent items, nested pages, async search and keyboard hints.
+- [Dashboard](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dashboard.json): KPI tiles with sparklines, revenue and signup charts, activity and top projects; the range lives in the URL.
+- [Data table](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/data-table.json): Search, filters, sort and pages kept in the URL, bulk actions and every loading state.
+- [Editable table](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/editable-table.json): Cells edit in place and save one at a time: optimistic updates, a spinner per saving cell, rollback with Retry on error, and spreadsheet keys.
+- [Not found](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/error-pages.json): 404, 403, 500 and maintenance pages with the way out.
+- [File manager](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/file-manager.json): Folder tree, breadcrumb, grid and list views, multi-select, context menu, rename, move, upload with progress and a storage meter. Virtualized for thousands of files.
+- [Grouped table](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/grouped-table.json): Rows in collapsible groups with pinned header, group bands and a calculation footer; continuous row numbers, group selection and a floating bulk-action bar.
+- [Mail inbox](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/inbox.json): Resizable list and detail with a thread and reply composer; multi-select with archive, read and label actions, J/K/E/X keys, search and folder in the URL, a virtualized list, and list-to-detail navigation on phones.
+- [Infinite table](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/infinite-table.json): Cursor pagination that loads ahead as you scroll: skeleton rows, inline retry, an end marker, a Load more fallback and back to top.
+- [Kanban board](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kanban.json): Columns with WIP limits and cards you drag between them or reorder, by pointer, touch or keyboard. Optimistic moves with rollback and Retry, a context menu, a details sheet and assignee and label filters in the URL.
+- [Landing page](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/marketing.json): Marketing header (sheet on mobile, theme and language), hero with a framed product preview, logo cloud, feature grid and testimonials.
+- [Notifications](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/notifications.json): A bell menu with unread count (Shift+N) and a full feed with mark as read and archive with undo.
+- [Setup wizard](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/onboarding.json): Workspace, team and plan in steps: the step in the URL, validation per step, values kept going back, direction-aware transitions.
+- [Pricing page](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/pricing.json): Monthly/yearly plans with the saving inline, a comparison table that becomes a plan picker on phones, FAQ and a closing call to action.
+- [Schedule](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/schedule.json): Month, week and day calendar: overlapping events side by side, all-day and multi-day banners, a current-time line, click-to-create, and an agenda list on narrow screens. View and date live in the URL; week start and formats follow the locale.
+- [Settings](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/settings.json): Profile form, members and roles, and a delete confirmed by typing the name.
+- [Site footer](https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/site-footer.json): Brand, link columns, newsletter, then copyright, status, language and theme. Reflows with its container.

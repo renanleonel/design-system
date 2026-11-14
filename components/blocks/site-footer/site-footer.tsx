@@ -124,7 +124,7 @@ export function SiteFooter({
                       aria-label="Subscribe"
                       disabled={busy}
                     >
-                      <ArrowRightIcon />
+                      <ArrowRightIcon className="rtl:rotate-180" />
                     </InputGroupButton>
                   </InputGroupAddon>
                 </InputGroup>

@@ -112,7 +112,7 @@ export function MarketingHeader({
             >
               <MenuIcon />
             </SheetTrigger>
-            <SheetContent side="right" className="w-72 gap-6 p-6">
+            <SheetContent side="inline-end" className="w-72 gap-6 p-6">
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <nav aria-label="Main" className="flex flex-col gap-1 pt-6">
                 {links.map((link) => (

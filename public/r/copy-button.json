@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "copy-button",
+  "title": "Copy button",
+  "description": "An icon button that copies a value and confirms with a check, a tooltip and a screen-reader announcement.",
+  "dependencies": [
+    "cn@^0.5.2",
+    "lucide-react@^1.72.0"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-copy-to-clipboard.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/copy-button.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { CheckIcon, CopyIcon } from \"lucide-react\"\nimport { cn } from \"cn\"\n\nimport { Button } from \"@/components/ui/button\"\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipTrigger,\n} from \"@/components/ui/tooltip\"\nimport { useCopyToClipboard } from \"@/hooks/use-copy-to-clipboard\"\n\ntype CopyButtonProps = Omit<\n  React.ComponentProps<typeof Button>,\n  \"value\" | \"children\" | \"onClick\" | \"onError\"\n> & {\n  /** Text to copy; a function is read at click time (current input value, selection). */\n  value: string | (() => string)\n  /** Accessible name and tooltip while idle. Name what is copied: \"Copy API key\". */\n  label?: string\n  /** Tooltip after a successful copy. */\n  copiedLabel?: string\n  /** Milliseconds the check stays before it swaps back. */\n  resetAfter?: number\n  /** Runs after a successful copy. */\n  onCopy?: (value: string) => void\n  /** Runs when the browser refuses or has no Clipboard API. */\n  onCopyError?: (error: Error) => void\n}\n\n/**\n * An icon button that copies a value. A check replaces the copy icon for a\n * moment, the tooltip changes to \"Copied\", and a live region announces the\n * result to screen readers. Needs a secure context (https or localhost); where\n * the Clipboard API is missing it says \"Couldn't copy\" instead of failing\n * silently.\n */\nfunction CopyButton({\n  value,\n  label = \"Copy\",\n  copiedLabel = \"Copied\",\n  resetAfter,\n  onCopy,\n  onCopyError,\n  variant = \"ghost\",\n  size = \"icon-sm\",\n  className,\n  ...props\n}: CopyButtonProps) {\n  const { copy, copied, error } = useCopyToClipboard({ resetAfter })\n  const text = error ? \"Couldn't copy\" : copied ? copiedLabel : label\n  return (\n    <>\n      <Tooltip>\n        <TooltipTrigger\n          render={\n            <Button\n              type=\"button\"\n              variant={variant}\n              size={size}\n              aria-label={label}\n              data-slot=\"copy-button\"\n              data-copied={copied || undefined}\n              className={cn(\"text-muted-foreground\", className)}\n              onClick={async () => {\n                const next = typeof value === \"function\" ? value() : value\n                if (await copy(next)) onCopy?.(next)\n                else onCopyError?.(new Error(\"Couldn't copy.\"))\n              }}\n              {...props}\n            />\n          }\n        >\n          {/* Two stacked icons cross-fade with a small scale; reduced motion\n              keeps the fade and drops the scale. */}\n          <span aria-hidden className=\"relative block size-4\">\n            <CopyIcon\n              className={cn(\n                \"absolute inset-0 transition-[opacity,transform] duration-(--ds-duration-popover) ease-out motion-reduce:scale-100\",\n                copied ? \"scale-50 opacity-0\" : \"scale-100 opacity-100\"\n              )}\n            />\n            <CheckIcon\n              className={cn(\n                \"absolute inset-0 text-tone-green transition-[opacity,transform] duration-(--ds-duration-popover) ease-out motion-reduce:scale-100\",\n                copied ? \"scale-100 opacity-100\" : \"scale-50 opacity-0\"\n              )}\n            />\n          </span>\n        </TooltipTrigger>\n        <TooltipContent>{text}</TooltipContent>\n      </Tooltip>\n      <span role=\"status\" className=\"sr-only\">\n        {error\n          ? \"Couldn't copy to clipboard\"\n          : copied\n            ? \"Copied to clipboard\"\n            : \"\"}\n      </span>\n    </>\n  )\n}\n\nexport { CopyButton }\nexport type { CopyButtonProps }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

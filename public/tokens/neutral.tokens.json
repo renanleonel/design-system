@@ -1,0 +1,1242 @@
+{
+  "$description": "neutral: design tokens from registry/themes/neutral.json and registry/tokens.mjs. Sets: core (mode-independent), light, dark. Colors are sRGB hex; the authored value is in $extensions[\"com.renanleonel.ui\"].original.",
+  "core": {
+    "radius": {
+      "base": {
+        "$type": "dimension",
+        "$value": "0.625rem"
+      }
+    },
+    "ds": {
+      "radius": {
+        "control": {
+          "$type": "dimension",
+          "$value": "{radius.base}",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "var(--radius)"
+            }
+          }
+        }
+      },
+      "panel": {
+        "radius": {
+          "$type": "dimension",
+          "$value": "{radius.base} * 2.4",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "calc(var(--radius) * 2.4)"
+            }
+          }
+        },
+        "pad": {
+          "$type": "dimension",
+          "$value": "0.5rem"
+        }
+      },
+      "control": {
+        "height": {
+          "$type": "dimension",
+          "$value": "2rem"
+        },
+        "height-sm": {
+          "$type": "dimension",
+          "$value": "1.75rem"
+        },
+        "height-xs": {
+          "$type": "dimension",
+          "$value": "1.5rem"
+        },
+        "height-lg": {
+          "$type": "dimension",
+          "$value": "2.25rem"
+        }
+      },
+      "ease": {
+        "out": {
+          "$type": "cubicBezier",
+          "$value": [
+            0.23,
+            1,
+            0.32,
+            1
+          ],
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "cubic-bezier(0.23, 1, 0.32, 1)"
+            }
+          }
+        },
+        "in-out": {
+          "$type": "cubicBezier",
+          "$value": [
+            0.77,
+            0,
+            0.175,
+            1
+          ],
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "cubic-bezier(0.77, 0, 0.175, 1)"
+            }
+          }
+        },
+        "drawer": {
+          "$type": "cubicBezier",
+          "$value": [
+            0.32,
+            0.72,
+            0,
+            1
+          ],
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "cubic-bezier(0.32, 0.72, 0, 1)"
+            }
+          }
+        }
+      },
+      "duration": {
+        "press": {
+          "$type": "duration",
+          "$value": "160ms"
+        },
+        "tooltip": {
+          "$type": "duration",
+          "$value": "125ms"
+        },
+        "popover": {
+          "$type": "duration",
+          "$value": "200ms"
+        },
+        "modal": {
+          "$type": "duration",
+          "$value": "250ms"
+        },
+        "drawer": {
+          "$type": "duration",
+          "$value": "500ms"
+        }
+      }
+    }
+  },
+  "light": {
+    "color": {
+      "background": {
+        "$type": "color",
+        "$value": "#ffffff",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(1 0 0)"
+          }
+        }
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "#0a0a0a",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.145 0 0)"
+          }
+        }
+      },
+      "card": {
+        "$type": "color",
+        "$value": "#ffffff",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(1 0 0)"
+          }
+        }
+      },
+      "card-foreground": {
+        "$type": "color",
+        "$value": "#0a0a0a",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.145 0 0)"
+          }
+        }
+      },
+      "popover": {
+        "$type": "color",
+        "$value": "#ffffff",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(1 0 0)"
+          }
+        }
+      },
+      "popover-foreground": {
+        "$type": "color",
+        "$value": "#0a0a0a",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.145 0 0)"
+          }
+        }
+      },
+      "primary": {
+        "$type": "color",
+        "$value": "#171717",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.205 0 0)"
+          }
+        }
+      },
+      "primary-foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "#f5f5f5",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.97 0 0)"
+          }
+        }
+      },
+      "secondary-foreground": {
+        "$type": "color",
+        "$value": "#171717",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.205 0 0)"
+          }
+        }
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "#f5f5f5",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.97 0 0)"
+          }
+        }
+      },
+      "muted-foreground": {
+        "$type": "color",
+        "$value": "#707070",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.5460 0 0)"
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "#f5f5f5",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.97 0 0)"
+          }
+        }
+      },
+      "accent-foreground": {
+        "$type": "color",
+        "$value": "#171717",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.205 0 0)"
+          }
+        }
+      },
+      "destructive": {
+        "$type": "color",
+        "$value": "#e7000b",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.577 0.245 27.325)"
+          }
+        }
+      },
+      "border": {
+        "$type": "color",
+        "$value": "#e5e5e5",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.922 0 0)"
+          }
+        }
+      },
+      "input": {
+        "$type": "color",
+        "$value": "#e5e5e5",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.922 0 0)"
+          }
+        }
+      },
+      "ring": {
+        "$type": "color",
+        "$value": "#737373",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.556 0 0)"
+          }
+        }
+      },
+      "chart-1": {
+        "$type": "color",
+        "$value": "#d4d4d4",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.87 0 0)"
+          }
+        }
+      },
+      "chart-2": {
+        "$type": "color",
+        "$value": "#737373",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.556 0 0)"
+          }
+        }
+      },
+      "chart-3": {
+        "$type": "color",
+        "$value": "#525252",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.439 0 0)"
+          }
+        }
+      },
+      "chart-4": {
+        "$type": "color",
+        "$value": "#404040",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.371 0 0)"
+          }
+        }
+      },
+      "chart-5": {
+        "$type": "color",
+        "$value": "#262626",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.269 0 0)"
+          }
+        }
+      },
+      "sidebar": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "sidebar-foreground": {
+        "$type": "color",
+        "$value": "#0a0a0a",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.145 0 0)"
+          }
+        }
+      },
+      "sidebar-primary": {
+        "$type": "color",
+        "$value": "#171717",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.205 0 0)"
+          }
+        }
+      },
+      "sidebar-primary-foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "sidebar-accent": {
+        "$type": "color",
+        "$value": "#f5f5f5",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.97 0 0)"
+          }
+        }
+      },
+      "sidebar-accent-foreground": {
+        "$type": "color",
+        "$value": "#171717",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.205 0 0)"
+          }
+        }
+      },
+      "sidebar-border": {
+        "$type": "color",
+        "$value": "#e5e5e5",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.922 0 0)"
+          }
+        }
+      },
+      "sidebar-ring": {
+        "$type": "color",
+        "$value": "#a1a1a1",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.708 0 0)"
+          }
+        }
+      }
+    },
+    "ds": {
+      "tone": {
+        "gray": {
+          "$type": "color",
+          "$value": "#55585e",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.46 0.01 260)"
+            }
+          }
+        },
+        "blue": {
+          "$type": "color",
+          "$value": "#1f53b8",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.47 0.17 262)"
+            }
+          }
+        },
+        "green": {
+          "$type": "color",
+          "$value": "#00673d",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.45 0.11 158)"
+            }
+          }
+        },
+        "amber": {
+          "$type": "color",
+          "$value": "#814d00",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.47 0.11 70)"
+            }
+          }
+        },
+        "orange": {
+          "$type": "color",
+          "$value": "#a33200",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.48 0.16 42)"
+            }
+          }
+        },
+        "red": {
+          "$type": "color",
+          "$value": "#b00a1d",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.48 0.19 25)"
+            }
+          }
+        },
+        "purple": {
+          "$type": "color",
+          "$value": "#8a2ea4",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.49 0.19 318)"
+            }
+          }
+        }
+      },
+      "chart": {
+        "1": {
+          "$type": "color",
+          "$value": "#2a78d6",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#2a78d6"
+            }
+          }
+        },
+        "2": {
+          "$type": "color",
+          "$value": "#eb6834",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#eb6834"
+            }
+          }
+        },
+        "3": {
+          "$type": "color",
+          "$value": "#1baf7a",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#1baf7a"
+            }
+          }
+        },
+        "4": {
+          "$type": "color",
+          "$value": "#eda100",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#eda100"
+            }
+          }
+        },
+        "5": {
+          "$type": "color",
+          "$value": "#e87ba4",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#e87ba4"
+            }
+          }
+        },
+        "6": {
+          "$type": "color",
+          "$value": "#008300",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#008300"
+            }
+          }
+        },
+        "7": {
+          "$type": "color",
+          "$value": "#6250d6",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#6250d6"
+            }
+          }
+        },
+        "8": {
+          "$type": "color",
+          "$value": "#e34948",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#e34948"
+            }
+          }
+        }
+      },
+      "focus-ring": {
+        "$type": "color",
+        "$value": "{color.ring}",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "var(--ring)"
+          }
+        }
+      },
+      "panel": {
+        "bg": {
+          "$type": "color",
+          "$value": "#f8f8f8",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "color-mix(in oklch, var(--muted) 65%, var(--background))"
+            }
+          }
+        }
+      },
+      "shadow": {
+        "border": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "color": "#0000000f",
+              "offsetX": "0px",
+              "offsetY": "0px",
+              "blur": "0px",
+              "spread": "1px"
+            },
+            {
+              "color": "#0000000f",
+              "offsetX": "0px",
+              "offsetY": "1px",
+              "blur": "2px",
+              "spread": "-1px"
+            },
+            {
+              "color": "#0000000a",
+              "offsetX": "0px",
+              "offsetY": "2px",
+              "blur": "4px",
+              "spread": "0px"
+            }
+          ],
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "0 0 0 1px oklch(0 0 0 / 0.06), 0 1px 2px -1px oklch(0 0 0 / 0.06), 0 2px 4px 0 oklch(0 0 0 / 0.04)"
+            }
+          }
+        },
+        "border-hover": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "color": "#00000014",
+              "offsetX": "0px",
+              "offsetY": "0px",
+              "blur": "0px",
+              "spread": "1px"
+            },
+            {
+              "color": "#00000014",
+              "offsetX": "0px",
+              "offsetY": "1px",
+              "blur": "2px",
+              "spread": "-1px"
+            },
+            {
+              "color": "#0000000f",
+              "offsetX": "0px",
+              "offsetY": "2px",
+              "blur": "4px",
+              "spread": "0px"
+            }
+          ],
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "0 0 0 1px oklch(0 0 0 / 0.08), 0 1px 2px -1px oklch(0 0 0 / 0.08), 0 2px 4px 0 oklch(0 0 0 / 0.06)"
+            }
+          }
+        },
+        "popover": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "color": "#00000014",
+              "offsetX": "0px",
+              "offsetY": "0px",
+              "blur": "0px",
+              "spread": "1px"
+            },
+            {
+              "color": "#0000000f",
+              "offsetX": "0px",
+              "offsetY": "2px",
+              "blur": "4px",
+              "spread": "-1px"
+            },
+            {
+              "color": "#0000001f",
+              "offsetX": "0px",
+              "offsetY": "8px",
+              "blur": "24px",
+              "spread": "-4px"
+            }
+          ],
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "0 0 0 1px oklch(0 0 0 / 0.08), 0 2px 4px -1px oklch(0 0 0 / 0.06), 0 8px 24px -4px oklch(0 0 0 / 0.12)"
+            }
+          }
+        },
+        "modal": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "color": "#00000014",
+              "offsetX": "0px",
+              "offsetY": "0px",
+              "blur": "0px",
+              "spread": "1px"
+            },
+            {
+              "color": "#0000000f",
+              "offsetX": "0px",
+              "offsetY": "4px",
+              "blur": "8px",
+              "spread": "-2px"
+            },
+            {
+              "color": "#00000033",
+              "offsetX": "0px",
+              "offsetY": "24px",
+              "blur": "48px",
+              "spread": "-12px"
+            }
+          ],
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "0 0 0 1px oklch(0 0 0 / 0.08), 0 4px 8px -2px oklch(0 0 0 / 0.06), 0 24px 48px -12px oklch(0 0 0 / 0.2)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "dark": {
+    "color": {
+      "background": {
+        "$type": "color",
+        "$value": "#0a0a0a",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.145 0 0)"
+          }
+        }
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "card": {
+        "$type": "color",
+        "$value": "#171717",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.205 0 0)"
+          }
+        }
+      },
+      "card-foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "popover": {
+        "$type": "color",
+        "$value": "#171717",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.205 0 0)"
+          }
+        }
+      },
+      "popover-foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "primary": {
+        "$type": "color",
+        "$value": "#e5e5e5",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.922 0 0)"
+          }
+        }
+      },
+      "primary-foreground": {
+        "$type": "color",
+        "$value": "#171717",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.205 0 0)"
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "#262626",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.269 0 0)"
+          }
+        }
+      },
+      "secondary-foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "#262626",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.269 0 0)"
+          }
+        }
+      },
+      "muted-foreground": {
+        "$type": "color",
+        "$value": "#a1a1a1",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.708 0 0)"
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "#262626",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.269 0 0)"
+          }
+        }
+      },
+      "accent-foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "destructive": {
+        "$type": "color",
+        "$value": "#ff6467",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.704 0.191 22.216)"
+          }
+        }
+      },
+      "border": {
+        "$type": "color",
+        "$value": "#ffffff1a",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(1 0 0 / 10%)"
+          }
+        }
+      },
+      "input": {
+        "$type": "color",
+        "$value": "#ffffff26",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(1 0 0 / 15%)"
+          }
+        }
+      },
+      "ring": {
+        "$type": "color",
+        "$value": "#a1a1a1",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.708 0 0)"
+          }
+        }
+      },
+      "chart-1": {
+        "$type": "color",
+        "$value": "#d4d4d4",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.87 0 0)"
+          }
+        }
+      },
+      "chart-2": {
+        "$type": "color",
+        "$value": "#737373",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.556 0 0)"
+          }
+        }
+      },
+      "chart-3": {
+        "$type": "color",
+        "$value": "#525252",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.439 0 0)"
+          }
+        }
+      },
+      "chart-4": {
+        "$type": "color",
+        "$value": "#404040",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.371 0 0)"
+          }
+        }
+      },
+      "chart-5": {
+        "$type": "color",
+        "$value": "#262626",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.269 0 0)"
+          }
+        }
+      },
+      "sidebar": {
+        "$type": "color",
+        "$value": "#171717",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.205 0 0)"
+          }
+        }
+      },
+      "sidebar-foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "sidebar-primary": {
+        "$type": "color",
+        "$value": "#1447e6",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.488 0.243 264.376)"
+          }
+        }
+      },
+      "sidebar-primary-foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "sidebar-accent": {
+        "$type": "color",
+        "$value": "#262626",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.269 0 0)"
+          }
+        }
+      },
+      "sidebar-accent-foreground": {
+        "$type": "color",
+        "$value": "#fafafa",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.985 0 0)"
+          }
+        }
+      },
+      "sidebar-border": {
+        "$type": "color",
+        "$value": "#ffffff1a",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(1 0 0 / 10%)"
+          }
+        }
+      },
+      "sidebar-ring": {
+        "$type": "color",
+        "$value": "#737373",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "oklch(0.556 0 0)"
+          }
+        }
+      }
+    },
+    "ds": {
+      "tone": {
+        "gray": {
+          "$type": "color",
+          "$value": "#c0c4cb",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.82 0.01 260)"
+            }
+          }
+        },
+        "blue": {
+          "$type": "color",
+          "$value": "#a4c8ff",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.83 0.1 262)"
+            }
+          }
+        },
+        "green": {
+          "$type": "color",
+          "$value": "#83daa9",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.82 0.11 158)"
+            }
+          }
+        },
+        "amber": {
+          "$type": "color",
+          "$value": "#f1bd73",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.83 0.11 75)"
+            }
+          }
+        },
+        "orange": {
+          "$type": "color",
+          "$value": "#ffb286",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.83 0.11 50)"
+            }
+          }
+        },
+        "red": {
+          "$type": "color",
+          "$value": "#ffb1ad",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.84 0.1 22)"
+            }
+          }
+        },
+        "purple": {
+          "$type": "color",
+          "$value": "#e9b4f9",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "oklch(0.84 0.11 318)"
+            }
+          }
+        }
+      },
+      "chart": {
+        "1": {
+          "$type": "color",
+          "$value": "#3987e5",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#3987e5"
+            }
+          }
+        },
+        "2": {
+          "$type": "color",
+          "$value": "#d95926",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#d95926"
+            }
+          }
+        },
+        "3": {
+          "$type": "color",
+          "$value": "#199e70",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#199e70"
+            }
+          }
+        },
+        "4": {
+          "$type": "color",
+          "$value": "#c98500",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#c98500"
+            }
+          }
+        },
+        "5": {
+          "$type": "color",
+          "$value": "#d55181",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#d55181"
+            }
+          }
+        },
+        "6": {
+          "$type": "color",
+          "$value": "#008300",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#008300"
+            }
+          }
+        },
+        "7": {
+          "$type": "color",
+          "$value": "#9085e9",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#9085e9"
+            }
+          }
+        },
+        "8": {
+          "$type": "color",
+          "$value": "#e66767",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "#e66767"
+            }
+          }
+        }
+      },
+      "focus-ring": {
+        "$type": "color",
+        "$value": "{color.ring}",
+        "$extensions": {
+          "com.renanleonel.ui": {
+            "original": "var(--ring)"
+          }
+        }
+      },
+      "panel": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.background}",
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "var(--background)"
+            }
+          }
+        }
+      },
+      "shadow": {
+        "border": {
+          "$type": "shadow",
+          "$value": {
+            "color": "#ffffff14",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "0px",
+            "spread": "1px"
+          },
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "0 0 0 1px oklch(1 0 0 / 0.08)"
+            }
+          }
+        },
+        "border-hover": {
+          "$type": "shadow",
+          "$value": {
+            "color": "#ffffff21",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "0px",
+            "spread": "1px"
+          },
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "0 0 0 1px oklch(1 0 0 / 0.13)"
+            }
+          }
+        },
+        "popover": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "color": "#ffffff1a",
+              "offsetX": "0px",
+              "offsetY": "0px",
+              "blur": "0px",
+              "spread": "1px"
+            },
+            {
+              "color": "#00000080",
+              "offsetX": "0px",
+              "offsetY": "8px",
+              "blur": "24px",
+              "spread": "-4px"
+            }
+          ],
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "0 0 0 1px oklch(1 0 0 / 0.1), 0 8px 24px -4px oklch(0 0 0 / 0.5)"
+            }
+          }
+        },
+        "modal": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "color": "#ffffff1a",
+              "offsetX": "0px",
+              "offsetY": "0px",
+              "blur": "0px",
+              "spread": "1px"
+            },
+            {
+              "color": "#00000099",
+              "offsetX": "0px",
+              "offsetY": "24px",
+              "blur": "48px",
+              "spread": "-12px"
+            }
+          ],
+          "$extensions": {
+            "com.renanleonel.ui": {
+              "original": "0 0 0 1px oklch(1 0 0 / 0.1), 0 24px 48px -12px oklch(0 0 0 / 0.6)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$themes": [
+    {
+      "id": "neutral-light",
+      "name": "neutral light",
+      "selectedTokenSets": {
+        "core": "source",
+        "light": "enabled"
+      }
+    },
+    {
+      "id": "neutral-dark",
+      "name": "neutral dark",
+      "selectedTokenSets": {
+        "core": "source",
+        "dark": "enabled"
+      }
+    }
+  ],
+  "$metadata": {
+    "tokenSetOrder": [
+      "core",
+      "light",
+      "dark"
+    ]
+  }
+}

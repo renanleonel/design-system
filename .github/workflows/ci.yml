@@ -30,8 +30,12 @@ jobs:
       - name: Registry is up to date
         run: |
           pnpm registry:build
-          git diff --exit-code -- registry.json public/r app/ds-tokens.css components/demos/index.ts \
+          git add -N public/llms.txt public/llms-full.txt
+          git diff --exit-code -- registry.json public/r public/llms.txt public/llms-full.txt app/ds-tokens.css components/demos/index.ts \
             || (echo "::error::Run 'pnpm registry:build' and commit the result." && exit 1)
+
+      - name: Size budget (gzip + npm deps per registry item)
+        run: pnpm check:size
 
   # The UI audit (layout checks + axe accessibility) covers ~80 pages at two
   # widths in two themes: split across 4 parallel jobs, each building the app.
@@ -71,6 +75,75 @@ jobs:
         run: pnpm audit:ui
         env:
           AUDIT_SHARD: ${{ matrix.shard }}/4
+      # Reuses this shard's build; one shard is enough for the suite.
+      - name: Interaction tests
+        if: matrix.shard == 1
+        run: pnpm test:interaction
+      - uses: actions/upload-artifact@v4
+        if: failure() && matrix.shard == 1
+        with:
+          name: playwright-traces
+          path: test-results/
+
+  # Screenshot comparison against the committed -linux baselines. Skipped until
+  # the first baselines exist (dispatch the "Visual baselines" workflow).
+  # Sharded like the audit; each shard builds the app.
+  visual:
+    name: Visual regression (${{ matrix.shard }}/2)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Baselines present?
+        id: baselines
+        run: |
+          if compgen -G "tests/visual/__screenshots__/*-linux.png" > /dev/null; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No -linux baselines committed; skipping."
+          fi
+      - uses: pnpm/action-setup@v4
+        if: steps.baselines.outputs.present == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.baselines.outputs.present == 'true'
+        with:
+          node-version: 24
+          cache: pnpm
+      - if: steps.baselines.outputs.present == 'true'
+        run: pnpm install --frozen-lockfile
+      - uses: actions/cache@v4
+        if: steps.baselines.outputs.present == 'true'
+        with:
+          path: .next/cache
+          key: next-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: next-${{ hashFiles('pnpm-lock.yaml') }}-
+      - if: steps.baselines.outputs.present == 'true'
+        run: pnpm build
+      - uses: actions/cache@v4
+        if: steps.baselines.outputs.present == 'true'
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install Chromium
+        if: steps.baselines.outputs.present == 'true' && steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Install Chromium system deps
+        if: steps.baselines.outputs.present == 'true' && steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
+      - name: Visual regression
+        if: steps.baselines.outputs.present == 'true'
+        run: pnpm test:visual --shard=${{ matrix.shard }}/2
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: visual-diff-${{ matrix.shard }}
+          path: |
+            playwright-report/visual/
+            test-results/visual/
 
   registry-install:
     name: Registry installs into a fresh project

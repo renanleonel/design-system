@@ -24,7 +24,7 @@ function ThemeToggle({
 }) {
   const { resolvedTheme, setTheme } = useTheme()
   const icon =
-    "absolute size-4 transition-[opacity,rotate,scale] duration-200 ease-out in-data-ds-instant:transition-none motion-reduce:transition-none"
+    "absolute size-4 transition-[opacity,rotate,scale] duration-(--ds-duration-popover) ease-out in-data-ds-instant:transition-none motion-reduce:transition-none"
   return (
     <Button
       variant="ghost"

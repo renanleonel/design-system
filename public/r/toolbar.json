@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toolbar",
+  "title": "Toolbar",
+  "description": "A row of related actions with one tab stop and arrow-key navigation.",
+  "dependencies": [
+    "@base-ui/react@^1.9.0",
+    "class-variance-authority@^0.7.1",
+    "cn@^0.5.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/toolbar.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Toolbar as ToolbarPrimitive } from \"@base-ui/react/toolbar\"\nimport type { VariantProps } from \"class-variance-authority\"\nimport { cn } from \"cn\"\n\nimport { buttonVariants } from \"@/components/ui/button\"\n\nfunction Toolbar({ className, ...props }: ToolbarPrimitive.Root.Props) {\n  return (\n    <ToolbarPrimitive.Root\n      data-slot=\"toolbar\"\n      className={cn(\n        \"flex w-fit max-w-full items-center gap-1 rounded-control p-1 shadow-border data-vertical:flex-col data-vertical:items-stretch\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** Takes `Button`'s variants and sizes; defaults to a small ghost button. */\nfunction ToolbarButton({\n  className,\n  variant = \"ghost\",\n  size = \"sm\",\n  ...props\n}: ToolbarPrimitive.Button.Props & VariantProps<typeof buttonVariants>) {\n  return (\n    <ToolbarPrimitive.Button\n      data-slot=\"toolbar-button\"\n      className={cn(\n        buttonVariants({ variant, size }),\n        \"data-pressed:bg-muted data-pressed:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ToolbarLink({\n  className,\n  variant = \"ghost\",\n  size = \"sm\",\n  ...props\n}: ToolbarPrimitive.Link.Props & VariantProps<typeof buttonVariants>) {\n  return (\n    <ToolbarPrimitive.Link\n      data-slot=\"toolbar-link\"\n      className={cn(buttonVariants({ variant, size }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction ToolbarGroup({ className, ...props }: ToolbarPrimitive.Group.Props) {\n  return (\n    <ToolbarPrimitive.Group\n      data-slot=\"toolbar-group\"\n      className={cn(\"flex items-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ToolbarSeparator({\n  className,\n  ...props\n}: React.ComponentProps<typeof ToolbarPrimitive.Separator>) {\n  return (\n    <ToolbarPrimitive.Separator\n      data-slot=\"toolbar-separator\"\n      className={cn(\"shrink-0 bg-border data-vertical:mx-1 data-vertical:h-5 data-vertical:w-px data-horizontal:my-1 data-horizontal:h-px data-horizontal:w-full\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ToolbarInput({ className, ...props }: ToolbarPrimitive.Input.Props) {\n  return (\n    <ToolbarPrimitive.Input\n      data-slot=\"toolbar-input\"\n      className={cn(\n        \"h-control-sm min-w-0 rounded-control border border-input bg-transparent px-2 text-sm focus-ring outline-none placeholder:text-muted-foreground disabled:opacity-50 dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport {\n  Toolbar,\n  ToolbarButton,\n  ToolbarLink,\n  ToolbarGroup,\n  ToolbarSeparator,\n  ToolbarInput,\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

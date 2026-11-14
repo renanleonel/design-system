@@ -22,16 +22,22 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/accordion.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert-dialog.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar-group.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/breadcrumb.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/calendar.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/card.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/carousel.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/chart.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/checkbox.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/collapsible.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/color-picker.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/combobox.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/command.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/context-menu.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/copy-button.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/data-list.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/date-picker.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dialog.json",
@@ -44,6 +50,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/form.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/inline-edit.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-otp.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
@@ -51,16 +58,22 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/label.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/language-select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/menubar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/meter.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/multi-select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/navigation-menu.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/number-field.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/pagination.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/panel.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/password-input.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/preview-card.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/progress.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/radio-group.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/rating.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/resizable.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/scroll-area.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/separator.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/settings-list.json",
@@ -70,6 +83,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sortable.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/stepper.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/swatch-picker.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/switch.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json",
@@ -82,6 +96,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/token-input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toolbar.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree-select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree.json",
@@ -701,6 +716,30 @@
       "name": "theme-neutral"
     },
     {
+      "name": "use-controllable-state",
+      "type": "registry:hook",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hooks/use-controllable-state.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "use-copy-to-clipboard",
+      "type": "registry:hook",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hooks/use-copy-to-clipboard.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "use-debounce",
       "type": "registry:hook",
       "dependencies": [],
@@ -727,6 +766,30 @@
       ]
     },
     {
+      "name": "use-intersection",
+      "type": "registry:hook",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hooks/use-intersection.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "use-local-storage",
+      "type": "registry:hook",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hooks/use-local-storage.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "use-media-query",
       "type": "registry:hook",
       "dependencies": [],
@@ -734,6 +797,18 @@
       "files": [
         {
           "path": "hooks/use-media-query.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "use-mounted",
+      "type": "registry:hook",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hooks/use-mounted.ts",
           "type": "registry:hook"
         }
       ]
@@ -800,6 +875,24 @@
       "files": [
         {
           "path": "components/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar-group",
+      "type": "registry:ui",
+      "title": "Avatar group",
+      "description": "Overlapping avatars built from a list of people, with a +N chip that lists the rest.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/avatar-group.tsx",
           "type": "registry:ui"
         }
       ]
@@ -922,6 +1015,28 @@
       ]
     },
     {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "A swipeable set of slides with arrows, dots, keyboard control, vertical and RTL support (embla).",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2",
+        "embla-carousel-react@^8.6.0",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/carousel.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "chart",
       "type": "registry:ui",
       "title": "Chart",
@@ -952,6 +1067,46 @@
       "files": [
         {
           "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "A single section that shows or hides its content from a trigger.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "Color Picker",
+      "description": "A color field that opens a saturation and hue area, an optional opacity slider, a hex input and preset swatches.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0",
+        "react-colorful@^5.8.1"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/swatch-picker.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-controllable-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/color-picker.tsx",
           "type": "registry:ui"
         }
       ]
@@ -995,6 +1150,46 @@
       "files": [
         {
           "path": "components/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "A menu at the pointer on right click or long press, styled like the dropdown menu.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "copy-button",
+      "type": "registry:ui",
+      "title": "Copy button",
+      "description": "An icon button that copies a value and confirms with a check, a tooltip and a screen-reader announcement.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-copy-to-clipboard.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/copy-button.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1239,6 +1434,28 @@
       ]
     },
     {
+      "name": "inline-edit",
+      "type": "registry:ui",
+      "title": "Inline edit",
+      "description": "Text that becomes an input on click: Enter or blur saves, Escape cancels, with validation and optimistic async saves.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0",
+        "sonner@^2.0.8"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-controllable-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/inline-edit.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "input-group",
       "type": "registry:ui",
       "title": "Input Group",
@@ -1370,6 +1587,43 @@
       ]
     },
     {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "A row of menus for application commands, with arrow-key movement between them.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/menubar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "description": "A value within a known range, such as storage used or seats taken.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "class-variance-authority@^0.7.1",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/meter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "multi-select",
       "type": "registry:ui",
       "title": "Multi Select",
@@ -1400,6 +1654,42 @@
       "files": [
         {
           "path": "components/ui/native-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "Site navigation: triggers open panels of links in one shared popup that resizes between them.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/navigation-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "number-field",
+      "type": "registry:ui",
+      "title": "Number field",
+      "description": "A numeric input with decrement and increment buttons, locale formatting and optional drag-to-scrub.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/number-field.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1475,6 +1765,23 @@
       ]
     },
     {
+      "name": "preview-card",
+      "type": "registry:ui",
+      "title": "Preview Card",
+      "description": "A link that previews its destination on hover or focus.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/preview-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress",
@@ -1539,6 +1846,23 @@
       "files": [
         {
           "path": "components/ui/resizable.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll area",
+      "description": "A scrolling region with overlay scrollbars that match the theme.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/scroll-area.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1706,6 +2030,25 @@
       "files": [
         {
           "path": "components/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Progress through a multi-step flow, horizontal or vertical, with complete, current, upcoming and error states.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-controllable-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/stepper.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1931,6 +2274,26 @@
       ]
     },
     {
+      "name": "toolbar",
+      "type": "registry:ui",
+      "title": "Toolbar",
+      "description": "A row of related actions with one tab stop and arrow-key navigation.",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "class-variance-authority@^0.7.1",
+        "cn@^0.5.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/toolbar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
@@ -2027,6 +2390,81 @@
       ]
     },
     {
+      "name": "activity-feed",
+      "type": "registry:block",
+      "title": "Activity feed",
+      "description": "A day-grouped timeline of comments, status changes, assignments, uploads and mentions: filter by type in the URL, collapsed runs of similar events, relative times with the exact moment in a tooltip, and infinite loading.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/skeleton.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/timeline.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-intersection.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/activity-feed/activity-feed.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/activity-feed/activity-feed.tsx"
+        },
+        {
+          "path": "components/blocks/activity-feed/sample-data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/activity-feed/sample-data.ts"
+        }
+      ]
+    },
+    {
+      "name": "ai-chat",
+      "type": "registry:block",
+      "title": "AI chat",
+      "description": "Streaming answers with Markdown and copyable code, collapsible tool calls, copy, regenerate and feedback, auto-scroll that lets go when you scroll up, and a composer with attachments and Stop.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/collapsible.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/copy-button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/error-state.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/scroll-area.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/ai-chat/ai-chat.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-chat/ai-chat.tsx"
+        },
+        {
+          "path": "components/blocks/ai-chat/markdown.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-chat/markdown.tsx"
+        },
+        {
+          "path": "components/blocks/ai-chat/tool-call.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/ai-chat/tool-call.tsx"
+        }
+      ]
+    },
+    {
       "name": "app-shell",
       "type": "registry:block",
       "title": "App shell",
@@ -2040,7 +2478,7 @@
       "registryDependencies": [
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/command.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/command-palette.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/drawer.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
@@ -2103,6 +2541,40 @@
           "path": "components/blocks/billing/billing-page.tsx",
           "type": "registry:component",
           "target": "components/blocks/billing/billing-page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "command-palette",
+      "type": "registry:block",
+      "title": "Command palette",
+      "description": "Mod+K palette with groups, recent items, nested pages, async search and keyboard hints.",
+      "dependencies": [
+        "@tanstack/react-hotkeys@0.25.0",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/command.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/kbd.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-controllable-state.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-debounce.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-local-storage.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/command-palette/command-palette.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/command-palette/command-palette.tsx"
+        },
+        {
+          "path": "components/blocks/command-palette/use-remote-search.ts",
+          "type": "registry:component",
+          "target": "components/blocks/command-palette/use-remote-search.ts"
         }
       ]
     },
@@ -2228,6 +2700,67 @@
       ]
     },
     {
+      "name": "file-manager",
+      "type": "registry:block",
+      "title": "File manager",
+      "description": "Folder tree, breadcrumb, grid and list views, multi-select, context menu, rename, move, upload with progress and a storage meter. Virtualized for thousands of files.",
+      "dependencies": [
+        "@tanstack/react-virtual@^3.14.26",
+        "class-variance-authority@^0.7.1",
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0",
+        "sonner@^2.0.8"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert-dialog.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/breadcrumb.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/context-menu.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dialog.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/file-dropzone.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/inline-edit.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/meter.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/progress.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sheet.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-controllable-state.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/file-manager/file-list.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/file-manager/file-list.tsx"
+        },
+        {
+          "path": "components/blocks/file-manager/file-manager-hooks.ts",
+          "type": "registry:component",
+          "target": "components/blocks/file-manager/file-manager-hooks.ts"
+        },
+        {
+          "path": "components/blocks/file-manager/file-manager-parts.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/file-manager/file-manager-parts.tsx"
+        },
+        {
+          "path": "components/blocks/file-manager/file-manager.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/file-manager/file-manager.tsx"
+        },
+        {
+          "path": "components/blocks/file-manager/file-utils.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/file-manager/file-utils.tsx"
+        }
+      ]
+    },
+    {
       "name": "grouped-table",
       "type": "registry:block",
       "title": "Grouped table",
@@ -2264,6 +2797,50 @@
       ]
     },
     {
+      "name": "inbox",
+      "type": "registry:block",
+      "title": "Mail inbox",
+      "description": "Resizable list and detail with a thread and reply composer; multi-select with archive, read and label actions, J/K/E/X keys, search and folder in the URL, a virtualized list, and list-to-detail navigation on phones.",
+      "dependencies": [
+        "@tanstack/react-hotkeys@0.25.0",
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/checkbox.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/resizable.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toolbar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-debounce.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/virtual-list.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/inbox/inbox.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/inbox/inbox.tsx"
+        },
+        {
+          "path": "components/blocks/inbox/sample-data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/inbox/sample-data.ts"
+        }
+      ]
+    },
+    {
       "name": "infinite-table",
       "type": "registry:block",
       "title": "Infinite table",
@@ -2295,6 +2872,69 @@
           "path": "components/blocks/infinite-table/infinite-table.tsx",
           "type": "registry:component",
           "target": "components/blocks/infinite-table/infinite-table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "kanban",
+      "type": "registry:block",
+      "title": "Kanban board",
+      "description": "Columns with WIP limits and cards you drag between them or reorder, by pointer, touch or keyboard. Optimistic moves with rollback and Retry, a context menu, a details sheet and assignee and label filters in the URL.",
+      "dependencies": [
+        "@dnd-kit/core@^6.3.1",
+        "@dnd-kit/sortable@^10.0.0",
+        "@dnd-kit/utilities@^3.2.2",
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0",
+        "sonner@^2.0.8"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/context-menu.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/field.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/multi-select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/scroll-area.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sheet.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/switch.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/kanban/board-dnd.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/board-dnd.ts"
+        },
+        {
+          "path": "components/blocks/kanban/board-model.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/board-model.ts"
+        },
+        {
+          "path": "components/blocks/kanban/kanban-board.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/kanban-board.tsx"
+        },
+        {
+          "path": "components/blocks/kanban/tasks-board.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/tasks-board.tsx"
+        },
+        {
+          "path": "components/blocks/kanban/use-board-drag.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/use-board-drag.ts"
+        },
+        {
+          "path": "components/blocks/kanban/use-board-operations.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/use-board-operations.ts"
         }
       ]
     },
@@ -2421,6 +3061,69 @@
           "path": "components/blocks/pricing/pricing.tsx",
           "type": "registry:component",
           "target": "components/blocks/pricing/pricing.tsx"
+        }
+      ]
+    },
+    {
+      "name": "schedule",
+      "type": "registry:block",
+      "title": "Schedule",
+      "description": "Month, week and day calendar: overlapping events side by side, all-day and multi-day banners, a current-time line, click-to-create, and an agenda list on narrow screens. View and date live in the URL; week start and formats follow the locale.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "date-fns@^4.4.0",
+        "lucide-react@^1.72.0",
+        "zod@^4.6.7"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/calendar.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/date-picker.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dialog.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/form.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/skeleton.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/swatch-picker.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/switch.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/time-input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/timezone-select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/schedule/schedule-event-dialog.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/schedule/schedule-event-dialog.tsx"
+        },
+        {
+          "path": "components/blocks/schedule/schedule-parts.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/schedule/schedule-parts.tsx"
+        },
+        {
+          "path": "components/blocks/schedule/schedule-sample.ts",
+          "type": "registry:component",
+          "target": "components/blocks/schedule/schedule-sample.ts"
+        },
+        {
+          "path": "components/blocks/schedule/schedule-utils.ts",
+          "type": "registry:component",
+          "target": "components/blocks/schedule/schedule-utils.ts"
+        },
+        {
+          "path": "components/blocks/schedule/schedule-views.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/schedule/schedule-views.tsx"
+        },
+        {
+          "path": "components/blocks/schedule/schedule.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/schedule/schedule.tsx"
         }
       ]
     },

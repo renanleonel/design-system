@@ -83,7 +83,7 @@ export default function Page() {
               className="inline-flex items-center gap-0.5 rounded-sm font-medium text-foreground focus-ring hover:underline"
             >
               Browse templates
-              <ChevronRightIcon className="size-3.5" />
+              <ChevronRightIcon className="size-3.5 rtl:rotate-180" />
             </Link>
           </>
         }

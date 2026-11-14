@@ -284,7 +284,7 @@ function BackToTop({ shown, scroller }: { shown: boolean; scroller: Scroller }) 
           behavior: reduce ? "auto" : "smooth",
         })
       }}
-      className="absolute top-12 left-1/2 z-20 -translate-x-1/2 -translate-y-2 rounded-full bg-popover opacity-0 shadow-popover transition-[opacity,translate] duration-150 ease-in data-open:translate-y-0 data-open:opacity-100 data-open:duration-200 data-open:ease-out motion-reduce:translate-y-0"
+      className="absolute top-12 left-1/2 z-20 -translate-x-1/2 -translate-y-2 rounded-full bg-popover opacity-0 shadow-popover transition-[opacity,translate] duration-(--ds-duration-press) ease-in data-open:translate-y-0 data-open:opacity-100 data-open:duration-(--ds-duration-popover) data-open:ease-out motion-reduce:translate-y-0"
     >
       <ArrowUpIcon data-icon="inline-start" />
       Back to top

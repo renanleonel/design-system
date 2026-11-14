@@ -148,7 +148,7 @@ function Stepper({
             >
               <span
                 className={cn(
-                  "flex size-7 shrink-0 items-center justify-center rounded-full border text-xs font-medium tabular-nums transition-colors duration-200",
+                  "flex size-7 shrink-0 items-center justify-center rounded-full border text-xs font-medium tabular-nums transition-colors duration-(--ds-duration-popover)",
                   done && "border-primary bg-primary text-primary-foreground",
                   active && "border-primary text-foreground",
                   !done && !active && "text-muted-foreground"
@@ -207,7 +207,7 @@ function StepFooter({
     <div className="flex items-center gap-2 border-t pt-6">
       {onBack && (
         <Button type="button" variant="ghost" onClick={onBack}>
-          <ArrowLeftIcon data-icon="inline-start" />
+          <ArrowLeftIcon data-icon="inline-start" className="rtl:rotate-180" />
           Back
         </Button>
       )}

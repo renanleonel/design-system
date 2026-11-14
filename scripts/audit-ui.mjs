@@ -23,6 +23,7 @@ const ALL_PAGES = [
   "/components",
   ...COMPONENT_PAGES,
   "/themes",
+  "/themes/builder",
   "/blocks",
   "/blocks/landing",
   "/blocks/pricing",
@@ -32,12 +33,45 @@ const ALL_PAGES = [
   "/blocks/onboarding?variant=card",
   "/blocks/projects",
   "/blocks/deals",
+  "/blocks/board",
+  "/blocks/board?data=worst",
+  "/blocks/board?data=many",
+  "/blocks/board?data=empty",
+  "/blocks/board?data=one",
   "/blocks/customers",
   "/blocks/activity",
   "/blocks/footer",
   "/blocks/not-found",
   "/blocks/server-error",
   "/blocks/inbox",
+  "/blocks/mail",
+  "/blocks/mail?data=worst",
+  "/blocks/mail?data=empty",
+  "/blocks/mail?data=one",
+  "/blocks/mail?data=many",
+  "/blocks/feed",
+  "/blocks/feed?data=worst",
+  "/blocks/feed?data=empty",
+  "/blocks/feed?data=one",
+  "/blocks/feed?data=many",
+  "/blocks/schedule",
+  "/blocks/schedule?view=month",
+  "/blocks/schedule?view=day",
+  "/blocks/schedule?lang=pt-BR&view=month",
+  "/blocks/schedule?data=worst",
+  "/blocks/schedule?data=worst&view=month",
+  "/blocks/schedule?data=worst&view=day",
+  "/blocks/schedule?data=empty&view=month",
+  "/blocks/schedule?data=one",
+  "/blocks/schedule?data=many&view=month",
+  "/blocks/assistant",
+  "/blocks/assistant?data=empty",
+  "/blocks/assistant?data=one",
+  "/blocks/assistant?data=many",
+  "/blocks/assistant?data=worst",
+  "/blocks/assistant?data=streaming",
+  "/blocks/assistant?data=error",
+  "/blocks/assistant?data=load-error",
   "/blocks/settings",
   "/blocks/settings?data=worst",
   "/blocks/settings?data=one",
@@ -48,8 +82,23 @@ const ALL_PAGES = [
   "/blocks/sign-up?layout=image-right",
   "/blocks/sign-up?layout=image-left",
   "/blocks/reset-password",
+  "/blocks/files",
+  "/blocks/files?data=worst",
+  "/blocks/files?data=empty",
+  "/blocks/files?data=one",
+  "/blocks/files?data=many",
+  "/blocks/files?view=list",
+  "/blocks/files?view=list&data=worst",
+  "/blocks/files?view=list&data=worst&sort=modified&dir=desc",
+  "/blocks/command-palette",
+  "/blocks/command-palette?data=worst",
+  "/blocks/command-palette?data=empty",
+  "/blocks/command-palette?data=one",
+  "/blocks/command-palette?data=many",
 ]
+// AUDIT_DIR=rtl appends ?dir=rtl to every URL, so the same checks run mirrored.
 // AUDIT_SHARD=2/4 audits every 4th page starting at the 2nd (CI runs 4 in parallel).
+const RTL = process.env.AUDIT_DIR === "rtl"
 const [shard, shards] = (process.env.AUDIT_SHARD ?? "1/1")
   .split("/")
   .map(Number)
@@ -72,6 +121,9 @@ async function a11yChecks(page) {
   const { violations } = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
     .exclude("iframe")
+    // Base UI's zero-size focus-trap sentinels: aria-hidden and focusable by
+    // design (they only bounce focus back into an open popup).
+    .exclude("[data-base-ui-focus-guard]")
     .analyze()
   return violations.map((v) => {
     const target = v.nodes[0]?.target.join(" ") ?? ""
@@ -205,7 +257,11 @@ async function selectChecks(page, scope = "") {
       return {
         label: t.textContent.trim().slice(0, 20),
         over: p.getAttribute("data-side") === "none",
-        left: pr.left - tr.left,
+        // Offset of the start edge (the right edge in RTL).
+        left:
+          getComputedStyle(t).direction === "rtl"
+            ? tr.right - pr.right
+            : pr.left - tr.left,
         narrower: tr.width - pr.width,
       }
     })
@@ -260,7 +316,10 @@ try {
         )
         // Pages full of iframes (the blocks gallery) never go fully idle:
         // wait for load, then give the network a few seconds to settle.
-        await page.goto(url + path, { waitUntil: "load" })
+        const target = RTL
+          ? url + path + (path.includes("?") ? "&" : "?") + "dir=rtl"
+          : url + path
+        await page.goto(target, { waitUntil: "load" })
         await page
           .waitForLoadState("networkidle", { timeout: 5000 })
           .catch(() => {})
@@ -317,6 +376,48 @@ try {
             await page.waitForTimeout(250)
             await page.keyboard.press("Escape")
             await page.waitForTimeout(250)
+          }
+        }
+        if (vp.name === "desktop") {
+          // Other popups: open the first few of each kind and run the layout
+          // and axe checks while they're open (menus, panels, hover cards).
+          const POPUPS = [
+            ["menubar", "[data-slot=menubar-trigger]", "click"],
+            ["navigation menu", "[data-slot=navigation-menu-trigger]", "click"],
+            ["popover", "[data-slot=popover-trigger]", "click"],
+            ["context menu", "[data-slot=context-menu-trigger]", "context"],
+            ["preview card", "[data-slot=preview-card-trigger]", "hover"],
+          ]
+          for (const [label, slot, how] of POPUPS) {
+            const triggers = page.locator(
+              `${slot}:visible:not([disabled]):not([data-disabled]):not([inert] *)`
+            )
+            const count = Math.min(await triggers.count(), 3)
+            for (let i = 0; i < count; i++) {
+              const trigger = triggers.nth(i)
+              try {
+                if (how === "hover") await trigger.hover({ timeout: 3000 })
+                else
+                  await trigger.click({
+                    timeout: 3000,
+                    button: how === "context" ? "right" : "left",
+                  })
+              } catch (error) {
+                const reason = error.message.split("\n")[0]
+                issues.push(`${label} #${i} could not be opened: ${reason}`)
+                continue
+              }
+              await page.waitForTimeout(how === "hover" ? 900 : 400)
+              issues.push(
+                ...(await page.evaluate(staticChecks, TOLERANCE)).map(
+                  (x) => `${label}: ${x}`
+                ),
+                ...(await a11yChecks(page)).map((x) => `${label}: ${x}`)
+              )
+              await page.keyboard.press("Escape")
+              await page.mouse.move(0, 0)
+              await page.waitForTimeout(300)
+            }
           }
         }
         if (vp.name === "desktop") {

@@ -110,11 +110,11 @@ export function GetStartedChecklist({
               >
                 <span
                   className={cn(
-                    "flex size-5 shrink-0 items-center justify-center rounded-full border border-dashed border-muted-foreground/50 transition-[background-color,border-color] duration-200",
+                    "flex size-5 shrink-0 items-center justify-center rounded-full border border-dashed border-muted-foreground/50 transition-[background-color,border-color] duration-(--ds-duration-popover)",
                     "group-data-done/task:border-solid group-data-done/task:border-tone-green group-data-done/task:bg-tone-green group-data-done/task:text-background"
                   )}
                 >
-                  <CheckIcon className="size-3 scale-50 opacity-0 transition-[opacity,scale] duration-200 ease-out group-data-done/task:scale-100 group-data-done/task:opacity-100" />
+                  <CheckIcon className="size-3 scale-50 opacity-0 transition-[opacity,scale] duration-(--ds-duration-popover) ease-out group-data-done/task:scale-100 group-data-done/task:opacity-100" />
                 </span>
                 <span className="min-w-0 flex-1 text-sm font-medium group-data-done/task:text-muted-foreground group-data-done/task:line-through group-data-done/task:decoration-muted-foreground/40">
                   {item.title}
@@ -122,7 +122,7 @@ export function GetStartedChecklist({
                 </span>
                 <ChevronDownIcon
                   className={cn(
-                    "size-4 shrink-0 text-muted-foreground transition-transform duration-200 ease-out motion-reduce:transition-none",
+                    "size-4 shrink-0 text-muted-foreground transition-transform duration-(--ds-duration-popover) ease-out motion-reduce:transition-none",
                     open && "rotate-180"
                   )}
                 />
@@ -130,7 +130,7 @@ export function GetStartedChecklist({
               {/* grid 0fr→1fr animates the height without measuring it. */}
               <div
                 className={cn(
-                  "grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none",
+                  "grid transition-[grid-template-rows,opacity] duration-(--ds-duration-popover) ease-out motion-reduce:transition-none",
                   open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                 )}
                 inert={!open}

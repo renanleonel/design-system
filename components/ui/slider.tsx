@@ -60,7 +60,7 @@ function Slider({
                       : ariaLabel
                 : undefined
             }
-            className="relative block size-4 shrink-0 rounded-full border border-primary bg-background shadow-border transition-[scale] duration-150 ease-out select-none after:absolute after:-inset-2 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-(--ds-focus-ring) data-disabled:pointer-events-none data-dragging:scale-110 motion-reduce:transition-none pointer-coarse:after:-inset-3.5"
+            className="relative block size-4 shrink-0 rounded-full border border-primary bg-background shadow-border transition-[scale] duration-(--ds-duration-press) ease-out select-none after:absolute after:-inset-2 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-(--ds-focus-ring) data-disabled:pointer-events-none data-dragging:scale-110 motion-reduce:transition-none pointer-coarse:after:-inset-3.5"
           />
         ))}
       </SliderPrimitive.Control>

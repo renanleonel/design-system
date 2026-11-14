@@ -8,7 +8,9 @@ Each recipe is done when its last step passes. All end with [Checks before pushi
 2. Write `components/ui/<name>.tsx`. Reuse `Panel`/`PanelCard`, `IconTile`, `Badge tone`, `DataList`, `TabsList variant="segmented"`, `Alert tone`, `Button variant="surface"` over one-off styling.
 3. Add `registry/catalog.json` → `components.<name>` (group, title, description, notes). The description becomes the item's description.
 4. Write `components/demos/<name>.tsx`: each `export function` is a story, the first is the main preview, an optional `/** … */` above it is its description. The code tab shows the story with only the imports and helpers it uses, so keep stories self-contained.
-5. `pnpm registry:build`. The page `/components/<name>` and its audit entry appear automatically.
+5. Add a dated entry to `registry/changelog.json` under the item's name, newest first: `{ "date": "YYYY-MM-DD", "change": "what changed for consumers, one line" }`. The generator rejects unknown items and malformed entries; entries surface in `public/llms-full.txt`.
+6. `pnpm registry:build`, then `pnpm check:size`. A new item warns until `pnpm check:size --write` seeds its budget in `registry/size-budget.json` (current size + 15%); an existing item over budget fails, so shrink it or raise its entry on purpose.
+7. The page `/components/<name>` and its audit entry appear automatically.
 
 ## Add a block
 
@@ -29,21 +31,32 @@ Run the `break-ui` skill. Where it leaves a choice open, this repo decides:
 
 ## Add a theme
 
-1. Drop the tweakcn theme JSON in `registry/themes/<name>.json` (published as `theme-<name>`).
+1. Drop the tweakcn theme JSON in `registry/themes/<name>.json` (published as `theme-<name>`). `/themes/builder` exports this JSON from a live editor.
 2. `pnpm check:contrast` (add `--fix` to nudge lightness), then `pnpm registry:build`.
 
 ## Change tokens or utilities
 
-1. Edit `registry/tokens.mjs`; defaults derive from theme vars.
+1. Edit `registry/tokens.mjs`; defaults derive from theme vars. A token that derives from a theme var gets a reference in `scripts/export-tokens.mjs` (`{color.ring}`), so the Figma export stays linked.
 2. `pnpm registry:build`, then install `public/r/tokens.json` into a fresh project and build it (CI's `registry-install` job does this).
 
 ## Checks before pushing
 
 ```bash
-pnpm typecheck && pnpm lint && pnpm check:contrast && pnpm registry:build && pnpm build && pnpm audit:ui
+pnpm typecheck && pnpm lint && pnpm check:contrast && pnpm registry:build && pnpm check:size && pnpm build && pnpm audit:ui
 ```
 
-- `audit:ui` starts `next start` on :3210, so run `pnpm build` first (or point `AUDIT_URL` at a running server). It fails on icons off their label's center by >0.5px, horizontal overflow, select popups narrower than or offset from their trigger, unnamed icon-only buttons, console errors, and any axe WCAG 2.2 A/AA violation. It opens every select, dialog and dropdown menu.
+- `audit:ui` starts `next start` on :3210, so run `pnpm build` first (or point `AUDIT_URL` at a running server). It fails on icons off their label's center by >0.5px, horizontal overflow, select popups narrower than or offset from their trigger, unnamed icon-only buttons, console errors, and any axe WCAG 2.2 A/AA violation. It opens every select, dialog and dropdown menu, and runs the layout and axe checks with the first few menubars, navigation menus, popovers, context menus and preview cards open (Base UI focus guards are excluded from axe).
 - Narrow it: `AUDIT_PAGES=/blocks/projects,/themes` or `AUDIT_SHARD=2/4`.
+- Mirrored: `AUDIT_DIR=rtl` appends `?dir=rtl` to every audited URL (not in CI; it doubles the runtime). Any docs page also renders RTL with `?dir=rtl`, or the RTL button above a component preview.
 - Debug one axe failure: `node scripts/axe-detail.mjs /path [rule]` prints the failing HTML.
 - Commit the generated files with the change; CI fails when `registry:build` produces a diff.
+
+### Visual regression
+
+`pnpm test:visual` (config: `playwright.visual.config.ts`, specs in `tests/visual/`) screenshots every component page's main preview (`[data-slot=story-preview]`, light and dark at 1280, plus RTL for a few directional ones) and every demo route under `app/blocks` (full page, light and dark at 1280 and 320; `?data=worst` too for routes that read it). Component and block lists come from `registry.json` and `app/blocks`, so new items are covered with no list to edit. Run `pnpm build` first; it starts `next start` on :3230 (or set `VISUAL_URL`). Shard with `--shard=1/2`.
+
+- Runs are deterministic: reduced motion, animations and caret disabled, fonts and hydration awaited, the clock fixed (`page.clock.setFixedTime`), `Math.random` seeded, UTC and `en-US`. `maxDiffPixelRatio` is 0.001 everywhere.
+- **Baselines are per OS and only `-linux.png` is committed** (`tests/visual/__screenshots__/`). Never generate them locally: dispatch the **Visual baselines** workflow (Actions tab) on your branch; it builds, runs `--update-snapshots` on ubuntu and commits the images as github-actions[bot].
+- CI's `visual` job compares against them, and is skipped until baselines exist. On failure it uploads the diff report (`playwright-report/visual`).
+- After an intended UI change: push, dispatch **Visual baselines** on the branch, review the image diff in the resulting commit, pull.
+- Local check without touching the committed set: `VISUAL_SNAPSHOT_DIR=tests/visual/.local pnpm test:visual --update-snapshots`, then rerun without `--update-snapshots` (the directory and `-win32`/`-darwin` images are gitignored).

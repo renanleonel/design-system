@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "preview-card",
+  "title": "Preview Card",
+  "description": "A link that previews its destination on hover or focus.",
+  "dependencies": [
+    "@base-ui/react@^1.9.0",
+    "cn@^0.5.2"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/preview-card.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { PreviewCard as PreviewCardPrimitive } from \"@base-ui/react/preview-card\"\nimport { cn } from \"cn\"\n\nfunction PreviewCard({ ...props }: PreviewCardPrimitive.Root.Props) {\n  return <PreviewCardPrimitive.Root data-slot=\"preview-card\" {...props} />\n}\n\n/** A real link. Hovering or focusing it previews the destination; touch follows the link. */\nfunction PreviewCardTrigger({\n  className,\n  ...props\n}: PreviewCardPrimitive.Trigger.Props) {\n  return (\n    <PreviewCardPrimitive.Trigger\n      data-slot=\"preview-card-trigger\"\n      className={cn(\n        \"rounded-sm underline decoration-muted-foreground/50 underline-offset-4 outline-hidden hover:decoration-foreground focus-ring data-popup-open:decoration-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction PreviewCardContent({\n  className,\n  align = \"center\",\n  alignOffset = 0,\n  side = \"bottom\",\n  sideOffset = 6,\n  ...props\n}: PreviewCardPrimitive.Popup.Props &\n  Pick<\n    PreviewCardPrimitive.Positioner.Props,\n    \"align\" | \"alignOffset\" | \"side\" | \"sideOffset\"\n  >) {\n  return (\n    <PreviewCardPrimitive.Portal>\n      <PreviewCardPrimitive.Positioner\n        align={align}\n        alignOffset={alignOffset}\n        side={side}\n        sideOffset={sideOffset}\n        className=\"isolate z-50\"\n      >\n        <PreviewCardPrimitive.Popup\n          data-slot=\"preview-card-content\"\n          className={cn(\n            \"z-50 flex w-72 max-w-(--available-width) motion-popover flex-col gap-2.5 rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-popover outline-hidden\",\n            className\n          )}\n          {...props}\n        />\n      </PreviewCardPrimitive.Positioner>\n    </PreviewCardPrimitive.Portal>\n  )\n}\n\nexport { PreviewCard, PreviewCardTrigger, PreviewCardContent }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

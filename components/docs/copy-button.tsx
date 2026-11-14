@@ -34,13 +34,13 @@ export function CopyButton({
       <span className="relative size-4">
         <CopyIcon
           className={cn(
-            "absolute inset-0 size-4 transition-[opacity,scale] duration-150 ease-out",
+            "absolute inset-0 size-4 transition-[opacity,scale] duration-(--ds-duration-press) ease-out",
             copied && "scale-75 opacity-0"
           )}
         />
         <CheckIcon
           className={cn(
-            "absolute inset-0 size-4 transition-[opacity,scale] duration-150 ease-out",
+            "absolute inset-0 size-4 transition-[opacity,scale] duration-(--ds-duration-press) ease-out",
             !copied && "scale-75 opacity-0"
           )}
         />

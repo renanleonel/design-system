@@ -16,7 +16,7 @@ export default function MobileMenu({
 }) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="left" className="w-72 overflow-y-auto p-4">
+      <SheetContent side="inline-start" className="w-72 overflow-y-auto p-4">
         <SheetTitle className="sr-only">Menu</SheetTitle>
         <DocsNav
           groups={[

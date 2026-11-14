@@ -151,7 +151,10 @@ function centerInList(el: HTMLElement | null) {
   if (!el || !list) return
   // Vertical column, or a horizontal row (DateTimePicker on phones).
   list.scrollTop = el.offsetTop - (list.clientHeight - el.offsetHeight) / 2
-  list.scrollLeft = el.offsetLeft - (list.clientWidth - el.offsetWidth) / 2
+  const left = el.offsetLeft - (list.clientWidth - el.offsetWidth) / 2
+  // In RTL, scrollLeft runs from 0 (the start edge) down to -(scrollWidth - clientWidth).
+  const rtl = getComputedStyle(list).direction === "rtl"
+  list.scrollLeft = rtl ? left - (list.scrollWidth - list.clientWidth) : left
 }
 
 /** Focus the landing slot when a slot list opens (keyboard and pointer alike). */
@@ -351,7 +354,7 @@ function TimeRangeInput({
         />
         <ArrowRightIcon
           aria-hidden
-          className="size-3.5 shrink-0 text-muted-foreground"
+          className="size-3.5 shrink-0 text-muted-foreground rtl:rotate-180"
         />
         <InputGroupInput
           {...field}

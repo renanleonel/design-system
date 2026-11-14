@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { useTheme } from "next-themes"
 import { CheckIcon, ExternalLinkIcon, PaintbrushIcon } from "lucide-react"
 
@@ -405,7 +406,7 @@ function ImportDialog({
   )
 }
 
-function SettingsCard() {
+export function SettingsCard() {
   return (
     <Card>
       <CardHeader>
@@ -517,7 +518,18 @@ export function Playground({ themes }: { themes: PlaygroundTheme[] }) {
           <p className="max-w-prose text-muted-foreground">
             Components read the shadcn theme variables, so any tweakcn theme
             works. Pick one below, or import your own from tweakcn, and the
-            whole site follows. Toggle dark mode to see its other half.
+            whole site follows. Toggle dark mode to see its other half. Want to
+            tweak colors yourself? Open the{" "}
+            <Link
+              href="/themes/builder"
+              // A rare destination: don't fetch the builder (and its color
+              // picker) for everyone who scrolls past this sentence.
+              prefetch={false}
+              className="rounded-sm text-foreground underline underline-offset-4 focus-ring"
+            >
+              theme builder
+            </Link>
+            .
           </p>
         </div>
 

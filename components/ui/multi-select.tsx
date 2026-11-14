@@ -58,6 +58,9 @@ function MultiSelect({
   onBlur?: React.FocusEventHandler<HTMLInputElement>
   "aria-invalid"?: boolean | "true" | "false"
   "aria-describedby"?: string
+  /** Names the field when there's no visible <label htmlFor={id}>. */
+  "aria-label"?: string
+  "aria-labelledby"?: string
 }) {
   const anchor = useComboboxAnchor()
   const index = React.useMemo(

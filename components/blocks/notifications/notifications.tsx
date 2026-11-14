@@ -181,7 +181,7 @@ function NotificationRow({
       </div>
       <span
         aria-hidden
-        className="absolute top-4 right-2 size-2 rounded-full bg-primary transition-opacity group-not-data-unread/row:opacity-0 group-focus-within/row:opacity-0 group-hover/row:opacity-0 pointer-coarse:hidden"
+        className="absolute top-4 end-2 size-2 rounded-full bg-primary transition-opacity group-not-data-unread/row:opacity-0 group-focus-within/row:opacity-0 group-hover/row:opacity-0 pointer-coarse:hidden"
       />
       {!item.read && <span className="sr-only">Unread</span>}
     </li>
@@ -241,7 +241,7 @@ export function NotificationsMenu({
         {unread > 0 && (
           <span
             aria-hidden
-            className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.625rem] font-semibold text-primary-foreground tabular-nums ring-2 ring-background"
+            className="absolute top-0.5 end-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.625rem] font-semibold text-primary-foreground tabular-nums ring-2 ring-background"
           >
             {unread > 9 ? "9+" : unread}
           </span>

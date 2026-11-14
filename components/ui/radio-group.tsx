@@ -30,7 +30,7 @@ function RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {
     >
       <span
         aria-hidden
-        className="size-1.5 scale-50 rounded-full bg-primary-foreground opacity-0 transition-[scale,opacity] duration-150 ease-out group-data-checked/radio-group-item:scale-100 group-data-checked/radio-group-item:opacity-100 motion-reduce:transition-none"
+        className="size-1.5 scale-50 rounded-full bg-primary-foreground opacity-0 transition-[scale,opacity] duration-(--ds-duration-press) ease-out group-data-checked/radio-group-item:scale-100 group-data-checked/radio-group-item:opacity-100 motion-reduce:transition-none"
       />
     </RadioPrimitive.Root>
   )

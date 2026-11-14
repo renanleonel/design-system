@@ -49,7 +49,7 @@ function UnsavedChangesBar({
         aria-label="Unsaved changes"
         data-open={open || undefined}
         inert={!open}
-        className="pointer-events-auto flex max-w-full translate-y-2 items-center gap-3 rounded-xl bg-popover p-1.5 ps-3.5 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-150 ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-200 data-open:ease-out"
+        className="pointer-events-auto flex max-w-full translate-y-2 items-center gap-3 rounded-xl bg-popover p-1.5 ps-3.5 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-(--ds-duration-press) ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-(--ds-duration-popover) data-open:ease-out"
       >
         <span
           aria-hidden

@@ -235,7 +235,7 @@ function SortableItem({
           ref={whole ? setActivatorNodeRef : undefined}
           {...(whole ? { ...attributes, ...listeners } : {})}
           className={cn(
-            "-m-1.5 rounded-xl p-1.5 transition-[scale,box-shadow,background-color] duration-150 ease-out motion-reduce:transition-none",
+            "-m-1.5 rounded-xl p-1.5 transition-[scale,box-shadow,background-color] duration-(--ds-duration-press) ease-out motion-reduce:transition-none",
             "in-data-dragging:scale-[1.02] in-data-dragging:bg-background in-data-dragging:shadow-popover",
             whole &&
               "cursor-grab touch-none focus-ring active:cursor-grabbing in-data-dragging:cursor-grabbing",

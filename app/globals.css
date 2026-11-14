@@ -3,7 +3,8 @@
 @import "shadcn/tailwind.css";
 @import "./ds-tokens.css";
 
-@custom-variant dark (&:is(.dark *));
+/* .ds-force-light: a light preview (theme builder) inside a dark page opts out of dark: styles. */
+@custom-variant dark (&:is(.dark *):not(.ds-force-light *));
 
 @theme inline {
     --font-heading: var(--font-sans);

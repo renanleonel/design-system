@@ -85,6 +85,7 @@ Fast by default, not after a complaint.
 - Soft destructive/status surfaces use `tone-*` (contrast-checked on card, page, muted and hovered rows), not the theme's raw `--destructive` on a tint.
 - A control's accessible name contains its visible text; decorative key caps get `aria-hidden`.
 - Separators inside `list`/`listbox` are `aria-hidden`. Icon-only buttons have `aria-label`.
+- Logical properties only (`ms/me/ps/pe`, `start/end`, `text-start/end`, `border-s/e`, `rounded-s/e`) so RTL mirrors for free; next/prev and submenu icons get `rtl:rotate-180`, negated translates get an `rtl:` twin, `space-x` gets `rtl:space-x-reverse`. Physical classes are kept only for `left-1/2 -translate-x-1/2` centering and for sides that are physical by contract (`Sheet`/`Drawer` `side`, tooltip `data-[side=left|right]`, swipe direction). Check with `AUDIT_DIR=rtl`.
 
 ## Component specifics
 

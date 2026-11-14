@@ -25,7 +25,7 @@ function Tile({
         className="group/tile flex w-fit items-center gap-1 rounded-md text-sm font-medium text-muted-foreground focus-ring hover:text-foreground"
       >
         {title}
-        <ArrowRightIcon className="size-3.5 transition-transform duration-150 ease-out group-hover/tile:translate-x-0.5" />
+        <ArrowRightIcon className="size-3.5 transition-transform duration-(--ds-duration-press) ease-out group-hover/tile:translate-x-0.5" />
       </Link>
       <div className="flex justify-center">{children}</div>
     </section>

@@ -1,0 +1,980 @@
+{
+  "accordion": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "alert": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    }
+  ],
+  "alert-dialog": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "app-shell": [
+    {
+      "date": "2026-11-14",
+      "change": "Mod+K now opens the command-palette block (recents, nested pages); new `commands` prop adds actions after the nav pages"
+    },
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "DropdownMenuLabel works outside a group (user menu crashed); audit opens every dropdown menu; capped pages center; demo control hidden on fu",
+      "commit": "da2edc8"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tables fill the shell without a second scrollbar (AppShellContent fill, relative scrollers), first-load skeleton fills the table; Brazilian ",
+      "commit": "12a9e09"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "resizable fade sidebar is the default; old rail is variant=\"classic\"; AGENTS rule for all resizable sidebars",
+      "commit": "306ac23"
+    }
+  ],
+  "auth": [
+    {
+      "date": "2026-11-13",
+      "change": "tables fill the shell without a second scrollbar (AppShellContent fill, relative scrollers), first-load skeleton fills the table; Brazilian ",
+      "commit": "12a9e09"
+    }
+  ],
+  "avatar-group": [
+    {
+      "date": "2026-11-14",
+      "change": "New: AvatarStack with +N popover"
+    }
+  ],
+  "badge": [
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    }
+  ],
+  "button": [
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    }
+  ],
+  "calendar": [
+    {
+      "date": "2026-11-13",
+      "change": "month/year pickers use Select; nav lets caption clicks through; touch cells fit 320px",
+      "commit": "989c84d"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "square icon buttons in input groups and calendar nav",
+      "commit": "456a4d4"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    }
+  ],
+  "card": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "carousel": [
+    {
+      "date": "2026-11-14",
+      "change": "New: carousel on Embla with dots, keyboard and RTL"
+    }
+  ],
+  "chart": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "chart tooltip valueFormatter + round axis ticks on the dashboard; demo control labeled and hideable; back link on auth and setup demos",
+      "commit": "b294e9d"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "no browser outline on Recharts 3 inner layers after a click; DS focus ring on keyboard focus",
+      "commit": "1024be4"
+    }
+  ],
+  "collapsible": [
+    {
+      "date": "2026-11-14",
+      "change": "New: collapsible with the accordion height transition"
+    }
+  ],
+  "color-picker": [
+    {
+      "date": "2026-11-14",
+      "change": "New: color picker on react-colorful with hex input and presets"
+    }
+  ],
+  "combobox": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "command": [
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    }
+  ],
+  "context-menu": [
+    {
+      "date": "2026-11-14",
+      "change": "New: context menu sharing the dropdown menu rows"
+    }
+  ],
+  "copy-button": [
+    {
+      "date": "2026-11-14",
+      "change": "New: copy button with live announcement"
+    }
+  ],
+  "dashboard": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tables fill the shell without a second scrollbar (AppShellContent fill, relative scrollers), first-load skeleton fills the table; Brazilian ",
+      "commit": "12a9e09"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "chart tooltip valueFormatter + round axis ticks on the dashboard; demo control labeled and hideable; back link on auth and setup demos",
+      "commit": "b294e9d"
+    }
+  ],
+  "data-list": [
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "data-table": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tables fill the shell without a second scrollbar (AppShellContent fill, relative scrollers), first-load skeleton fills the table; Brazilian ",
+      "commit": "12a9e09"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    }
+  ],
+  "date-picker": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "form-ready date fields; calendar month/year use Select",
+      "commit": "989aa66"
+    }
+  ],
+  "dialog": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "drawer": [
+    {
+      "date": "2026-11-14",
+      "change": "swipeDirection accepts inline-start and inline-end"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "dropdown-menu": [
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "DropdownMenuLabel works outside a group (user menu crashed); audit opens every dropdown menu; capped pages center; demo control hidden on fu",
+      "commit": "da2edc8"
+    }
+  ],
+  "editable-table": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "cells that save on their own with optimistic updates and rollback",
+      "commit": "51179aa"
+    }
+  ],
+  "empty": [
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "field": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "file-dropzone": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "form": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "settings list, swatch picker, timezone select, unsaved-changes bar",
+      "commit": "ad82db8"
+    }
+  ],
+  "grouped-table": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tables fill the shell without a second scrollbar (AppShellContent fill, relative scrollers), first-load skeleton fills the table; Brazilian ",
+      "commit": "12a9e09"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "grouped table (collapsible groups, pinned bands, calc footer, floating bulk bar) and infinite table (cursor pagination, load-ahead, inline r",
+      "commit": "847b5d7"
+    }
+  ],
+  "infinite-table": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tables fill the shell without a second scrollbar (AppShellContent fill, relative scrollers), first-load skeleton fills the table; Brazilian ",
+      "commit": "12a9e09"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "grouped table (collapsible groups, pinned bands, calc footer, floating bulk bar) and infinite table (cursor pagination, load-ahead, inline r",
+      "commit": "847b5d7"
+    }
+  ],
+  "inline-edit": [
+    {
+      "date": "2026-11-14",
+      "change": "New: inline edit with async save and rollback"
+    }
+  ],
+  "input": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "clearable inputs, custom file field, visible OTP slots",
+      "commit": "5a763c9"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "input-group": [
+    {
+      "date": "2026-11-13",
+      "change": "square icon buttons in input groups and calendar nav",
+      "commit": "456a4d4"
+    }
+  ],
+  "input-otp": [
+    {
+      "date": "2026-11-13",
+      "change": "clearable inputs, custom file field, visible OTP slots",
+      "commit": "5a763c9"
+    }
+  ],
+  "item": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    }
+  ],
+  "language-select": [
+    {
+      "date": "2026-11-13",
+      "change": "settings list, swatch picker, timezone select, unsaved-changes bar",
+      "commit": "ad82db8"
+    }
+  ],
+  "marketing": [
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "pricing page and marketing kit (header, hero, logo cloud, features, testimonials); landing demo",
+      "commit": "9b8e8dc"
+    }
+  ],
+  "menubar": [
+    {
+      "date": "2026-11-14",
+      "change": "New: menubar sharing the dropdown menu rows"
+    }
+  ],
+  "meter": [
+    {
+      "date": "2026-11-14",
+      "change": "New: meter with Badge tones"
+    }
+  ],
+  "multi-select": [
+    {
+      "date": "2026-11-14",
+      "change": "Accepts aria-label and aria-labelledby"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "native-select": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "navigation-menu": [
+    {
+      "date": "2026-11-14",
+      "change": "New: navigation menu with animated viewport"
+    }
+  ],
+  "notifications": [
+    {
+      "date": "2026-11-13",
+      "change": "tables fill the shell without a second scrollbar (AppShellContent fill, relative scrollers), first-load skeleton fills the table; Brazilian ",
+      "commit": "12a9e09"
+    }
+  ],
+  "number-field": [
+    {
+      "date": "2026-11-14",
+      "change": "New: number field with steppers, scrub and Intl formatting"
+    }
+  ],
+  "onboarding": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tables fill the shell without a second scrollbar (AppShellContent fill, relative scrollers), first-load skeleton fills the table; Brazilian ",
+      "commit": "12a9e09"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "setup wizard and get-started checklist",
+      "commit": "3502dec"
+    }
+  ],
+  "password-input": [
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "popover": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "preview-card": [
+    {
+      "date": "2026-11-14",
+      "change": "New: hover preview card"
+    }
+  ],
+  "pricing": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "pricing page and marketing kit (header, hero, logo cloud, features, testimonials); landing demo",
+      "commit": "9b8e8dc"
+    }
+  ],
+  "radio-group": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "rating": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "resizable": [
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "scroll-area": [
+    {
+      "date": "2026-11-14",
+      "change": "Vertical-only areas no longer let one wide child widen every sibling"
+    },
+    {
+      "date": "2026-11-14",
+      "change": "New: scroll area with hover scrollbars and edge fades"
+    }
+  ],
+  "select": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "drop hover-to-scroll arrows from SelectContent",
+      "commit": "e127338"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "settings": [
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "settings list, swatch picker, timezone select, unsaved-changes bar",
+      "commit": "ad82db8"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "DropdownMenuLabel works outside a group (user menu crashed); audit opens every dropdown menu; capped pages center; demo control hidden on fu",
+      "commit": "da2edc8"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tables fill the shell without a second scrollbar (AppShellContent fill, relative scrollers), first-load skeleton fills the table; Brazilian ",
+      "commit": "12a9e09"
+    }
+  ],
+  "settings-list": [
+    {
+      "date": "2026-11-13",
+      "change": "settings list, swatch picker, timezone select, unsaved-changes bar",
+      "commit": "ad82db8"
+    }
+  ],
+  "sheet": [
+    {
+      "date": "2026-11-14",
+      "change": "New logical sides: inline-start and inline-end follow the text direction"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "site-footer": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "slider": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation",
+      "commit": "ab05d95"
+    }
+  ],
+  "sonner": [
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "sortable": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "stepper": [
+    {
+      "date": "2026-11-14",
+      "change": "Optional id on steps for stable keys"
+    },
+    {
+      "date": "2026-11-14",
+      "change": "New: stepper, horizontal and vertical"
+    }
+  ],
+  "swatch-picker": [
+    {
+      "date": "2026-11-13",
+      "change": "settings list, swatch picker, timezone select, unsaved-changes bar",
+      "commit": "ad82db8"
+    }
+  ],
+  "textarea": [
+    {
+      "date": "2026-11-13",
+      "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
+      "commit": "334efd2"
+    }
+  ],
+  "time-input": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "timeline": [
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "timezone-select": [
+    {
+      "date": "2026-11-13",
+      "change": "settings list, swatch picker, timezone select, unsaved-changes bar",
+      "commit": "ad82db8"
+    }
+  ],
+  "toggle": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "toggle-group": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    }
+  ],
+  "token-input": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "toolbar": [
+    {
+      "date": "2026-11-14",
+      "change": "New: toolbar reusing button variants"
+    }
+  ],
+  "tooltip": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "tree": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "tree-select": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    }
+  ],
+  "unsaved-changes-bar": [
+    {
+      "date": "2026-11-13",
+      "change": "tree select, sortable dragFrom, themes page, docs footer and site polish",
+      "commit": "719ad4b"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "settings list, swatch picker, timezone select, unsaved-changes bar",
+      "commit": "ad82db8"
+    }
+  ],
+  "use-controllable-state": [
+    {
+      "date": "2026-11-14",
+      "change": "New hook"
+    }
+  ],
+  "use-copy-to-clipboard": [
+    {
+      "date": "2026-11-14",
+      "change": "New hook"
+    }
+  ],
+  "use-intersection": [
+    {
+      "date": "2026-11-14",
+      "change": "New hook"
+    }
+  ],
+  "use-local-storage": [
+    {
+      "date": "2026-11-14",
+      "change": "New hook"
+    }
+  ],
+  "use-mounted": [
+    {
+      "date": "2026-11-14",
+      "change": "New hook"
+    }
+  ],
+  "virtual-list": [
+    {
+      "date": "2026-11-14",
+      "change": "lighthouse and react doctor pass across docs site and registry",
+      "commit": "7f7e21c"
+    },
+    {
+      "date": "2026-11-13",
+      "change": "virtualize long lists and tables, debounce inputs, add 8 components",
+      "commit": "fe31a0b"
+    }
+  ],
+  "inbox": [
+    {
+      "date": "2026-11-14",
+      "change": "New block: mail list and detail with bulk actions, keyboard navigation and URL state"
+    }
+  ],
+  "activity-feed": [
+    {
+      "date": "2026-11-14",
+      "change": "New block: day-grouped timeline with type filter, collapsed runs and infinite loading"
+    }
+  ],
+  "kanban": [
+    {
+      "date": "2026-11-14",
+      "change": "New block: kanban board with keyboard drag, WIP limits and optimistic moves"
+    }
+  ],
+  "file-manager": [
+    {
+      "date": "2026-11-14",
+      "change": "No layout shift on load: the grid measures before paint and the sort select keeps its width when touch devices swap in the native picker; the native picker is labelled"
+    },
+    {
+      "date": "2026-11-14",
+      "change": "files is controlled (pair with onFilesChange); defaultFiles for uncontrolled use"
+    },
+    {
+      "date": "2026-11-14",
+      "change": "Menu key and Shift+F10 open the item context menu; focus returns to the list after menus, move and delete; folder sheet follows text direction"
+    },
+    {
+      "date": "2026-11-14",
+      "change": "New block: file manager with tree, grid/list views, context menu, upload and storage meter"
+    }
+  ],
+  "command-palette": [
+    {
+      "date": "2026-11-14",
+      "change": "New block: command palette with nested pages, async search and recents"
+    }
+  ],
+  "schedule": [
+    {
+      "date": "2026-11-14",
+      "change": "Month day cells create events from the keyboard (a real button per cell)"
+    },
+    {
+      "date": "2026-11-14",
+      "change": "New block: month/week/day schedule with overlap layout, agenda fallback and locale-aware weeks"
+    }
+  ],
+  "ai-chat": [
+    {
+      "date": "2026-11-14",
+      "change": "New block: streaming AI chat with Markdown, tool-call cards, message actions and composer"
+    }
+  ]
+}

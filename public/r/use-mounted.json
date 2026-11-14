@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-mounted",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-mounted.ts",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nconst subscribe = () => () => {}\n\n/**\n * `false` on the server and during hydration, `true` afterwards. Gate output\n * that differs between server and client (theme, locale, `window` reads):\n *\n * ```tsx\n * const mounted = useMounted()\n * return mounted ? <Clock /> : <Skeleton className=\"h-6 w-20\" />\n * ```\n */\nexport function useMounted() {\n  return React.useSyncExternalStore(\n    subscribe,\n    () => true,\n    () => false\n  )\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

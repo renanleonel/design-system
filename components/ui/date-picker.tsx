@@ -97,7 +97,7 @@ function DateField({
         <span className="min-w-0 flex-1 truncate tabular-nums">
           {text ?? placeholder}
         </span>
-        <ChevronDownIcon className="text-muted-foreground transition-transform duration-200 ease-out group-data-popup-open/date-field:rotate-180 motion-reduce:transition-none" />
+        <ChevronDownIcon className="text-muted-foreground transition-transform duration-(--ds-duration-popover) ease-out group-data-popup-open/date-field:rotate-180 motion-reduce:transition-none" />
       </PopoverTrigger>
       {canClear && (
         // A sibling, not inside the trigger: buttons can't nest.

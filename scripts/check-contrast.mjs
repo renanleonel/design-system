@@ -5,70 +5,9 @@
 // then the background if the foreground is already at black/white.
 import { readdirSync, readFileSync, writeFileSync } from "node:fs"
 
+import { PAIRS, parse, ratio } from "../lib/color.mjs"
+
 const FIX = process.argv.includes("--fix")
-
-const PAIRS = [
-  ["foreground", "background", 4.5],
-  ["muted-foreground", "background", 4.5],
-  ["muted-foreground", "muted", 4.5],
-  ["card-foreground", "card", 4.5],
-  ["popover-foreground", "popover", 4.5],
-  ["primary-foreground", "primary", 4.5],
-  ["secondary-foreground", "secondary", 4.5],
-  ["accent-foreground", "accent", 4.5],
-  ["destructive", "background", 4.5],
-  ["ring", "background", 3],
-]
-
-function oklchToRgb(l, c, h) {
-  const hr = (h * Math.PI) / 180
-  const a = c * Math.cos(hr)
-  const b = c * Math.sin(hr)
-  const l_ = (l + 0.3963377774 * a + 0.2158037573 * b) ** 3
-  const m_ = (l - 0.1055613458 * a - 0.0638541728 * b) ** 3
-  const s_ = (l - 0.0894841775 * a - 1.291485548 * b) ** 3
-  return [
-    4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_,
-    -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_,
-    -0.0041960863 * l_ - 0.7034186147 * m_ + 1.707614701 * s_,
-  ].map((v) => Math.min(1, Math.max(0, v)))
-}
-
-function hslToRgb(h, s, l) {
-  s /= 100
-  l /= 100
-  const k = (n) => (n + h / 30) % 12
-  const a = s * Math.min(l, 1 - l)
-  const f = (n) =>
-    l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
-  return [f(0), f(8), f(4)].map((v) => {
-    // sRGB-encoded -> linear
-    return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4
-  })
-}
-
-// Returns linear-light RGB in 0..1, or null when the value isn't a plain color.
-function parse(value) {
-  const v = value.trim()
-  let m = v.match(/^oklch\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)/)
-  if (m) return oklchToRgb(m[2] ? m[1] / 100 : +m[1], +m[3], +m[4])
-  m = v.match(/^hsl\(\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%/)
-  if (m) return hslToRgb(+m[1], +m[2], +m[3])
-  m = v.match(/^#([0-9a-f]{6})$/i)
-  if (m) {
-    return [0, 2, 4].map((i) => {
-      const c = parseInt(m[1].slice(i, i + 2), 16) / 255
-      return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
-    })
-  }
-  return null
-}
-
-const luminance = ([r, g, b]) => 0.2126 * r + 0.7152 * g + 0.0722 * b
-const ratio = (a, b) => {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x)
-  return (hi + 0.05) / (lo + 0.05)
-}
 
 const OKLCH = /^oklch\(\s*([\d.]+)(%?)(\s+[\d.]+\s+[\d.]+.*)$/
 const lightnessOf = (v) => {

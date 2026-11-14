@@ -150,9 +150,9 @@ function FileDropzone({
           setDragDepth(0)
           if (!disabled) add([...e.dataTransfer.files])
         }}
-        className="group/dropzone flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-input px-6 py-8 text-center focus-ring transition-[border-color,background-color] duration-150 ease-out hover:border-foreground/25 hover:bg-muted/40 disabled:cursor-not-allowed disabled:opacity-50 data-dragging:border-primary data-dragging:bg-primary/5 data-invalid:border-destructive"
+        className="group/dropzone flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-input px-6 py-8 text-center focus-ring transition-[border-color,background-color] duration-(--ds-duration-press) ease-out hover:border-foreground/25 hover:bg-muted/40 disabled:cursor-not-allowed disabled:opacity-50 data-dragging:border-primary data-dragging:bg-primary/5 data-invalid:border-destructive"
       >
-        <span className="flex size-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition-[scale,color] duration-150 ease-out group-data-dragging/dropzone:scale-110 group-data-dragging/dropzone:text-primary motion-reduce:transition-none">
+        <span className="flex size-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition-[scale,color] duration-(--ds-duration-press) ease-out group-data-dragging/dropzone:scale-110 group-data-dragging/dropzone:text-primary motion-reduce:transition-none">
           <UploadIcon className="size-4" />
         </span>
         <span className="text-sm font-medium">

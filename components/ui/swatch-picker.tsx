@@ -91,7 +91,7 @@ function SwatchPicker({
             aria-hidden
             strokeWidth={3}
             className={cn(
-              "scale-50 opacity-0 transition-[scale,opacity] duration-150 ease-out group-data-checked/swatch:scale-100 group-data-checked/swatch:opacity-100 motion-reduce:transition-none",
+              "scale-50 opacity-0 transition-[scale,opacity] duration-(--ds-duration-press) ease-out group-data-checked/swatch:scale-100 group-data-checked/swatch:opacity-100 motion-reduce:transition-none",
               size === "sm" ? "size-3" : "size-4"
             )}
           />

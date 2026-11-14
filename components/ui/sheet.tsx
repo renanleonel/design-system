@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog"
+import { useDirection } from "@base-ui/react/direction-provider"
 import { cn } from "cn"
 
 import { Button } from "@/components/ui/button"
@@ -39,13 +40,28 @@ function SheetOverlay({ className, ...props }: SheetPrimitive.Backdrop.Props) {
 function SheetContent({
   className,
   children,
-  side = "right",
+  side: sideProp = "right",
   showCloseButton = true,
   ...props
 }: SheetPrimitive.Popup.Props & {
-  side?: "top" | "right" | "bottom" | "left"
+  /**
+   * `inline-start` / `inline-end` follow the reading direction (wrap the app in
+   * Base UI's `DirectionProvider`); `left` / `right` stay physical.
+   */
+  side?: "top" | "right" | "bottom" | "left" | "inline-start" | "inline-end"
   showCloseButton?: boolean
 }) {
+  const direction = useDirection()
+  const side =
+    sideProp === "inline-start"
+      ? direction === "rtl"
+        ? "right"
+        : "left"
+      : sideProp === "inline-end"
+        ? direction === "rtl"
+          ? "left"
+          : "right"
+        : sideProp
   return (
     <SheetPortal>
       <SheetOverlay />
@@ -67,7 +83,7 @@ function SheetContent({
             render={
               <Button
                 variant="ghost"
-                className="absolute top-[calc(--spacing(3)+env(safe-area-inset-top))] right-[calc(--spacing(3)+env(safe-area-inset-right))] group-data-[side=bottom]/sheet:top-3"
+                className="absolute top-[calc(--spacing(3)+env(safe-area-inset-top))] end-[calc(--spacing(3)+env(safe-area-inset-right))] group-data-[side=bottom]/sheet:top-3"
                 size="icon-sm"
               />
             }

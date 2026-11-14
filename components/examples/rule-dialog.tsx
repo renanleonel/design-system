@@ -180,7 +180,7 @@ function ActionRow({
       >
         <SelectTrigger
           aria-label={`${label} action`}
-          className="w-full bg-muted/50 pl-1.5 data-[size=default]:h-11!"
+          className="w-full bg-muted/50 ps-1.5 data-[size=default]:h-11!"
         >
           <IconTile
             tone="inverse"

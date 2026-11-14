@@ -99,9 +99,9 @@ function TearLine() {
       aria-hidden
       className="relative -mx-(--ds-card-pad) my-1 flex items-center"
     >
-      <span className="size-4 -translate-x-1/2 rounded-full bg-panel" />
+      <span className="size-4 -translate-x-1/2 rounded-full bg-panel rtl:translate-x-1/2" />
       <span className="h-px flex-1 border-t border-dashed" />
-      <span className="size-4 translate-x-1/2 rounded-full bg-panel" />
+      <span className="size-4 translate-x-1/2 rounded-full bg-panel rtl:-translate-x-1/2" />
     </div>
   )
 }
