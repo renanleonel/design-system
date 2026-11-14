@@ -31,6 +31,7 @@ const ALL_PAGES = [
   "/blocks/onboarding",
   "/blocks/onboarding?variant=card",
   "/blocks/projects",
+  "/blocks/deals",
   "/blocks/customers",
   "/blocks/activity",
   "/blocks/footer",

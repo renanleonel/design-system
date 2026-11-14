@@ -2172,6 +2172,37 @@
       ]
     },
     {
+      "name": "editable-table",
+      "type": "registry:block",
+      "title": "Editable table",
+      "description": "Cells edit in place and save one at a time: optimistic updates, a spinner per saving cell, rollback with Retry on error, and spreadsheet keys.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "sonner@^2.0.8"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/field.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/switch.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json"
+      ],
+      "files": [
+        {
+          "path": "components/blocks/editable-table/deals-table.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/editable-table/deals-table.tsx"
+        },
+        {
+          "path": "components/blocks/editable-table/editable-table.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/editable-table/editable-table.tsx"
+        }
+      ]
+    },
+    {
       "name": "error-pages",
       "type": "registry:block",
       "title": "Not found",

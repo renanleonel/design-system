@@ -7,6 +7,7 @@ import {
   BookOpenIcon,
   CreditCardIcon,
   FolderKanbanIcon,
+  HandshakeIcon,
   HexagonIcon,
   InboxIcon,
   LayoutDashboardIcon,
@@ -85,6 +86,11 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
                 href: "/blocks/projects",
                 icon: <FolderKanbanIcon />,
                 hotkey: ["G", "P"],
+              },
+              {
+                label: "Deals",
+                href: "/blocks/deals",
+                icon: <HandshakeIcon />,
               },
               {
                 label: "Customers",

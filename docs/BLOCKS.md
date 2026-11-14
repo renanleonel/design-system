@@ -22,6 +22,7 @@ Pick by job:
 | --- | --- |
 | `DataTable` | Search, filters, sort and pages in the URL |
 | `GroupedTable` | Spreadsheet view: collapsible groups, calculation footer, floating bulk bar |
+| `EditableTable` | Cells edited in place, each saved on its own: optimistic value, rollback and Retry on error, spreadsheet keys |
 | `InfiniteTable` | Feeds and logs: cursor pagination; `useCursorPages` has the `useInfiniteQuery` shape, reset with a `key` when filters change |
 
 - Scrolling bodies are virtualized (`InfiniteTable`, `GroupedTable`): spacer rows stand in for off-screen rows; `GroupedTable` keeps one `<tbody>` per group, padded to its full height, so bands stay pinned. See Performance in [`RULES.md`](RULES.md).

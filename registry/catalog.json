@@ -696,6 +696,13 @@
       "src": "/blocks/projects"
     },
     {
+      "id": "deals",
+      "registry": "editable-table",
+      "title": "Editable table",
+      "description": "Cells edit in place and save one at a time: optimistic updates, a spinner per saving cell, rollback with Retry on error, and spreadsheet keys.",
+      "src": "/blocks/deals"
+    },
+    {
       "id": "settings",
       "registry": "settings",
       "title": "Settings",
