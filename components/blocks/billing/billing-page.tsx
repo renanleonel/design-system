@@ -158,7 +158,7 @@ function Usage({
       <Meter.Track className="h-1.5 overflow-hidden rounded-full bg-muted">
         <Meter.Indicator
           className={cn(
-            "h-full rounded-full transition-[width] duration-300 ease-out",
+            "h-full rounded-full transition-[width] duration-(--ds-duration-fill) ease-out",
             ratio >= 0.9
               ? "bg-tone-red"
               : ratio >= 0.7

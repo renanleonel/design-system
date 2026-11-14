@@ -125,7 +125,15 @@ function exportTheme(name, cssVars) {
     set(core, `ds.control.${path}`, token("dimension", dsRoot[key]))
   for (const k of ["out", "in-out", "drawer"])
     set(core, `ds.ease.${k}`, bezier(dsRoot[`ds-ease-${k}`]))
-  for (const k of ["press", "tooltip", "popover", "modal", "drawer"])
+  for (const k of [
+    "press",
+    "tooltip",
+    "popover",
+    "modal",
+    "drawer",
+    "fill",
+    "reveal",
+  ])
     set(core, `ds.duration.${k}`, token("duration", dsRoot[`ds-duration-${k}`]))
 
   const sets = { core }

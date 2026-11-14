@@ -661,6 +661,10 @@
   ],
   "settings": [
     {
+      "date": "2026-11-14",
+      "change": "Date format toggle fits a 320px phone in any font"
+    },
+    {
       "date": "2026-11-13",
       "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
       "commit": "334efd2"
@@ -975,6 +979,12 @@
     {
       "date": "2026-11-14",
       "change": "New block: streaming AI chat with Markdown, tool-call cards, message actions and composer"
+    }
+  ],
+  "tokens": [
+    {
+      "date": "2026-11-14",
+      "change": "New duration tokens: --ds-duration-fill (300ms) and --ds-duration-reveal (500ms)"
     }
   ]
 }

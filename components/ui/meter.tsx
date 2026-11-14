@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
 const meterIndicatorVariants = cva(
-  "h-full rounded-full transition-[width] duration-300 ease-out motion-reduce:transition-none",
+  "h-full rounded-full transition-[width] duration-(--ds-duration-fill) ease-out motion-reduce:transition-none",
   {
     variants: {
       // Same tones as Badge. The bar is a graphic (3:1), so the full tone color.

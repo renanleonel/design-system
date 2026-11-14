@@ -257,14 +257,15 @@ export function GeneralSettings({ host = "acme.app" }: { host?: string }) {
                 value={[field.value]}
                 onValueChange={(v) => v[0] && field.onChange(v[0])}
                 aria-labelledby={`${ids.dates}-label`}
-                // Fills the column on phones so three dates fit at 320px.
-                className="w-full @2xl/settings:w-fit"
+                // Fills the column on phones so three dates fit at 320px. The
+                // `!`s beat the variant's own w-fit, px-2 and text-sm.
+                className="w-full! @2xl/settings:w-fit!"
               >
                 {DATE_FORMATS.map((f) => (
                   <ToggleGroupItem
                     key={f.value}
                     value={f.value}
-                    className="flex-1 px-2 tabular-nums"
+                    className="min-w-0 flex-1 px-1! text-xs! tabular-nums @2xl/settings:px-2! @2xl/settings:text-sm!"
                   >
                     {f.label}
                   </ToggleGroupItem>

@@ -71,7 +71,7 @@ export function GetStartedChecklist({
               <span
                 key={item.id}
                 className={cn(
-                  "h-1.5 flex-1 rounded-full bg-muted transition-colors duration-300",
+                  "h-1.5 flex-1 rounded-full bg-muted transition-colors duration-(--ds-duration-fill)",
                   item.done && "bg-tone-green"
                 )}
               />

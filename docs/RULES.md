@@ -13,6 +13,7 @@ Apply to everything in `components/ui` and `hooks`, and to any code that uses th
 ## Motion
 
 - `motion-press` on pressables; `motion-popover` / `motion-tooltip` / `motion-modal` / `motion-backdrop` on Base UI popups.
+- Durations come from tokens: `duration-(--ds-duration-press)` for hover and press feedback, `-popover` for small reveals, `-fill` for a bar or step moving to a new value, `-reveal` for content easing in on first paint. `duration-0` (instant) is the only raw value.
 - Transitions only (no `animate-in` keyframes), `transform`/`opacity` only, explicit properties (no `transition-all`), start scale above 0.
 - Reduced motion keeps fades and drops movement. Keyboard-shortcut actions are instant: press with `useHotkeyPress` so popups opened from the keyboard skip their motion.
 - Chevrons on popup triggers rotate 180° while open (`group-data-popup-open`); the icon stays the same.

@@ -92,7 +92,12 @@ export function BlockFrame({
             <Tabs value={src} onValueChange={(v) => setPicked(String(v))}>
               <TabsList variant="segmented" aria-label={`${title} layout`}>
                 {variants.map((v) => (
-                  <TabsTrigger key={v.src} value={v.src}>
+                  <TabsTrigger
+                    key={v.src}
+                    value={v.src}
+                    // Three labels must fit a 320px phone in any font.
+                    className="max-sm:px-2.5!"
+                  >
                     {v.label}
                   </TabsTrigger>
                 ))}
@@ -144,7 +149,7 @@ export function BlockFrame({
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
             style={{ width }}
             className={cn(
-              "h-[42rem] max-w-full bg-background transition-[width] duration-300 ease-[cubic-bezier(0.77,0,0.175,1)] motion-reduce:transition-none",
+              "h-[42rem] max-w-full bg-background transition-[width] duration-(--ds-duration-fill) ease-[cubic-bezier(0.77,0,0.175,1)] motion-reduce:transition-none",
               device !== "desktop" && "shadow-border"
             )}
           />

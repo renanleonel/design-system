@@ -32,7 +32,7 @@ export function FeatureIntro({
   className?: string
 }) {
   const enter =
-    "transition-[opacity,translate] duration-500 ease-out starting:translate-y-2 starting:opacity-0 motion-reduce:transition-opacity motion-reduce:delay-0"
+    "transition-[opacity,translate] duration-(--ds-duration-reveal) ease-out starting:translate-y-2 starting:opacity-0 motion-reduce:transition-opacity motion-reduce:delay-0"
   return (
     <section
       data-slot="feature-intro"

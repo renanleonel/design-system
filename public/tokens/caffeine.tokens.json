@@ -130,6 +130,14 @@
         "drawer": {
           "$type": "duration",
           "$value": "500ms"
+        },
+        "fill": {
+          "$type": "duration",
+          "$value": "300ms"
+        },
+        "reveal": {
+          "$type": "duration",
+          "$value": "500ms"
         }
       }
     }

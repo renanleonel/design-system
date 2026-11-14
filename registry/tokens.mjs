@@ -88,6 +88,10 @@ export const root = {
   "ds-duration-popover": "200ms",
   "ds-duration-modal": "250ms",
   "ds-duration-drawer": "500ms",
+  // Not interaction feedback, so they may run longer: a bar or step filling
+  // to a new value, and content easing in on first paint.
+  "ds-duration-fill": "300ms",
+  "ds-duration-reveal": "500ms",
 
   // Elevation (surfaces.md): one named shadow per role. Light = layered, ring included.
   "ds-shadow-border":

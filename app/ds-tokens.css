@@ -33,6 +33,8 @@
   --ds-duration-popover: 200ms;
   --ds-duration-modal: 250ms;
   --ds-duration-drawer: 500ms;
+  --ds-duration-fill: 300ms;
+  --ds-duration-reveal: 500ms;
   --ds-shadow-border: 0 0 0 1px oklch(0 0 0 / 0.06), 0 1px 2px -1px oklch(0 0 0 / 0.06), 0 2px 4px 0 oklch(0 0 0 / 0.04);
   --ds-shadow-border-hover: 0 0 0 1px oklch(0 0 0 / 0.08), 0 1px 2px -1px oklch(0 0 0 / 0.08), 0 2px 4px 0 oklch(0 0 0 / 0.06);
   --ds-shadow-popover: 0 0 0 1px oklch(0 0 0 / 0.08), 0 2px 4px -1px oklch(0 0 0 / 0.06), 0 8px 24px -4px oklch(0 0 0 / 0.12);

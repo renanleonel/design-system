@@ -538,7 +538,7 @@ export function SetupWizard({
         <div
           key={step}
           style={{ "--dir": direction } as React.CSSProperties}
-          className="w-full max-w-lg transition-[opacity,translate] duration-300 ease-out motion-reduce:transition-opacity motion-reduce:delay-0 starting:translate-x-[calc(var(--dir)*1rem)] starting:opacity-0"
+          className="w-full max-w-lg transition-[opacity,translate] duration-(--ds-duration-fill) ease-out motion-reduce:transition-opacity motion-reduce:delay-0 starting:translate-x-[calc(var(--dir)*1rem)] starting:opacity-0"
         >
           {step === "workspace" && (
             <WorkspaceStep

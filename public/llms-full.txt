@@ -18,6 +18,9 @@ Install: `npx shadcn add https://raw.githubusercontent.com/renanleonel/design-sy
 
 Install: `npx shadcn add https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tokens.json`
 
+Changelog:
+- 2026-11-14: New duration tokens: --ds-duration-fill (300ms) and --ds-duration-reveal (500ms)
+
 ## Themes
 
 ### theme-amethyst-haze
@@ -1780,6 +1783,7 @@ Needs: avatar, badge, button, dialog, dropdown-menu, field, form, input-group, i
 Exports: GeneralSettings, Member, SettingsPage
 
 Changelog:
+- 2026-11-14: Date format toggle fits a 320px phone in any font
 - 2026-11-13: stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills
 - 2026-11-13: settings list, swatch picker, timezone select, unsaved-changes bar
 - 2026-11-13: DropdownMenuLabel works outside a group (user menu crashed); audit opens every dropdown menu; capped pages center; demo control hidden on fu
