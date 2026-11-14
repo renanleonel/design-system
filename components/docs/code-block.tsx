@@ -34,7 +34,7 @@ export async function CodeBlock({
         tabIndex={0}
         role="region"
         aria-label={title ? `Code: ${title}` : "Code"}
-        className="docs-code max-h-[32rem] overflow-auto focus-ring-inset py-3.5 text-[0.8125rem] leading-relaxed"
+        className="docs-code max-h-[32rem] overflow-auto py-3.5 text-[0.8125rem] leading-relaxed focus-ring-inset"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </figure>

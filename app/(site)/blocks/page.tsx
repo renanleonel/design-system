@@ -10,7 +10,7 @@ import {
   registryItem,
 } from "@/lib/docs"
 
-export const metadata: Metadata = { title: "Blocks · renan/ui" }
+export const metadata: Metadata = { title: "Blocks" }
 
 export default function BlocksPage() {
   const blocks = getBlocks()
@@ -24,7 +24,7 @@ export default function BlocksPage() {
           Blocks
         </h1>
         <p className="text-muted-foreground">
-          Full screens built only from renan/ui components. They are
+          Full screens built only from renanleonel/ui components. They are
           router-agnostic and keep shareable state in the URL. Install one and
           wire your data in.
         </p>
@@ -70,7 +70,12 @@ export default function BlocksPage() {
                 <InstallCommand command={installCommand(block.registry)} />
               </div>
             </div>
-            <BlockFrame title={block.title} src={block.src} files={files} />
+            <BlockFrame
+              title={block.title}
+              src={block.src}
+              variants={"variants" in block ? block.variants : undefined}
+              files={files}
+            />
           </section>
         )
       })}

@@ -3,14 +3,13 @@
 import { toast } from "sonner"
 import { z } from "zod"
 
-import { DatePicker, DateRangePicker } from "@/components/ui/date-picker"
-import { Field, FieldLabel } from "@/components/ui/field"
 import {
-  Form,
-  FormField,
-  FormSubmit,
-  useZodForm,
-} from "@/components/ui/form"
+  DatePicker,
+  DateRangePicker,
+  DateTimePicker,
+} from "@/components/ui/date-picker"
+import { Field, FieldLabel } from "@/components/ui/field"
+import { Form, FormField, FormSubmit, useZodForm } from "@/components/ui/form"
 
 // Fixed dates: render-time `new Date()` differs between server and browser.
 const TODAY = new Date(2026, 10, 13)
@@ -32,6 +31,20 @@ export function Range() {
     <Field className="w-72">
       <FieldLabel htmlFor="dp-period">Report period</FieldLabel>
       <DateRangePicker id="dp-period" className="w-full" />
+    </Field>
+  )
+}
+
+/** A day and a time slot in one field; picking the time closes it. */
+export function DateTime() {
+  return (
+    <Field className="w-72">
+      <FieldLabel htmlFor="dp-meeting">Meeting</FieldLabel>
+      <DateTimePicker
+        id="dp-meeting"
+        defaultValue={new Date(2026, 10, 13, 14, 30)}
+        className="w-full"
+      />
     </Field>
   )
 }

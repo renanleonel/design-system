@@ -1,4 +1,4 @@
-# renan/ui
+# renanleonel/ui
 
 Personal design system: a [shadcn](https://ui.shadcn.com) registry on [Base UI](https://base-ui.com), themeable with any [tweakcn](https://tweakcn.com) theme. Accessible by default (axe WCAG 2.2 AA audited on every page), responsive down to 320px, light and dark.
 
@@ -61,7 +61,7 @@ npx shadcn add @renanleonel/button @renanleonel/app-shell @renanleonel/theme-caf
 
 ```bash
 pnpm install
-pnpm dev              # docs site: /, /components, /blocks, /examples, /themes
+pnpm dev              # docs site: /, /components, /blocks, /themes
 pnpm registry:build   # regenerate registry.json, app/ds-tokens.css, public/r (commit the output)
 ```
 

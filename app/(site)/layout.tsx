@@ -1,4 +1,4 @@
-import { DemoFooter } from "@/components/playground/demo-footer"
+import { DocsFooter } from "@/components/docs/docs-footer"
 import { SiteHeader } from "@/components/docs/site-header"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { getNav, GITHUB_URL } from "@/lib/docs"
@@ -11,7 +11,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
         <main id="main" className="flex flex-1 flex-col">
           {children}
         </main>
-        <DemoFooter />
+        <DocsFooter githubUrl={GITHUB_URL} />
       </div>
     </TooltipProvider>
   )

@@ -27,7 +27,7 @@ export async function generateMetadata({
 }: PageProps<"/components/[name]">): Promise<Metadata> {
   const { name } = await params
   const entry = getComponents().find((c) => c.name === name)
-  return { title: `${entry?.title ?? name} · renan/ui`, description: entry?.description }
+  return { title: entry?.title ?? name, description: entry?.description }
 }
 
 /** `code` spans in catalog notes. */

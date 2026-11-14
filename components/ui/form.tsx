@@ -180,7 +180,7 @@ function FormField<
           <FieldLabel htmlFor={id}>
             {label}
             {required && (
-              <span aria-hidden className="text-destructive">
+              <span aria-hidden className="-ms-1.5 text-destructive">
                 *
               </span>
             )}
@@ -207,7 +207,7 @@ function FormField<
                 <>
                   {label}
                   {required && (
-                    <span aria-hidden className="ms-1 text-destructive">
+                    <span aria-hidden className="ms-0.5 text-destructive">
                       *
                     </span>
                   )}

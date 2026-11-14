@@ -83,7 +83,6 @@ export const getNav = cache((): NavGroup[] => {
         { title: "Introduction", href: "/" },
         { title: "Components", href: "/components" },
         { title: "Themes", href: "/themes" },
-        { title: "Examples", href: "/examples" },
       ],
     },
     ...groups.values(),

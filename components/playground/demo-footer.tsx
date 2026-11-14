@@ -1,17 +1,19 @@
 "use client"
 
+import * as React from "react"
 import { MailIcon, RssIcon } from "lucide-react"
 
 import { SiteFooter } from "@/components/blocks/site-footer/site-footer"
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-/** SiteFooter filled with sample links (used by the docs site and the demo). */
+/** SiteFooter filled with a sample company's links (block demos only). */
 export function DemoFooter() {
+  const [language, setLanguage] = React.useState("en")
   return (
     <SiteFooter
-      brand="renan/ui"
-      tagline="Components and blocks for shipping SaaS fast."
+      brand="Acme"
+      tagline="Project tracking for teams that ship weekly."
       onSubscribe={async (email) => {
         await wait(800)
         if (email.endsWith("@example.com"))
@@ -21,17 +23,17 @@ export function DemoFooter() {
         {
           title: "Product",
           links: [
-            { label: "Components", href: "/components" },
-            { label: "Blocks", href: "/blocks" },
-            { label: "Themes", href: "/themes" },
+            { label: "Features", href: "#features" },
+            { label: "Pricing", href: "#pricing" },
+            { label: "Integrations", href: "#integrations" },
             { label: "Changelog", href: "#changelog", badge: "New" },
           ],
         },
         {
           title: "Resources",
           links: [
-            { label: "Examples", href: "/examples" },
-            { label: "Composition guide", href: "#composition" },
+            { label: "Docs", href: "#docs" },
+            { label: "Guides", href: "#guides" },
             { label: "Accessibility", href: "#a11y" },
           ],
         },
@@ -52,11 +54,13 @@ export function DemoFooter() {
         },
       ]}
       social={[
-        { label: "Email", href: "mailto:hello@example.com", icon: <MailIcon /> },
+        { label: "Email", href: "mailto:hello@acme.app", icon: <MailIcon /> },
         { label: "RSS", href: "#rss", icon: <RssIcon /> },
       ]}
-      copyright="© 2026 renan/ui"
+      copyright="© 2026 Acme, Inc."
       status={{ label: "All systems normal", href: "#status" }}
+      language={language}
+      onLanguageChange={setLanguage}
     />
   )
 }

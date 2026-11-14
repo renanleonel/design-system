@@ -60,6 +60,19 @@ export function Clearable() {
   )
 }
 
+/** `copyable`: a copy button; read-only, the text selects on focus too. */
+export function Copyable() {
+  return (
+    <Input
+      readOnly
+      copyable
+      value="sk_live_51Hx8pQ2eZvKYlo2C"
+      aria-label="API key"
+      className="max-w-xs font-mono"
+    />
+  )
+}
+
 export function File() {
   return <Input type="file" aria-label="Upload" className="max-w-xs" />
 }

@@ -1,6 +1,11 @@
 "use client"
 
-import { BoldIcon, BookmarkIcon, ItalicIcon } from "lucide-react"
+import {
+  BoldIcon,
+  BookmarkCheckIcon,
+  BookmarkIcon,
+  ItalicIcon,
+} from "lucide-react"
 
 import { Toggle } from "@/components/ui/toggle"
 
@@ -20,6 +25,24 @@ export function Default() {
 export function Outline() {
   return (
     <Toggle variant="outline">
+      <BookmarkIcon />
+      Bookmark
+    </Toggle>
+  )
+}
+
+/** `pressedChildren` swaps the icon and label while on, without a width jump. */
+export function PressedContent() {
+  return (
+    <Toggle
+      variant="outline"
+      pressedChildren={
+        <>
+          <BookmarkCheckIcon />
+          Bookmarked
+        </>
+      }
+    >
       <BookmarkIcon />
       Bookmark
     </Toggle>

@@ -161,7 +161,7 @@ export function SearchPalette() {
       <Button
         variant="outline"
         className="w-64 justify-start text-muted-foreground"
-        hotkey="Mod+K"
+        hotkey="Mod+J"
         showHotkey
         onClick={() => setOpen(true)}
       >
@@ -252,7 +252,7 @@ export function SearchPalette() {
             </span>
             <span className="ms-auto hidden items-center gap-1.5 sm:flex">
               Open search anywhere
-              <Hotkey hotkey="Mod+K" />
+              <Hotkey hotkey="Mod+J" />
             </span>
           </div>
         </CommandPrimitive>

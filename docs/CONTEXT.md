@@ -18,9 +18,9 @@ Next.js 16 (App Router, Turbopack) · React 19 · Tailwind v4 · Base UI · shad
 | `registry/themes/*.json` | tweakcn themes → `theme-<file>` items | yes |
 | `registry/catalog.json` | Docs metadata per ui component (group, title, description, notes) | yes |
 | `components/demos/<name>.tsx` | Stories for each ui component | yes |
-| `components/examples/` | Reference compositions shown at `/examples` | yes |
+| `components/examples/` | Reference compositions, shown live on the home page | yes |
 | `components/docs/`, `components/playground/` | Docs-site-only code; not published | yes |
-| `app/(site)/` | Docs site: `/`, `/components`, `/blocks`, `/examples`, `/themes` | yes |
+| `app/(site)/` | Docs site: `/`, `/components`, `/blocks`, `/themes` | yes |
 | `app/blocks/` | Demo routes rendering each block; `(app)` group wraps pages in `AppShell` | yes |
 | `scripts/` | `gen-registry`, `check-contrast`, `audit-ui`, `axe-detail` | yes |
 | `registry.json`, `app/ds-tokens.css`, `components/demos/index.ts` | Output of `registry:gen` | **generated** |

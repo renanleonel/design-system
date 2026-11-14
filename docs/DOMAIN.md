@@ -15,7 +15,7 @@ The vocabulary used across code, docs and commits. Use these words exactly.
 | **Elevation** | One shadow per surface role: `shadow-border` (cards), `shadow-popover`, `shadow-modal`. |
 | **Catalog** | `registry/catalog.json`: group, title, description, notes per component. Feeds the docs sidebar and item descriptions. |
 | **Story** | An `export function` in `components/demos/<name>.tsx` (Storybook CSF style); the first is the page's main preview. |
-| **Example** | A reference composition in `components/examples/`, shown at `/examples`. Start new compositions from one. |
+| **Example** | A reference composition in `components/examples/`, shown live on the home page. Start new compositions from one. |
 | **Playground** | `/themes`: live theme and token editing. |
 | **Audit** | `pnpm audit:ui`: Playwright + axe over every docs page and block demo, 320/1280px, light/dark. |
 | **Hotkey** | A `Mod+…`-style binding via `@tanstack/react-hotkeys`; shown with `<Hotkey>`. |

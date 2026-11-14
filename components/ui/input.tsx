@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Input as InputPrimitive } from "@base-ui/react/input"
 import { cn } from "cn"
-import { UploadIcon, XIcon } from "lucide-react"
+import { CheckIcon, CopyIcon, UploadIcon, XIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { mergeRefs } from "@/hooks/use-hotkey-press"
@@ -19,6 +19,11 @@ type InputProps = React.ComponentProps<"input"> & {
   clearable?: boolean
   /** Fires after the X empties the field, on top of `onChange`. */
   onClear?: () => void
+  /**
+   * Adds a copy button for the value (share links, API keys, ids). Read-only
+   * copyable fields also select their text on focus.
+   */
+  copyable?: boolean
 }
 
 /** Sets the value the way typing does, so `onChange` and form libraries see it. */
@@ -61,18 +66,62 @@ function ClearButton({
   )
 }
 
+function CopyButton({
+  getValue,
+  offset,
+}: {
+  getValue: () => string
+  /** Sits left of a clear button. */
+  offset?: boolean
+}) {
+  const [copied, setCopied] = React.useState(false)
+  const timer = React.useRef<ReturnType<typeof setTimeout>>(undefined)
+  return (
+    <>
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon-xs"
+        aria-label={copied ? "Copied" : "Copy"}
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={async () => {
+          try {
+            await navigator.clipboard.writeText(getValue())
+          } catch {
+            return
+          }
+          setCopied(true)
+          clearTimeout(timer.current)
+          timer.current = setTimeout(() => setCopied(false), 1500)
+        }}
+        className={cn(
+          "absolute top-1/2 -translate-y-1/2 text-muted-foreground",
+          offset ? "end-8" : "end-1.5"
+        )}
+      >
+        {copied ? <CheckIcon /> : <CopyIcon />}
+      </Button>
+      <span role="status" className="sr-only">
+        {copied ? "Copied to clipboard" : ""}
+      </span>
+    </>
+  )
+}
+
 /**
  * Single-line text field. `clearable` adds an X while there's a value.
  * `type="file"` renders as a field that shows the picked file's name (or
  * "3 files") in place of the browser's "Choose File" button, with an X to
- * unselect.
+ * unselect. `copyable` adds a copy button (a check confirms the copy).
  */
 function Input({
   className,
   type,
   clearable,
   onClear,
+  copyable,
   onChange,
+  onFocus,
   ref,
   ...props
 }: InputProps) {
@@ -84,7 +133,7 @@ function Input({
   )
   const [files, setFiles] = React.useState<string[]>([])
 
-  if (!clearable && !isFile) {
+  if (!clearable && !copyable && !isFile) {
     return (
       <InputPrimitive
         ref={ref}
@@ -92,6 +141,7 @@ function Input({
         data-slot="input"
         className={cn(inputClasses, className)}
         onChange={onChange}
+        onFocus={onFocus}
         {...props}
       />
     )
@@ -135,7 +185,7 @@ function Input({
           data-empty={!summary || undefined}
           className={cn(
             inputClasses,
-            "flex cursor-pointer items-center gap-2 has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input/50 has-disabled:opacity-50 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-(--ds-focus-ring) has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 data-empty:text-muted-foreground dark:has-disabled:bg-input/80 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
+            "flex cursor-pointer items-center gap-2 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-(--ds-focus-ring) has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input/50 has-disabled:opacity-50 has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 data-empty:text-muted-foreground dark:has-disabled:bg-input/80 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
             canClear && "pe-9"
           )}
         >
@@ -144,6 +194,7 @@ function Input({
             type="file"
             className="sr-only"
             onChange={handleChange}
+            onFocus={onFocus}
             {...props}
           />
           <UploadIcon
@@ -173,11 +224,25 @@ function Input({
         ref={mergeRefs(ref, inputRef)}
         type={type}
         data-slot="input"
-        className={cn(inputClasses, canClear && "pe-9")}
+        className={cn(
+          inputClasses,
+          (canClear || copyable) && "pe-9",
+          canClear && copyable && "pe-16"
+        )}
         onChange={handleChange}
+        onFocus={(e) => {
+          if (copyable && props.readOnly) e.currentTarget.select()
+          onFocus?.(e)
+        }}
         {...props}
       />
       {canClear && <ClearButton label="Clear" onClear={clear} />}
+      {copyable && (
+        <CopyButton
+          offset={canClear}
+          getValue={() => inputRef.current?.value ?? ""}
+        />
+      )}
     </div>
   )
 }

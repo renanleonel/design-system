@@ -60,6 +60,25 @@ export function Default() {
   )
 }
 
+/** `multiple`: rows become checkboxes; each node toggles on its own. */
+export function Multiple() {
+  const [value, setValue] = React.useState<string[]>([
+    "components/ui/tree.tsx",
+    "package.json",
+  ])
+  return (
+    <Tree
+      multiple
+      nodes={PROJECT}
+      value={value}
+      onValueChange={setValue}
+      defaultExpanded={["components", "components/ui"]}
+      aria-label="Files to commit"
+      className="w-72"
+    />
+  )
+}
+
 // 20 folders × 25 subfolders × 20 files: 10,520 nodes.
 const LARGE: TreeNode[] = Array.from({ length: 20 }, (_, a) =>
   folder(

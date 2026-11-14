@@ -26,6 +26,7 @@
       "notes": [
         "16px text on touch screens so iOS never zooms on focus.",
         "`clearable` adds an X while there's a value; it fires `onChange` like typing, then `onClear`.",
+        "`copyable` adds a copy button with a check to confirm; read-only copyable fields select their text on focus.",
         "`type=\"file\"` shows the picked file's name instead of the browser's \"Choose File\" button, with an X to unselect.",
         "Pair with `Field` or `FormField` for label, description and error."
       ]
@@ -62,7 +63,8 @@
       "title": "Native Select",
       "description": "The platform select, styled like the rest of the controls.",
       "notes": [
-        "Best on mobile and for long, plain lists."
+        "Best on mobile and for long, plain lists.",
+        "In Chromium the open list is styled like Select (`appearance: base-select`); other browsers show their own picker."
       ]
     },
     "combobox": {
@@ -183,8 +185,9 @@
       "title": "Tooltip",
       "description": "A short label for an icon or a hint, with an optional hotkey.",
       "notes": [
-        "Opens after 400ms; moving between tooltips is instant.",
-        "Never put essential information only in a tooltip: touch screens can't hover."
+        "Opens after 400ms (`TooltipOverflow`: 200ms); moving between tooltips is instant.",
+        "Never put essential information only in a tooltip: touch screens can't hover.",
+        "`TooltipOverflow` truncates text (or clamps to `lines`) and shows the tooltip only while it's cut off, for fixed-width columns."
       ]
     },
     "command": {
@@ -342,6 +345,7 @@
       "description": "A list you reorder by dragging, or with the keyboard.",
       "notes": [
         "Keyboard: focus a handle, Space to lift, arrows to move, Space to drop, Escape to cancel.",
+        "dragFrom=\"item\" drags from anywhere on the row (set it on Sortable, or per SortableItem); keep interactive controls out of those rows.",
         "Moves are announced to screen readers; works inside dialogs."
       ]
     },
@@ -359,7 +363,8 @@
       "title": "Toggle",
       "description": "A button that stays pressed: bold on, bold off.",
       "notes": [
-        "`pressed` / `onPressedChange`; the pressed state is announced to screen readers."
+        "`pressed` / `onPressedChange`; the pressed state is announced to screen readers.",
+        "`pressedChildren` swaps the icon and label while on; the width stays put."
       ]
     },
     "toggle-group": {
@@ -402,8 +407,9 @@
     "date-picker": {
       "group": "Inputs",
       "title": "Date Picker",
-      "description": "A form field that opens a calendar, for a single date or a range.",
+      "description": "A form field that opens a calendar, for a single date, a range, or a date and time.",
       "notes": [
+        "`DateTimePicker`: the calendar with a column of time slots (a row on phones); picking the time closes it.",
         "Looks and behaves like a Select; `clearable` adds a clear button for optional dates.",
         "A bottom sheet on phones; the range picker shows one month there and two elsewhere.",
         "Ranges: the first click starts, the second ends and closes.",
@@ -495,10 +501,12 @@
     "time-input": {
       "group": "Inputs",
       "title": "Time Input",
-      "description": "A time of day with the browser's own segmented field and native picker on touch.",
+      "description": "A time of day, typed in the browser's segmented field or picked from a styled list; plus a start–end range as one field.",
       "notes": [
+        "The clock opens slots every `interval` minutes (default 30) within `min`/`max`; picking fires `onChange` like typing.",
         "`step` is in seconds: 900 snaps the arrows to 15 minutes; under 60 adds seconds.",
-        "Pair it with Date Picker for a date and time."
+        "`TimeRangeInput`: pick the start, then the end (it can't come first); shows the length and submits `09:00/17:30`.",
+        "For a date and a time together, use `DateTimePicker` from Date Picker."
       ]
     },
     "rating": {
@@ -507,7 +515,8 @@
       "description": "A star rating: a radio group when interactive, an image with fractions when read-only.",
       "notes": [
         "Hover previews; arrow keys move and pick.",
-        "`readOnly` is named \"4.5 out of 5 stars\" for review summaries."
+        "`readOnly` is named \"4.5 out of 5 stars\" for review summaries.",
+        "`allowHalf` makes each star two targets, so picks and arrows step by 0.5."
       ]
     },
     "tree": {
@@ -517,7 +526,19 @@
       "notes": [
         "Only rows in view render: tens of thousands of nodes stay fast.",
         "Arrows move and open, Home/End jump, Enter selects, * opens siblings, typing jumps to a label.",
-        "`filter` shows matches with their ancestors; debounce it with `useDebouncedState`."
+        "`filter` shows matches with their ancestors; debounce it with `useDebouncedState`.",
+        "The chevron opens and closes without selecting; the highlight covers only the icon and label.",
+        "`multiple` turns rows into checkboxes; each node toggles on its own."
+      ]
+    },
+    "tree-select": {
+      "group": "Inputs",
+      "title": "Tree Select",
+      "description": "A select whose options are a searchable tree; pick one node or check several.",
+      "notes": [
+        "Single mode closes on pick; `multiple` shows tags and keeps the popup open.",
+        "Type to filter; ArrowDown moves from the search box into the tree; Escape closes.",
+        "Opens on the ancestors of the current value. `name` posts the ids with a form."
       ]
     },
     "virtual-list": {
@@ -706,22 +727,13 @@
       "id": "sign-up",
       "registry": "auth",
       "title": "Sign up",
-      "description": "Live password rules and terms.",
-      "src": "/blocks/sign-up"
-    },
-    {
-      "id": "sign-up-image-right",
-      "registry": "auth",
-      "title": "Sign up, image right",
-      "description": "Split layout with the media on the trailing side.",
-      "src": "/blocks/sign-up?layout=image-right"
-    },
-    {
-      "id": "sign-up-image-left",
-      "registry": "auth",
-      "title": "Sign up, image left",
-      "description": "Split layout with the media on the leading side.",
-      "src": "/blocks/sign-up?layout=image-left"
+      "description": "Live password rules and terms. Centered, or split with the media on either side.",
+      "src": "/blocks/sign-up",
+      "variants": [
+        { "label": "Centered", "src": "/blocks/sign-up" },
+        { "label": "Image left", "src": "/blocks/sign-up?layout=image-left" },
+        { "label": "Image right", "src": "/blocks/sign-up?layout=image-right" }
+      ]
     },
     {
       "id": "reset-password",

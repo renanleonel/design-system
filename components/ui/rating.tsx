@@ -6,12 +6,14 @@ import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group"
 import { cn } from "cn"
 import { StarIcon } from "lucide-react"
 
-const plural = (n: number) => `${n} ${n === 1 ? "star" : "stars"}`
+const plural = (n: number) =>
+  `${n.toLocaleString("en-US")} ${n === 1 ? "star" : "stars"}`
 
 /**
  * A star rating. Interactive, it's a radio group: arrows move and pick,
  * hovering previews. With `readOnly` it's an image named "4.5 out of 5 stars"
- * and shows fractions, for review summaries.
+ * and shows fractions, for review summaries. `allowHalf` splits each star
+ * into two targets (left half, right half), so arrows step by 0.5.
  */
 function Rating({
   value,
@@ -19,6 +21,7 @@ function Rating({
   onValueChange,
   max = 5,
   readOnly = false,
+  allowHalf = false,
   disabled,
   name,
   size = "default",
@@ -32,6 +35,8 @@ function Rating({
   max?: number
   /** Display only; accepts fractions (4.5). */
   readOnly?: boolean
+  /** Interactive half stars: values 0.5, 1, 1.5 … `max`. */
+  allowHalf?: boolean
   disabled?: boolean
   name?: string
   size?: "sm" | "default"
@@ -84,17 +89,42 @@ function Rating({
         className
       )}
     >
-      {stars.map((n) => (
-        <RadioPrimitive.Root
-          key={n}
-          value={n}
-          aria-label={plural(n)}
-          onPointerEnter={() => !disabled && setHover(n)}
-          className="hit-area flex items-center justify-center rounded-sm focus-ring outline-none disabled:cursor-not-allowed"
-        >
-          <Star fill={n <= lit ? 1 : 0} className={iconSize} />
-        </RadioPrimitive.Root>
-      ))}
+      {stars.map((n) =>
+        allowHalf ? (
+          // One star, two radios over its halves; the ring shows on the star.
+          <span
+            key={n}
+            className="relative flex rounded-sm has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-(--ds-focus-ring)"
+          >
+            <Star
+              fill={Math.max(0, Math.min(1, lit - (n - 1)))}
+              className={iconSize}
+            />
+            {[n - 0.5, n].map((v) => (
+              <RadioPrimitive.Root
+                key={v}
+                value={v}
+                aria-label={plural(v)}
+                onPointerEnter={() => !disabled && setHover(v)}
+                className={cn(
+                  "absolute inset-y-0 w-1/2 outline-none disabled:cursor-not-allowed",
+                  v === n ? "end-0" : "start-0"
+                )}
+              />
+            ))}
+          </span>
+        ) : (
+          <RadioPrimitive.Root
+            key={n}
+            value={n}
+            aria-label={plural(n)}
+            onPointerEnter={() => !disabled && setHover(n)}
+            className="hit-area flex items-center justify-center rounded-sm focus-ring outline-none disabled:cursor-not-allowed"
+          >
+            <Star fill={n <= lit ? 1 : 0} className={iconSize} />
+          </RadioPrimitive.Root>
+        )
+      )}
     </RadioGroupPrimitive>
   )
 }

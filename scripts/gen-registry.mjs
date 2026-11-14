@@ -144,7 +144,7 @@ const themes = existsSync(themesDir)
 const base = {
   name: "base",
   type: "registry:base",
-  title: "renan/ui",
+  title: "renanleonel/ui",
   description: "Everything: tokens, default theme, utils and all components.",
   config: {
     style: "base-nova",

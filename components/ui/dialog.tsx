@@ -164,7 +164,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 in-data-[slot=drawer-popup]:mb-[calc(-1*max(1rem,env(safe-area-inset-bottom)))] in-data-[slot=drawer-popup]:rounded-none in-data-[slot=drawer-popup]:pb-[max(1rem,env(safe-area-inset-bottom))] sm:flex-row sm:justify-end",
+        "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 px-4 py-3 in-data-[slot=drawer-popup]:mb-[calc(-1*max(1rem,env(safe-area-inset-bottom)))] in-data-[slot=drawer-popup]:rounded-none in-data-[slot=drawer-popup]:pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:flex-row sm:justify-end",
         className
       )}
       {...props}

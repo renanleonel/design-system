@@ -143,3 +143,11 @@
 .dark .docs-code span {
   color: var(--shiki-dark);
 }
+
+/* Site logo: the four blocks settle in once per page load (components/docs/logo-mark.tsx). */
+@keyframes logo-block-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}

@@ -112,17 +112,24 @@ function MultiSelect({
                     </span>
                   </span>
                 )}
+                {/* Inside the render fn so the placeholder only shows when nothing is
+                    selected, and the input collapses beside the tags at rest instead of
+                    wrapping to its own line. */}
+                <ComboboxChipsInput
+                  ref={ref}
+                  id={id}
+                  className={cn(
+                    selected.length > 0 &&
+                      "group-[:not(:focus-within)]/chips:min-w-0"
+                  )}
+                  placeholder={selected.length === 0 ? placeholder : undefined}
+                  onBlur={onBlur}
+                  {...aria}
+                />
               </>
             )
           }}
         </ComboboxValue>
-        <ComboboxChipsInput
-          ref={ref}
-          id={id}
-          placeholder={placeholder}
-          onBlur={onBlur}
-          {...aria}
-        />
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
         <ComboboxEmpty>{emptyMessage}</ComboboxEmpty>

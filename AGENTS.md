@@ -8,7 +8,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# renan/ui
+# renanleonel/ui
 
 A shadcn registry on Base UI, plus the Next.js docs site that previews it. Consumers install from the committed `public/r/*.json`, so every change ships as registry output, not just source.
 

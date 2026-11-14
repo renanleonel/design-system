@@ -21,16 +21,20 @@ const DEVICES = [
 /**
  * A block running in an iframe at a device width, with its source beside it.
  * The frame's width animates between devices, so the layout visibly reflows.
+ * `variants` (layouts of one block) add a switch that swaps the frame's URL.
  */
 export function BlockFrame({
   title,
-  src,
+  src: defaultSrc,
+  variants,
   files,
 }: {
   title: string
   src: string
+  variants?: { label: string; src: string }[]
   files: { path: string; code: React.ReactNode }[]
 }) {
+  const [src, setSrc] = React.useState(defaultSrc)
   const [device, setDevice] = React.useState<string>("desktop")
   const [file, setFile] = React.useState(files[0]?.path)
   const width = DEVICES.find((d) => d.id === device)?.width
@@ -42,7 +46,18 @@ export function BlockFrame({
           <TabsTrigger value="preview">Preview</TabsTrigger>
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
-        <div className="ms-auto flex items-center gap-2">
+        <div className="ms-auto flex flex-wrap items-center justify-end gap-2">
+          {variants && variants.length > 1 && (
+            <Tabs value={src} onValueChange={(v) => setSrc(String(v))}>
+              <TabsList variant="segmented" aria-label={`${title} layout`}>
+                {variants.map((v) => (
+                  <TabsTrigger key={v.src} value={v.src}>
+                    {v.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          )}
           <Tabs
             value={device}
             onValueChange={(v) => setDevice(String(v))}

@@ -1,6 +1,6 @@
 # Composition
 
-How to build cards, panels and dialogs that look considered, using only renan/ui parts. The three compositions in `/examples` (`components/examples/*`) follow every rule here; start from the closest one.
+How to build cards, panels and dialogs that look considered, using only renanleonel/ui parts. The three compositions in `components/examples/*` (live on the home page) follow every rule here; start from the closest one.
 
 ## 1. Surfaces
 

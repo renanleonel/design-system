@@ -13,7 +13,7 @@ import { readFileSync } from "node:fs"
 import AxeBuilder from "@axe-core/playwright"
 import { chromium } from "playwright"
 
-// AUDIT_PAGES=/blocks/projects,/examples limits the run to some pages.
+// AUDIT_PAGES=/blocks/projects,/themes limits the run to some pages.
 // Every component docs page, from the registry.
 const COMPONENT_PAGES = JSON.parse(readFileSync("registry.json", "utf8"))
   .items.filter((i) => i.type === "registry:ui")
@@ -23,7 +23,6 @@ const ALL_PAGES = [
   "/components",
   ...COMPONENT_PAGES,
   "/themes",
-  "/examples",
   "/blocks",
   "/blocks/landing",
   "/blocks/pricing",

@@ -15,7 +15,7 @@ function UnsavedChangesBar({
   open,
   onDiscard,
   saving = false,
-  message = "You have unsaved changes",
+  message = "Unsaved changes",
   saveLabel = "Save changes",
   className,
 }: {
@@ -49,12 +49,19 @@ function UnsavedChangesBar({
         aria-label="Unsaved changes"
         data-open={open || undefined}
         inert={!open}
-        className="pointer-events-auto flex max-w-full translate-y-2 flex-wrap items-center gap-2 rounded-xl bg-popover p-1.5 ps-3 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-150 ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-200 data-open:ease-out"
+        className="pointer-events-auto flex max-w-full translate-y-2 items-center gap-3 rounded-xl bg-popover p-1.5 ps-3.5 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-150 ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-200 data-open:ease-out"
       >
-        <p role="status" className="me-2 font-medium">
+        <span
+          aria-hidden
+          className="size-1.5 shrink-0 rounded-full bg-tone-amber"
+        />
+        <p
+          role="status"
+          className="-ms-1.5 min-w-0 flex-1 truncate font-medium"
+        >
           {open ? message : null}
         </p>
-        <div className="ms-auto flex items-center gap-1.5">
+        <div className="flex shrink-0 items-center gap-1">
           <Button
             type="button"
             variant="ghost"

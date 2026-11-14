@@ -65,18 +65,31 @@ class OverlaySafeKeyboardSensor extends KeyboardSensor {
   }
 }
 
-// Only what the handle needs (no refs), so render never reads a ref.
+// Only what the handle needs (no refs), so render never reads a ref. `null`
+// means the whole row drags (the handle is decorative); `undefined` means the
+// handle sits outside a SortableItem.
 type HandleContext = Pick<
   ReturnType<typeof useSortable>,
   "attributes" | "listeners" | "setActivatorNodeRef"
 > | null
-const SortableHandleContext = React.createContext<HandleContext>(null)
+const SortableHandleContext = React.createContext<HandleContext | undefined>(
+  undefined
+)
+
+type DragFrom = "handle" | "item"
+const SortableDragFromContext = React.createContext<DragFrom>("handle")
 
 /**
  * A vertically reorderable list (dnd-kit).
- * - Pointer: drag by the handle; neighbours slide out of the way.
- * - Keyboard: focus the handle, Space to lift, arrows to move, Space to drop,
- *   Escape to cancel. Moves are announced to screen readers via `getLabel`.
+ * - Pointer: drag by the handle (`dragFrom="handle"`, default) or anywhere on
+ *   the row (`dragFrom="item"`); neighbours slide out of the way. Rows don't
+ *   select text, so a drag never highlights it.
+ * - Keyboard: focus the handle (or the row with `dragFrom="item"`), Space to
+ *   lift, arrows to move, Space to drop, Escape to cancel. Moves are announced
+ *   to screen readers via `getLabel`.
+ * - `dragFrom="item"` turns the whole row into the drag button, so keep
+ *   interactive controls (inputs, buttons, links) out of those rows; use the
+ *   handle mode for rows that contain them.
  * - Reduced motion: items jump into place instead of sliding.
  *
  *   <Sortable items={rows} getId={(r) => r.id} onReorder={setRows} getLabel={(r) => r.name}>
@@ -92,6 +105,7 @@ function Sortable<T>({
   getId,
   onReorder,
   getLabel,
+  dragFrom = "handle",
   children,
 }: {
   items: T[]
@@ -99,6 +113,8 @@ function Sortable<T>({
   onReorder: (items: T[]) => void
   /** Human name of an item, for screen reader announcements. */
   getLabel?: (item: T) => string
+  /** Where a drag starts: the grip only, or anywhere on the row. */
+  dragFrom?: DragFrom
   children: React.ReactNode
 }) {
   const sensors = useSensors(
@@ -153,7 +169,9 @@ function Sortable<T>({
       }}
     >
       <SortableContext items={ids} strategy={verticalListSortingStrategy}>
-        {children}
+        <SortableDragFromContext value={dragFrom}>
+          {children}
+        </SortableDragFromContext>
       </SortableContext>
     </DndContext>
   )
@@ -165,13 +183,19 @@ function Sortable<T>({
  */
 function SortableItem({
   id,
+  dragFrom: dragFromProp,
   className,
   children,
 }: {
   id: UniqueIdentifier
+  /** Overrides the list's `dragFrom` for this row. */
+  dragFrom?: DragFrom
   className?: string
   children: React.ReactNode
 }) {
+  const listDragFrom = React.useContext(SortableDragFromContext)
+  const dragFrom = dragFromProp ?? listDragFrom
+  const whole = dragFrom === "item"
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)")
   const {
     attributes,
@@ -189,22 +213,27 @@ function SortableItem({
   })
   return (
     <SortableHandleContext
-      value={{ attributes, listeners, setActivatorNodeRef }}
+      value={whole ? null : { attributes, listeners, setActivatorNodeRef }}
     >
       <div
         ref={setNodeRef}
         data-slot="sortable-item"
         data-dragging={isDragging || undefined}
+        data-drag-from={dragFrom}
         style={{
           transform: CSS.Translate.toString(transform),
           transition,
         }}
-        className="relative data-dragging:z-10"
+        className="relative select-none data-dragging:z-10"
       >
         <div
+          ref={whole ? setActivatorNodeRef : undefined}
+          {...(whole ? { ...attributes, ...listeners } : {})}
           className={cn(
             "-m-1.5 rounded-xl p-1.5 transition-[scale,box-shadow,background-color] duration-150 ease-out motion-reduce:transition-none",
             "in-data-dragging:scale-[1.02] in-data-dragging:bg-background in-data-dragging:shadow-popover",
+            whole &&
+              "cursor-grab touch-none focus-ring active:cursor-grabbing in-data-dragging:cursor-grabbing",
             className
           )}
         >
@@ -215,7 +244,11 @@ function SortableItem({
   )
 }
 
-/** The grip that starts a drag (pointer or keyboard). Must be inside a SortableItem. */
+/**
+ * The grip that starts a drag (pointer or keyboard). Must be inside a
+ * SortableItem. With `dragFrom="item"` it is only a visual cue: the row is the
+ * button, so the grip renders as a decorative icon.
+ */
 function SortableHandle({
   label = "Reorder",
   className,
@@ -224,7 +257,21 @@ function SortableHandle({
   className?: string
 }) {
   const context = React.useContext(SortableHandleContext)
-  if (!context) throw new Error("SortableHandle must be inside SortableItem")
+  if (context === undefined)
+    throw new Error("SortableHandle must be inside SortableItem")
+  if (context === null)
+    return (
+      <span
+        aria-hidden
+        data-slot="sortable-handle"
+        className={cn(
+          "flex h-control w-4 shrink-0 items-center justify-center text-muted-foreground/60 in-data-dragging:text-foreground",
+          className
+        )}
+      >
+        <GripVerticalIcon className="size-4" />
+      </span>
+    )
   const { attributes, listeners, setActivatorNodeRef } = context
   return (
     <button

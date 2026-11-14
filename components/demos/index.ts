@@ -65,6 +65,7 @@ import * as toggleGroupDemos from "./toggle-group"
 import * as toggleDemos from "./toggle"
 import * as tokenInputDemos from "./token-input"
 import * as tooltipDemos from "./tooltip"
+import * as treeSelectDemos from "./tree-select"
 import * as treeDemos from "./tree"
 import * as unsavedChangesBarDemos from "./unsaved-changes-bar"
 import * as virtualListDemos from "./virtual-list"
@@ -134,6 +135,7 @@ export const demos: Record<string, Record<string, ComponentType>> = {
   "toggle": toggleDemos,
   "token-input": tokenInputDemos,
   "tooltip": tooltipDemos,
+  "tree-select": treeSelectDemos,
   "tree": treeDemos,
   "unsaved-changes-bar": unsavedChangesBarDemos,
   "virtual-list": virtualListDemos,

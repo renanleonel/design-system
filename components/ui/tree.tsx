@@ -3,7 +3,7 @@
 import * as React from "react"
 import { defaultRangeExtractor, useVirtualizer } from "@tanstack/react-virtual"
 import { cn } from "cn"
-import { ChevronRightIcon } from "lucide-react"
+import { CheckIcon, ChevronRightIcon } from "lucide-react"
 
 export type TreeNode = {
   /** Unique across the whole tree. */
@@ -30,33 +30,48 @@ type Row = {
 const ROW_HEIGHT = 36
 const TYPEAHEAD_MS = 500
 
+type SingleProps = {
+  multiple?: false
+  /** Selected node id. */
+  value?: string | null
+  defaultValue?: string | null
+  onValueChange?: (id: string, node: TreeNode) => void
+}
+type MultipleProps = {
+  /** Checkbox rows; each node toggles on its own. */
+  multiple: true
+  /** Selected node ids. */
+  value?: string[]
+  defaultValue?: string[]
+  onValueChange?: (ids: string[], node: TreeNode) => void
+}
+
 /**
  * A file-explorer style tree (WAI-ARIA tree pattern). Only the rows in view
  * render, so it stays fast at tens of thousands of nodes. Focus stays on the
  * tree and moves with `aria-activedescendant`: arrows move and open/close,
  * Home/End jump, Enter/Space select, `*` opens siblings, typing jumps to a
- * label. `filter` shows matches with their ancestors (debounce it, see
- * `useDebouncedState`). Give it a height; it scrolls inside (`max-h-96` default).
+ * label. Pointer: the chevron opens and closes without selecting; the rest of
+ * the row selects (double-click also opens a folder). The highlight covers
+ * only the icon and label, from the row's indent. `multiple` turns rows into
+ * checkboxes. `filter` shows matches with their ancestors (debounce it, see
+ * `useDebouncedState`). Give it a height; it scrolls inside (`max-h-96`
+ * default).
  */
 function Tree({
   nodes,
-  value,
-  defaultValue = null,
-  onValueChange,
   expanded,
   defaultExpanded = [],
   onExpandedChange,
   filter = "",
   empty = "No matches.",
   className,
+  ref,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledby,
-}: {
+  ...selection
+}: (SingleProps | MultipleProps) & {
   nodes: TreeNode[]
-  /** Selected node id. */
-  value?: string | null
-  defaultValue?: string | null
-  onValueChange?: (id: string, node: TreeNode) => void
   /** Open node ids. */
   expanded?: string[]
   defaultExpanded?: string[]
@@ -66,12 +81,19 @@ function Tree({
   /** Shown when `filter` matches nothing. */
   empty?: React.ReactNode
   className?: string
+  /** The scrolling `role="tree"` element, e.g. to focus it. */
+  ref?: React.Ref<HTMLDivElement>
   "aria-label"?: string
   "aria-labelledby"?: string
 }) {
   const baseId = React.useId()
-  const [selectedState, setSelectedState] = React.useState(defaultValue)
-  const selected = value !== undefined ? value : selectedState
+  const multiple = selection.multiple === true
+  const [selectedState, setSelectedState] = React.useState<string[]>(() =>
+    toIds(selection.defaultValue)
+  )
+  const selectedIds =
+    selection.value !== undefined ? toIds(selection.value) : selectedState
+  const selectedSet = React.useMemo(() => new Set(selectedIds), [selectedIds])
   const [expandedState, setExpandedState] = React.useState(defaultExpanded)
   const openIds = expanded ?? expandedState
   const openSet = React.useMemo(() => new Set(openIds), [openIds])
@@ -112,7 +134,15 @@ function Tree({
       list.forEach((node, i) => {
         const kids = kidsOf(node)
         const open = kids.length > 0 && (included ? true : openSet.has(node.id))
-        out.push({ node, depth, parentId, kids, open, setSize: list.length, pos: i + 1 })
+        out.push({
+          node,
+          depth,
+          parentId,
+          kids,
+          open,
+          setSize: list.length,
+          pos: i + 1,
+        })
         if (open) walk(kids, depth + 1, node.id)
       })
     }
@@ -128,10 +158,15 @@ function Tree({
   const [activeId, setActiveId] = React.useState<string | null>(null)
   // The active row falls back to the selection, then the first row.
   const activeIndex =
-    indexOf.get(activeId ?? "") ?? indexOf.get(selected ?? "") ?? 0
+    indexOf.get(activeId ?? "") ?? indexOf.get(selectedIds[0] ?? "") ?? 0
   const active = rows[activeIndex]
 
   const scroller = React.useRef<HTMLDivElement>(null)
+  const setScroller = (el: HTMLDivElement | null) => {
+    scroller.current = el
+    if (typeof ref === "function") ref(el)
+    else if (ref) ref.current = el
+  }
   // eslint-disable-next-line react-hooks/incompatible-library -- TanStack Virtual returns non-memoizable functions by design
   const virtualizer = useVirtualizer({
     count: rows.length,
@@ -159,9 +194,18 @@ function Tree({
   }
 
   const select = (row: Row) => {
-    if (row.node.disabled) return
-    setSelectedState(row.node.id)
-    onValueChange?.(row.node.id, row.node)
+    const { node } = row
+    if (node.disabled) return
+    if (selection.multiple) {
+      const next = selectedSet.has(node.id)
+        ? selectedIds.filter((id) => id !== node.id)
+        : [...selectedIds, node.id]
+      setSelectedState(next)
+      selection.onValueChange?.(next, node)
+    } else {
+      setSelectedState([node.id])
+      selection.onValueChange?.(node.id, node)
+    }
   }
 
   const toggle = (row: Row, open = !row.open) => {
@@ -207,7 +251,8 @@ function Tree({
         if (included) break
         const next = new Set(openSet)
         for (const r of rows)
-          if (r.parentId === active.parentId && r.kids.length) next.add(r.node.id)
+          if (r.parentId === active.parentId && r.kids.length)
+            next.add(r.node.id)
         setOpen(next)
         break
       }
@@ -247,9 +292,10 @@ function Tree({
 
   return (
     <div
-      ref={scroller}
+      ref={setScroller}
       role="tree"
       tabIndex={0}
+      aria-multiselectable={multiple || undefined}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
       aria-activedescendant={active ? rowId(active.node.id) : undefined}
@@ -268,6 +314,7 @@ function Tree({
         {virtualizer.getVirtualItems().map((v) => {
           const row = rows[v.index]
           const { node } = row
+          const isSelected = selectedSet.has(node.id)
           return (
             <div
               key={v.key}
@@ -279,15 +326,17 @@ function Tree({
               aria-setsize={row.setSize}
               aria-posinset={row.pos}
               aria-expanded={row.kids.length ? row.open : undefined}
-              aria-selected={selected === node.id}
+              aria-selected={isSelected}
               aria-disabled={node.disabled || undefined}
               data-active={v.index === activeIndex || undefined}
-              data-selected={selected === node.id || undefined}
+              data-selected={isSelected || undefined}
               data-disabled={node.disabled || undefined}
               onClick={() => {
                 setActiveId(node.id)
                 select(row)
-                toggle(row)
+              }}
+              onDoubleClick={() => {
+                if (!multiple) toggle(row)
               }}
               style={
                 {
@@ -296,30 +345,64 @@ function Tree({
                 } as React.CSSProperties
               }
               className={cn(
-                "absolute inset-x-0 top-0 flex h-9 cursor-default items-center gap-1.5 rounded-md ps-[calc(var(--depth)*--spacing(4)+--spacing(1.5))] pe-2 text-sm hover:bg-muted/60 pointer-coarse:h-11",
-                "data-selected:bg-accent data-selected:text-accent-foreground data-disabled:opacity-50",
-                "group-focus-visible/tree:data-active:outline-2 group-focus-visible/tree:data-active:-outline-offset-2 group-focus-visible/tree:data-active:outline-(--ds-focus-ring)",
+                "group/row absolute inset-x-0 top-0 flex h-9 cursor-default items-center gap-0.5 ps-[calc(var(--depth)*--spacing(4)+--spacing(1))] pe-1 text-sm pointer-coarse:h-11",
+                "data-disabled:opacity-50",
                 "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
               )}
             >
               {row.kids.length ? (
-                <ChevronRightIcon
+                // Opens and closes only, never selects. Not a button: focus
+                // stays on the tree (aria-activedescendant).
+                <span
                   aria-hidden
-                  className={cn(
-                    "text-muted-foreground transition-transform duration-150 ease-out motion-reduce:transition-none rtl:-scale-x-100",
-                    row.open && "rotate-90 rtl:-rotate-90"
-                  )}
-                />
-              ) : (
-                <span aria-hidden className="size-4 shrink-0" />
-              )}
-              {node.icon && (
-                <span aria-hidden className="flex text-muted-foreground">
-                  {node.icon}
+                  data-slot="tree-toggle"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setActiveId(node.id)
+                    toggle(row)
+                  }}
+                  onDoubleClick={(e) => e.stopPropagation()}
+                  className="flex size-6 shrink-0 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground pointer-coarse:size-9"
+                >
+                  <ChevronRightIcon
+                    className={cn(
+                      "transition-transform duration-150 ease-out motion-reduce:transition-none rtl:-scale-x-100",
+                      row.open && "rotate-90 rtl:-rotate-90"
+                    )}
+                  />
                 </span>
+              ) : (
+                <span
+                  aria-hidden
+                  className="size-6 shrink-0 pointer-coarse:size-9"
+                />
               )}
-              <span className="truncate" title={node.label}>
-                <Highlight text={node.label} query={query} />
+              <span
+                data-slot="tree-label"
+                className={cn(
+                  "flex h-7 max-w-full min-w-0 items-center gap-1.5 rounded-md px-1.5 transition-colors group-hover/row:bg-muted/60 pointer-coarse:h-9",
+                  !multiple &&
+                    "group-data-selected/row:bg-accent group-data-selected/row:text-accent-foreground",
+                  "group-focus-visible/tree:group-data-active/row:outline-2 group-focus-visible/tree:group-data-active/row:-outline-offset-2 group-focus-visible/tree:group-data-active/row:outline-(--ds-focus-ring)"
+                )}
+              >
+                {multiple && (
+                  <span
+                    aria-hidden
+                    data-slot="tree-checkbox"
+                    className="flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input text-primary-foreground transition-colors group-data-selected/row:border-primary group-data-selected/row:bg-primary dark:bg-input/30 dark:group-data-selected/row:bg-primary"
+                  >
+                    <CheckIcon className="size-3.5! opacity-0 group-data-selected/row:opacity-100" />
+                  </span>
+                )}
+                {node.icon && (
+                  <span aria-hidden className="flex text-muted-foreground">
+                    {node.icon}
+                  </span>
+                )}
+                <span className="truncate" title={node.label}>
+                  <Highlight text={node.label} query={query} />
+                </span>
               </span>
             </div>
           )
@@ -343,4 +426,20 @@ function Highlight({ text, query }: { text: string; query: string }) {
   )
 }
 
-export { Tree }
+const toIds = (v: string | string[] | null | undefined) =>
+  v == null ? [] : Array.isArray(v) ? v : [v]
+
+/** Every node by id, e.g. to show the labels of selected ids. */
+function indexTree(nodes: TreeNode[]) {
+  const map = new Map<string, TreeNode>()
+  const walk = (list: TreeNode[]) => {
+    for (const node of list) {
+      map.set(node.id, node)
+      if (node.children) walk(node.children)
+    }
+  }
+  walk(nodes)
+  return map
+}
+
+export { Tree, indexTree }

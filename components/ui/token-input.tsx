@@ -107,7 +107,7 @@ function TokenInput({
         }
       }}
       className={cn(
-        "flex min-h-control w-full flex-wrap items-center gap-1 rounded-control border border-input bg-transparent bg-clip-padding px-2.5 py-1 text-base transition-colors focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-(--ds-focus-ring) has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=token]:ps-1 data-disabled:pointer-events-none data-disabled:opacity-50 sm:text-sm dark:bg-input/30",
+        "group/token-input flex min-h-control w-full flex-wrap items-center gap-1 rounded-control border border-input bg-transparent bg-clip-padding px-2.5 py-1 text-base transition-colors focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-(--ds-focus-ring) has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=token]:ps-1 sm:text-sm dark:bg-input/30 data-disabled:pointer-events-none data-disabled:opacity-50",
         className
       )}
     >
@@ -125,7 +125,9 @@ function TokenInput({
             <Button
               variant="ghost"
               size="icon-xs"
-              aria-label={error ? `Remove ${token} (${error})` : `Remove ${token}`}
+              aria-label={
+                error ? `Remove ${token} (${error})` : `Remove ${token}`
+              }
               disabled={disabled}
               onClick={() => remove(i)}
               className="-ms-1 text-current opacity-60 hover:opacity-100"
@@ -175,7 +177,12 @@ function TokenInput({
           if (draft.trim()) add(draft)
           onBlur?.(e)
         }}
-        className="min-w-24 flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
+        // At rest beside tokens it collapses, so it never wraps onto a line of
+        // its own (an empty extra row); focusing gives it room to type.
+        className={cn(
+          "min-w-24 flex-1 bg-transparent outline-none placeholder:text-muted-foreground",
+          tokens.length > 0 && "group-[:not(:focus-within)]/token-input:min-w-0"
+        )}
         {...aria}
       />
       {name && <input type="hidden" name={name} value={tokens.join(",")} />}

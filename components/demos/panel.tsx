@@ -14,7 +14,7 @@ import {
   PanelHeader,
 } from "@/components/ui/panel"
 
-/** A tray with concentric cards and one primary action. See /examples for a full composition. */
+/** A tray with concentric cards and one primary action. The home page shows a full composition (components/examples/releases-panel). */
 export function Default() {
   return (
     <Panel className="w-full max-w-md">

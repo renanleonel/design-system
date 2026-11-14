@@ -44,6 +44,6 @@ pnpm typecheck && pnpm lint && pnpm check:contrast && pnpm registry:build && pnp
 ```
 
 - `audit:ui` starts `next start` on :3210, so run `pnpm build` first (or point `AUDIT_URL` at a running server). It fails on icons off their label's center by >0.5px, horizontal overflow, select popups narrower than or offset from their trigger, unnamed icon-only buttons, console errors, and any axe WCAG 2.2 A/AA violation. It opens every select, dialog and dropdown menu.
-- Narrow it: `AUDIT_PAGES=/blocks/projects,/examples` or `AUDIT_SHARD=2/4`.
+- Narrow it: `AUDIT_PAGES=/blocks/projects,/themes` or `AUDIT_SHARD=2/4`.
 - Debug one axe failure: `node scripts/axe-detail.mjs /path [rule]` prints the failing HTML.
 - Commit the generated files with the change; CI fails when `registry:build` produces a diff.

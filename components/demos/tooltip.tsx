@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import {
   Tooltip,
   TooltipContent,
+  TooltipOverflow,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
@@ -15,7 +16,9 @@ export function Default() {
   return (
     <Tooltip>
       <TooltipTrigger
-        render={<Button variant="outline" size="icon" aria-label="New project" />}
+        render={
+          <Button variant="outline" size="icon" aria-label="New project" />
+        }
       >
         <PlusIcon />
       </TooltipTrigger>
@@ -55,5 +58,28 @@ export function WithHotkey() {
         ))}
       </div>
     </TooltipProvider>
+  )
+}
+
+const FILES = [
+  "Q3 report.pdf",
+  "Relatório trimestral de desempenho comercial — região Nordeste.xlsx",
+  "logo.svg",
+  "Contrato de prestação de serviços assinado por Maria Eduarda dos Santos.pdf",
+]
+
+/**
+ * `TooltipOverflow` truncates its text and shows the tooltip only when it's
+ * cut off: hover the long names, not the short ones.
+ */
+export function Overflow() {
+  return (
+    <ul className="w-56 divide-y rounded-lg text-sm shadow-border">
+      {FILES.map((name) => (
+        <li key={name} className="px-3 py-2">
+          <TooltipOverflow>{name}</TooltipOverflow>
+        </li>
+      ))}
+    </ul>
   )
 }

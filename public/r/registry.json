@@ -6,7 +6,7 @@
     {
       "name": "base",
       "type": "registry:base",
-      "title": "renan/ui",
+      "title": "renanleonel/ui",
       "description": "Everything: tokens, default theme, utils and all components.",
       "config": {
         "style": "base-nova",
@@ -83,6 +83,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/token-input.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree-select.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/unsaved-changes-bar.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/virtual-list.json"
@@ -1018,7 +1019,7 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "Date Picker",
-      "description": "A form field that opens a calendar, for a single date or a range.",
+      "description": "A form field that opens a calendar, for a single date, a range, or a date and time.",
       "dependencies": [
         "cn@^0.5.2",
         "date-fns@^4.4.0",
@@ -1029,6 +1030,7 @@
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/calendar.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/time-input.json",
         "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json"
       ],
       "files": [
@@ -1819,12 +1821,15 @@
       "name": "time-input",
       "type": "registry:ui",
       "title": "Time Input",
-      "description": "A time of day with the browser's own segmented field and native picker on touch.",
+      "description": "A time of day, typed in the browser's segmented field or picked from a styled list; plus a start–end range as one field.",
       "dependencies": [
-        "cn@^0.5.2"
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json"
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json"
       ],
       "files": [
         {
@@ -1941,6 +1946,29 @@
       "files": [
         {
           "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tree-select",
+      "type": "registry:ui",
+      "title": "Tree Select",
+      "description": "A select whose options are a searchable tree; pick one node or check several.",
+      "dependencies": [
+        "cn@^0.5.2",
+        "lucide-react@^1.72.0"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree.json",
+        "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-debounce.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/tree-select.tsx",
           "type": "registry:ui"
         }
       ]

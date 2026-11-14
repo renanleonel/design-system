@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import { getComponents } from "@/lib/docs"
 
-export const metadata: Metadata = { title: "Components · renan/ui" }
+export const metadata: Metadata = { title: "Components" }
 
 export default function ComponentsIndex() {
   const components = getComponents()

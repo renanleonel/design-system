@@ -22,6 +22,16 @@ const VirtualScroll = React.createContext<React.RefObject<
 const VirtualRow = React.createContext<{ index: number; size: number } | null>(
   null
 )
+/**
+ * The field's whole `InputGroup` (addons included), so the popup anchors to
+ * and matches the width of what people see, not just the bare `<input>`.
+ */
+const FieldAnchor = React.createContext<{
+  element: HTMLDivElement | null
+  set: (element: HTMLDivElement | null) => void
+} | null>(null)
+/** Inputs inside the popup (search fields) never become the anchor. */
+const InPopup = React.createContext(false)
 
 function Combobox<
   Value,
@@ -32,17 +42,24 @@ function Combobox<
   ...props
 }: ComboboxPrimitive.Root.Props<Value, Multiple, Item>) {
   const scrollTo = React.useRef<((index: number) => void) | null>(null)
+  const [field, setField] = React.useState<HTMLDivElement | null>(null)
+  const anchor = React.useMemo(
+    () => ({ element: field, set: setField }),
+    [field]
+  )
   return (
-    <VirtualScroll value={scrollTo}>
-      <ComboboxPrimitive.Root
-        {...(props as ComboboxPrimitive.Root.Props<Value, Multiple, Item>)}
-        onItemHighlighted={(item, details) => {
-          // A virtualized row may not be mounted yet: bring it in first.
-          if (details.reason !== "pointer") scrollTo.current?.(details.index)
-          onItemHighlighted?.(item, details)
-        }}
-      />
-    </VirtualScroll>
+    <FieldAnchor value={anchor}>
+      <VirtualScroll value={scrollTo}>
+        <ComboboxPrimitive.Root
+          {...(props as ComboboxPrimitive.Root.Props<Value, Multiple, Item>)}
+          onItemHighlighted={(item, details) => {
+            // A virtualized row may not be mounted yet: bring it in first.
+            if (details.reason !== "pointer") scrollTo.current?.(details.index)
+            onItemHighlighted?.(item, details)
+          }}
+        />
+      </VirtualScroll>
+    </FieldAnchor>
   )
 }
 
@@ -95,8 +112,13 @@ function ComboboxInput({
   showTrigger?: boolean
   showClear?: boolean
 }) {
+  const fieldAnchor = React.use(FieldAnchor)
+  const inPopup = React.use(InPopup)
   return (
-    <InputGroup className={cn("w-auto", className)}>
+    <InputGroup
+      ref={inPopup ? undefined : fieldAnchor?.set}
+      className={cn("w-auto", className)}
+    >
       <ComboboxPrimitive.Input
         render={<InputGroupInput disabled={disabled} />}
         {...props}
@@ -127,12 +149,15 @@ function ComboboxContent({
   align = "start",
   alignOffset = 0,
   anchor,
+  children,
   ...props
 }: ComboboxPrimitive.Popup.Props &
   Pick<
     ComboboxPrimitive.Positioner.Props,
     "side" | "align" | "sideOffset" | "alignOffset" | "anchor"
   >) {
+  const field = React.use(FieldAnchor)?.element
+  const resolved = anchor ?? field ?? undefined
   return (
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Positioner
@@ -140,18 +165,20 @@ function ComboboxContent({
         sideOffset={sideOffset}
         align={align}
         alignOffset={alignOffset}
-        anchor={anchor}
+        anchor={resolved}
         className="isolate z-50"
       >
         <ComboboxPrimitive.Popup
           data-slot="combobox-content"
-          data-chips={!!anchor}
+          data-anchored={!!resolved}
           className={cn(
-            "group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] motion-popover overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-popover data-[chips=true]:min-w-(--anchor-width) *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-control *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none",
+            "group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] motion-popover overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-popover data-[anchored=true]:min-w-(--anchor-width) *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-control *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none",
             className
           )}
           {...props}
-        />
+        >
+          <InPopup value>{children}</InPopup>
+        </ComboboxPrimitive.Popup>
       </ComboboxPrimitive.Positioner>
     </ComboboxPrimitive.Portal>
   )
@@ -246,15 +273,17 @@ function ComboboxItem({
       aria-setsize={virtual?.size}
       aria-posinset={virtual ? virtual.index + 1 : undefined}
       className={cn(
-        "relative flex min-h-9 w-full cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground pointer-coarse:min-h-11 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-9 w-full cursor-default items-center gap-2 rounded-sm px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground pointer-coarse:min-h-11 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
     >
-      {children}
+      {/* Content fills the row, so trailing metadata (`ms-auto`) ends at the
+          row's padding; the check only takes space on the selected row. */}
+      <span className="flex min-w-0 flex-1 items-center gap-2">{children}</span>
       <ComboboxPrimitive.ItemIndicator
         render={
-          <span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center" />
+          <span className="pointer-events-none flex size-4 shrink-0 items-center justify-center" />
         }
       >
         <CheckIcon className="pointer-events-none" />

@@ -17,6 +17,24 @@ export function Default() {
   )
 }
 
+/** `allowHalf`: each star has a left and a right half; arrows step by 0.5. */
+export function HalfStars() {
+  const [value, setValue] = React.useState<number | null>(3.5)
+  return (
+    <div className="flex items-center gap-3">
+      <Rating
+        allowHalf
+        value={value}
+        onValueChange={setValue}
+        aria-label="Your rating"
+      />
+      <span className="text-sm text-muted-foreground tabular-nums">
+        {value ? `${value} of 5` : "Not rated"}
+      </span>
+    </div>
+  )
+}
+
 /** Review summaries: read-only, with fractions. */
 export function ReadOnly() {
   return (

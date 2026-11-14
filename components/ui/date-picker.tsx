@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { TimeSlots } from "@/components/ui/time-input"
 import { useIsMobile } from "@/hooks/use-media-query"
 
 type CalendarProps = React.ComponentProps<typeof Calendar>
@@ -250,7 +251,9 @@ function DateRangePicker({
         <input
           type="hidden"
           name={name}
-          value={range?.from && range.to ? `${iso(range.from)}/${iso(range.to)}` : ""}
+          value={
+            range?.from && range.to ? `${iso(range.from)}/${iso(range.to)}` : ""
+          }
           required={required}
         />
       )}
@@ -281,4 +284,120 @@ function DateRangePicker({
   )
 }
 
-export { DatePicker, DateRangePicker }
+/**
+ * A date and a time in one field: the calendar with a column of time slots
+ * beside it (a row under it on phones). Picking a day keeps the time already
+ * set; picking a time completes the value and closes it. Until a time is
+ * picked, a new day starts at `defaultTime`. `name` submits local ISO
+ * (`2026-11-13T09:30`).
+ */
+function DateTimePicker({
+  value,
+  defaultValue,
+  onValueChange,
+  placeholder = "Pick a date and time",
+  dateFormat = "PPP, p",
+  interval = 30,
+  defaultTime = "09:00",
+  name,
+  required,
+  onBlur,
+  captionLayout,
+  startMonth,
+  endMonth,
+  disabledDays,
+  calendarProps,
+  className,
+  ...field
+}: FieldProps & {
+  value?: Date | null
+  defaultValue?: Date | null
+  onValueChange?: (date: Date | undefined) => void
+  /** Minutes between time slots. */
+  interval?: number
+  /** "HH:mm" a day gets when picked before any time. */
+  defaultTime?: string
+}) {
+  const [open, setOpen] = React.useState(false)
+  const [internal, setInternal] = React.useState(defaultValue ?? undefined)
+  const date = value !== undefined ? (value ?? undefined) : internal
+  const set = (next: Date | undefined) => {
+    setInternal(next)
+    onValueChange?.(next)
+  }
+  const withTime = (day: Date, time: string) => {
+    const [h = 0, m = 0] = time.split(":").map(Number)
+    const next = new Date(day)
+    next.setHours(h, m, 0, 0)
+    return next
+  }
+  const close = () => {
+    setOpen(false)
+    onBlur?.()
+  }
+  return (
+    <Popover
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next)
+        if (!next) onBlur?.()
+      }}
+    >
+      <DateField
+        text={date ? format(date, dateFormat) : undefined}
+        placeholder={placeholder}
+        onClear={() => set(undefined)}
+        className={cn("w-72", className)}
+        {...field}
+      />
+      {name && (
+        <input
+          type="hidden"
+          name={name}
+          value={date ? format(date, "yyyy-MM-dd'T'HH:mm") : ""}
+          required={required}
+        />
+      )}
+      <PopoverContent
+        className="w-auto gap-0 p-0 max-sm:p-0 sm:flex-row"
+        align="start"
+      >
+        <Calendar
+          mode="single"
+          autoFocus
+          selected={date}
+          defaultMonth={date}
+          captionLayout={captionLayout}
+          startMonth={startMonth}
+          endMonth={endMonth}
+          disabled={disabledDays}
+          onSelect={(day) => {
+            if (!day) return
+            set(withTime(day, date ? format(date, "HH:mm") : defaultTime))
+          }}
+          {...calendarProps}
+        />
+        {/* Same height as the calendar beside it, scrolling inside. */}
+        <div className="relative max-sm:border-t sm:w-32 sm:border-s">
+          <TimeSlots
+            aria-label="Time"
+            value={date ? format(date, "HH:mm") : undefined}
+            interval={interval}
+            formatLabel={(time) =>
+              format(withTime(new Date(2000, 0, 1), time), "p")
+            }
+            isDisabled={date ? undefined : () => true}
+            onPick={(time) => {
+              if (!date) return
+              set(withTime(date, time))
+              close()
+            }}
+            className="max-sm:max-h-none max-sm:flex-row max-sm:overflow-x-auto max-sm:overflow-y-hidden sm:absolute sm:inset-0 sm:max-h-none"
+          />
+        </div>
+      </PopoverContent>
+    </Popover>
+  )
+}
+
+export { DatePicker, DateRangePicker, DateTimePicker }

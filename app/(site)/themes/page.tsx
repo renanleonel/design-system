@@ -1,7 +1,12 @@
 import { readdirSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 
+import type { Metadata } from "next"
+
 import { Playground } from "@/components/playground/playground"
+import { installCommand } from "@/lib/docs"
+
+export const metadata: Metadata = { title: "Themes" }
 
 type ThemeFile = {
   cssVars: { light?: Record<string, string>; dark?: Record<string, string> }
@@ -38,7 +43,12 @@ export default function Page() {
   return (
     <>
       <style>{css}</style>
-      <Playground themes={themes.map((t) => t.name)} />
+      <Playground
+        themes={themes.map((t) => ({
+          ...t,
+          install: installCommand(`theme-${t.name}`),
+        }))}
+      />
     </>
   )
 }

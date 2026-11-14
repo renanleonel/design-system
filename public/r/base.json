@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "base",
-  "title": "renan/ui",
+  "title": "renanleonel/ui",
   "description": "Everything: tokens, default theme, utils and all components.",
   "registryDependencies": [
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json",
@@ -70,6 +70,7 @@
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/toggle.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/token-input.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
+    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree-select.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tree.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/unsaved-changes-bar.json",
     "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/virtual-list.json"

@@ -14,7 +14,7 @@ const fontMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: { default: "renan/ui", template: "%s · renan/ui" },
+  title: { default: "renanleonel/ui", template: "%s · renanleonel/ui" },
   description: "Components and blocks for shipping SaaS fast.",
 }
 

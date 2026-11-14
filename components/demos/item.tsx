@@ -17,6 +17,7 @@ import {
   ItemSeparator,
   ItemTitle,
 } from "@/components/ui/item"
+import { TooltipOverflow } from "@/components/ui/tooltip"
 
 export function Default() {
   return (
@@ -94,7 +95,11 @@ const WORST_PEOPLE = [
   { name: "王秀英", email: "wang.xiuying@example.com" },
 ]
 
-/** Worst case: long compound names, an unbreakable email, a two-letter name and CJK, in a narrow column. */
+/**
+ * Worst case: long compound names, an unbreakable email, a two-letter name and
+ * CJK, in a narrow column. Each truncates to one line; `TooltipOverflow` shows
+ * the full text only on the rows that got cut.
+ */
 export function WorstCase() {
   return (
     <ItemGroup className="max-w-xs">
@@ -108,8 +113,12 @@ export function WorstCase() {
               </Avatar>
             </ItemMedia>
             <ItemContent>
-              <ItemTitle>{person.name}</ItemTitle>
-              <ItemDescription>{person.email}</ItemDescription>
+              <ItemTitle className="w-full">
+                <TooltipOverflow>{person.name}</TooltipOverflow>
+              </ItemTitle>
+              <ItemDescription className="line-clamp-none">
+                <TooltipOverflow>{person.email}</TooltipOverflow>
+              </ItemDescription>
             </ItemContent>
             <ItemActions>
               <Button variant="outline" size="sm">
