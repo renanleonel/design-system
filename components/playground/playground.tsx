@@ -181,6 +181,8 @@ function Picker({
       items={items}
       value={value}
       onValueChange={(v) => v && onValueChange(v)}
+      // The native picker on touch screens takes the name from Select itself.
+      aria-label={label}
     >
       <SelectTrigger className="w-36" aria-label={label}>
         <SelectValue />

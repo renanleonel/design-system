@@ -47,6 +47,8 @@ function Slider({
         {values.map((_, index) => (
           <SliderPrimitive.Thumb
             data-slot="slider-thumb"
+            // A thumb is its position in the value array; Base UI keys it by index too.
+            // react-doctor-disable-next-line react-doctor/no-array-index-as-key
             key={index}
             index={index}
             // The label belongs on each thumb's input (that's what gets focus).

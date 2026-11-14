@@ -4,7 +4,7 @@ import { DemoMarketingFrame } from "@/components/playground/demo-marketing"
 export default function Page() {
   return (
     <DemoMarketingFrame>
-      <PricingPage />
+      <PricingPage contactHref="mailto:sales@example.com" />
     </DemoMarketingFrame>
   )
 }

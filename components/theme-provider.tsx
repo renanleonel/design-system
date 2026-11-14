@@ -15,7 +15,9 @@ function ThemeProvider({
       disableTransitionOnChange
       // The inline script runs from the server HTML. On the client React 19 warns about
       // rendering <script>, so mark it as a data block there (never executed anyway).
+      // The mismatch is confined to that inert attribute; the visible tree is identical.
       scriptProps={
+        // react-doctor-disable-next-line react-doctor/no-hydration-branch-on-browser-global
         typeof window === "undefined" ? undefined : { type: "application/json" }
       }
       {...props}

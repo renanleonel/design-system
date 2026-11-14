@@ -6,6 +6,9 @@ const NAME_PARTICLES =
   /^(da|de|do|das|dos|di|du|del|della|der|den|van|von|la|le|y|e|bin|al)$/i
 const NAME_SUFFIXES = /^(jr|sr|ii|iii|iv|neto|filho|j[uú]nior|sobrinho)\.?$/i
 
+// Built once on first use; avatars call initials() for every row of a list.
+let graphemes: Intl.Segmenter | undefined
+
 /**
  * Up to two initials for an avatar fallback: first and last word, skipping
  * particles ("dos", "de la") and suffixes (Jr, III, Neto). Counts graphemes,
@@ -23,7 +26,9 @@ export function initials(name: string) {
   while (core.length > 1 && NAME_SUFFIXES.test(core[core.length - 1]))
     core.pop()
   if (!core.length) return ""
-  const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" })
+  const segmenter = (graphemes ??= new Intl.Segmenter(undefined, {
+    granularity: "grapheme",
+  }))
   const first = (word: string) =>
     segmenter.segment(word)[Symbol.iterator]().next().value?.segment ?? ""
   const picked =

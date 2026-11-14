@@ -108,13 +108,85 @@ function CopyButton({
   )
 }
 
+type FieldProps = Omit<InputProps, "clearable" | "copyable">
+
+/** Clears the field the way typing does, refocuses it, then calls `onClear`. */
+function useClear(
+  inputRef: React.RefObject<HTMLInputElement | null>,
+  onClear?: () => void
+) {
+  return () => {
+    const input = inputRef.current
+    if (!input) return
+    clearNative(input)
+    input.focus()
+    onClear?.()
+  }
+}
+
 /**
- * Single-line text field. `clearable` adds an X while there's a value.
- * `type="file"` renders as a field that shows the picked file's name (or
- * "3 files") in place of the browser's "Choose File" button, with an X to
- * unselect. `copyable` adds a copy button (a check confirms the copy).
+ * `type="file"`: the picked file's name (or "3 files") in place of the
+ * browser's "Choose File" button, with an X to unselect.
  */
-function Input({
+function FileInput({
+  className,
+  onClear,
+  onChange,
+  onFocus,
+  ref,
+  ...props
+}: FieldProps) {
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  const [files, setFiles] = React.useState<string[]>([])
+  const clear = useClear(inputRef, onClear)
+  const canClear = files.length > 0 && !props.disabled && !props.readOnly
+  const summary =
+    files.length > 1 ? `${files.length} files` : (files[0] ?? undefined)
+  return (
+    <div
+      data-slot="input-wrapper"
+      className={cn("relative w-full min-w-0", className)}
+    >
+      <label
+        data-slot="input"
+        data-empty={!summary || undefined}
+        className={cn(
+          inputClasses,
+          "flex cursor-pointer items-center gap-2 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-(--ds-focus-ring) has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input/50 has-disabled:opacity-50 has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 data-empty:text-muted-foreground dark:has-disabled:bg-input/80 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
+          canClear && "pe-9"
+        )}
+      >
+        <InputPrimitive
+          ref={mergeRefs(ref, inputRef)}
+          type="file"
+          className="sr-only"
+          onChange={(e) => {
+            setFiles(Array.from(e.target.files ?? [], (f) => f.name))
+            onChange?.(e)
+          }}
+          onFocus={onFocus}
+          {...props}
+        />
+        <UploadIcon
+          aria-hidden
+          className="size-4 shrink-0 text-muted-foreground"
+        />
+        <span className="min-w-0 flex-1 truncate" title={files.join(", ")}>
+          {summary ?? props.placeholder ?? "Choose file"}
+        </span>
+      </label>
+      {canClear && (
+        <ClearButton
+          label={files.length > 1 ? "Remove files" : "Remove file"}
+          onClear={clear}
+        />
+      )}
+    </div>
+  )
+}
+
+/** A text field with a clear X (`clearable`) and/or a copy button (`copyable`). */
+function AffixedInput({
   className,
   type,
   clearable,
@@ -126,95 +198,15 @@ function Input({
   ...props
 }: InputProps) {
   const inputRef = React.useRef<HTMLInputElement>(null)
-  const isFile = type === "file"
   const controlled = props.value !== undefined
   const [uncontrolledFilled, setUncontrolledFilled] = React.useState(
     () => props.defaultValue != null && String(props.defaultValue) !== ""
   )
-  const [files, setFiles] = React.useState<string[]>([])
-
-  if (!clearable && !copyable && !isFile) {
-    return (
-      <InputPrimitive
-        ref={ref}
-        type={type}
-        data-slot="input"
-        className={cn(inputClasses, className)}
-        onChange={onChange}
-        onFocus={onFocus}
-        {...props}
-      />
-    )
-  }
-
-  const filled = isFile
-    ? files.length > 0
-    : controlled
-      ? String(props.value ?? "") !== ""
-      : uncontrolledFilled
-  const canClear =
-    (clearable || isFile) && filled && !props.disabled && !props.readOnly
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isFile) {
-      setFiles(Array.from(e.target.files ?? [], (f) => f.name))
-    } else if (!controlled) {
-      setUncontrolledFilled(e.target.value !== "")
-    }
-    onChange?.(e)
-  }
-
-  const clear = () => {
-    const input = inputRef.current
-    if (!input) return
-    clearNative(input)
-    input.focus()
-    onClear?.()
-  }
-
-  if (isFile) {
-    const summary =
-      files.length > 1 ? `${files.length} files` : (files[0] ?? undefined)
-    return (
-      <div
-        data-slot="input-wrapper"
-        className={cn("relative w-full min-w-0", className)}
-      >
-        <label
-          data-slot="input"
-          data-empty={!summary || undefined}
-          className={cn(
-            inputClasses,
-            "flex cursor-pointer items-center gap-2 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-(--ds-focus-ring) has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input/50 has-disabled:opacity-50 has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 data-empty:text-muted-foreground dark:has-disabled:bg-input/80 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
-            canClear && "pe-9"
-          )}
-        >
-          <InputPrimitive
-            ref={mergeRefs(ref, inputRef)}
-            type="file"
-            className="sr-only"
-            onChange={handleChange}
-            onFocus={onFocus}
-            {...props}
-          />
-          <UploadIcon
-            aria-hidden
-            className="size-4 shrink-0 text-muted-foreground"
-          />
-          <span className="min-w-0 flex-1 truncate" title={files.join(", ")}>
-            {summary ?? props.placeholder ?? "Choose file"}
-          </span>
-        </label>
-        {canClear && (
-          <ClearButton
-            label={files.length > 1 ? "Remove files" : "Remove file"}
-            onClear={clear}
-          />
-        )}
-      </div>
-    )
-  }
-
+  const clear = useClear(inputRef, onClear)
+  const filled = controlled
+    ? String(props.value ?? "") !== ""
+    : uncontrolledFilled
+  const canClear = !!clearable && filled && !props.disabled && !props.readOnly
   return (
     <div
       data-slot="input-wrapper"
@@ -229,7 +221,10 @@ function Input({
           (canClear || copyable) && "pe-9",
           canClear && copyable && "pe-16"
         )}
-        onChange={handleChange}
+        onChange={(e) => {
+          if (!controlled) setUncontrolledFilled(e.target.value !== "")
+          onChange?.(e)
+        }}
         onFocus={(e) => {
           if (copyable && props.readOnly) e.currentTarget.select()
           onFocus?.(e)
@@ -244,6 +239,43 @@ function Input({
         />
       )}
     </div>
+  )
+}
+
+/**
+ * Single-line text field. `clearable` adds an X while there's a value.
+ * `type="file"` renders as a field that shows the picked file's name (or
+ * "3 files") in place of the browser's "Choose File" button, with an X to
+ * unselect. `copyable` adds a copy button (a check confirms the copy).
+ */
+function Input({
+  className,
+  type,
+  clearable,
+  copyable,
+  onClear,
+  ...props
+}: InputProps) {
+  if (type === "file")
+    return <FileInput className={className} onClear={onClear} {...props} />
+  if (clearable || copyable)
+    return (
+      <AffixedInput
+        className={className}
+        type={type}
+        clearable={clearable}
+        copyable={copyable}
+        onClear={onClear}
+        {...props}
+      />
+    )
+  return (
+    <InputPrimitive
+      type={type}
+      data-slot="input"
+      className={cn(inputClasses, className)}
+      {...props}
+    />
   )
 }
 

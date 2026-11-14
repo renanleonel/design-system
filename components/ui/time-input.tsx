@@ -360,11 +360,11 @@ function TimeRangeInput({
           onChange={(e) => set({ ...range, to: e.target.value })}
         />
         <InputGroupAddon align="inline-end" className="gap-1.5">
-          {length && (
+          {length ? (
             <span className="text-xs text-muted-foreground tabular-nums">
               {length}
             </span>
-          )}
+          ) : null}
           <PopoverTrigger
             disabled={disabled}
             render={

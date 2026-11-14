@@ -1,5 +1,7 @@
 "use client"
 
+// Chart stories; the docs load this file on demand (components/demos/index.ts).
+// react-doctor-disable-next-line react-doctor/prefer-dynamic-import
 import {
   Area,
   AreaChart,

@@ -226,7 +226,7 @@ export function ComparisonTable({
   className?: string
 }) {
   const [planId, setPlanId] = React.useState(
-    plans.find((p) => p.highlighted)?.id ?? plans[0]?.id
+    () => plans.find((p) => p.highlighted)?.id ?? plans[0]?.id
   )
   return (
     <div className={cn("@container", className)}>
@@ -502,7 +502,8 @@ export const SAMPLE_FAQ = [
 
 /**
  * A full pricing page: heading, period toggle (in the URL as `?period=`),
- * plans, comparison, FAQ and a closing call to action.
+ * plans, comparison, FAQ and a closing call to action. `contactHref` adds a
+ * "Talk to us" link under the FAQ (a sales page or a mailto:).
  */
 export function PricingPage({
   plans = SAMPLE_PLANS,
@@ -510,12 +511,14 @@ export function PricingPage({
   faq = SAMPLE_FAQ,
   yearlyDiscount = 0.2,
   onSelect,
+  contactHref,
 }: {
   plans?: PricingPlan[]
   comparison?: ComparisonGroup[]
   faq?: { question: string; answer: React.ReactNode }[]
   yearlyDiscount?: number
   onSelect?: (plan: PricingPlan, period: Period) => void
+  contactHref?: string
 }) {
   const [periodParam, setPeriod] = useUrlState("period", "yearly")
   const period: Period = periodParam === "monthly" ? "monthly" : "yearly"
@@ -553,16 +556,18 @@ export function PricingPage({
       <PricingFaq
         items={faq}
         description={
-          <>
-            Can&apos;t find an answer?{" "}
-            <a
-              href="#contact"
-              className="rounded-sm font-medium text-foreground underline underline-offset-4 focus-ring"
-            >
-              Talk to us
-            </a>
-            .
-          </>
+          contactHref && (
+            <>
+              Can&apos;t find an answer?{" "}
+              <a
+                href={contactHref}
+                className="rounded-sm font-medium text-foreground underline underline-offset-4 focus-ring"
+              >
+                Talk to us
+              </a>
+              .
+            </>
+          )
         }
       />
       <CtaBand

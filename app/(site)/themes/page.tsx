@@ -2,15 +2,18 @@ import { readdirSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 
 import type { Metadata } from "next"
+import { z } from "zod"
 
 import { Playground } from "@/components/playground/playground"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import { installCommand } from "@/lib/docs"
 
 export const metadata: Metadata = { title: "Themes" }
 
-type ThemeFile = {
-  cssVars: { light?: Record<string, string>; dark?: Record<string, string> }
-}
+const Vars = z.record(z.string(), z.string())
+const ThemeFile = z.object({
+  cssVars: z.object({ light: Vars.optional(), dark: Vars.optional() }),
+})
 
 function loadThemes() {
   const dir = join(process.cwd(), "registry/themes")
@@ -18,9 +21,9 @@ function loadThemes() {
     .filter((f) => f.endsWith(".json"))
     .map((f) => {
       const name = f.replace(/\.json$/, "")
-      const { cssVars } = JSON.parse(
-        readFileSync(join(dir, f), "utf8")
-      ) as ThemeFile
+      const { cssVars } = ThemeFile.parse(
+        JSON.parse(readFileSync(join(dir, f), "utf8"))
+      )
       return { name, cssVars }
     })
 }
@@ -43,12 +46,14 @@ export default function Page() {
   return (
     <>
       <style>{css}</style>
-      <Playground
-        themes={themes.map((t) => ({
-          ...t,
-          install: installCommand(`theme-${t.name}`),
-        }))}
-      />
+      <TooltipProvider>
+        <Playground
+          themes={themes.map((t) => ({
+            ...t,
+            install: installCommand(`theme-${t.name}`),
+          }))}
+        />
+      </TooltipProvider>
     </>
   )
 }

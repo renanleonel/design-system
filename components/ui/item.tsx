@@ -15,6 +15,9 @@ function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <InGroupContext value={true}>
       <div
+        // Items render as div, a or button (render prop), which can't be <li>,
+        // so the list semantics come from roles.
+        // react-doctor-disable-next-line react-doctor/prefer-tag-over-role
         role="list"
         data-slot="item-group"
         className={cn(

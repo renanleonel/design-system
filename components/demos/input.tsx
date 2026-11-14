@@ -66,7 +66,7 @@ export function Copyable() {
     <Input
       readOnly
       copyable
-      value="sk_live_51Hx8pQ2eZvKYlo2C"
+      value="demo_key_8pQ2eZvKYlo2C"
       aria-label="API key"
       className="max-w-xs font-mono"
     />

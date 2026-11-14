@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 import { cache } from "react"
 import { createHighlighter } from "shiki"
+import { z } from "zod"
 
 import catalog from "@/registry/catalog.json"
 
@@ -17,13 +18,17 @@ type CatalogEntry = {
   description: string
   notes: string[]
 }
-type RegistryItem = {
-  name: string
-  type: string
-  registryDependencies?: string[]
-  dependencies?: string[]
-  files: { path: string }[]
-}
+const RegistrySchema = z.object({
+  items: z.array(
+    z.object({
+      name: z.string(),
+      type: z.string(),
+      registryDependencies: z.array(z.string()).optional(),
+      dependencies: z.array(z.string()).optional(),
+      files: z.array(z.object({ path: z.string() })).default([]),
+    })
+  ),
+})
 
 export type DocEntry = CatalogEntry & { name: string; href: string }
 export type BlockEntry = (typeof catalog.blocks)[number] & { href: string }
@@ -33,8 +38,9 @@ export type NavGroup = { label: string; items: { title: string; href: string }[]
 const read = (path: string) =>
   readFileSync(join(/*turbopackIgnore: true*/ process.cwd(), path), "utf8")
 
+// Validated, so a malformed registry.json fails the build with a readable error.
 const registryItems = cache(
-  () => (JSON.parse(read("registry.json")) as { items: RegistryItem[] }).items
+  () => RegistrySchema.parse(JSON.parse(read("registry.json"))).items
 )
 
 export function registryItem(name: string) {
@@ -210,17 +216,17 @@ export const getStories = cache((name: string): Story[] => {
 
   return stories.map((story) => {
     // Helpers used by the story, and helpers used by those helpers.
-    const used: typeof helpers = []
+    const used = new Set<(typeof helpers)[number]>()
     const visit = (code: string) => {
       for (const h of helpers)
-        if (!used.includes(h) && uses(code, h.id)) {
-          used.push(h)
+        if (!used.has(h) && uses(code, h.id)) {
+          used.add(h)
           visit(h.text)
         }
     }
     visit(story.code)
     const body = [
-      ...helpers.filter((h) => used.includes(h)).map((h) => h.text),
+      ...helpers.filter((h) => used.has(h)).map((h) => h.text),
       story.code,
     ].join("\n\n")
     const importText = imports

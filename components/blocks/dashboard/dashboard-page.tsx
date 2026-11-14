@@ -3,15 +3,6 @@
 import * as React from "react"
 import { cn } from "cn"
 import { ArrowDownRightIcon, ArrowUpRightIcon } from "lucide-react"
-import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-} from "recharts"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -23,16 +14,45 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/components/ui/chart"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useUrlState } from "@/hooks/use-url-state"
+
+// Recharts is most of this page's JavaScript. Load the charts after the first
+// paint; the fallback holds their 16rem height so nothing shifts.
+const RevenueChart = React.lazy(() =>
+  import("./dashboard-charts").then((m) => ({ default: m.RevenueChart }))
+)
+const SignupsChart = React.lazy(() =>
+  import("./dashboard-charts").then((m) => ({ default: m.SignupsChart }))
+)
+const chartFallback = <div aria-hidden className="h-64 w-full" />
+
+/**
+ * Charts measure and lay out their SVG on mount, the page's heaviest work. On
+ * a phone they sit below the tiles, so mount each one only as it nears the
+ * viewport; the placeholder keeps its height, so nothing shifts.
+ */
+function WhenNear({ children }: { children: React.ReactNode }) {
+  const ref = React.useRef<HTMLDivElement>(null)
+  const [near, setNear] = React.useState(false)
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el || near) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) setNear(true)
+      },
+      { rootMargin: "200px 0px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [near])
+  if (near)
+    return <React.Suspense fallback={chartFallback}>{children}</React.Suspense>
+  return (
+    <div ref={ref} aria-hidden className="h-64 w-full" />
+  )
+}
 
 // --- Stat tile -------------------------------------------------------------
 
@@ -223,38 +243,8 @@ const TOP_PROJECTS = [
   { name: "mobile-gateway", requests: 87_000 },
 ]
 
-/**
- * Round axis ticks (dataviz: clean numbers): 0 up to the first "nice" value
- * above the max, in about `count` steps of 1, 2, 2.5 or 5 × 10^n.
- */
-function niceTicks(max: number, count = 4) {
-  const raw = max / count
-  const magnitude = 10 ** Math.floor(Math.log10(raw || 1))
-  const step =
-    [1, 2, 2.5, 5, 10].map((m) => m * magnitude).find((s) => s >= raw) ??
-    magnitude * 10
-  const top = Math.ceil(max / step) * step
-  return Array.from({ length: Math.round(top / step) + 1 }, (_, i) => i * step)
-}
-
-const usd = (n: number) =>
-  n.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  })
-
 const compact = (n: number) =>
   n.toLocaleString("en-US", { notation: "compact", maximumFractionDigits: 1 })
-
-const revenueConfig = {
-  revenue: { label: "Revenue", color: "var(--ds-chart-1)" },
-} satisfies ChartConfig
-
-const signupsConfig = {
-  organic: { label: "Organic", color: "var(--ds-chart-1)" },
-  paid: { label: "Paid", color: "var(--ds-chart-2)" },
-} satisfies ChartConfig
 
 // --- Page --------------------------------------------------------------------
 
@@ -262,8 +252,9 @@ const signupsConfig = {
  * A product dashboard: KPI tiles, a revenue trend, signups by channel, recent
  * activity and top projects. The range lives in the URL (`?range=7d`), so a
  * shared link opens the same view. Swap `sampleData` for your queries.
+ * `activityHref` adds a "View all" link to the activity card.
  */
-export function DashboardPage() {
+export function DashboardPage({ activityHref }: { activityHref?: string } = {}) {
   const [rangeValue, setRange] = useUrlState("range", "30d")
   const range = RANGES.find((r) => r.value === rangeValue) ?? RANGES[1]
   const { revenue, signups, stats } = React.useMemo(
@@ -271,10 +262,6 @@ export function DashboardPage() {
     [range.days]
   )
   const maxRequests = Math.max(...TOP_PROJECTS.map((p) => p.requests))
-  const revenueTicks = niceTicks(Math.max(...revenue.map((r) => r.revenue)))
-  const signupTicks = niceTicks(
-    Math.max(...signups.flatMap((s) => [s.organic, s.paid]))
-  )
 
   return (
     <div className="flex flex-col gap-6">
@@ -309,45 +296,9 @@ export function DashboardPage() {
             <CardDescription>Daily, in USD</CardDescription>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={revenueConfig} className="aspect-auto h-64 w-full">
-              <AreaChart data={revenue} margin={{ left: 0, right: 8, top: 8 }}>
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="date"
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={8}
-                  minTickGap={32}
-                />
-                <YAxis
-                  tickLine={false}
-                  axisLine={false}
-                  width={44}
-                  domain={[0, revenueTicks.at(-1) ?? "auto"]}
-                  ticks={revenueTicks}
-                  tickFormatter={(v: number) => `$${compact(v)}`}
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={
-                    <ChartTooltipContent
-                      indicator="line"
-                      valueFormatter={(v) => usd(Number(v))}
-                    />
-                  }
-                />
-                <Area
-                  dataKey="revenue"
-                  type="monotone"
-                  stroke="var(--color-revenue)"
-                  strokeWidth={2}
-                  fill="var(--color-revenue)"
-                  fillOpacity={0.1}
-                  isAnimationActive={false}
-                  activeDot={{ r: 4, strokeWidth: 2, stroke: "var(--card)" }}
-                />
-              </AreaChart>
-            </ChartContainer>
+            <WhenNear>
+              <RevenueChart data={revenue} />
+            </WhenNear>
           </CardContent>
         </Card>
 
@@ -357,49 +308,25 @@ export function DashboardPage() {
             <CardDescription>Weekly, by channel</CardDescription>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={signupsConfig} className="aspect-auto h-64 w-full">
-              <BarChart data={signups} barGap={2} margin={{ left: 0, right: 8, top: 8 }}>
-                <CartesianGrid vertical={false} />
-                <XAxis dataKey="week" tickLine={false} axisLine={false} tickMargin={8} />
-                <YAxis
-                  tickLine={false}
-                  axisLine={false}
-                  width={32}
-                  domain={[0, signupTicks.at(-1) ?? "auto"]}
-                  ticks={signupTicks}
-                />
-                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                <ChartLegend content={<ChartLegendContent />} />
-                <Bar
-                  dataKey="organic"
-                  fill="var(--color-organic)"
-                  radius={[4, 4, 0, 0]}
-                  maxBarSize={24}
-                  isAnimationActive={false}
-                />
-                <Bar
-                  dataKey="paid"
-                  fill="var(--color-paid)"
-                  radius={[4, 4, 0, 0]}
-                  maxBarSize={24}
-                  isAnimationActive={false}
-                />
-              </BarChart>
-            </ChartContainer>
+            <WhenNear>
+              <SignupsChart data={signups} />
+            </WhenNear>
           </CardContent>
         </Card>
 
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>Recent activity</CardTitle>
-            <CardAction>
-              <a
-                href="#activity"
-                className="rounded-sm text-sm text-muted-foreground focus-ring hover:text-foreground"
-              >
-                View all
-              </a>
-            </CardAction>
+            {activityHref && (
+              <CardAction>
+                <a
+                  href={activityHref}
+                  className="rounded-sm text-sm text-muted-foreground focus-ring hover:text-foreground"
+                >
+                  View all
+                </a>
+              </CardAction>
+            )}
           </CardHeader>
           <CardContent>
             <ul className="flex flex-col gap-4">

@@ -61,6 +61,10 @@ export type NavItem = {
 }
 export type NavSection = { label?: string; items: NavItem[] }
 
+// Unlabeled sections are keyed by their first link, which is unique per nav.
+const sectionKey = (section: NavSection) =>
+  section.label ?? section.items[0]?.href ?? "section"
+
 type LinkComponent = React.ComponentType<
   React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }
 >
@@ -496,6 +500,379 @@ function UserMenu({
   )
 }
 
+/** Leaf links: groups contribute their sub-pages, plain items themselves. */
+const leaves = (items: NavItem[]) =>
+  items.flatMap((item) => (item.items?.length ? item.items : [item]))
+
+/** Only the most specific matching link is current (/blocks/projects, not also /blocks). */
+function activeHrefFor(items: NavItem[], currentPath: string) {
+  return items
+    .map((item) => item.href)
+    .filter(
+      (href) => currentPath === href || currentPath.startsWith(`${href}/`)
+    )
+    .sort((a, b) => b.length - a.length)[0]
+}
+
+type NavProps = {
+  activeHref: string | undefined
+  fade: boolean
+  Link: LinkComponent
+  onItemClick?: () => void
+  onExpand: () => void
+}
+
+function NavEntry({
+  item,
+  rail,
+  index,
+  activeHref,
+  fade,
+  Link,
+  onItemClick,
+  onExpand,
+}: NavProps & { item: NavItem; rail: boolean; index: number }) {
+  if (item.items?.length)
+    return (
+      <NavGroup
+        item={item}
+        activeHref={activeHref}
+        collapsed={rail}
+        fade={fade}
+        index={index}
+        Link={Link}
+        onClick={onItemClick}
+        onExpand={onExpand}
+      />
+    )
+  return (
+    <NavLink
+      item={item}
+      active={item.href === activeHref}
+      collapsed={rail}
+      fade={fade}
+      index={index}
+      Link={Link}
+      onClick={onItemClick}
+    />
+  )
+}
+
+/**
+ * Running index for the staggered label fade-in: section labels and items in
+ * reading order; a group's sub-items take the indices after it.
+ */
+function staggerOrder(sections: NavSection[], showLabels: boolean) {
+  let index = 0
+  return sections.map((section) => {
+    const label = section.label && showLabels ? index++ : index
+    const items: number[] = []
+    for (const item of section.items) {
+      items.push(index)
+      index += 1 + (item.items?.length ?? 0)
+    }
+    return { label, items }
+  })
+}
+
+function SidebarNav({
+  sections,
+  rail,
+  ...nav
+}: NavProps & { sections: NavSection[]; rail: boolean }) {
+  const showLabels = nav.fade || !rail
+  const order = staggerOrder(sections, showLabels)
+  return (
+    <nav aria-label="Main" className="flex flex-col gap-5">
+      {sections.map((section, s) => (
+        <div key={sectionKey(section)} className="flex flex-col gap-0.5">
+          {section.label && showLabels && (
+            <p
+              style={indexStyle(order[s].label)}
+              className={cn(
+                "px-2.5 pb-1 text-xs font-medium text-muted-foreground",
+                nav.fade && FADE_LABEL
+              )}
+            >
+              {section.label}
+            </p>
+          )}
+          {section.items.map((item, i) => (
+            <NavEntry
+              key={item.href}
+              item={item}
+              rail={rail}
+              index={order[s].items[i]}
+              {...nav}
+            />
+          ))}
+        </div>
+      ))}
+    </nav>
+  )
+}
+
+type ShellUser = { name: string; email: string; initials: string }
+type Workspace = { name: string; logo: React.ReactNode; plan?: string }
+
+/** Workspace, search, nav, footer links and the account menu: the rail and the phone drawer. */
+function SidebarBody({
+  rail,
+  workspace,
+  sections,
+  footerItems,
+  user,
+  settingsHref,
+  onSignOut,
+  onSearch,
+  ...nav
+}: NavProps & {
+  rail: boolean
+  workspace: Workspace
+  sections: NavSection[]
+  footerItems?: NavItem[]
+  user: ShellUser
+  settingsHref?: string
+  onSignOut?: () => void
+  onSearch: () => void
+}) {
+  const { fade } = nav
+  const labels = fade || !rail
+  return (
+    <>
+      <div
+        className={cn(
+          "flex items-center gap-2.5",
+          // Fade: the logo's center lines up with the nav icons in both states.
+          fade ? "px-0.5" : "px-1.5",
+          !fade && rail && "justify-center px-0"
+        )}
+      >
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-foreground text-background [&_svg]:size-4">
+          {workspace.logo}
+        </span>
+        {labels && (
+          <div className={cn("min-w-0", fade && FADE_LABEL)}>
+            <p className="truncate text-sm font-medium">{workspace.name}</p>
+            {workspace.plan && (
+              <p className="truncate text-xs text-muted-foreground">
+                {workspace.plan}
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+      <button
+        type="button"
+        onClick={() => {
+          nav.onItemClick?.()
+          onSearch()
+        }}
+        aria-label={rail ? "Search" : undefined}
+        className={cn(
+          "flex h-control items-center gap-2.5 rounded-control bg-background px-2.5 text-sm text-muted-foreground shadow-border focus-ring transition-shadow hover:shadow-border-hover",
+          !fade && rail && "justify-center px-0"
+        )}
+      >
+        <SearchIcon className="size-4 shrink-0" />
+        {labels && (
+          <>
+            <span className={cn("flex-1 text-start", fade && FADE_LABEL)}>
+              Search
+            </span>
+            <Hotkey
+              hotkey="Mod+K"
+              variant="text"
+              className={cn("text-xs", fade && FADE_LABEL)}
+            />
+          </>
+        )}
+      </button>
+      <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
+        <SidebarNav sections={sections} rail={rail} {...nav} />
+      </div>
+      {footerItems && (
+        <div className="flex flex-col gap-0.5">
+          {footerItems.map((item, i) => (
+            <NavEntry
+              key={item.href}
+              item={item}
+              rail={rail}
+              index={i}
+              {...nav}
+            />
+          ))}
+        </div>
+      )}
+      <UserMenu
+        user={user}
+        collapsed={rail}
+        fade={fade}
+        onSignOut={onSignOut}
+        settingsHref={settingsHref}
+        Link={nav.Link}
+      />
+    </>
+  )
+}
+
+/** Mod+K: every nav page, with its sequence hotkey. */
+function NavPalette({
+  open,
+  onOpenChange,
+  sections,
+  onNavigate,
+}: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  sections: NavSection[]
+  onNavigate: (href: string) => void
+}) {
+  return (
+    <CommandDialog open={open} onOpenChange={onOpenChange} title="Go to">
+      <Command>
+        <CommandInput placeholder="Go to…" />
+        <CommandList>
+          <CommandEmpty>No pages match.</CommandEmpty>
+          {sections.map((section) => (
+            <CommandGroup
+              key={sectionKey(section)}
+              heading={section.label ?? "Pages"}
+            >
+              {leaves(section.items).map((item) => (
+                <CommandItem
+                  key={item.href}
+                  value={item.label}
+                  onSelect={() => {
+                    onOpenChange(false)
+                    onNavigate(item.href)
+                  }}
+                >
+                  {item.icon}
+                  {item.label}
+                  {item.hotkey && (
+                    <CommandShortcut>
+                      <Hotkey hotkey={item.hotkey} variant="text" />
+                    </CommandShortcut>
+                  )}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          ))}
+        </CommandList>
+      </Command>
+    </CommandDialog>
+  )
+}
+
+/**
+ * Fade variant: what the sidebar shows right now. Ease out snaps to the rail
+ * as soon as a drag crosses 160px; cascade and scrub keep following the
+ * pointer until it's released.
+ */
+function fadeState({
+  motion,
+  collapsed,
+  width,
+  dragging,
+  dragBelowSnap,
+}: {
+  motion: SidebarMotion
+  collapsed: boolean
+  width: number
+  dragging: boolean
+  dragBelowSnap: boolean
+}) {
+  const timing = SIDEBAR_MOTION[motion]
+  const belowSnap = dragging && dragBelowSnap
+  const snapped = dragging && motion === "ease-out" && belowSnap
+  const restingWidth = collapsed ? RAIL : width
+  let labelsHidden = collapsed
+  if (dragging) labelsHidden = motion === "scrub" ? false : belowSnap
+  const label = labelsHidden ? timing.out : timing.in
+  const style = {
+    // Snapped (ease-out below 160px) shows the rail; otherwise a drag's
+    // `--sb-drag-w` wins over the resting width.
+    width: snapped ? RAIL : `var(--sb-drag-w, ${restingWidth}px)`,
+    transitionDuration:
+      dragging && !snapped ? "0ms" : `${timing.width.duration}ms`,
+    transitionTimingFunction: timing.width.ease,
+    "--sb-delay": `${label.delay}ms`,
+    "--sb-stagger": `${label.stagger}ms`,
+    "--sb-dur": dragging && motion === "scrub" ? "0ms" : `${label.duration}ms`,
+    "--sb-drift": `${label.drift}px`,
+    "--sb-blur": `${label.blur}px`,
+  } as React.CSSProperties
+  return { restingWidth, labelsHidden, style }
+}
+
+/**
+ * Drag-to-resize. React only tracks the discrete states (dragging, below the
+ * snap width); the width itself is written to `--sb-drag-w` on the aside every
+ * pointer move, so dragging never re-renders the shell.
+ */
+function useSidebarDrag({
+  asideRef,
+  motion,
+  defaultWidth,
+  collapsed,
+  setCollapsed,
+}: {
+  asideRef: React.RefObject<HTMLElement | null>
+  motion: SidebarMotion
+  defaultWidth: number
+  collapsed: boolean
+  setCollapsed: (collapsed: boolean) => void
+}) {
+  // The expanded width, and the live width while dragging.
+  const [width, setWidth] = React.useState(defaultWidth)
+  const [dragging, setDragging] = React.useState(false)
+  const [dragBelowSnap, setDragBelowSnap] = React.useState(false)
+  const dragWidth = React.useRef(0)
+
+  const settle = (next: number) => {
+    if (next < SNAP) setCollapsed(true)
+    else {
+      setWidth(next)
+      setCollapsed(false)
+    }
+  }
+  const applyDrag = (next: number) => {
+    dragWidth.current = next
+    const el = asideRef.current
+    if (!el) return
+    el.style.setProperty("--sb-drag-w", `${next}px`)
+    // Scrub: labels fade with the width between the rail and 160px.
+    if (motion === "scrub")
+      el.style.setProperty(
+        "--sb-label-o",
+        String(clamp((next - RAIL) / (SNAP - RAIL), 0, 1))
+      )
+    setDragBelowSnap(next < SNAP)
+  }
+  const endDrag = (to?: number) => {
+    const final = to ?? dragWidth.current
+    asideRef.current?.style.removeProperty("--sb-drag-w")
+    asideRef.current?.style.removeProperty("--sb-label-o")
+    setDragging(false)
+    setDragBelowSnap(false)
+    settle(final)
+  }
+  const state = fadeState({ motion, collapsed, width, dragging, dragBelowSnap })
+  return {
+    ...state,
+    dragging,
+    startDrag: () => {
+      applyDrag(state.restingWidth)
+      setDragging(true)
+    },
+    applyDrag,
+    endDrag,
+    nudge: (delta: number) =>
+      settle(clamp((collapsed ? RAIL : width) + delta, RAIL, MAX_WIDTH)),
+  }
+}
+
 /**
  * The frame every app page sits in: a tinted sidebar and the page on an inset
  * white surface (nested surfaces, docs/COMPOSITION.md).
@@ -528,9 +905,9 @@ function AppShell({
   footerItems,
   children,
 }: {
-  workspace: { name: string; logo: React.ReactNode; plan?: string }
+  workspace: Workspace
   sections: NavSection[]
-  user: { name: string; email: string; initials: string }
+  user: ShellUser
   currentPath: string
   linkComponent?: LinkComponent
   onNavigate?: (href: string) => void
@@ -555,29 +932,21 @@ function AppShell({
 }) {
   const fade = variant === "fade"
   const [collapsed, setCollapsed] = React.useState(defaultCollapsed)
-  // Fade variant: the expanded width, and the live width while dragging.
-  const [width, setWidth] = React.useState(defaultWidth)
-  // Drag: React only tracks the discrete states (dragging, below the snap
-  // width). The width itself is written to `--sb-drag-w` on the aside every
-  // pointer move, so dragging never re-renders the shell.
-  const [dragging, setDragging] = React.useState(false)
-  const [dragBelowSnap, setDragBelowSnap] = React.useState(false)
-  const asideRef = React.useRef<HTMLElement>(null)
-  const dragWidth = React.useRef(0)
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [paletteOpen, setPaletteOpen] = React.useState(false)
-  const items = [
+  const asideRef = React.useRef<HTMLElement>(null)
+  const drag = useSidebarDrag({
+    asideRef,
+    motion,
+    defaultWidth,
+    collapsed,
+    setCollapsed,
+  })
+  const items = leaves([
     ...sections.flatMap((s) => s.items),
     ...(footerItems ?? []),
-  ].flatMap((item) => (item.items?.length ? item.items : [item]))
-  // Only the most specific matching link is current (/blocks/projects, not also /blocks).
-  const activeHref = items
-    .map((item) => item.href)
-    .filter(
-      (href) => currentPath === href || currentPath.startsWith(`${href}/`)
-    )
-    .sort((a, b) => b.length - a.length)[0]
-  const isActive = (href: string) => href === activeHref
+  ])
+  const activeHref = activeHrefFor(items, currentPath)
 
   const toggleSidebar = React.useCallback((fromKeyboard = false) => {
     const change = () => setCollapsed((c) => !c)
@@ -606,190 +975,20 @@ function AppShell({
     [collapsed, toggleSidebar]
   )
 
-  const expand = () => setCollapsed(false)
-  const navItem = (
-    item: NavItem,
-    rail: boolean,
-    index: number,
-    onItemClick?: () => void
-  ) =>
-    item.items?.length ? (
-      <NavGroup
-        key={item.href}
-        item={item}
-        activeHref={activeHref}
-        collapsed={rail}
-        fade={fade}
-        index={index}
-        Link={Link}
-        onClick={onItemClick}
-        onExpand={expand}
-      />
-    ) : (
-      <NavLink
-        key={item.href}
-        item={item}
-        active={isActive(item.href)}
-        collapsed={rail}
-        fade={fade}
-        index={index}
-        Link={Link}
-        onClick={onItemClick}
-      />
-    )
-
-  const nav = (rail: boolean, onItemClick?: () => void) => {
-    // Running index for the staggered label fade-in.
-    let index = 0
-    return (
-      <nav aria-label="Main" className="flex flex-col gap-5">
-        {sections.map((section, i) => (
-          <div key={section.label ?? i} className="flex flex-col gap-0.5">
-            {section.label && (fade || !rail) && (
-              <p
-                style={indexStyle(index++)}
-                className={cn(
-                  "px-2.5 pb-1 text-xs font-medium text-muted-foreground",
-                  fade && FADE_LABEL
-                )}
-              >
-                {section.label}
-              </p>
-            )}
-            {section.items.map((item) => {
-              const node = navItem(item, rail, index, onItemClick)
-              index += 1 + (item.items?.length ?? 0)
-              return node
-            })}
-          </div>
-        ))}
-      </nav>
-    )
+  const body = {
+    workspace,
+    sections,
+    footerItems,
+    user,
+    settingsHref,
+    onSignOut,
+    activeHref,
+    fade,
+    Link,
+    onExpand: () => setCollapsed(false),
+    onSearch: () => setPaletteOpen(true),
   }
-
-  const sidebarBody = (rail: boolean, onItemClick?: () => void) => (
-    <>
-      <div
-        className={cn(
-          "flex items-center gap-2.5",
-          // Fade: the logo's center lines up with the nav icons in both states.
-          fade ? "px-0.5" : "px-1.5",
-          !fade && rail && "justify-center px-0"
-        )}
-      >
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-foreground text-background [&_svg]:size-4">
-          {workspace.logo}
-        </span>
-        {(fade || !rail) && (
-          <div className={cn("min-w-0", fade && FADE_LABEL)}>
-            <p className="truncate text-sm font-medium">{workspace.name}</p>
-            {workspace.plan && (
-              <p className="truncate text-xs text-muted-foreground">
-                {workspace.plan}
-              </p>
-            )}
-          </div>
-        )}
-      </div>
-      <button
-        type="button"
-        onClick={() => {
-          onItemClick?.()
-          setPaletteOpen(true)
-        }}
-        aria-label={rail ? "Search" : undefined}
-        className={cn(
-          "flex h-control items-center gap-2.5 rounded-control bg-background px-2.5 text-sm text-muted-foreground shadow-border focus-ring transition-shadow hover:shadow-border-hover",
-          !fade && rail && "justify-center px-0"
-        )}
-      >
-        <SearchIcon className="size-4 shrink-0" />
-        {(fade || !rail) && (
-          <>
-            <span className={cn("flex-1 text-start", fade && FADE_LABEL)}>
-              Search
-            </span>
-            <Hotkey
-              hotkey="Mod+K"
-              variant="text"
-              className={cn("text-xs", fade && FADE_LABEL)}
-            />
-          </>
-        )}
-      </button>
-      <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
-        {nav(rail, onItemClick)}
-      </div>
-      {footerItems && (
-        <div className="flex flex-col gap-0.5">
-          {footerItems.map((item, i) => navItem(item, rail, i, onItemClick))}
-        </div>
-      )}
-      <UserMenu
-        user={user}
-        collapsed={rail}
-        fade={fade}
-        onSignOut={onSignOut}
-        settingsHref={settingsHref}
-        Link={Link}
-      />
-    </>
-  )
-
-  // Fade variant: what the sidebar shows right now.
-  const timing = SIDEBAR_MOTION[motion]
-  const belowSnap = dragging && dragBelowSnap
-  // Ease out snaps to the rail as soon as the drag crosses 160px; cascade and
-  // scrub keep following the pointer until it's released.
-  const snapped = dragging && motion === "ease-out" && belowSnap
-  const restingWidth = collapsed ? RAIL : width
-  const labelsHidden = fade
-    ? dragging
-      ? motion === "scrub"
-        ? false
-        : belowSnap
-      : collapsed
-    : collapsed
-  const label = labelsHidden ? timing.out : timing.in
-  const sidebarStyle = {
-    // Snapped (ease-out below 160px) shows the rail; otherwise a drag's
-    // `--sb-drag-w` wins over the resting width.
-    width: snapped ? RAIL : `var(--sb-drag-w, ${restingWidth}px)`,
-    transitionDuration:
-      dragging && !snapped ? "0ms" : `${timing.width.duration}ms`,
-    transitionTimingFunction: timing.width.ease,
-    "--sb-delay": `${label.delay}ms`,
-    "--sb-stagger": `${label.stagger}ms`,
-    "--sb-dur": dragging && motion === "scrub" ? "0ms" : `${label.duration}ms`,
-    "--sb-drift": `${label.drift}px`,
-    "--sb-blur": `${label.blur}px`,
-  } as React.CSSProperties
-
-  const applyDrag = (next: number) => {
-    dragWidth.current = next
-    const el = asideRef.current
-    if (!el) return
-    el.style.setProperty("--sb-drag-w", `${next}px`)
-    // Scrub: labels fade with the width between the rail and 160px.
-    if (motion === "scrub")
-      el.style.setProperty(
-        "--sb-label-o",
-        String(clamp((next - RAIL) / (SNAP - RAIL), 0, 1))
-      )
-    setDragBelowSnap(next < SNAP)
-  }
-  const endDrag = (to?: number) => {
-    const final = to ?? dragWidth.current
-    asideRef.current?.style.removeProperty("--sb-drag-w")
-    asideRef.current?.style.removeProperty("--sb-label-o")
-    setDragging(false)
-    setDragBelowSnap(false)
-    if (final < SNAP) setCollapsed(true)
-    else {
-      setWidth(final)
-      setCollapsed(false)
-    }
-  }
+  const labelsHidden = fade ? drag.labelsHidden : collapsed
 
   return (
     <AppShellContext value={context}>
@@ -804,37 +1003,23 @@ function AppShell({
             data-slot="app-sidebar"
             data-collapsed={labelsHidden || undefined}
             data-motion={fade ? motion : undefined}
-            style={fade ? sidebarStyle : undefined}
+            style={fade ? drag.style : undefined}
             className={cn(
               "group/sidebar sticky top-0 hidden h-dvh shrink-0 flex-col gap-4 overflow-hidden p-3 transition-[width] in-data-ds-instant:transition-none motion-reduce:transition-none md:flex",
               !fade && "duration-200 ease-in-out",
               !fade && (collapsed ? "w-16" : "w-64")
             )}
           >
-            {sidebarBody(collapsed)}
+            <SidebarBody rail={collapsed} {...body} />
             {fade && resizable && (
               <ResizeHandle
-                width={restingWidth}
-                dragging={dragging}
-                onDragStart={() => {
-                  applyDrag(restingWidth)
-                  setDragging(true)
-                }}
-                onDrag={applyDrag}
-                onDragEnd={endDrag}
+                width={drag.restingWidth}
+                dragging={drag.dragging}
+                onDragStart={drag.startDrag}
+                onDrag={drag.applyDrag}
+                onDragEnd={drag.endDrag}
                 onToggle={() => toggleSidebar()}
-                onNudge={(delta) => {
-                  const next = clamp(
-                    (collapsed ? RAIL : width) + delta,
-                    RAIL,
-                    MAX_WIDTH
-                  )
-                  if (next < SNAP) setCollapsed(true)
-                  else {
-                    setWidth(next)
-                    setCollapsed(false)
-                  }
-                }}
+                onNudge={drag.nudge}
               />
             )}
           </aside>
@@ -848,7 +1033,11 @@ function AppShell({
             <DrawerContent className="bg-sidebar text-sidebar-foreground [--drawer-bleed-background:var(--color-sidebar)] [--drawer-content-width:18rem]! md:hidden">
               <DrawerTitle className="sr-only">Navigation</DrawerTitle>
               <div className="flex min-h-0 flex-1 flex-col gap-4 p-3 ps-[calc(--spacing(3)+env(safe-area-inset-left))] pt-[calc(--spacing(3)+env(safe-area-inset-top))] pb-[calc(--spacing(3)+env(safe-area-inset-bottom))]">
-                {sidebarBody(false, () => setMobileOpen(false))}
+                <SidebarBody
+                  rail={false}
+                  onItemClick={() => setMobileOpen(false)}
+                  {...body}
+                />
               </div>
             </DrawerContent>
           </Drawer>
@@ -865,47 +1054,12 @@ function AppShell({
           </div>
         </div>
 
-        <CommandDialog
+        <NavPalette
           open={paletteOpen}
           onOpenChange={setPaletteOpen}
-          title="Go to"
-        >
-          <Command>
-            <CommandInput placeholder="Go to…" />
-            <CommandList>
-              <CommandEmpty>No pages match.</CommandEmpty>
-              {sections.map((section, i) => (
-                <CommandGroup
-                  key={section.label ?? i}
-                  heading={section.label ?? "Pages"}
-                >
-                  {section.items
-                    .flatMap((item) =>
-                      item.items?.length ? item.items : [item]
-                    )
-                    .map((item) => (
-                      <CommandItem
-                        key={item.href}
-                        value={item.label}
-                        onSelect={() => {
-                          setPaletteOpen(false)
-                          onNavigate(item.href)
-                        }}
-                      >
-                        {item.icon}
-                        {item.label}
-                        {item.hotkey && (
-                          <CommandShortcut>
-                            <Hotkey hotkey={item.hotkey} variant="text" />
-                          </CommandShortcut>
-                        )}
-                      </CommandItem>
-                    ))}
-                </CommandGroup>
-              ))}
-            </CommandList>
-          </Command>
-        </CommandDialog>
+          sections={sections}
+          onNavigate={onNavigate}
+        />
       </TooltipProvider>
     </AppShellContext>
   )

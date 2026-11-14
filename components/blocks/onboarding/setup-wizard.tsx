@@ -237,8 +237,9 @@ function WorkspaceStep({
   const form = useZodForm(workspaceSchema, {
     defaultValues: defaults ?? { name: "", slug: "", region: "fra" },
   })
-  // The URL follows the name until someone edits it by hand.
-  const [slugEdited, setSlugEdited] = React.useState(!!defaults)
+  // The URL follows the name until someone edits it by hand. Only handlers read
+  // it, so a ref (no re-render); returning to the step starts from the saved slug.
+  const slugEdited = React.useRef(!!defaults)
   return (
     <Form form={form} onSubmit={onNext} className="flex flex-col gap-6">
       <StepHeader
@@ -256,7 +257,7 @@ function WorkspaceStep({
             autoComplete="organization"
             onChange={(event) => {
               onChange(event)
-              if (!slugEdited)
+              if (!slugEdited.current)
                 form.setValue("slug", slugify(event.target.value), {
                   shouldValidate: form.formState.isSubmitted,
                 })
@@ -278,7 +279,7 @@ function WorkspaceStep({
             <InputGroupInput
               spellCheck={false}
               onChange={(event) => {
-                setSlugEdited(true)
+                slugEdited.current = true
                 onChange(event)
               }}
               {...field}
@@ -441,6 +442,55 @@ function PlanStep({
  * kept when going back, and the content slides in the direction you move.
  * `onComplete` runs on the last step; a throw shows its message in a banner.
  */
+/**
+ * The step to show, derived during render: the one in the URL, but never past
+ * the first unfinished one. `completed` counts finished steps (0–3).
+ */
+function resolveStep(values: Partial<SetupValues>, stepParam: string) {
+  let completed = 0
+  if (values.workspace) completed = 1
+  if (values.workspace && values.team) completed = 2
+  if (values.workspace && values.team && values.plan) completed = 3
+  const requested = Math.max(
+    STEPS.findIndex((s) => s.id === stepParam),
+    0
+  )
+  const index =
+    stepParam === "done" && completed === 3
+      ? 3
+      : Math.min(requested, completed)
+  const step: StepId = index === 3 ? "done" : STEPS[index].id
+  return { completed, index, step }
+}
+
+function DoneStep({
+  values,
+  continueHref,
+}: {
+  values: Partial<SetupValues>
+  continueHref: string
+}) {
+  const invites = values.team?.emails.length ?? 0
+  return (
+    <div className="flex flex-col items-start gap-6">
+      <IconTile tone="green" size="lg">
+        <PartyPopperIcon />
+      </IconTile>
+      <StepHeader
+        title={`${values.workspace?.name} is ready`}
+        description={
+          invites
+            ? `We sent ${invites} invite${invites === 1 ? "" : "s"}. Next, create your first project.`
+            : "Next, create your first project. You can invite your team any time from Settings."
+        }
+      />
+      <Button size="lg" render={<a href={continueHref} />} nativeButton={false}>
+        Go to dashboard
+      </Button>
+    </div>
+  )
+}
+
 export function SetupWizard({
   brand,
   onComplete,
@@ -456,20 +506,7 @@ export function SetupWizard({
   const [teamInput, setTeamInput] = React.useState<z.input<typeof teamSchema>>()
   const [direction, setDirection] = React.useState<1 | -1>(1)
 
-  // Derive the step during render: never past the first unfinished one.
-  const completed = values.workspace
-    ? values.team
-      ? values.plan
-        ? 3
-        : 2
-      : 1
-    : 0
-  const requested = STEPS.findIndex((s) => s.id === stepParam)
-  const index =
-    stepParam === "done" && completed === 3
-      ? 3
-      : Math.min(requested === -1 ? 0 : requested, completed)
-  const step: StepId = index === 3 ? "done" : STEPS[index].id
+  const { completed, index, step } = resolveStep(values, stepParam)
 
   // Slide direction follows the step change itself, so browser Back/Forward
   // (which never call `go`) slide the right way too.
@@ -539,26 +576,7 @@ export function SetupWizard({
             />
           )}
           {step === "done" && (
-            <div className="flex flex-col items-start gap-6">
-              <IconTile tone="green" size="lg">
-                <PartyPopperIcon />
-              </IconTile>
-              <StepHeader
-                title={`${values.workspace?.name} is ready`}
-                description={
-                  values.team?.emails.length
-                    ? `We sent ${values.team.emails.length} invite${values.team.emails.length === 1 ? "" : "s"}. Next, create your first project.`
-                    : "Next, create your first project. You can invite your team any time from Settings."
-                }
-              />
-              <Button
-                size="lg"
-                render={<a href={continueHref} />}
-                nativeButton={false}
-              >
-                Go to dashboard
-              </Button>
-            </div>
+            <DoneStep values={values} continueHref={continueHref} />
           )}
         </div>
       </main>

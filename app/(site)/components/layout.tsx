@@ -1,4 +1,5 @@
 import { DocsNav } from "@/components/docs/docs-nav"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import { getNav } from "@/lib/docs"
 
 export default function ComponentsLayout({
@@ -9,7 +10,10 @@ export default function ComponentsLayout({
       <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-56 shrink-0 overflow-y-auto overscroll-contain [scrollbar-width:thin] py-8 pe-4 md:block">
         <DocsNav groups={getNav()} />
       </aside>
-      <div className="min-w-0 flex-1 py-8 md:ps-8 lg:ps-12">{children}</div>
+      <div className="min-w-0 flex-1 py-8 md:ps-8 lg:ps-12">
+        {/* Demos group their tooltips' open delay; other routes don't ship tooltips. */}
+        <TooltipProvider>{children}</TooltipProvider>
+      </div>
     </div>
   )
 }

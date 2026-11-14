@@ -48,7 +48,7 @@ export default function Page() {
             className="max-w-xl"
           />
         )}
-        <DashboardPage />
+        <DashboardPage activityHref="/blocks/activity" />
       </AppShellContent>
     </>
   )

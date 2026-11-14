@@ -139,6 +139,8 @@ export function GetStartedChecklist({
                   <div className="flex flex-col items-start gap-3 ps-10 pe-3 pb-3 text-sm text-muted-foreground">
                     <p>{item.description}</p>
                     {item.action && !item.done && (
+                      // Named by its children (the action label), passed through render.
+                      // react-doctor-disable-next-line react-doctor/control-has-associated-label
                       <Button
                         size="sm"
                         onClick={item.action.onClick}

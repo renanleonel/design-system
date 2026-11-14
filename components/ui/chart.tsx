@@ -2,6 +2,9 @@
 
 import * as React from "react"
 import { cn } from "cn"
+// This module is the recharts wrapper itself; lazy-load the chart that uses it
+// (see the dashboard block) rather than the wrapper's own import.
+// react-doctor-disable-next-line react-doctor/prefer-dynamic-import
 import * as RechartsPrimitive from "recharts"
 import type { TooltipValueType } from "recharts"
 
@@ -57,9 +60,10 @@ function ChartContainer({
 }) {
   const uniqueId = React.useId()
   const chartId = `chart-${id ?? uniqueId.replace(/:/g, "")}`
+  const context = React.useMemo(() => ({ config }), [config])
 
   return (
-    <ChartContext.Provider value={{ config }}>
+    <ChartContext.Provider value={context}>
       <div
         data-slot="chart"
         data-chart={chartId}
@@ -152,7 +156,13 @@ function ChartTooltipContent({
   >) {
   const { config } = useChart()
 
-  const tooltipLabel = React.useMemo(() => {
+  if (!active || !payload?.length) {
+    return null
+  }
+
+  // Plain computation: `payload` is a new array on every render, so a memo
+  // keyed on it never hit.
+  const tooltipLabel = (() => {
     if (hideLabel || !payload?.length) {
       return null
     }
@@ -178,19 +188,7 @@ function ChartTooltipContent({
     }
 
     return <div className={cn("font-medium", labelClassName)}>{value}</div>
-  }, [
-    label,
-    labelFormatter,
-    payload,
-    hideLabel,
-    labelClassName,
-    config,
-    labelKey,
-  ])
-
-  if (!active || !payload?.length) {
-    return null
-  }
+  })()
 
   const nestLabel = payload.length === 1 && indicator !== "dot"
 
@@ -212,7 +210,8 @@ function ChartTooltipContent({
 
             return (
               <div
-                key={index}
+                // One row per series; pie slices share a dataKey but not a name.
+                key={`${item.name ?? ""}:${String(item.dataKey ?? "")}`}
                 className={cn(
                   "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
                   indicator === "dot" && "items-center"
@@ -306,13 +305,13 @@ function ChartLegendContent({
     >
       {payload
         .filter((item) => item.type !== "none")
-        .map((item, index) => {
+        .map((item) => {
           const key = `${nameKey ?? item.dataKey ?? "value"}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
           return (
             <div
-              key={index}
+              key={String(item.dataKey ?? item.value)}
               className={cn(
                 "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
               )}

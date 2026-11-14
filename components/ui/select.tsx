@@ -82,7 +82,12 @@ function Select<Value, Multiple extends boolean | undefined = false>({
         </NativeSelectOption>
       )}
       {list.map((item, index) => (
-        <NativeSelectOption key={index} value={String(index)}>
+        <NativeSelectOption
+          // Values are positions in `items` (option values must be strings).
+          // react-doctor-disable-next-line react-doctor/no-array-index-as-key
+          key={index}
+          value={String(index)}
+        >
           {typeof item.label === "string" ? item.label : String(item.value)}
         </NativeSelectOption>
       ))}

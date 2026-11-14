@@ -70,26 +70,26 @@ function VirtualList<T>({
         className
       )}
     >
-      <div
+      <ul
+        // Kept explicit: Safari drops list semantics from unstyled lists.
         role="list"
         className="relative w-full"
         style={{ height: virtualizer.getTotalSize() }}
       >
         {virtualizer.getVirtualItems().map((v) => (
-          <div
+          <li
             key={v.key}
             ref={virtualizer.measureElement}
             data-index={v.index}
-            role="listitem"
             aria-setsize={items.length}
             aria-posinset={v.index + 1}
             className="absolute inset-x-0 top-0"
             style={{ transform: `translateY(${v.start}px)` }}
           >
             {renderItem(items[v.index], v.index)}
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   )
 }

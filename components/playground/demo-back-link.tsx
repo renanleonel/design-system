@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { cn } from "cn"
 import { ArrowLeftIcon } from "lucide-react"
 
@@ -25,7 +26,7 @@ export function DemoBackLink({
 }) {
   if (useEmbedded()) return null
   return (
-    <a
+    <Link
       href="/blocks"
       className={cn(
         "fixed z-50 inline-flex items-center gap-1.5 rounded-full bg-popover py-1.5 ps-2.5 pe-3 text-xs font-medium text-muted-foreground shadow-popover focus-ring transition-colors hover:text-foreground",
@@ -34,6 +35,6 @@ export function DemoBackLink({
     >
       <ArrowLeftIcon className="size-3.5" />
       All blocks
-    </a>
+    </Link>
   )
 }

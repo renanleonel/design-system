@@ -1,14 +1,9 @@
 import type { Metadata } from "next"
 
 import { BlockFrame } from "@/components/docs/block-frame"
-import { CodeBlock } from "@/components/docs/code-block"
+import { BlockSource } from "@/components/docs/block-source"
 import { InstallCommand } from "@/components/docs/install-command"
-import {
-  getBlocks,
-  installCommand,
-  readSource,
-  registryItem,
-} from "@/lib/docs"
+import { getBlocks, installCommand, registryItem } from "@/lib/docs"
 
 export const metadata: Metadata = { title: "Blocks" }
 
@@ -35,7 +30,7 @@ export default function BlocksPage() {
           owner === block.id
             ? (registryItem(block.registry)?.files ?? []).map((f) => ({
                 path: f.path,
-                code: <CodeBlock code={readSource(f.path)} title={f.path} />,
+                code: <BlockSource registry={block.registry} path={f.path} />,
               }))
             : [
                 {

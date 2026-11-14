@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import {
   ChevronRightIcon,
   FileSpreadsheetIcon,
@@ -75,13 +76,15 @@ export default function Page() {
             <strong>Don&apos;t have an idea yet?</strong> Start from a
             template: a landing page, a dashboard or an API, deployed in a
             minute and yours to change.{" "}
-            <a
-              href="#templates"
+            {/* _top leaves the gallery's preview frame. */}
+            <Link
+              href="/blocks"
+              target="_top"
               className="inline-flex items-center gap-0.5 rounded-sm font-medium text-foreground focus-ring hover:underline"
             >
               Browse templates
               <ChevronRightIcon className="size-3.5" />
-            </a>
+            </Link>
           </>
         }
       />

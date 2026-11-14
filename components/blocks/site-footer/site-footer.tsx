@@ -12,8 +12,15 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group"
-import { LanguageSelect } from "@/components/ui/language-select"
 import { ThemeSwitcher } from "@/components/ui/theme-toggle"
+
+// Only translated sites show the picker, so single-language sites don't ship
+// Select and its positioning code. Server rendering resolves it inline.
+const LanguageSelect = React.lazy(() =>
+  import("@/components/ui/language-select").then((m) => ({
+    default: m.LanguageSelect,
+  }))
+)
 
 export type FooterColumn = {
   title: string
@@ -187,11 +194,13 @@ export function SiteFooter({
               </Button>
             ))}
             {onLanguageChange && (
-              <LanguageSelect
-                value={language}
-                onValueChange={onLanguageChange}
-                compact
-              />
+              <React.Suspense fallback={null}>
+                <LanguageSelect
+                  value={language}
+                  onValueChange={onLanguageChange}
+                  compact
+                />
+              </React.Suspense>
             )}
             <ThemeSwitcher />
           </div>

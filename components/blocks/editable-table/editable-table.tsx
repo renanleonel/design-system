@@ -72,33 +72,18 @@ function parse(
 }
 
 /**
- * A grid whose cells edit in place and save one at a time, optimistically.
- *
- * - The new value shows at once with a spinner while `onCommit` runs. Resolve
- *   after your data holds the new value (setState, `setQueryData`); reject to
- *   roll the cell back: it keeps an error ring and a toast offers Retry.
- *   A newer save of the same cell wins over an older one still in flight.
- * - Keyboard (WAI-ARIA data grid): arrows move, Home/End jump in the row,
- *   Enter or F2 or typing edits, Enter saves and moves down, Tab saves and
- *   moves right, Escape cancels. Double-click edits.
+ * Optimistic, per-cell saves. The new value shows at once (`valueAt`) while
+ * `onCommit` runs; a failure rolls it back, keeps an error and offers Retry.
+ * The newest save per cell wins over an older one still in flight.
  */
-export function EditableTable<Row>({
-  rows,
-  columns,
+function useOptimisticCells<Row>({
   getRowId,
   getRowLabel,
   onCommit,
-  "aria-label": ariaLabel,
-  className,
 }: {
-  rows: Row[]
-  columns: EditableColumn<Row>[]
   getRowId: (row: Row) => string
-  /** Names the row in announcements and toasts ("Value for Acme"). */
   getRowLabel: (row: Row) => string
   onCommit: (change: CellChange<Row>) => Promise<void>
-  "aria-label": string
-  className?: string
 }) {
   const [pending, setPending] = React.useState<Map<string, Pending>>(
     () => new Map()
@@ -106,27 +91,13 @@ export function EditableTable<Row>({
   const [errors, setErrors] = React.useState<Map<string, string>>(
     () => new Map()
   )
-  const [active, setActive] = React.useState<Pos>({ r: 0, c: 0 })
-  const [editing, setEditing] = React.useState<{
-    pos: Pos
-    initial: string
-    typed: boolean
-  } | null>(null)
   const [status, setStatus] = React.useState("")
   const seq = React.useRef(0)
   // The newest save per cell; an older one settling never overwrites it.
   const latest = React.useRef(new Map<string, number>())
-  const cells = React.useRef(new Map<string, HTMLTableCellElement>())
 
   const valueAt = (row: Row, column: EditableColumn<Row>) =>
     pending.get(keyOf(getRowId(row), column.id))?.value ?? column.value(row)
-
-  const focusCell = (pos: Pos) => {
-    const r = Math.max(0, Math.min(rows.length - 1, pos.r))
-    const c = Math.max(0, Math.min(columns.length - 1, pos.c))
-    setActive({ r, c })
-    cells.current.get(`${r}:${c}`)?.focus()
-  }
 
   const setError = (key: string, message: string | null) =>
     setErrors((prev) => {
@@ -195,6 +166,132 @@ export function EditableTable<Row>({
     }
   }
 
+  /** Parses typed text; a parse error marks the cell instead of saving. */
+  const commitText = (row: Row, column: EditableColumn<Row>, text: string) => {
+    if (!column.editor) return
+    const parsed = parse(column.editor, text)
+    if (typeof parsed !== "object") return void commit(row, column, parsed)
+    setError(keyOf(getRowId(row), column.id), parsed.error)
+    setStatus(
+      `${column.header} for ${getRowLabel(row)} not saved: ${parsed.error}`
+    )
+  }
+
+  return { pending, errors, status, valueAt, commitText }
+}
+
+/** Where an arrow, Home or End key moves the active cell (Ctrl/⌘ for corners). */
+function moveFor(
+  key: string,
+  { r, c }: Pos,
+  last: Pos,
+  mod: boolean
+): Pos | undefined {
+  const moves: Record<string, Pos> = {
+    ArrowUp: { r: r - 1, c },
+    ArrowDown: { r: r + 1, c },
+    ArrowLeft: { r, c: c - 1 },
+    ArrowRight: { r, c: c + 1 },
+    Home: mod ? { r: 0, c: 0 } : { r, c: 0 },
+    End: mod ? last : { r, c: last.c },
+  }
+  return moves[key]
+}
+
+function CellDisplay<Row>({
+  column,
+  row,
+  value,
+  saving,
+}: {
+  column: EditableColumn<Row>
+  row: Row
+  value: CellValue
+  saving: boolean
+}) {
+  const end = column.align === "end"
+  return (
+    <div
+      className={cn(
+        "flex h-10 min-w-0 items-center gap-2 px-3",
+        end && "justify-end"
+      )}
+    >
+      {saving && end && (
+        <Spinner aria-label="Saving" className="size-3 text-muted-foreground" />
+      )}
+      <span className={cn("min-w-0 truncate", end && "tabular-nums")}>
+        {column.render ? column.render(value, row) : String(value)}
+      </span>
+      {saving && !end && (
+        <Spinner
+          aria-label="Saving"
+          className="ms-auto size-3 shrink-0 text-muted-foreground"
+        />
+      )}
+    </div>
+  )
+}
+
+function SaveSummary({ saving, failed }: { saving: number; failed: number }) {
+  const plural = (n: number) => (n === 1 ? "change" : "changes")
+  let text = "All changes saved"
+  if (saving > 0) text = `Saving ${saving} ${plural(saving)}…`
+  else if (failed > 0) text = `${failed} ${plural(failed)} not saved`
+  return (
+    <div className="flex items-center justify-between gap-3 px-1 text-xs text-muted-foreground">
+      <p className="hidden sm:block">
+        Enter or type to edit · Enter saves · Esc cancels
+      </p>
+      <p className="tabular-nums sm:ms-auto">{text}</p>
+    </div>
+  )
+}
+
+type Editing = { pos: Pos; initial: string; typed: boolean }
+
+/**
+ * A grid whose cells edit in place and save one at a time, optimistically.
+ *
+ * - The new value shows at once with a spinner while `onCommit` runs. Resolve
+ *   after your data holds the new value (setState, `setQueryData`); reject to
+ *   roll the cell back: it keeps an error ring and a toast offers Retry.
+ *   A newer save of the same cell wins over an older one still in flight.
+ * - Keyboard (WAI-ARIA data grid): arrows move, Home/End jump in the row,
+ *   Enter or F2 or typing edits, Enter saves and moves down, Tab saves and
+ *   moves right, Escape cancels. Double-click edits.
+ */
+export function EditableTable<Row>({
+  rows,
+  columns,
+  getRowId,
+  getRowLabel,
+  onCommit,
+  "aria-label": ariaLabel,
+  className,
+}: {
+  rows: Row[]
+  columns: EditableColumn<Row>[]
+  getRowId: (row: Row) => string
+  /** Names the row in announcements and toasts ("Value for Acme"). */
+  getRowLabel: (row: Row) => string
+  onCommit: (change: CellChange<Row>) => Promise<void>
+  "aria-label": string
+  className?: string
+}) {
+  const cellsState = useOptimisticCells({ getRowId, getRowLabel, onCommit })
+  const { pending, errors, valueAt } = cellsState
+  const [active, setActive] = React.useState<Pos>({ r: 0, c: 0 })
+  const [editing, setEditing] = React.useState<Editing | null>(null)
+  const cells = React.useRef(new Map<string, HTMLTableCellElement>())
+
+  const focusCell = (pos: Pos) => {
+    const r = Math.max(0, Math.min(rows.length - 1, pos.r))
+    const c = Math.max(0, Math.min(columns.length - 1, pos.c))
+    setActive({ r, c })
+    cells.current.get(`${r}:${c}`)?.focus()
+  }
+
   const startEdit = (pos: Pos, initial?: string) => {
     const column = columns[pos.c]
     const row = rows[pos.r]
@@ -215,18 +312,8 @@ export function EditableTable<Row>({
     if (!editing) return
     const { pos } = editing
     const row = rows[pos.r]
-    const column = columns[pos.c]
     setEditing(null)
-    if (text !== null && row && column.editor) {
-      const parsed = parse(column.editor, text)
-      if (typeof parsed === "object") {
-        const key = keyOf(getRowId(row), column.id)
-        setError(key, parsed.error)
-        setStatus(
-          `${column.header} for ${getRowLabel(row)} not saved: ${parsed.error}`
-        )
-      } else void commit(row, column, parsed)
-    }
+    if (text !== null && row) cellsState.commitText(row, columns[pos.c], text)
     if (refocus) focusCell(move ?? pos)
   }
 
@@ -235,23 +322,13 @@ export function EditableTable<Row>({
     // The focused cell, not `active`: a key can land before focus re-renders.
     const td = (e.target as HTMLElement).closest<HTMLElement>("td[data-r]")
     if (!td) return
-    const r = Number(td.dataset.r)
-    const c = Number(td.dataset.c)
-    const here = { r, c }
+    const here = { r: Number(td.dataset.r), c: Number(td.dataset.c) }
     const mod = e.ctrlKey || e.metaKey
-    const moves: Record<string, Pos> = {
-      ArrowUp: { r: r - 1, c },
-      ArrowDown: { r: r + 1, c },
-      ArrowLeft: { r, c: c - 1 },
-      ArrowRight: { r, c: c + 1 },
-      Home: mod ? { r: 0, c: 0 } : { r, c: 0 },
-      End: mod
-        ? { r: rows.length - 1, c: columns.length - 1 }
-        : { r, c: columns.length - 1 },
-    }
-    if (moves[e.key]) {
+    const last = { r: rows.length - 1, c: columns.length - 1 }
+    const move = moveFor(e.key, here, last, mod)
+    if (move) {
       e.preventDefault()
-      focusCell(moves[e.key])
+      focusCell(move)
       return
     }
     if (e.key === "Enter" || e.key === "F2") {
@@ -259,22 +336,19 @@ export function EditableTable<Row>({
       startEdit(here)
       return
     }
-    const editor = columns[c]?.editor
-    if (
-      editor &&
-      editor.type !== "select" &&
-      e.key.length === 1 &&
-      !mod &&
-      !e.altKey
-    ) {
+    const editor = columns[here.c]?.editor
+    const typing = e.key.length === 1 && !mod && !e.altKey
+    if (editor && editor.type !== "select" && typing) {
       // Typing replaces the value, like a spreadsheet.
       e.preventDefault()
       startEdit(here, e.key)
     }
   }
 
-  const saving = pending.size
-  const failed = errors.size
+  const registerCell = (pos: string, el: HTMLTableCellElement | null) => {
+    if (el) cells.current.set(pos, el)
+    else cells.current.delete(pos)
+  }
 
   return (
     <div className={cn("flex min-w-0 flex-col gap-2", className)}>
@@ -307,110 +381,110 @@ export function EditableTable<Row>({
               const rowId = getRowId(row)
               return (
                 <TableRow key={rowId} className="border-0 hover:bg-transparent">
-                  {columns.map((column, c) => {
-                    const key = keyOf(rowId, column.id)
-                    const value = valueAt(row, column)
-                    const isActive = active.r === r && active.c === c
-                    const isEditing =
-                      editing?.pos.r === r && editing.pos.c === c
-                    const isSaving = pending.has(key)
-                    const error = errors.get(key)
-                    const editable = Boolean(column.editor)
-                    return (
-                      <TableCell
-                        key={column.id}
-                        ref={(el) => {
-                          if (el) cells.current.set(`${r}:${c}`, el)
-                          else cells.current.delete(`${r}:${c}`)
-                        }}
-                        role="gridcell"
-                        tabIndex={isActive && !isEditing ? 0 : -1}
-                        aria-readonly={!editable || undefined}
-                        aria-busy={isSaving || undefined}
-                        aria-invalid={error ? true : undefined}
-                        title={error}
-                        data-r={r}
-                        data-c={c}
-                        data-editable={editable || undefined}
-                        onFocus={() => {
-                          if (!isActive) setActive({ r, c })
-                        }}
-                        onClick={() => setActive({ r, c })}
-                        onDoubleClick={() => startEdit({ r, c })}
-                        className={cn(
-                          "relative h-10 p-0 shadow-[inset_0_-1px_0_var(--border)] outline-none focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-(--ds-focus-ring)",
-                          "data-editable:cursor-text data-editable:hover:bg-muted/40",
-                          error &&
-                            "bg-destructive/5 shadow-[inset_0_0_0_1px_var(--destructive)]",
-                          column.className
-                        )}
-                      >
-                        {isEditing && column.editor ? (
-                          <CellEditorControl
-                            editor={column.editor}
-                            label={`${column.header} for ${getRowLabel(row)}`}
-                            initial={editing.initial}
-                            typed={editing.typed}
-                            align={column.align}
-                            onDone={finishEdit}
-                            pos={{ r, c }}
-                          />
-                        ) : (
-                          <div
-                            className={cn(
-                              "flex h-10 min-w-0 items-center gap-2 px-3",
-                              column.align === "end" && "justify-end"
-                            )}
-                          >
-                            {isSaving && column.align === "end" && (
-                              <Spinner
-                                aria-label="Saving"
-                                className="size-3 text-muted-foreground"
-                              />
-                            )}
-                            <span
-                              className={cn(
-                                "min-w-0 truncate",
-                                column.align === "end" && "tabular-nums"
-                              )}
-                            >
-                              {column.render
-                                ? column.render(value, row)
-                                : String(value)}
-                            </span>
-                            {isSaving && column.align !== "end" && (
-                              <Spinner
-                                aria-label="Saving"
-                                className="ms-auto size-3 shrink-0 text-muted-foreground"
-                              />
-                            )}
-                          </div>
-                        )}
-                      </TableCell>
-                    )
-                  })}
+                  {columns.map((column, c) => (
+                    <GridCell
+                      key={column.id}
+                      row={row}
+                      column={column}
+                      pos={{ r, c }}
+                      value={valueAt(row, column)}
+                      active={active.r === r && active.c === c}
+                      editing={
+                        editing?.pos.r === r && editing.pos.c === c
+                          ? editing
+                          : null
+                      }
+                      saving={pending.has(keyOf(rowId, column.id))}
+                      error={errors.get(keyOf(rowId, column.id))}
+                      label={`${column.header} for ${getRowLabel(row)}`}
+                      register={registerCell}
+                      onActivate={setActive}
+                      onStartEdit={startEdit}
+                      onDone={finishEdit}
+                    />
+                  ))}
                 </TableRow>
               )
             })}
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between gap-3 px-1 text-xs text-muted-foreground">
-        <p className="hidden sm:block">
-          Enter or type to edit · Enter saves · Esc cancels
-        </p>
-        <p className="tabular-nums sm:ms-auto">
-          {saving > 0
-            ? `Saving ${saving} ${saving === 1 ? "change" : "changes"}…`
-            : failed > 0
-              ? `${failed} ${failed === 1 ? "change" : "changes"} not saved`
-              : "All changes saved"}
-        </p>
-      </div>
+      <SaveSummary saving={pending.size} failed={errors.size} />
       <p aria-live="polite" className="sr-only">
-        {status}
+        {cellsState.status}
       </p>
     </div>
+  )
+}
+
+function GridCell<Row>({
+  row,
+  column,
+  pos,
+  value,
+  active,
+  editing,
+  saving,
+  error,
+  label,
+  register,
+  onActivate,
+  onStartEdit,
+  onDone,
+}: {
+  row: Row
+  column: EditableColumn<Row>
+  pos: Pos
+  value: CellValue
+  active: boolean
+  editing: Editing | null
+  saving: boolean
+  error: string | undefined
+  label: string
+  register: (pos: string, el: HTMLTableCellElement | null) => void
+  onActivate: (pos: Pos) => void
+  onStartEdit: (pos: Pos) => void
+  onDone: React.ComponentProps<typeof CellEditorControl>["onDone"]
+}) {
+  const editable = Boolean(column.editor)
+  return (
+    <TableCell
+      ref={(el) => register(`${pos.r}:${pos.c}`, el)}
+      role="gridcell"
+      tabIndex={active && !editing ? 0 : -1}
+      aria-readonly={!editable || undefined}
+      aria-busy={saving || undefined}
+      aria-invalid={error ? true : undefined}
+      title={error}
+      data-r={pos.r}
+      data-c={pos.c}
+      data-editable={editable || undefined}
+      onFocus={() => {
+        if (!active) onActivate(pos)
+      }}
+      onClick={() => onActivate(pos)}
+      onDoubleClick={() => onStartEdit(pos)}
+      className={cn(
+        "relative h-10 p-0 shadow-[inset_0_-1px_0_var(--border)] outline-none focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-(--ds-focus-ring)",
+        "data-editable:cursor-text data-editable:hover:bg-muted/40",
+        error && "bg-destructive/5 shadow-[inset_0_0_0_1px_var(--destructive)]",
+        column.className
+      )}
+    >
+      {editing && column.editor ? (
+        <CellEditorControl
+          editor={column.editor}
+          label={label}
+          initial={editing.initial}
+          typed={editing.typed}
+          align={column.align}
+          onDone={onDone}
+          pos={pos}
+        />
+      ) : (
+        <CellDisplay column={column} row={row} value={value} saving={saving} />
+      )}
+    </TableCell>
   )
 }
 

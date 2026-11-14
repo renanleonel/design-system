@@ -6,7 +6,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 import { CodeBlock } from "@/components/docs/code-block"
 import { InstallCommand } from "@/components/docs/install-command"
 import { PreviewTabs } from "@/components/docs/preview-tabs"
-import { demos } from "@/components/demos"
+import { DemoStory } from "@/components/demos"
 import {
   getComponents,
   getStories,
@@ -35,6 +35,8 @@ function Inline({ text }: { text: string }) {
   return text.split(/(`[^`]+`)/).map((part, i) =>
     part.startsWith("`") ? (
       <code
+        // Segments of a static string; they never reorder.
+        // react-doctor-disable-next-line react-doctor/no-array-index-as-key
         key={i}
         className="rounded bg-muted px-1 py-0.5 font-mono text-[0.8125rem]"
       >
@@ -47,10 +49,9 @@ function Inline({ text }: { text: string }) {
 }
 
 function StoryView({ name, story }: { name: string; story: Story }) {
-  const Demo = demos[name]?.[story.id]
   return (
     <PreviewTabs
-      preview={Demo ? <Demo /> : null}
+      preview={<DemoStory name={name} story={story.id} />}
       code={<CodeBlock code={story.code} />}
     />
   )

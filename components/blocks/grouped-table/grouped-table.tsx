@@ -6,7 +6,9 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
+  type Column,
   type ColumnDef,
+  type Header,
   type Row,
   type SortingState,
 } from "@tanstack/react-table"
@@ -100,6 +102,503 @@ function calculate(values: unknown[], calc: Calc) {
   }
 }
 
+type Noun = { one: string; other: string }
+
+const ARIA_SORT = { asc: "ascending", desc: "descending" } as const
+
+function sortingFrom(sortParam: string): SortingState {
+  return sortParam
+    ? [{ id: sortParam.replace(/^-/, ""), desc: sortParam.startsWith("-") }]
+    : []
+}
+
+/** Rows split by the grouping column, in the group's order, then alphabetically. */
+function groupRows<TData>(rows: Row<TData>[], group: GroupOption | undefined) {
+  if (!group) return [{ value: "", rows }]
+  const map = new Map<string, Row<TData>[]>()
+  for (const row of rows) {
+    const value = String(row.getValue(group.id) ?? "")
+    map.set(value, [...(map.get(value) ?? []), row])
+  }
+  const order = group.order ?? []
+  const rank = (v: string) =>
+    order.includes(v) ? order.indexOf(v) : order.length
+  return [...map.entries()]
+    .sort(([a], [b]) => rank(a) - rank(b) || a.localeCompare(b))
+    .map(([value, rows]) => ({ value, rows }))
+}
+
+/**
+ * Bands and rows flattened into one virtual list: only what's near the
+ * viewport renders, so thousands of rows scroll like dozens.
+ */
+function flatten<TData>(
+  groups: { value: string; rows: Row<TData>[] }[],
+  group: GroupOption | undefined,
+  collapsed: Set<string>
+) {
+  const entries: Entry<TData>[] = []
+  const spans: GroupSpan<TData>[] = []
+  let number = 0
+  for (const { value, rows } of groups) {
+    const open = !group || !collapsed.has(`${group.id}:${value}`)
+    const a = entries.length
+    if (group) entries.push({ kind: "band", index: a })
+    if (open)
+      for (const row of rows)
+        entries.push({ kind: "row", index: entries.length, row, number: ++number })
+    else number += rows.length
+    spans.push({ value, rows, open, a, b: entries.length - 1 })
+  }
+  return { entries, spans }
+}
+
+/** The virtualizer plus what the groups need to place themselves in its window. */
+function useGroupWindow<TData>(
+  entries: Entry<TData>[],
+  spans: GroupSpan<TData>[]
+) {
+  const scroller = React.useRef<HTMLDivElement>(null)
+  // eslint-disable-next-line react-hooks/incompatible-library -- TanStack Virtual returns non-memoizable functions by design
+  const virtualizer = useVirtualizer({
+    count: entries.length,
+    getScrollElement: () => scroller.current,
+    estimateSize: (i) => (entries[i].kind === "band" ? BAND_HEIGHT : ROW_HEIGHT),
+    overscan: 12,
+    paddingStart: HEAD_HEIGHT,
+    // Keyboard focus never lands under the pinned header and band.
+    scrollPaddingStart: HEAD_HEIGHT + BAND_HEIGHT,
+    // Server render and first paint show the top rows instead of nothing.
+    initialRect: { width: 0, height: 800 },
+  })
+  const range = virtualizer.getVirtualItems()
+  const rangeStart = range[0]?.index ?? 0
+  const rangeEnd = range.at(-1)?.index ?? -1
+  const measurements = virtualizer.measurementsCache
+  const startOf = (i: number) => measurements[i]?.start ?? HEAD_HEIGHT
+  const endOf = (i: number) => measurements[i]?.end ?? HEAD_HEIGHT
+  const visibleSpans = spans.filter(
+    (s) => s.b >= s.a && s.b >= rangeStart && s.a <= rangeEnd
+  )
+  const first = visibleSpans[0]
+  const last = visibleSpans.at(-1)
+  return {
+    scroller,
+    measure: virtualizer.measureElement,
+    window: { rangeStart, rangeEnd, startOf, endOf },
+    visibleSpans,
+    topGap: first ? startOf(first.a) - HEAD_HEIGHT : 0,
+    bottomGap: last ? virtualizer.getTotalSize() - endOf(last.b) : 0,
+  }
+}
+
+type GroupWindow = {
+  rangeStart: number
+  rangeEnd: number
+  startOf: (i: number) => number
+  endOf: (i: number) => number
+}
+
+function Toolbar({
+  groupOptions,
+  group,
+  allCollapsed,
+  onToggleAll,
+  total,
+  groupCount,
+  noun,
+}: {
+  groupOptions: GroupOption[]
+  group: GroupOption | undefined
+  allCollapsed: boolean
+  onToggleAll: () => void
+  total: number
+  groupCount: number
+  noun: Noun
+}) {
+  const ToggleIcon = allCollapsed ? ChevronsUpDownIcon : ChevronsDownUpIcon
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      {groupOptions.length > 1 && (
+        <Select
+          items={groupOptions.map((g) => ({ value: g.id, label: g.label }))}
+          value={group?.id ?? null}
+          onValueChange={(v) => v && setSearchParams({ group: v })}
+          aria-label="Group by"
+        >
+          <SelectTrigger aria-label="Group by" className="min-w-40">
+            <span className="text-muted-foreground">Group by</span>
+            <SelectValue />
+          </SelectTrigger>
+          {/* The "Group by" prefix sits before the value: open below, not over it. */}
+          <SelectContent alignItemWithTrigger={false}>
+            {groupOptions.map((g) => (
+              <SelectItem key={g.id} value={g.id}>
+                {g.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+      <Button variant="ghost" onClick={onToggleAll} hotkey="Shift+E">
+        <ToggleIcon data-icon="inline-start" />
+        {allCollapsed ? "Expand all" : "Collapse all"}
+      </Button>
+      <p className="ms-auto text-sm text-muted-foreground tabular-nums">
+        {total === 1 ? `1 ${noun.one}` : `${total} ${noun.other}`}
+        {group && ` in ${groupCount} groups`}
+      </p>
+    </div>
+  )
+}
+
+function HeadCell<TData>({
+  header,
+  onSort,
+}: {
+  header: Header<TData, unknown>
+  onSort: (id: string) => void
+}) {
+  const def = header.column.columnDef
+  const dir = header.column.getIsSorted()
+  const label = flexRender(def.header, header.getContext())
+  return (
+    <th
+      className={cn(HEAD, def.meta?.align === "end" && "text-end")}
+      aria-sort={dir ? ARIA_SORT[dir] : undefined}
+    >
+      {header.column.getCanSort() ? (
+        <button
+          type="button"
+          onClick={() => onSort(header.column.id)}
+          className={cn(
+            "-mx-1.5 inline-flex h-7 items-center gap-1 rounded-md px-1.5 focus-ring hover:text-foreground",
+            def.meta?.align === "end" && "flex-row-reverse"
+          )}
+        >
+          {label}
+          {dir === "asc" && <ArrowUpIcon className="size-3.5" />}
+          {dir === "desc" && <ArrowDownIcon className="size-3.5" />}
+        </button>
+      ) : (
+        label
+      )}
+    </th>
+  )
+}
+
+function Band<TData>({
+  span,
+  value,
+  rows,
+  open,
+  label,
+  index,
+  measure,
+  onSelect,
+  onToggle,
+}: {
+  span: number
+  value: string
+  rows: Row<TData>[]
+  open: boolean
+  label: React.ReactNode
+  index: number
+  measure: (el: Element | null) => void
+  onSelect: (rows: Row<TData>[], selected: boolean) => void
+  onToggle: (value: string) => void
+}) {
+  const groupSelected = rows.every((r) => r.getIsSelected())
+  const someSelected = rows.some((r) => r.getIsSelected())
+  return (
+    <tr ref={measure} data-index={index}>
+      <td className={cn(BAND, "ps-3 pe-1")}>
+        <Checkbox
+          aria-label={`Select all in ${value || "No value"}`}
+          checked={groupSelected}
+          indeterminate={!groupSelected && someSelected}
+          onCheckedChange={(v) => onSelect(rows, !!v)}
+        />
+      </td>
+      <th scope="rowgroup" colSpan={span - 1} className={BAND}>
+        <button
+          type="button"
+          aria-expanded={open}
+          onClick={() => onToggle(value)}
+          className="-ms-1 flex h-7 items-center gap-1.5 rounded-md ps-1 pe-2 text-start font-medium focus-ring hover:bg-foreground/5"
+        >
+          <ChevronRightIcon
+            aria-hidden
+            className={cn(
+              "size-4 text-muted-foreground transition-transform duration-150 ease-out motion-reduce:transition-none rtl:-scale-x-100",
+              open && "rotate-90 rtl:-rotate-90"
+            )}
+          />
+          {label}
+          <span className="font-normal text-muted-foreground tabular-nums">
+            {rows.length}
+          </span>
+        </button>
+      </th>
+    </tr>
+  )
+}
+
+function DataRow<TData>({
+  row,
+  number,
+  index,
+  measure,
+  getRowLabel,
+}: {
+  row: Row<TData>
+  number: number
+  index: number
+  measure: (el: Element | null) => void
+  getRowLabel?: (row: TData) => string
+}) {
+  return (
+    <tr
+      ref={measure}
+      data-index={index}
+      data-state={row.getIsSelected() ? "selected" : undefined}
+      className="group/row hover:bg-muted/50 data-[state=selected]:bg-muted"
+    >
+      <td className={cn(CELL, "ps-3 pe-1")}>
+        <Checkbox
+          aria-label={`Select ${getRowLabel?.(row.original) ?? `row ${number}`}`}
+          checked={row.getIsSelected()}
+          onCheckedChange={(v) => row.toggleSelected(!!v)}
+        />
+      </td>
+      <td
+        className={cn(
+          CELL,
+          "px-1 text-end text-xs text-muted-foreground tabular-nums"
+        )}
+      >
+        {number}
+      </td>
+      {row.getVisibleCells().map((cell) => (
+        <td
+          key={cell.id}
+          className={cn(
+            CELL,
+            cell.column.columnDef.meta?.align === "end" &&
+              "text-end tabular-nums"
+          )}
+        >
+          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </td>
+      ))}
+    </tr>
+  )
+}
+
+/**
+ * One group's tbody: its band, then the rows inside the rendered range.
+ * Spacers keep the tbody its full height so the band stays pinned over all of it.
+ */
+function GroupBody<TData>({
+  groupSpan,
+  group,
+  entries,
+  win,
+  span,
+  measure,
+  getRowLabel,
+  onSelect,
+  onToggle,
+}: {
+  groupSpan: GroupSpan<TData>
+  group: GroupOption | undefined
+  entries: Entry<TData>[]
+  win: GroupWindow
+  span: number
+  measure: (el: Element | null) => void
+  getRowLabel?: (row: TData) => string
+  onSelect: (rows: Row<TData>[], selected: boolean) => void
+  onToggle: (value: string) => void
+}) {
+  const { value, rows, open, a, b } = groupSpan
+  const from = Math.max(group ? a + 1 : a, win.rangeStart)
+  const to = Math.min(b, win.rangeEnd)
+  const groupTop = group ? win.endOf(a) : win.startOf(a)
+  const hasRows = from <= to
+  const innerTop = hasRows ? win.startOf(from) - groupTop : 0
+  const innerBottom = hasRows
+    ? win.endOf(b) - win.endOf(to)
+    : win.endOf(b) - groupTop
+  const shown = open ? entries.slice(from, to + 1) : []
+  return (
+    <tbody>
+      {group && (
+        <Band
+          span={span}
+          value={value}
+          rows={rows}
+          open={open}
+          label={group.render?.(value) ?? (value || "No value")}
+          index={a}
+          measure={measure}
+          onSelect={onSelect}
+          onToggle={onToggle}
+        />
+      )}
+      {open && innerTop > 0 && <SpacerRow height={innerTop} span={span} />}
+      {shown.map((entry) =>
+        entry.kind === "row" ? (
+          <DataRow
+            key={entry.row.id}
+            row={entry.row}
+            number={entry.number}
+            index={entry.index}
+            measure={measure}
+            getRowLabel={getRowLabel}
+          />
+        ) : null
+      )}
+      {open && innerBottom > 0 && (
+        <SpacerRow height={innerBottom} span={span} />
+      )}
+    </tbody>
+  )
+}
+
+const NUMERIC_CALCS = new Set<Calc>(["sum", "avg", "min", "max"])
+
+function formatResult(
+  result: number,
+  calc: Calc,
+  meta: ColumnDef<unknown>["meta"]
+) {
+  if (meta?.numeric && NUMERIC_CALCS.has(calc))
+    return meta.format?.(result) ?? Math.round(result).toLocaleString("en-US")
+  return result.toLocaleString("en-US")
+}
+
+/** A footer cell: pick a calculation for the column and show its result. */
+function CalcCell<TData>({
+  column,
+  rows,
+  calc,
+  onChange,
+}: {
+  column: Column<TData, unknown>
+  rows: Row<TData>[]
+  calc: Calc | undefined
+  onChange: (calc: Calc | null) => void
+}) {
+  const meta = column.columnDef.meta
+  const name = meta?.label ?? column.id
+  const calcLabel = CALCS.find((c) => c.value === calc)?.label
+  const shown = calc
+    ? formatResult(
+        calculate(
+          rows.map((r) => r.getValue(column.id)),
+          calc
+        ),
+        calc,
+        meta
+      )
+    : null
+  return (
+    <td className={cn(FOOT, meta?.align === "end" && "text-end")}>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="xs"
+              className="-mx-1.5 text-muted-foreground"
+              aria-label={
+                shown == null
+                  ? `Calculate ${name}`
+                  : `${name}: ${calcLabel} ${shown}`
+              }
+            />
+          }
+        >
+          {shown == null ? (
+            <>
+              <ChevronDownIcon data-icon="inline-start" />
+              Calculate
+            </>
+          ) : (
+            <>
+              <span>{calcLabel}</span>
+              <span className="font-medium text-foreground tabular-nums">
+                {shown}
+              </span>
+            </>
+          )}
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align={meta?.align === "end" ? "end" : "start"}
+          side="top"
+        >
+          <DropdownMenuRadioGroup
+            value={calc ?? "none"}
+            onValueChange={(v) => onChange(v === "none" ? null : (v as Calc))}
+          >
+            <DropdownMenuLabel>{name}</DropdownMenuLabel>
+            <DropdownMenuRadioItem value="none" closeOnClick>
+              None
+            </DropdownMenuRadioItem>
+            {CALCS.filter((c) => !c.numeric || meta?.numeric).map((c) => (
+              <DropdownMenuRadioItem key={c.value} value={c.value} closeOnClick>
+                {c.label}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </td>
+  )
+}
+
+/** Floats over the table's bottom edge; fades and rises in, leaves faster. */
+function FloatingBulkBar<TData>({
+  selected,
+  count,
+  noun,
+  bulkActions,
+  onClear,
+}: {
+  selected: TData[]
+  /** The last non-zero count, so the bar fades out without flashing "0". */
+  count: number
+  noun: Noun
+  bulkActions: (rows: TData[], clear: () => void) => React.ReactNode
+  onClear: () => void
+}) {
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-14 z-30 flex justify-center px-3">
+      <div
+        role="region"
+        aria-label="Bulk actions"
+        data-open={selected.length > 0 || undefined}
+        inert={selected.length === 0}
+        className="pointer-events-auto flex max-w-full translate-y-2 items-center gap-1 overflow-x-auto [scrollbar-width:none] rounded-xl bg-popover p-1.5 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-150 ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-200 data-open:ease-out"
+      >
+        <span className="ps-2 pe-1 font-medium whitespace-nowrap tabular-nums">
+          {count === 1 ? `1 ${noun.one} selected` : `${count} ${noun.other} selected`}
+        </span>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Clear selection"
+          onClick={onClear}
+        >
+          <XIcon />
+        </Button>
+        <span aria-hidden className="mx-1 h-5 w-px shrink-0 bg-border" />
+        {bulkActions(selected, onClear)}
+      </div>
+    </div>
+  )
+}
+
 /**
  * A spreadsheet-style table split into groups. The column header, each group's
  * band and the calculation footer stay pinned while the body scrolls; groups
@@ -125,7 +624,7 @@ function GroupedTable<TData>({
   getRowLabel?: (row: TData) => string
   groupOptions: GroupOption[]
   defaultGroup?: string
-  noun?: { one: string; other: string }
+  noun?: Noun
   /** Actions for the floating bar shown while rows are selected. */
   bulkActions?: (rows: TData[], clear: () => void) => React.ReactNode
   className?: string
@@ -136,13 +635,7 @@ function GroupedTable<TData>({
     groupOptions.find((g) => g.id === defaultGroup)
   const sortParam = params.get("sort") ?? ""
   // Memoized by value: TanStack Table treats a new array as a state change.
-  const sorting = React.useMemo<SortingState>(
-    () =>
-      sortParam
-        ? [{ id: sortParam.replace(/^-/, ""), desc: sortParam.startsWith("-") }]
-        : [],
-    [sortParam]
-  )
+  const sorting = React.useMemo(() => sortingFrom(sortParam), [sortParam])
 
   const [rowSelection, setRowSelection] = React.useState<
     Record<string, boolean>
@@ -163,20 +656,12 @@ function GroupedTable<TData>({
   })
 
   const rows = table.getRowModel().rows
-  const groups = React.useMemo(() => {
-    if (!group) return [{ value: "", rows }]
-    const map = new Map<string, Row<TData>[]>()
-    for (const row of rows) {
-      const value = String(row.getValue(group.id) ?? "")
-      map.set(value, [...(map.get(value) ?? []), row])
-    }
-    const order = group.order ?? []
-    const rank = (v: string) =>
-      order.includes(v) ? order.indexOf(v) : order.length
-    return [...map.entries()]
-      .sort(([a], [b]) => rank(a) - rank(b) || a.localeCompare(b))
-      .map(([value, rows]) => ({ value, rows }))
-  }, [rows, group])
+  const groups = React.useMemo(() => groupRows(rows, group), [rows, group])
+  const { entries, spans } = React.useMemo(
+    () => flatten(groups, group, collapsed),
+    [groups, group, collapsed]
+  )
+  const view = useGroupWindow(entries, spans)
 
   const selected = table.getSelectedRowModel().rows.map((r) => r.original)
   const clearSelection = () => setRowSelection({})
@@ -203,7 +688,21 @@ function GroupedTable<TData>({
         else next.add(keyOf(g.value))
       return next
     })
-
+  const selectRows = (list: Row<TData>[], on: boolean) =>
+    setRowSelection((prev) => {
+      const next = { ...prev }
+      for (const r of list)
+        if (on) next[r.id] = true
+        else delete next[r.id]
+      return next
+    })
+  const setCalc = (id: string, calc: Calc | null) =>
+    setCalcs((prev) => {
+      const next = { ...prev }
+      if (calc) next[id] = calc
+      else delete next[id]
+      return next
+    })
   const toggleSort = (id: string) => {
     const next =
       sortParam === id ? `-${id}` : sortParam === `-${id}` ? null : id
@@ -214,95 +713,23 @@ function GroupedTable<TData>({
   const span = leafColumns.length + 2 // select + row number
   const allSelected = table.getIsAllRowsSelected()
 
-  // Bands and rows flattened into one virtual list: only what's near the
-  // viewport renders, so thousands of rows scroll like dozens.
-  const { entries, spans } = React.useMemo(() => {
-    const entries: Entry<TData>[] = []
-    const spans: GroupSpan<TData>[] = []
-    let number = 0
-    for (const { value, rows } of groups) {
-      const open = !group || !collapsed.has(`${group.id}:${value}`)
-      const a = entries.length
-      if (group) entries.push({ kind: "band", index: a })
-      if (open)
-        for (const row of rows)
-          entries.push({ kind: "row", index: entries.length, row, number: ++number })
-      else number += rows.length
-      spans.push({ value, rows, open, a, b: entries.length - 1 })
-    }
-    return { entries, spans }
-  }, [groups, group, collapsed])
-
-  const scroller = React.useRef<HTMLDivElement>(null)
-  const virtualizer = useVirtualizer({
-    count: entries.length,
-    getScrollElement: () => scroller.current,
-    estimateSize: (i) => (entries[i].kind === "band" ? BAND_HEIGHT : ROW_HEIGHT),
-    overscan: 12,
-    paddingStart: HEAD_HEIGHT,
-    // Keyboard focus never lands under the pinned header and band.
-    scrollPaddingStart: HEAD_HEIGHT + BAND_HEIGHT,
-    // Server render and first paint show the top rows instead of nothing.
-    initialRect: { width: 0, height: 800 },
-  })
-  const range = virtualizer.getVirtualItems()
-  const rangeStart = range[0]?.index ?? 0
-  const rangeEnd = range.at(-1)?.index ?? -1
-  const measurements = virtualizer.measurementsCache
-  const startOf = (i: number) => measurements[i]?.start ?? HEAD_HEIGHT
-  const endOf = (i: number) => measurements[i]?.end ?? HEAD_HEIGHT
-  const visibleSpans = spans.filter(
-    (s) => s.b >= s.a && s.b >= rangeStart && s.a <= rangeEnd
-  )
-  const topGap = visibleSpans.length
-    ? startOf(visibleSpans[0].a) - HEAD_HEIGHT
-    : 0
-  const bottomGap = visibleSpans.length
-    ? virtualizer.getTotalSize() - endOf(visibleSpans.at(-1)!.b)
-    : 0
-
   return (
     <div
       data-slot="grouped-table"
       className={cn("relative flex min-h-80 flex-col gap-3", className)}
     >
-      <div className="flex flex-wrap items-center gap-2">
-        {groupOptions.length > 1 && (
-          <Select
-            items={groupOptions.map((g) => ({ value: g.id, label: g.label }))}
-            value={group?.id ?? null}
-            onValueChange={(v) => v && setSearchParams({ group: v })}
-          >
-            <SelectTrigger aria-label="Group by" className="min-w-40">
-              <span className="text-muted-foreground">Group by</span>
-              <SelectValue />
-            </SelectTrigger>
-            {/* The "Group by" prefix sits before the value: open below, not over it. */}
-            <SelectContent alignItemWithTrigger={false}>
-              {groupOptions.map((g) => (
-                <SelectItem key={g.id} value={g.id}>
-                  {g.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        )}
-        <Button variant="ghost" onClick={toggleAll} hotkey="Shift+E">
-          {allCollapsed ? (
-            <ChevronsUpDownIcon data-icon="inline-start" />
-          ) : (
-            <ChevronsDownUpIcon data-icon="inline-start" />
-          )}
-          {allCollapsed ? "Expand all" : "Collapse all"}
-        </Button>
-        <p className="ms-auto text-sm text-muted-foreground tabular-nums">
-          {data.length === 1 ? `1 ${noun.one}` : `${data.length} ${noun.other}`}
-          {group && ` in ${groups.length} groups`}
-        </p>
-      </div>
+      <Toolbar
+        groupOptions={groupOptions}
+        group={group}
+        allCollapsed={allCollapsed}
+        onToggleAll={toggleAll}
+        total={data.length}
+        groupCount={groups.length}
+        noun={noun}
+      />
 
       <div
-        ref={scroller}
+        ref={view.scroller}
         className="relative min-h-0 flex-1 overflow-auto overscroll-contain rounded-lg bg-card shadow-border"
       >
         {/* border-separate: sticky cells keep their borders while scrolling. */}
@@ -320,288 +747,56 @@ function GroupedTable<TData>({
               <th className={cn(HEAD, "w-10 px-1 text-end")}>
                 <span className="sr-only">Row</span>
               </th>
-              {table.getHeaderGroups()[0].headers.map((header) => {
-                const def = header.column.columnDef
-                const dir = header.column.getIsSorted()
-                return (
-                  <th
-                    key={header.id}
-                    className={cn(HEAD, def.meta?.align === "end" && "text-end")}
-                    aria-sort={
-                      dir === "asc"
-                        ? "ascending"
-                        : dir === "desc"
-                          ? "descending"
-                          : undefined
-                    }
-                  >
-                    {header.column.getCanSort() ? (
-                      <button
-                        type="button"
-                        onClick={() => toggleSort(header.column.id)}
-                        className={cn(
-                          "-mx-1.5 inline-flex h-7 items-center gap-1 rounded-md px-1.5 focus-ring hover:text-foreground",
-                          def.meta?.align === "end" && "flex-row-reverse"
-                        )}
-                      >
-                        {flexRender(def.header, header.getContext())}
-                        {dir === "asc" ? (
-                          <ArrowUpIcon className="size-3.5" />
-                        ) : dir === "desc" ? (
-                          <ArrowDownIcon className="size-3.5" />
-                        ) : null}
-                      </button>
-                    ) : (
-                      flexRender(def.header, header.getContext())
-                    )}
-                  </th>
-                )
-              })}
+              {table.getHeaderGroups()[0].headers.map((header) => (
+                <HeadCell key={header.id} header={header} onSort={toggleSort} />
+              ))}
             </tr>
           </thead>
 
-          {topGap > 0 && <SpacerBody height={topGap} span={span} />}
-          {visibleSpans.map(({ value, rows, open, a, b }) => {
-            const groupSelected = rows.every((r) => r.getIsSelected())
-            const someSelected = rows.some((r) => r.getIsSelected())
-            const label = group?.render?.(value) ?? (value || "No value")
-            // Rows of this group inside the rendered range; spacers keep the
-            // tbody its full height so the band stays pinned over all of it.
-            const rowStart = group ? a + 1 : a
-            const from = Math.max(rowStart, rangeStart)
-            const to = Math.min(b, rangeEnd)
-            const groupTop = group ? endOf(a) : startOf(a)
-            const innerTop = from <= to ? startOf(from) - groupTop : 0
-            const innerBottom =
-              from <= to ? endOf(b) - endOf(to) : endOf(b) - groupTop
-            const shown: Entry<TData>[] = []
-            for (let i = from; i <= to; i++) shown.push(entries[i])
-            return (
-              <tbody key={value}>
-                {group && (
-                  <tr
-                    ref={virtualizer.measureElement}
-                    data-index={a}
-                  >
-                    <td className={cn(BAND, "ps-3 pe-1")}>
-                      <Checkbox
-                        aria-label={`Select all in ${value || "No value"}`}
-                        checked={groupSelected}
-                        indeterminate={!groupSelected && someSelected}
-                        onCheckedChange={(v) =>
-                          setRowSelection((prev) => {
-                            const next = { ...prev }
-                            for (const r of rows)
-                              if (v) next[r.id] = true
-                              else delete next[r.id]
-                            return next
-                          })
-                        }
-                      />
-                    </td>
-                    <th scope="rowgroup" colSpan={span - 1} className={BAND}>
-                      <button
-                        type="button"
-                        aria-expanded={open}
-                        onClick={() => toggleGroup(value)}
-                        className="-ms-1 flex h-7 items-center gap-1.5 rounded-md ps-1 pe-2 text-start font-medium focus-ring hover:bg-foreground/5"
-                      >
-                        <ChevronRightIcon
-                          aria-hidden
-                          className={cn(
-                            "size-4 text-muted-foreground transition-transform duration-150 ease-out motion-reduce:transition-none rtl:-scale-x-100",
-                            open && "rotate-90 rtl:-rotate-90"
-                          )}
-                        />
-                        {label}
-                        <span className="font-normal text-muted-foreground tabular-nums">
-                          {rows.length}
-                        </span>
-                      </button>
-                    </th>
-                  </tr>
-                )}
-                {open && innerTop > 0 && (
-                  <SpacerRow height={innerTop} span={span} />
-                )}
-                {open &&
-                  shown.map((entry) => {
-                    if (entry.kind !== "row") return null
-                    const { row, number } = entry
-                    return (
-                    <tr
-                      key={row.id}
-                      ref={virtualizer.measureElement}
-                      data-index={entry.index}
-                      data-state={row.getIsSelected() ? "selected" : undefined}
-                      className="group/row hover:bg-muted/50 data-[state=selected]:bg-muted"
-                    >
-                      <td className={cn(CELL, "ps-3 pe-1")}>
-                        <Checkbox
-                          aria-label={`Select ${getRowLabel?.(row.original) ?? `row ${number}`}`}
-                          checked={row.getIsSelected()}
-                          onCheckedChange={(v) => row.toggleSelected(!!v)}
-                        />
-                      </td>
-                      <td
-                        className={cn(
-                          CELL,
-                          "px-1 text-end text-xs text-muted-foreground tabular-nums"
-                        )}
-                      >
-                        {number}
-                      </td>
-                      {row.getVisibleCells().map((cell) => (
-                        <td
-                          key={cell.id}
-                          className={cn(
-                            CELL,
-                            cell.column.columnDef.meta?.align === "end" &&
-                              "text-end tabular-nums"
-                          )}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      ))}
-                    </tr>
-                    )
-                  })}
-                {open && innerBottom > 0 && (
-                  <SpacerRow height={innerBottom} span={span} />
-                )}
-              </tbody>
-            )
-          })}
-          {bottomGap > 0 && <SpacerBody height={bottomGap} span={span} />}
+          {view.topGap > 0 && <SpacerBody height={view.topGap} span={span} />}
+          {view.visibleSpans.map((groupSpan) => (
+            <GroupBody
+              key={groupSpan.value}
+              groupSpan={groupSpan}
+              group={group}
+              entries={entries}
+              win={view.window}
+              span={span}
+              measure={view.measure}
+              getRowLabel={getRowLabel}
+              onSelect={selectRows}
+              onToggle={toggleGroup}
+            />
+          ))}
+          {view.bottomGap > 0 && (
+            <SpacerBody height={view.bottomGap} span={span} />
+          )}
 
           <tfoot>
             <tr>
               <td className={FOOT} colSpan={2} />
-              {leafColumns.map((column) => {
-                const meta = column.columnDef.meta
-                const calc = calcs[column.id]
-                const result =
-                  calc &&
-                  calculate(
-                    rows.map((r) => r.getValue(column.id)),
-                    calc
-                  )
-                const shown =
-                  result === undefined
-                    ? null
-                    : meta?.numeric &&
-                        ["sum", "avg", "min", "max"].includes(calc)
-                      ? (meta.format?.(result) ??
-                        Math.round(result).toLocaleString("en-US"))
-                      : result.toLocaleString("en-US")
-                const name = meta?.label ?? column.id
-                return (
-                  <td
-                    key={column.id}
-                    className={cn(FOOT, meta?.align === "end" && "text-end")}
-                  >
-                    <DropdownMenu>
-                      <DropdownMenuTrigger
-                        render={
-                          <Button
-                            variant="ghost"
-                            size="xs"
-                            className="-mx-1.5 text-muted-foreground"
-                            aria-label={
-                              shown == null
-                                ? `Calculate ${name}`
-                                : `${name}: ${CALCS.find((c) => c.value === calc)?.label} ${shown}`
-                            }
-                          />
-                        }
-                      >
-                        {shown == null ? (
-                          <>
-                            <ChevronDownIcon data-icon="inline-start" />
-                            Calculate
-                          </>
-                        ) : (
-                          <>
-                            <span>
-                              {CALCS.find((c) => c.value === calc)?.label}
-                            </span>
-                            <span className="font-medium text-foreground tabular-nums">
-                              {shown}
-                            </span>
-                          </>
-                        )}
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        align={meta?.align === "end" ? "end" : "start"}
-                        side="top"
-                      >
-                        <DropdownMenuRadioGroup
-                          value={calc ?? "none"}
-                          onValueChange={(v) =>
-                            setCalcs((prev) => {
-                              const next = { ...prev }
-                              if (v === "none") delete next[column.id]
-                              else next[column.id] = v as Calc
-                              return next
-                            })
-                          }
-                        >
-                          <DropdownMenuLabel>{name}</DropdownMenuLabel>
-                          <DropdownMenuRadioItem value="none" closeOnClick>
-                            None
-                          </DropdownMenuRadioItem>
-                          {CALCS.filter((c) => !c.numeric || meta?.numeric).map(
-                            (c) => (
-                              <DropdownMenuRadioItem
-                                key={c.value}
-                                value={c.value}
-                                closeOnClick
-                              >
-                                {c.label}
-                              </DropdownMenuRadioItem>
-                            )
-                          )}
-                        </DropdownMenuRadioGroup>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </td>
-                )
-              })}
+              {leafColumns.map((column) => (
+                <CalcCell
+                  key={column.id}
+                  column={column}
+                  rows={rows}
+                  calc={calcs[column.id]}
+                  onChange={(calc) => setCalc(column.id, calc)}
+                />
+              ))}
             </tr>
           </tfoot>
         </table>
       </div>
 
       {bulkActions && (
-        // Floats over the table's bottom edge; fades and rises in, leaves faster.
-        <div className="pointer-events-none absolute inset-x-0 bottom-14 z-30 flex justify-center px-3">
-          <div
-            role="region"
-            aria-label="Bulk actions"
-            data-open={selected.length > 0 || undefined}
-            inert={selected.length === 0}
-            className="pointer-events-auto flex max-w-full translate-y-2 items-center gap-1 overflow-x-auto [scrollbar-width:none] rounded-xl bg-popover p-1.5 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-150 ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-200 data-open:ease-out"
-          >
-            <span className="ps-2 pe-1 font-medium whitespace-nowrap tabular-nums">
-              {shownCount === 1
-                ? `1 ${noun.one} selected`
-                : `${shownCount} ${noun.other} selected`}
-            </span>
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              aria-label="Clear selection"
-              onClick={clearSelection}
-            >
-              <XIcon />
-            </Button>
-            <span aria-hidden className="mx-1 h-5 w-px shrink-0 bg-border" />
-            {bulkActions(selected, clearSelection)}
-          </div>
-        </div>
+        <FloatingBulkBar
+          selected={selected}
+          count={shownCount}
+          noun={noun}
+          bulkActions={bulkActions}
+          onClear={clearSelection}
+        />
       )}
     </div>
   )

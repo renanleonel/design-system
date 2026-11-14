@@ -19,6 +19,18 @@ function formatBytes(bytes: number) {
 }
 
 /** `accept` like the input attribute: ".pdf,image/*". */
+// A stable key per File object, so removing one file doesn't remount the rest.
+const fileKeys = new WeakMap<File, string>()
+let nextFileKey = 0
+function fileKey(file: File) {
+  let key = fileKeys.get(file)
+  if (!key) {
+    key = `file-${nextFileKey++}`
+    fileKeys.set(file, key)
+  }
+  return key
+}
+
 function matchesAccept(file: File, accept?: string) {
   if (!accept) return true
   return accept.split(",").some((rule) => {
@@ -161,9 +173,9 @@ function FileDropzone({
       />
       {(files.length > 0 || rejected.length > 0) && (
         <ul className="flex flex-col gap-1.5" aria-label="Files">
-          {files.map((file, i) => (
+          {files.map((file) => (
             <li
-              key={`${file.name}-${file.size}-${i}`}
+              key={fileKey(file)}
               className="flex items-center gap-3 rounded-lg bg-card py-1.5 ps-3 pe-1.5 shadow-border"
             >
               <FileIcon className="size-4 shrink-0 text-muted-foreground" />
@@ -181,7 +193,7 @@ function FileDropzone({
                 size="icon-sm"
                 aria-label={`Remove ${file.name}`}
                 disabled={disabled}
-                onClick={() => commit(files.filter((_, j) => j !== i))}
+                onClick={() => commit(files.filter((f) => f !== file))}
               >
                 <XIcon />
               </Button>

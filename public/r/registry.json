@@ -2126,6 +2126,11 @@
       ],
       "files": [
         {
+          "path": "components/blocks/dashboard/dashboard-charts.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard/dashboard-charts.tsx"
+        },
+        {
           "path": "components/blocks/dashboard/dashboard-page.tsx",
           "type": "registry:component",
           "target": "components/blocks/dashboard/dashboard-page.tsx"

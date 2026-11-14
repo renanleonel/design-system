@@ -211,9 +211,14 @@ function SortableItem({
       ? null
       : { duration: 200, easing: "cubic-bezier(0.77, 0, 0.175, 1)" },
   })
+  // dnd-kit memoizes attributes and listeners, so this only changes with them.
+  const handle = React.useMemo(
+    () => (whole ? null : { attributes, listeners, setActivatorNodeRef }),
+    [whole, attributes, listeners, setActivatorNodeRef]
+  )
   return (
     <SortableHandleContext
-      value={whole ? null : { attributes, listeners, setActivatorNodeRef }}
+      value={handle}
     >
       <div
         ref={setNodeRef}

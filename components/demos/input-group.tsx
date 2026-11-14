@@ -45,7 +45,7 @@ export function WithButton() {
   const [copied, setCopied] = React.useState(false)
   return (
     <InputGroup className="max-w-xs">
-      <InputGroupInput readOnly value="sk_live_51Hq…9fA" aria-label="API key" />
+      <InputGroupInput readOnly value="demo_key_51Hq…9fA" aria-label="API key" />
       <InputGroupAddon align="inline-end">
         <InputGroupButton
           size="icon-xs"
@@ -53,7 +53,7 @@ export function WithButton() {
           // The check is a confirmation, not a control: no hover, no pointer.
           className={copied ? "pointer-events-none" : undefined}
           onClick={async () => {
-            await navigator.clipboard.writeText("sk_live_51Hq…9fA")
+            await navigator.clipboard.writeText("demo_key_51Hq…9fA")
             setCopied(true)
             setTimeout(() => setCopied(false), 1500)
           }}

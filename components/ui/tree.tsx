@@ -46,6 +46,65 @@ type MultipleProps = {
   onValueChange?: (ids: string[], node: TreeNode) => void
 }
 
+/** Ids of nodes whose label contains `query`, plus every ancestor; null without a query. */
+function matchIds(nodes: TreeNode[], query: string) {
+  if (!query) return null
+  const keep = new Set<string>()
+  const walk = (list: TreeNode[]): boolean => {
+    let any = false
+    for (const node of list) {
+      const childHit = node.children ? walk(node.children) : false
+      if (childHit || node.label.toLowerCase().includes(query)) {
+        keep.add(node.id)
+        any = true
+      }
+    }
+    return any
+  }
+  walk(nodes)
+  return keep
+}
+
+/** The visible rows, depth-first. While filtering, matches show with every ancestor open. */
+function flattenRows(
+  nodes: TreeNode[],
+  included: Set<string> | null,
+  openSet: Set<string>
+) {
+  const out: Row[] = []
+  const kidsOf = (node: TreeNode) =>
+    included
+      ? (node.children ?? []).filter((c) => included.has(c.id))
+      : (node.children ?? [])
+  const walk = (list: TreeNode[], depth: number, parentId: string | null) => {
+    list.forEach((node, i) => {
+      const kids = kidsOf(node)
+      const open = kids.length > 0 && (included ? true : openSet.has(node.id))
+      out.push({
+        node,
+        depth,
+        parentId,
+        kids,
+        open,
+        setSize: list.length,
+        pos: i + 1,
+      })
+      if (open) walk(kids, depth + 1, node.id)
+    })
+  }
+  walk(included ? nodes.filter((n) => included.has(n.id)) : nodes, 1, null)
+  return out
+}
+
+/** The first row from `start` (wrapping) whose label starts with `needle`. */
+function findByPrefix(rows: Row[], needle: string, start: number) {
+  for (let i = 0; i < rows.length; i++) {
+    const index = (start + i) % rows.length
+    if (rows[index].node.label.toLowerCase().startsWith(needle)) return index
+  }
+  return -1
+}
+
 /**
  * A file-explorer style tree (WAI-ARIA tree pattern). Only the rows in view
  * render, so it stays fast at tens of thousands of nodes. Focus stays on the
@@ -106,49 +165,11 @@ function Tree({
 
   // Filtering: matches plus every ancestor, all shown open.
   const query = filter.trim().toLowerCase()
-  const included = React.useMemo(() => {
-    if (!query) return null
-    const keep = new Set<string>()
-    const walk = (list: TreeNode[]): boolean => {
-      let any = false
-      for (const node of list) {
-        const childHit = node.children ? walk(node.children) : false
-        if (childHit || node.label.toLowerCase().includes(query)) {
-          keep.add(node.id)
-          any = true
-        }
-      }
-      return any
-    }
-    walk(nodes)
-    return keep
-  }, [nodes, query])
-
-  const rows = React.useMemo(() => {
-    const out: Row[] = []
-    const kidsOf = (node: TreeNode) =>
-      included
-        ? (node.children ?? []).filter((c) => included.has(c.id))
-        : (node.children ?? [])
-    const walk = (list: TreeNode[], depth: number, parentId: string | null) => {
-      list.forEach((node, i) => {
-        const kids = kidsOf(node)
-        const open = kids.length > 0 && (included ? true : openSet.has(node.id))
-        out.push({
-          node,
-          depth,
-          parentId,
-          kids,
-          open,
-          setSize: list.length,
-          pos: i + 1,
-        })
-        if (open) walk(kids, depth + 1, node.id)
-      })
-    }
-    walk(included ? nodes.filter((n) => included.has(n.id)) : nodes, 1, null)
-    return out
-  }, [nodes, included, openSet])
+  const included = React.useMemo(() => matchIds(nodes, query), [nodes, query])
+  const rows = React.useMemo(
+    () => flattenRows(nodes, included, openSet),
+    [nodes, included, openSet]
+  )
 
   const indexOf = React.useMemo(
     () => new Map(rows.map((r, i) => [r.node.id, i])),
@@ -264,13 +285,8 @@ function Tree({
         const needle = t.text.toLowerCase()
         // A repeated single letter cycles; a longer word refines in place.
         const start = t.text.length === 1 ? activeIndex + 1 : activeIndex
-        for (let i = 0; i < rows.length; i++) {
-          const r = rows[(start + i) % rows.length]
-          if (r.node.label.toLowerCase().startsWith(needle)) {
-            moveTo((start + i) % rows.length)
-            break
-          }
-        }
+        const found = findByPrefix(rows, needle, start)
+        if (found >= 0) moveTo(found)
         break
       }
     }
@@ -313,101 +329,145 @@ function Tree({
       >
         {virtualizer.getVirtualItems().map((v) => {
           const row = rows[v.index]
-          const { node } = row
-          const isSelected = selectedSet.has(node.id)
           return (
-            <div
+            <TreeRow
               key={v.key}
-              ref={virtualizer.measureElement}
-              data-index={v.index}
-              id={rowId(node.id)}
-              role="treeitem"
-              aria-level={row.depth}
-              aria-setsize={row.setSize}
-              aria-posinset={row.pos}
-              aria-expanded={row.kids.length ? row.open : undefined}
-              aria-selected={isSelected}
-              aria-disabled={node.disabled || undefined}
-              data-active={v.index === activeIndex || undefined}
-              data-selected={isSelected || undefined}
-              data-disabled={node.disabled || undefined}
-              onClick={() => {
-                setActiveId(node.id)
+              row={row}
+              id={rowId(row.node.id)}
+              index={v.index}
+              start={v.start}
+              measure={virtualizer.measureElement}
+              active={v.index === activeIndex}
+              selected={selectedSet.has(row.node.id)}
+              multiple={multiple}
+              query={query}
+              onSelect={() => {
+                setActiveId(row.node.id)
                 select(row)
+              }}
+              onToggle={() => {
+                setActiveId(row.node.id)
+                toggle(row)
               }}
               onDoubleClick={() => {
                 if (!multiple) toggle(row)
               }}
-              style={
-                {
-                  transform: `translateY(${v.start}px)`,
-                  "--depth": row.depth - 1,
-                } as React.CSSProperties
-              }
-              className={cn(
-                "group/row absolute inset-x-0 top-0 flex h-9 cursor-default items-center gap-0.5 ps-[calc(var(--depth)*--spacing(4)+--spacing(1))] pe-1 text-sm pointer-coarse:h-11",
-                "data-disabled:opacity-50",
-                "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
-              )}
-            >
-              {row.kids.length ? (
-                // Opens and closes only, never selects. Not a button: focus
-                // stays on the tree (aria-activedescendant).
-                <span
-                  aria-hidden
-                  data-slot="tree-toggle"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    setActiveId(node.id)
-                    toggle(row)
-                  }}
-                  onDoubleClick={(e) => e.stopPropagation()}
-                  className="flex size-6 shrink-0 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground pointer-coarse:size-9"
-                >
-                  <ChevronRightIcon
-                    className={cn(
-                      "transition-transform duration-150 ease-out motion-reduce:transition-none rtl:-scale-x-100",
-                      row.open && "rotate-90 rtl:-rotate-90"
-                    )}
-                  />
-                </span>
-              ) : (
-                <span
-                  aria-hidden
-                  className="size-6 shrink-0 pointer-coarse:size-9"
-                />
-              )}
-              <span
-                data-slot="tree-label"
-                className={cn(
-                  "flex h-7 max-w-full min-w-0 items-center gap-1.5 rounded-md px-1.5 transition-colors group-hover/row:bg-muted/60 pointer-coarse:h-9",
-                  !multiple &&
-                    "group-data-selected/row:bg-accent group-data-selected/row:text-accent-foreground",
-                  "group-focus-visible/tree:group-data-active/row:outline-2 group-focus-visible/tree:group-data-active/row:-outline-offset-2 group-focus-visible/tree:group-data-active/row:outline-(--ds-focus-ring)"
-                )}
-              >
-                {multiple && (
-                  <span
-                    aria-hidden
-                    data-slot="tree-checkbox"
-                    className="flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input text-primary-foreground transition-colors group-data-selected/row:border-primary group-data-selected/row:bg-primary dark:bg-input/30 dark:group-data-selected/row:bg-primary"
-                  >
-                    <CheckIcon className="size-3.5! opacity-0 group-data-selected/row:opacity-100" />
-                  </span>
-                )}
-                {node.icon && (
-                  <span aria-hidden className="flex text-muted-foreground">
-                    {node.icon}
-                  </span>
-                )}
-                <span className="truncate" title={node.label}>
-                  <Highlight text={node.label} query={query} />
-                </span>
-              </span>
-            </div>
+            />
           )
         })}
       </div>
+    </div>
+  )
+}
+
+function TreeRow({
+  row,
+  id,
+  index,
+  start,
+  measure,
+  active,
+  selected,
+  multiple,
+  query,
+  onSelect,
+  onToggle,
+  onDoubleClick,
+}: {
+  row: Row
+  id: string
+  index: number
+  start: number
+  measure: (el: Element | null) => void
+  active: boolean
+  selected: boolean
+  multiple: boolean
+  query: string
+  onSelect: () => void
+  /** The chevron: opens and closes, never selects. */
+  onToggle: () => void
+  onDoubleClick: () => void
+}) {
+  const { node } = row
+  return (
+    <div
+      ref={measure}
+      data-index={index}
+      id={id}
+      role="treeitem"
+      aria-level={row.depth}
+      aria-setsize={row.setSize}
+      aria-posinset={row.pos}
+      aria-expanded={row.kids.length ? row.open : undefined}
+      aria-selected={selected}
+      aria-disabled={node.disabled || undefined}
+      data-active={active || undefined}
+      data-selected={selected || undefined}
+      data-disabled={node.disabled || undefined}
+      onClick={onSelect}
+      onDoubleClick={onDoubleClick}
+      style={
+        {
+          transform: `translateY(${start}px)`,
+          "--depth": row.depth - 1,
+        } as React.CSSProperties
+      }
+      className={cn(
+        "group/row absolute inset-x-0 top-0 flex h-9 cursor-default items-center gap-0.5 ps-[calc(var(--depth)*--spacing(4)+--spacing(1))] pe-1 text-sm pointer-coarse:h-11",
+        "data-disabled:opacity-50",
+        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+      )}
+    >
+      {row.kids.length ? (
+        // Opens and closes only, never selects. Not a button: focus
+        // stays on the tree (aria-activedescendant).
+        <span
+          aria-hidden
+          data-slot="tree-toggle"
+          onClick={(e) => {
+            e.stopPropagation()
+            onToggle()
+          }}
+          onDoubleClick={(e) => e.stopPropagation()}
+          className="flex size-6 shrink-0 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground pointer-coarse:size-9"
+        >
+          <ChevronRightIcon
+            className={cn(
+              "transition-transform duration-150 ease-out motion-reduce:transition-none rtl:-scale-x-100",
+              row.open && "rotate-90 rtl:-rotate-90"
+            )}
+          />
+        </span>
+      ) : (
+        <span aria-hidden className="size-6 shrink-0 pointer-coarse:size-9" />
+      )}
+      <span
+        data-slot="tree-label"
+        className={cn(
+          "flex h-7 max-w-full min-w-0 items-center gap-1.5 rounded-md px-1.5 transition-colors group-hover/row:bg-muted/60 pointer-coarse:h-9",
+          !multiple &&
+            "group-data-selected/row:bg-accent group-data-selected/row:text-accent-foreground",
+          "group-focus-visible/tree:group-data-active/row:outline-2 group-focus-visible/tree:group-data-active/row:-outline-offset-2 group-focus-visible/tree:group-data-active/row:outline-(--ds-focus-ring)"
+        )}
+      >
+        {multiple && (
+          <span
+            aria-hidden
+            data-slot="tree-checkbox"
+            className="flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input text-primary-foreground transition-colors group-data-selected/row:border-primary group-data-selected/row:bg-primary dark:bg-input/30 dark:group-data-selected/row:bg-primary"
+          >
+            <CheckIcon className="size-3.5! opacity-0 group-data-selected/row:opacity-100" />
+          </span>
+        )}
+        {node.icon && (
+          <span aria-hidden className="flex text-muted-foreground">
+            {node.icon}
+          </span>
+        )}
+        <span className="truncate" title={node.label}>
+          <Highlight text={node.label} query={query} />
+        </span>
+      </span>
     </div>
   )
 }

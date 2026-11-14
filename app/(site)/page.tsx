@@ -1,23 +1,8 @@
 import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 
-import * as AlertDemos from "@/components/demos/alert"
-import * as BadgeDemos from "@/components/demos/badge"
-import * as ButtonDemos from "@/components/demos/button"
-import * as CalendarDemos from "@/components/demos/calendar"
-import * as ChartDemos from "@/components/demos/chart"
-import * as DataListDemos from "@/components/demos/data-list"
-import * as FileDropzoneDemos from "@/components/demos/file-dropzone"
-import * as FormDemos from "@/components/demos/form"
-import * as MultiSelectDemos from "@/components/demos/multi-select"
-import * as RatingDemos from "@/components/demos/rating"
-import * as SortableDemos from "@/components/demos/sortable"
-import * as SwitchDemos from "@/components/demos/switch"
-import * as TabsDemos from "@/components/demos/tabs"
-import * as TimelineDemos from "@/components/demos/timeline"
-import * as TreeDemos from "@/components/demos/tree"
-import * as TreeSelectDemos from "@/components/demos/tree-select"
 import { InstallCommand } from "@/components/docs/install-command"
+import { LazyDemo } from "@/components/docs/lazy-demo"
 import { ReleasesPanel } from "@/components/examples/releases-panel"
 import { RuleDialog } from "@/components/examples/rule-dialog"
 import { SearchPalette } from "@/components/examples/search-palette"
@@ -110,52 +95,52 @@ export default function Home() {
           className="columns-1 gap-4 md:columns-2 xl:columns-3"
         >
           <Tile title="Form" href="/components/form">
-            <FormDemos.Default />
+            <LazyDemo name="form" story="Default" className="h-60.5" />
           </Tile>
           <Tile title="Chart" href="/components/chart">
-            <ChartDemos.Revenue />
+            <LazyDemo name="chart" story="Revenue" className="h-60" />
           </Tile>
           <Tile title="Tree Select" href="/components/tree-select">
-            <TreeSelectDemos.Multiple />
+            <LazyDemo name="tree-select" story="Multiple" className="h-22" />
           </Tile>
           <Tile title="Badge" href="/components/badge">
-            <BadgeDemos.Tones />
+            <LazyDemo name="badge" story="Tones" className="h-12" />
           </Tile>
           <Tile title="Calendar" href="/components/calendar">
-            <CalendarDemos.Default />
+            <LazyDemo name="calendar" story="Default" className="h-81" />
           </Tile>
           <Tile title="Tabs" href="/components/tabs">
-            <TabsDemos.Segmented />
+            <LazyDemo name="tabs" story="Segmented" className="h-9" />
           </Tile>
           <Tile title="Sortable" href="/components/sortable">
-            <SortableDemos.Default />
+            <LazyDemo name="sortable" story="Default" className="h-50" />
           </Tile>
           <Tile title="Multi Select" href="/components/multi-select">
-            <MultiSelectDemos.Default />
+            <LazyDemo name="multi-select" story="Default" className="h-8.5" />
           </Tile>
           <Tile title="Tree" href="/components/tree">
-            <TreeDemos.Default />
+            <LazyDemo name="tree" story="Default" className="h-81" />
           </Tile>
           <Tile title="Timeline" href="/components/timeline">
-            <TimelineDemos.Default />
+            <LazyDemo name="timeline" story="Default" className="h-57" />
           </Tile>
           <Tile title="Button" href="/components/button">
-            <ButtonDemos.Loading />
+            <LazyDemo name="button" story="Loading" className="h-8" />
           </Tile>
           <Tile title="Alert" href="/components/alert">
-            <AlertDemos.Tones />
+            <LazyDemo name="alert" story="Tones" className="h-44" />
           </Tile>
           <Tile title="File Dropzone" href="/components/file-dropzone">
-            <FileDropzoneDemos.Default />
+            <LazyDemo name="file-dropzone" story="Default" className="h-46" />
           </Tile>
           <Tile title="Switch" href="/components/switch">
-            <SwitchDemos.SettingRow />
+            <LazyDemo name="switch" story="SettingRow" className="h-10.5" />
           </Tile>
           <Tile title="Rating" href="/components/rating">
-            <RatingDemos.Default />
+            <LazyDemo name="rating" story="Default" className="h-5" />
           </Tile>
           <Tile title="Data List" href="/components/data-list">
-            <DataListDemos.Stack />
+            <LazyDemo name="data-list" story="Stack" className="h-30" />
           </Tile>
         </section>
       </div>

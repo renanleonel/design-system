@@ -22,6 +22,20 @@ const VirtualScroll = React.createContext<React.RefObject<
 const VirtualRow = React.createContext<{ index: number; size: number } | null>(
   null
 )
+/** Stable per-row context value, so rows only re-render when their slot changes. */
+function VirtualRowProvider({
+  index,
+  size,
+  children,
+}: {
+  index: number
+  size: number
+  children: React.ReactNode
+}) {
+  const value = React.useMemo(() => ({ index, size }), [index, size])
+  return <VirtualRow value={value}>{children}</VirtualRow>
+}
+
 /**
  * The field's whole `InputGroup` (addons included), so the popup anchors to
  * and matches the width of what people see, not just the bare `<input>`.
@@ -249,9 +263,9 @@ function ComboboxVirtualList<Item>({
               className="absolute inset-x-0 top-0"
               style={{ transform: `translateY(${row.start}px)` }}
             >
-              <VirtualRow value={{ index: row.index, size: items.length }}>
+              <VirtualRowProvider index={row.index} size={items.length}>
                 {children(items[row.index], row.index)}
-              </VirtualRow>
+              </VirtualRowProvider>
             </div>
           ))}
         </div>

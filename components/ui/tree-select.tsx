@@ -56,6 +56,101 @@ function ancestorsOf(nodes: TreeNode[], ids: string[]) {
   return [...out]
 }
 
+/** The trigger's content: placeholder, the picked node, or tags plus "+N". */
+function TreeSelectValue({
+  selected,
+  multiple,
+  placeholder,
+  maxVisible,
+}: {
+  selected: TreeNode[]
+  multiple: boolean
+  placeholder: string
+  maxVisible: number
+}) {
+  return (
+    <span className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
+      {selected.length === 0 ? (
+        <span className="truncate">{placeholder}</span>
+      ) : multiple ? (
+        <TreeSelectTags selected={selected} maxVisible={maxVisible} />
+      ) : (
+        <span className="flex min-w-0 items-center gap-1.5">
+          {selected[0].icon && (
+            <span aria-hidden className="flex text-muted-foreground">
+              {selected[0].icon}
+            </span>
+          )}
+          <span className="truncate" title={selected[0].label}>
+            {selected[0].label}
+          </span>
+        </span>
+      )}
+    </span>
+  )
+}
+
+function TreeSelectTags({
+  selected,
+  maxVisible,
+}: {
+  selected: TreeNode[]
+  maxVisible: number
+}) {
+  const hidden = selected.slice(maxVisible)
+  const hiddenLabels = hidden.map((node) => node.label).join(", ")
+  return (
+    <>
+      {selected.slice(0, maxVisible).map((node) => (
+        <span
+          key={node.id}
+          title={node.label}
+          className="flex h-[calc(--spacing(5.25))] max-w-full min-w-0 items-center rounded-sm bg-muted px-1.5 text-xs font-medium text-foreground"
+        >
+          <span className="truncate">{node.label}</span>
+        </span>
+      ))}
+      {hidden.length > 0 && (
+        <span
+          title={hiddenLabels}
+          className="flex h-[calc(--spacing(5.25))] items-center rounded-sm bg-muted px-1.5 text-xs font-medium text-muted-foreground tabular-nums"
+        >
+          +{hidden.length}
+          <span className="sr-only"> more: {hiddenLabels}</span>
+        </span>
+      )}
+    </>
+  )
+}
+
+/** Selection count (announced) and Clear. */
+function TreeSelectFooter({
+  count,
+  onClear,
+}: {
+  count: number
+  onClear: () => void
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2 border-t px-1 pt-1.5">
+      <span
+        aria-live="polite"
+        className="text-xs text-muted-foreground tabular-nums"
+      >
+        {count === 0 ? "Nothing selected" : `${count} selected`}
+      </span>
+      <Button
+        variant="ghost"
+        size="xs"
+        disabled={count === 0}
+        onClick={onClear}
+      >
+        Clear
+      </Button>
+    </div>
+  )
+}
+
 /**
  * A select whose options are a tree: a trigger like `Select` that opens a
  * searchable `Tree` in a popover (a bottom sheet below 640px). Pick one node
@@ -130,8 +225,6 @@ function TreeSelect({
     if (!next) setQuery("", { immediate: true })
   }
 
-  const hidden = selected.slice(maxVisible)
-
   return (
     <Popover open={open} onOpenChange={onOpenChange}>
       <PopoverTrigger
@@ -151,46 +244,12 @@ function TreeSelect({
           className
         )}
       >
-        <span className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
-          {selected.length === 0 ? (
-            <span className="truncate">{placeholder}</span>
-          ) : multiple ? (
-            <>
-              {selected.slice(0, maxVisible).map((node) => (
-                <span
-                  key={node.id}
-                  title={node.label}
-                  className="flex h-[calc(--spacing(5.25))] max-w-full min-w-0 items-center rounded-sm bg-muted px-1.5 text-xs font-medium text-foreground"
-                >
-                  <span className="truncate">{node.label}</span>
-                </span>
-              ))}
-              {hidden.length > 0 && (
-                <span
-                  title={hidden.map((node) => node.label).join(", ")}
-                  className="flex h-[calc(--spacing(5.25))] items-center rounded-sm bg-muted px-1.5 text-xs font-medium text-muted-foreground tabular-nums"
-                >
-                  +{hidden.length}
-                  <span className="sr-only">
-                    {" "}
-                    more: {hidden.map((node) => node.label).join(", ")}
-                  </span>
-                </span>
-              )}
-            </>
-          ) : (
-            <span className="flex min-w-0 items-center gap-1.5">
-              {selected[0].icon && (
-                <span aria-hidden className="flex text-muted-foreground">
-                  {selected[0].icon}
-                </span>
-              )}
-              <span className="truncate" title={selected[0].label}>
-                {selected[0].label}
-              </span>
-            </span>
-          )}
-        </span>
+        <TreeSelectValue
+          selected={selected}
+          multiple={multiple}
+          placeholder={placeholder}
+          maxVisible={maxVisible}
+        />
         <ChevronDownIcon className="text-muted-foreground transition-transform duration-200 ease-out group-data-popup-open/tree-select:rotate-180 motion-reduce:transition-none" />
       </PopoverTrigger>
       <PopoverContent
@@ -247,24 +306,10 @@ function TreeSelect({
           />
         )}
         {(multiple || clearable) && (
-          <div className="flex items-center justify-between gap-2 border-t px-1 pt-1.5">
-            <span
-              aria-live="polite"
-              className="text-xs text-muted-foreground tabular-nums"
-            >
-              {selected.length === 0
-                ? "Nothing selected"
-                : `${selected.length} selected`}
-            </span>
-            <Button
-              variant="ghost"
-              size="xs"
-              disabled={selected.length === 0}
-              onClick={() => commit([])}
-            >
-              Clear
-            </Button>
-          </div>
+          <TreeSelectFooter
+            count={selected.length}
+            onClear={() => commit([])}
+          />
         )}
       </PopoverContent>
       {name &&

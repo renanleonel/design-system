@@ -1,33 +1,29 @@
 "use client"
 
 import * as React from "react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { useHotkey } from "@tanstack/react-hotkeys"
 import { MenuIcon, SearchIcon } from "lucide-react"
 
-import { DocsNav } from "@/components/docs/docs-nav"
 import { GitHubIcon } from "@/components/docs/github-icon"
 import { LogoMark } from "@/components/docs/logo-mark"
 import { Button } from "@/components/ui/button"
-import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command"
 import { Hotkey } from "@/components/ui/hotkey"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
-import {
-  Sheet,
-  SheetContent,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
 import type { NavGroup } from "@/lib/docs"
+
+// The palette (cmdk) and the phone sheet stay closed on load, so they load on
+// first open; hovering, focusing or touching their buttons warms the chunk.
+const SiteSearch = dynamic(() => import("@/components/docs/site-search"), {
+  ssr: false,
+})
+const MobileMenu = dynamic(() => import("@/components/docs/mobile-menu"), {
+  ssr: false,
+})
+const warmSearch = () => void import("@/components/docs/site-search")
+const warmMenu = () => void import("@/components/docs/mobile-menu")
 
 const LINKS = [
   { title: "Components", href: "/components" },
@@ -43,41 +39,43 @@ export function SiteHeader({
   githubUrl: string
 }) {
   const pathname = usePathname()
-  const router = useRouter()
   const [searchOpen, setSearchOpen] = React.useState(false)
   const [menuOpen, setMenuOpen] = React.useState(false)
-  useHotkey("Mod+K", () => setSearchOpen((open) => !open))
+  // Mounted after the first open and kept, so closing still animates out.
+  const [searchUsed, setSearchUsed] = React.useState(false)
+  const [menuUsed, setMenuUsed] = React.useState(false)
+  const openSearch = (open: boolean) => {
+    if (open) setSearchUsed(true)
+    setSearchOpen(open)
+  }
+  useHotkey("Mod+K", () => {
+    setSearchUsed(true)
+    setSearchOpen((open) => !open)
+  })
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-2 px-4 md:gap-6 md:px-6">
-        <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-          <SheetTrigger
-            render={
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Menu"
-                className="-ms-2 md:hidden"
-              />
-            }
-          >
-            <MenuIcon />
-          </SheetTrigger>
-          <SheetContent side="left" className="w-72 overflow-y-auto p-4">
-            <SheetTitle className="sr-only">Menu</SheetTitle>
-            <DocsNav
-              groups={[
-                {
-                  label: "Site",
-                  items: [{ title: "Blocks", href: "/blocks" }],
-                },
-                ...nav,
-              ]}
-              onNavigate={() => setMenuOpen(false)}
-            />
-          </SheetContent>
-        </Sheet>
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Menu"
+          aria-haspopup="dialog"
+          aria-expanded={menuOpen}
+          className="-ms-2 md:hidden"
+          onPointerEnter={warmMenu}
+          onFocus={warmMenu}
+          onTouchStart={warmMenu}
+          onClick={() => {
+            setMenuUsed(true)
+            setMenuOpen(true)
+          }}
+        >
+          <MenuIcon />
+        </Button>
+        {menuUsed && (
+          <MobileMenu nav={nav} open={menuOpen} onOpenChange={setMenuOpen} />
+        )}
 
         <Link
           href="/"
@@ -107,7 +105,10 @@ export function SiteHeader({
         <div className="ms-auto flex items-center gap-1">
           <Button
             variant="outline"
-            onClick={() => setSearchOpen(true)}
+            onClick={() => openSearch(true)}
+            onPointerEnter={warmSearch}
+            onFocus={warmSearch}
+            onTouchStart={warmSearch}
             aria-keyshortcuts="Control+K Meta+K"
             // Not justify-between: Button's (empty) spinner slot is a flex item
             // too and would take a share of the space. Push the hotkey instead.
@@ -132,34 +133,9 @@ export function SiteHeader({
         </div>
       </div>
 
-      <CommandDialog
-        open={searchOpen}
-        onOpenChange={setSearchOpen}
-        title="Search docs"
-      >
-        <Command>
-          <CommandInput placeholder="Search components, blocks and pages…" />
-          <CommandList>
-            <CommandEmpty>Nothing matches.</CommandEmpty>
-            {nav.map((group) => (
-              <CommandGroup key={group.label} heading={group.label}>
-                {group.items.map((item) => (
-                  <CommandItem
-                    key={item.href}
-                    value={`${group.label} ${item.title}`}
-                    onSelect={() => {
-                      setSearchOpen(false)
-                      router.push(item.href)
-                    }}
-                  >
-                    {item.title}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            ))}
-          </CommandList>
-        </Command>
-      </CommandDialog>
+      {searchUsed && (
+        <SiteSearch nav={nav} open={searchOpen} onOpenChange={setSearchOpen} />
+      )}
     </header>
   )
 }
