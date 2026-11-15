@@ -6,7 +6,7 @@ import { z } from "zod"
 
 import catalog from "@/registry/catalog.json"
 
-export const REGISTRY_URL = "https://ds.renanleonel.com/r"
+export const REGISTRY_URL = "https://ui.renanleonel.com/r"
 export const GITHUB_URL = "https://github.com/renanleonel/design-system"
 
 type CatalogEntry = {

@@ -2,12 +2,12 @@
 
 Personal design system: a [shadcn](https://ui.shadcn.com) registry on [Base UI](https://base-ui.com), themeable with any [tweakcn](https://tweakcn.com) theme. Accessible by default (axe WCAG 2.2 AA audited on every page), responsive down to 320px, light and dark.
 
-Docs and live previews: [ds.renanleonel.com](https://ds.renanleonel.com).
+Docs and live previews: [ui.renanleonel.com](https://ui.renanleonel.com).
 
 ## Install
 
 ```bash
-R=https://ds.renanleonel.com/r
+R=https://ui.renanleonel.com/r
 
 npx shadcn init $R/base.json                            # new project: tokens, utils, every component
 npx shadcn add $R/theme-caffeine.json                   # a theme from this registry (neutral, caffeine, amethyst-haze)
@@ -20,7 +20,7 @@ Or register the namespace once in the project's `components.json` and add items 
 
 ```json
 "registries": {
-  "@renanleonel": "https://ds.renanleonel.com/r/{name}.json"
+  "@renanleonel": "https://ui.renanleonel.com/r/{name}.json"
 }
 ```
 
@@ -44,12 +44,12 @@ The server reads the `registries` in the project's `components.json`. Agents wit
 A second, read-only MCP server ships with the docs site at `/mcp` (Streamable HTTP, no auth). Where the shadcn MCP installs items, this one explains them: usage stories (`get_examples`), design rules (`get_rules`), `--ds-*` tokens (`get_tokens`), full item source and dependencies (`get_item`), plus `list_items`, `search` and `get_changelog`. It reads the committed registry output, so new items appear without any list to maintain.
 
 ```bash
-claude mcp add --transport http renanleonel-ui https://ds.renanleonel.com/mcp
+claude mcp add --transport http renanleonel-ui https://ui.renanleonel.com/mcp
 ```
 
 ```json
 // Cursor: .cursor/mcp.json
-{ "mcpServers": { "renanleonel-ui": { "url": "https://ds.renanleonel.com/mcp" } } }
+{ "mcpServers": { "renanleonel-ui": { "url": "https://ui.renanleonel.com/mcp" } } }
 ```
 
 Check a running instance with `pnpm mcp:smoke [url]` (default `http://localhost:3000/mcp`).

@@ -10,10 +10,10 @@
     "cn@^0.5.2"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/hotkey.json",
-    "https://ds.renanleonel.com/r/spinner.json",
-    "https://ds.renanleonel.com/r/use-hotkey-press.json",
-    "https://ds.renanleonel.com/r/utils.json"
+    "https://ui.renanleonel.com/r/hotkey.json",
+    "https://ui.renanleonel.com/r/spinner.json",
+    "https://ui.renanleonel.com/r/use-hotkey-press.json",
+    "https://ui.renanleonel.com/r/utils.json"
   ],
   "files": [
     {

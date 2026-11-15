@@ -9,12 +9,12 @@
     "recharts@3.8.0"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/avatar.json",
-    "https://ds.renanleonel.com/r/badge.json",
-    "https://ds.renanleonel.com/r/card.json",
-    "https://ds.renanleonel.com/r/chart.json",
-    "https://ds.renanleonel.com/r/tabs.json",
-    "https://ds.renanleonel.com/r/use-url-state.json"
+    "https://ui.renanleonel.com/r/avatar.json",
+    "https://ui.renanleonel.com/r/badge.json",
+    "https://ui.renanleonel.com/r/card.json",
+    "https://ui.renanleonel.com/r/chart.json",
+    "https://ui.renanleonel.com/r/tabs.json",
+    "https://ui.renanleonel.com/r/use-url-state.json"
   ],
   "files": [
     {

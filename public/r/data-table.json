@@ -10,19 +10,19 @@
     "sonner@^2.0.8"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/avatar.json",
-    "https://ds.renanleonel.com/r/badge.json",
-    "https://ds.renanleonel.com/r/button.json",
-    "https://ds.renanleonel.com/r/checkbox.json",
-    "https://ds.renanleonel.com/r/dropdown-menu.json",
-    "https://ds.renanleonel.com/r/empty.json",
-    "https://ds.renanleonel.com/r/error-state.json",
-    "https://ds.renanleonel.com/r/input-group.json",
-    "https://ds.renanleonel.com/r/skeleton.json",
-    "https://ds.renanleonel.com/r/sonner.json",
-    "https://ds.renanleonel.com/r/table.json",
-    "https://ds.renanleonel.com/r/use-debounce.json",
-    "https://ds.renanleonel.com/r/use-url-state.json"
+    "https://ui.renanleonel.com/r/avatar.json",
+    "https://ui.renanleonel.com/r/badge.json",
+    "https://ui.renanleonel.com/r/button.json",
+    "https://ui.renanleonel.com/r/checkbox.json",
+    "https://ui.renanleonel.com/r/dropdown-menu.json",
+    "https://ui.renanleonel.com/r/empty.json",
+    "https://ui.renanleonel.com/r/error-state.json",
+    "https://ui.renanleonel.com/r/input-group.json",
+    "https://ui.renanleonel.com/r/skeleton.json",
+    "https://ui.renanleonel.com/r/sonner.json",
+    "https://ui.renanleonel.com/r/table.json",
+    "https://ui.renanleonel.com/r/use-debounce.json",
+    "https://ui.renanleonel.com/r/use-url-state.json"
   ],
   "files": [
     {

@@ -181,7 +181,7 @@ jobs:
           npx -y shadcn@4.23.0 init -t next -b base -p nova -n consumer --no-monorepo -y
           mkdir consumer/r
           cp "$GITHUB_WORKSPACE"/public/r/*.json consumer/r/
-          sed -i 's#https://ds.renanleonel.com/r/#./r/#g' consumer/r/*.json
+          sed -i 's#https://ui.renanleonel.com/r/#./r/#g' consumer/r/*.json
           cd consumer
           npx -y shadcn@4.23.0 add ./r/base.json ./r/app-shell.json ./r/data-table.json ./r/settings.json ./r/billing.json ./r/auth.json -y --overwrite
           npx tsc --noEmit

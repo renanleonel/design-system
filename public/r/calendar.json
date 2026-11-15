@@ -10,8 +10,8 @@
     "react-day-picker@^10.0.2"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/button.json",
-    "https://ds.renanleonel.com/r/select.json"
+    "https://ui.renanleonel.com/r/button.json",
+    "https://ui.renanleonel.com/r/select.json"
   ],
   "files": [
     {

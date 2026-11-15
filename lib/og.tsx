@@ -115,19 +115,19 @@ const GLYPHS = [
       background: "#262626",
     }}
   >
-    {[C.strong, C.mid, C.mid].map((color, i) => (
+    {(["active", "second", "third"] as const).map((tab) => (
       <div
-        key={i}
+        key={tab}
         style={{
           display: "flex",
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
           borderRadius: 8,
-          background: i === 0 ? "#404040" : "transparent",
+          background: tab === "active" ? "#404040" : "transparent",
         }}
       >
-        <Bar w={18} color={color} />
+        <Bar w={18} color={tab === "active" ? C.strong : C.mid} />
       </div>
     ))}
   </div>,
@@ -259,7 +259,7 @@ function Wall() {
     >
       {GLYPHS.map((glyph, i) => (
         <div
-          key={i}
+          key={glyph?.key ?? "slot"}
           style={{
             display: "flex",
             alignItems: "center",

@@ -8,18 +8,18 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/avatar.json",
-    "https://ds.renanleonel.com/r/badge.json",
-    "https://ds.renanleonel.com/r/button.json",
-    "https://ds.renanleonel.com/r/empty.json",
-    "https://ds.renanleonel.com/r/icon-tile.json",
-    "https://ds.renanleonel.com/r/skeleton.json",
-    "https://ds.renanleonel.com/r/timeline.json",
-    "https://ds.renanleonel.com/r/toggle-group.json",
-    "https://ds.renanleonel.com/r/tooltip.json",
-    "https://ds.renanleonel.com/r/use-intersection.json",
-    "https://ds.renanleonel.com/r/use-url-state.json",
-    "https://ds.renanleonel.com/r/utils.json"
+    "https://ui.renanleonel.com/r/avatar.json",
+    "https://ui.renanleonel.com/r/badge.json",
+    "https://ui.renanleonel.com/r/button.json",
+    "https://ui.renanleonel.com/r/empty.json",
+    "https://ui.renanleonel.com/r/icon-tile.json",
+    "https://ui.renanleonel.com/r/skeleton.json",
+    "https://ui.renanleonel.com/r/timeline.json",
+    "https://ui.renanleonel.com/r/toggle-group.json",
+    "https://ui.renanleonel.com/r/tooltip.json",
+    "https://ui.renanleonel.com/r/use-intersection.json",
+    "https://ui.renanleonel.com/r/use-url-state.json",
+    "https://ui.renanleonel.com/r/utils.json"
   ],
   "files": [
     {

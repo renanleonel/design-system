@@ -8,12 +8,12 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/avatar.json",
-    "https://ds.renanleonel.com/r/button.json",
-    "https://ds.renanleonel.com/r/icon-tile.json",
-    "https://ds.renanleonel.com/r/language-select.json",
-    "https://ds.renanleonel.com/r/sheet.json",
-    "https://ds.renanleonel.com/r/theme-toggle.json"
+    "https://ui.renanleonel.com/r/avatar.json",
+    "https://ui.renanleonel.com/r/button.json",
+    "https://ui.renanleonel.com/r/icon-tile.json",
+    "https://ui.renanleonel.com/r/language-select.json",
+    "https://ui.renanleonel.com/r/sheet.json",
+    "https://ui.renanleonel.com/r/theme-toggle.json"
   ],
   "files": [
     {

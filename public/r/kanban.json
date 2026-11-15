@@ -12,21 +12,21 @@
     "sonner@^2.0.8"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/avatar-group.json",
-    "https://ds.renanleonel.com/r/badge.json",
-    "https://ds.renanleonel.com/r/button.json",
-    "https://ds.renanleonel.com/r/context-menu.json",
-    "https://ds.renanleonel.com/r/field.json",
-    "https://ds.renanleonel.com/r/input.json",
-    "https://ds.renanleonel.com/r/multi-select.json",
-    "https://ds.renanleonel.com/r/scroll-area.json",
-    "https://ds.renanleonel.com/r/select.json",
-    "https://ds.renanleonel.com/r/sheet.json",
-    "https://ds.renanleonel.com/r/sonner.json",
-    "https://ds.renanleonel.com/r/spinner.json",
-    "https://ds.renanleonel.com/r/switch.json",
-    "https://ds.renanleonel.com/r/use-media-query.json",
-    "https://ds.renanleonel.com/r/use-url-state.json"
+    "https://ui.renanleonel.com/r/avatar-group.json",
+    "https://ui.renanleonel.com/r/badge.json",
+    "https://ui.renanleonel.com/r/button.json",
+    "https://ui.renanleonel.com/r/context-menu.json",
+    "https://ui.renanleonel.com/r/field.json",
+    "https://ui.renanleonel.com/r/input.json",
+    "https://ui.renanleonel.com/r/multi-select.json",
+    "https://ui.renanleonel.com/r/scroll-area.json",
+    "https://ui.renanleonel.com/r/select.json",
+    "https://ui.renanleonel.com/r/sheet.json",
+    "https://ui.renanleonel.com/r/sonner.json",
+    "https://ui.renanleonel.com/r/spinner.json",
+    "https://ui.renanleonel.com/r/switch.json",
+    "https://ui.renanleonel.com/r/use-media-query.json",
+    "https://ui.renanleonel.com/r/use-url-state.json"
   ],
   "files": [
     {

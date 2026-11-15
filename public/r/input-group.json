@@ -8,9 +8,9 @@
     "cn@^0.5.2"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/button.json",
-    "https://ds.renanleonel.com/r/input.json",
-    "https://ds.renanleonel.com/r/textarea.json"
+    "https://ui.renanleonel.com/r/button.json",
+    "https://ui.renanleonel.com/r/input.json",
+    "https://ui.renanleonel.com/r/textarea.json"
   ],
   "files": [
     {

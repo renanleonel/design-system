@@ -5,9 +5,9 @@
   "description": "Overlapping avatars built from a list of people, with a +N chip that lists the rest.",
   "dependencies": [],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/avatar.json",
-    "https://ds.renanleonel.com/r/popover.json",
-    "https://ds.renanleonel.com/r/utils.json"
+    "https://ui.renanleonel.com/r/avatar.json",
+    "https://ui.renanleonel.com/r/popover.json",
+    "https://ui.renanleonel.com/r/utils.json"
   ],
   "files": [
     {

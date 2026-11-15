@@ -17,91 +17,91 @@
         }
       },
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/utils.json",
-        "https://ds.renanleonel.com/r/tokens.json",
-        "https://ds.renanleonel.com/r/accordion.json",
-        "https://ds.renanleonel.com/r/alert-dialog.json",
-        "https://ds.renanleonel.com/r/alert.json",
-        "https://ds.renanleonel.com/r/avatar-group.json",
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/breadcrumb.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/calendar.json",
-        "https://ds.renanleonel.com/r/card.json",
-        "https://ds.renanleonel.com/r/carousel.json",
-        "https://ds.renanleonel.com/r/chart.json",
-        "https://ds.renanleonel.com/r/checkbox.json",
-        "https://ds.renanleonel.com/r/collapsible.json",
-        "https://ds.renanleonel.com/r/color-picker.json",
-        "https://ds.renanleonel.com/r/combobox.json",
-        "https://ds.renanleonel.com/r/command.json",
-        "https://ds.renanleonel.com/r/context-menu.json",
-        "https://ds.renanleonel.com/r/copy-button.json",
-        "https://ds.renanleonel.com/r/data-list.json",
-        "https://ds.renanleonel.com/r/date-picker.json",
-        "https://ds.renanleonel.com/r/dialog.json",
-        "https://ds.renanleonel.com/r/drawer.json",
-        "https://ds.renanleonel.com/r/dropdown-menu.json",
-        "https://ds.renanleonel.com/r/empty.json",
-        "https://ds.renanleonel.com/r/error-state.json",
-        "https://ds.renanleonel.com/r/field.json",
-        "https://ds.renanleonel.com/r/file-dropzone.json",
-        "https://ds.renanleonel.com/r/form.json",
-        "https://ds.renanleonel.com/r/hotkey.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/inline-edit.json",
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/input-otp.json",
-        "https://ds.renanleonel.com/r/input.json",
-        "https://ds.renanleonel.com/r/item.json",
-        "https://ds.renanleonel.com/r/kbd.json",
-        "https://ds.renanleonel.com/r/label.json",
-        "https://ds.renanleonel.com/r/language-select.json",
-        "https://ds.renanleonel.com/r/menubar.json",
-        "https://ds.renanleonel.com/r/meter.json",
-        "https://ds.renanleonel.com/r/multi-select.json",
-        "https://ds.renanleonel.com/r/native-select.json",
-        "https://ds.renanleonel.com/r/navigation-menu.json",
-        "https://ds.renanleonel.com/r/number-field.json",
-        "https://ds.renanleonel.com/r/pagination.json",
-        "https://ds.renanleonel.com/r/panel.json",
-        "https://ds.renanleonel.com/r/password-input.json",
-        "https://ds.renanleonel.com/r/popover.json",
-        "https://ds.renanleonel.com/r/preview-card.json",
-        "https://ds.renanleonel.com/r/progress.json",
-        "https://ds.renanleonel.com/r/radio-group.json",
-        "https://ds.renanleonel.com/r/rating.json",
-        "https://ds.renanleonel.com/r/resizable.json",
-        "https://ds.renanleonel.com/r/scroll-area.json",
-        "https://ds.renanleonel.com/r/select.json",
-        "https://ds.renanleonel.com/r/separator.json",
-        "https://ds.renanleonel.com/r/settings-list.json",
-        "https://ds.renanleonel.com/r/sheet.json",
-        "https://ds.renanleonel.com/r/skeleton.json",
-        "https://ds.renanleonel.com/r/slider.json",
-        "https://ds.renanleonel.com/r/sonner.json",
-        "https://ds.renanleonel.com/r/sortable.json",
-        "https://ds.renanleonel.com/r/spinner.json",
-        "https://ds.renanleonel.com/r/stepper.json",
-        "https://ds.renanleonel.com/r/swatch-picker.json",
-        "https://ds.renanleonel.com/r/switch.json",
-        "https://ds.renanleonel.com/r/table.json",
-        "https://ds.renanleonel.com/r/tabs.json",
-        "https://ds.renanleonel.com/r/textarea.json",
-        "https://ds.renanleonel.com/r/theme-toggle.json",
-        "https://ds.renanleonel.com/r/time-input.json",
-        "https://ds.renanleonel.com/r/timeline.json",
-        "https://ds.renanleonel.com/r/timezone-select.json",
-        "https://ds.renanleonel.com/r/toggle-group.json",
-        "https://ds.renanleonel.com/r/toggle.json",
-        "https://ds.renanleonel.com/r/token-input.json",
-        "https://ds.renanleonel.com/r/toolbar.json",
-        "https://ds.renanleonel.com/r/tooltip.json",
-        "https://ds.renanleonel.com/r/tree-select.json",
-        "https://ds.renanleonel.com/r/tree.json",
-        "https://ds.renanleonel.com/r/unsaved-changes-bar.json",
-        "https://ds.renanleonel.com/r/virtual-list.json"
+        "https://ui.renanleonel.com/r/utils.json",
+        "https://ui.renanleonel.com/r/tokens.json",
+        "https://ui.renanleonel.com/r/accordion.json",
+        "https://ui.renanleonel.com/r/alert-dialog.json",
+        "https://ui.renanleonel.com/r/alert.json",
+        "https://ui.renanleonel.com/r/avatar-group.json",
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/breadcrumb.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/calendar.json",
+        "https://ui.renanleonel.com/r/card.json",
+        "https://ui.renanleonel.com/r/carousel.json",
+        "https://ui.renanleonel.com/r/chart.json",
+        "https://ui.renanleonel.com/r/checkbox.json",
+        "https://ui.renanleonel.com/r/collapsible.json",
+        "https://ui.renanleonel.com/r/color-picker.json",
+        "https://ui.renanleonel.com/r/combobox.json",
+        "https://ui.renanleonel.com/r/command.json",
+        "https://ui.renanleonel.com/r/context-menu.json",
+        "https://ui.renanleonel.com/r/copy-button.json",
+        "https://ui.renanleonel.com/r/data-list.json",
+        "https://ui.renanleonel.com/r/date-picker.json",
+        "https://ui.renanleonel.com/r/dialog.json",
+        "https://ui.renanleonel.com/r/drawer.json",
+        "https://ui.renanleonel.com/r/dropdown-menu.json",
+        "https://ui.renanleonel.com/r/empty.json",
+        "https://ui.renanleonel.com/r/error-state.json",
+        "https://ui.renanleonel.com/r/field.json",
+        "https://ui.renanleonel.com/r/file-dropzone.json",
+        "https://ui.renanleonel.com/r/form.json",
+        "https://ui.renanleonel.com/r/hotkey.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/inline-edit.json",
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/input-otp.json",
+        "https://ui.renanleonel.com/r/input.json",
+        "https://ui.renanleonel.com/r/item.json",
+        "https://ui.renanleonel.com/r/kbd.json",
+        "https://ui.renanleonel.com/r/label.json",
+        "https://ui.renanleonel.com/r/language-select.json",
+        "https://ui.renanleonel.com/r/menubar.json",
+        "https://ui.renanleonel.com/r/meter.json",
+        "https://ui.renanleonel.com/r/multi-select.json",
+        "https://ui.renanleonel.com/r/native-select.json",
+        "https://ui.renanleonel.com/r/navigation-menu.json",
+        "https://ui.renanleonel.com/r/number-field.json",
+        "https://ui.renanleonel.com/r/pagination.json",
+        "https://ui.renanleonel.com/r/panel.json",
+        "https://ui.renanleonel.com/r/password-input.json",
+        "https://ui.renanleonel.com/r/popover.json",
+        "https://ui.renanleonel.com/r/preview-card.json",
+        "https://ui.renanleonel.com/r/progress.json",
+        "https://ui.renanleonel.com/r/radio-group.json",
+        "https://ui.renanleonel.com/r/rating.json",
+        "https://ui.renanleonel.com/r/resizable.json",
+        "https://ui.renanleonel.com/r/scroll-area.json",
+        "https://ui.renanleonel.com/r/select.json",
+        "https://ui.renanleonel.com/r/separator.json",
+        "https://ui.renanleonel.com/r/settings-list.json",
+        "https://ui.renanleonel.com/r/sheet.json",
+        "https://ui.renanleonel.com/r/skeleton.json",
+        "https://ui.renanleonel.com/r/slider.json",
+        "https://ui.renanleonel.com/r/sonner.json",
+        "https://ui.renanleonel.com/r/sortable.json",
+        "https://ui.renanleonel.com/r/spinner.json",
+        "https://ui.renanleonel.com/r/stepper.json",
+        "https://ui.renanleonel.com/r/swatch-picker.json",
+        "https://ui.renanleonel.com/r/switch.json",
+        "https://ui.renanleonel.com/r/table.json",
+        "https://ui.renanleonel.com/r/tabs.json",
+        "https://ui.renanleonel.com/r/textarea.json",
+        "https://ui.renanleonel.com/r/theme-toggle.json",
+        "https://ui.renanleonel.com/r/time-input.json",
+        "https://ui.renanleonel.com/r/timeline.json",
+        "https://ui.renanleonel.com/r/timezone-select.json",
+        "https://ui.renanleonel.com/r/toggle-group.json",
+        "https://ui.renanleonel.com/r/toggle.json",
+        "https://ui.renanleonel.com/r/token-input.json",
+        "https://ui.renanleonel.com/r/toolbar.json",
+        "https://ui.renanleonel.com/r/tooltip.json",
+        "https://ui.renanleonel.com/r/tree-select.json",
+        "https://ui.renanleonel.com/r/tree.json",
+        "https://ui.renanleonel.com/r/unsaved-changes-bar.json",
+        "https://ui.renanleonel.com/r/virtual-list.json"
       ]
     },
     {
@@ -855,7 +855,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json"
+        "https://ui.renanleonel.com/r/button.json"
       ],
       "files": [
         {
@@ -888,9 +888,9 @@
       "description": "Overlapping avatars built from a list of people, with a +N chip that lists the rest.",
       "dependencies": [],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/popover.json",
-        "https://ds.renanleonel.com/r/utils.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/popover.json",
+        "https://ui.renanleonel.com/r/utils.json"
       ],
       "files": [
         {
@@ -927,7 +927,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/utils.json"
+        "https://ui.renanleonel.com/r/utils.json"
       ],
       "files": [
         {
@@ -966,10 +966,10 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/hotkey.json",
-        "https://ds.renanleonel.com/r/spinner.json",
-        "https://ds.renanleonel.com/r/use-hotkey-press.json",
-        "https://ds.renanleonel.com/r/utils.json"
+        "https://ui.renanleonel.com/r/hotkey.json",
+        "https://ui.renanleonel.com/r/spinner.json",
+        "https://ui.renanleonel.com/r/use-hotkey-press.json",
+        "https://ui.renanleonel.com/r/utils.json"
       ],
       "files": [
         {
@@ -990,8 +990,8 @@
         "react-day-picker@^10.0.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/select.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/select.json"
       ],
       "files": [
         {
@@ -1028,8 +1028,8 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/use-media-query.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/use-media-query.json"
       ],
       "files": [
         {
@@ -1101,10 +1101,10 @@
         "react-colorful@^5.8.1"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/popover.json",
-        "https://ds.renanleonel.com/r/swatch-picker.json",
-        "https://ds.renanleonel.com/r/use-controllable-state.json"
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/popover.json",
+        "https://ui.renanleonel.com/r/swatch-picker.json",
+        "https://ui.renanleonel.com/r/use-controllable-state.json"
       ],
       "files": [
         {
@@ -1125,8 +1125,8 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/input-group.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/input-group.json"
       ],
       "files": [
         {
@@ -1146,8 +1146,8 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/dialog.json",
-        "https://ds.renanleonel.com/r/input-group.json"
+        "https://ui.renanleonel.com/r/dialog.json",
+        "https://ui.renanleonel.com/r/input-group.json"
       ],
       "files": [
         {
@@ -1166,7 +1166,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/dropdown-menu.json"
+        "https://ui.renanleonel.com/r/dropdown-menu.json"
       ],
       "files": [
         {
@@ -1185,9 +1185,9 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/tooltip.json",
-        "https://ds.renanleonel.com/r/use-copy-to-clipboard.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/tooltip.json",
+        "https://ui.renanleonel.com/r/use-copy-to-clipboard.json"
       ],
       "files": [
         {
@@ -1224,11 +1224,11 @@
         "react-day-picker@^10.0.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/calendar.json",
-        "https://ds.renanleonel.com/r/popover.json",
-        "https://ds.renanleonel.com/r/time-input.json",
-        "https://ds.renanleonel.com/r/use-media-query.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/calendar.json",
+        "https://ui.renanleonel.com/r/popover.json",
+        "https://ui.renanleonel.com/r/time-input.json",
+        "https://ui.renanleonel.com/r/use-media-query.json"
       ],
       "files": [
         {
@@ -1248,9 +1248,9 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/drawer.json",
-        "https://ds.renanleonel.com/r/use-media-query.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/drawer.json",
+        "https://ui.renanleonel.com/r/use-media-query.json"
       ],
       "files": [
         {
@@ -1288,9 +1288,9 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/hotkey.json",
-        "https://ds.renanleonel.com/r/use-hotkey-press.json",
-        "https://ds.renanleonel.com/r/utils.json"
+        "https://ui.renanleonel.com/r/hotkey.json",
+        "https://ui.renanleonel.com/r/use-hotkey-press.json",
+        "https://ui.renanleonel.com/r/utils.json"
       ],
       "files": [
         {
@@ -1325,8 +1325,8 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/empty.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/empty.json"
       ],
       "files": [
         {
@@ -1345,8 +1345,8 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/label.json",
-        "https://ds.renanleonel.com/r/separator.json"
+        "https://ui.renanleonel.com/r/label.json",
+        "https://ui.renanleonel.com/r/separator.json"
       ],
       "files": [
         {
@@ -1365,7 +1365,7 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json"
+        "https://ui.renanleonel.com/r/button.json"
       ],
       "files": [
         {
@@ -1387,10 +1387,10 @@
         "zod@^4.6.7"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/alert.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/field.json",
-        "https://ds.renanleonel.com/r/settings-list.json"
+        "https://ui.renanleonel.com/r/alert.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/field.json",
+        "https://ui.renanleonel.com/r/settings-list.json"
       ],
       "files": [
         {
@@ -1409,7 +1409,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/kbd.json"
+        "https://ui.renanleonel.com/r/kbd.json"
       ],
       "files": [
         {
@@ -1446,9 +1446,9 @@
         "sonner@^2.0.8"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/input.json",
-        "https://ds.renanleonel.com/r/spinner.json",
-        "https://ds.renanleonel.com/r/use-controllable-state.json"
+        "https://ui.renanleonel.com/r/input.json",
+        "https://ui.renanleonel.com/r/spinner.json",
+        "https://ui.renanleonel.com/r/use-controllable-state.json"
       ],
       "files": [
         {
@@ -1467,9 +1467,9 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/input.json",
-        "https://ds.renanleonel.com/r/textarea.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/input.json",
+        "https://ui.renanleonel.com/r/textarea.json"
       ],
       "files": [
         {
@@ -1507,8 +1507,8 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/use-hotkey-press.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/use-hotkey-press.json"
       ],
       "files": [
         {
@@ -1528,7 +1528,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/separator.json"
+        "https://ui.renanleonel.com/r/separator.json"
       ],
       "files": [
         {
@@ -1579,7 +1579,7 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/select.json"
+        "https://ui.renanleonel.com/r/select.json"
       ],
       "files": [
         {
@@ -1598,7 +1598,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/dropdown-menu.json"
+        "https://ui.renanleonel.com/r/dropdown-menu.json"
       ],
       "files": [
         {
@@ -1634,7 +1634,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/combobox.json"
+        "https://ui.renanleonel.com/r/combobox.json"
       ],
       "files": [
         {
@@ -1706,7 +1706,7 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json"
+        "https://ui.renanleonel.com/r/button.json"
       ],
       "files": [
         {
@@ -1740,7 +1740,7 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/input-group.json"
+        "https://ui.renanleonel.com/r/input-group.json"
       ],
       "files": [
         {
@@ -1880,8 +1880,8 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/native-select.json",
-        "https://ds.renanleonel.com/r/use-media-query.json"
+        "https://ui.renanleonel.com/r/native-select.json",
+        "https://ui.renanleonel.com/r/use-media-query.json"
       ],
       "files": [
         {
@@ -1916,7 +1916,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/label.json"
+        "https://ui.renanleonel.com/r/label.json"
       ],
       "files": [
         {
@@ -1936,7 +1936,7 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json"
+        "https://ui.renanleonel.com/r/button.json"
       ],
       "files": [
         {
@@ -2010,7 +2010,7 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/use-media-query.json"
+        "https://ui.renanleonel.com/r/use-media-query.json"
       ],
       "files": [
         {
@@ -2046,7 +2046,7 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/use-controllable-state.json"
+        "https://ui.renanleonel.com/r/use-controllable-state.json"
       ],
       "files": [
         {
@@ -2152,8 +2152,8 @@
         "next-themes@^0.4.6"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/toggle-group.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/toggle-group.json"
       ],
       "files": [
         {
@@ -2172,9 +2172,9 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/popover.json",
-        "https://ds.renanleonel.com/r/use-hotkey-press.json"
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/popover.json",
+        "https://ui.renanleonel.com/r/use-hotkey-press.json"
       ],
       "files": [
         {
@@ -2208,8 +2208,8 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/combobox.json",
-        "https://ds.renanleonel.com/r/input-group.json"
+        "https://ui.renanleonel.com/r/combobox.json",
+        "https://ui.renanleonel.com/r/input-group.json"
       ],
       "files": [
         {
@@ -2229,7 +2229,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/toggle.json"
+        "https://ui.renanleonel.com/r/toggle.json"
       ],
       "files": [
         {
@@ -2266,7 +2266,7 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json"
+        "https://ui.renanleonel.com/r/button.json"
       ],
       "files": [
         {
@@ -2286,7 +2286,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json"
+        "https://ui.renanleonel.com/r/button.json"
       ],
       "files": [
         {
@@ -2306,7 +2306,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/hotkey.json"
+        "https://ui.renanleonel.com/r/hotkey.json"
       ],
       "files": [
         {
@@ -2325,11 +2325,11 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/popover.json",
-        "https://ds.renanleonel.com/r/tree.json",
-        "https://ds.renanleonel.com/r/use-debounce.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/popover.json",
+        "https://ui.renanleonel.com/r/tree.json",
+        "https://ui.renanleonel.com/r/use-debounce.json"
       ],
       "files": [
         {
@@ -2365,7 +2365,7 @@
         "cn@^0.5.2"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json"
+        "https://ui.renanleonel.com/r/button.json"
       ],
       "files": [
         {
@@ -2401,18 +2401,18 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/empty.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/skeleton.json",
-        "https://ds.renanleonel.com/r/timeline.json",
-        "https://ds.renanleonel.com/r/toggle-group.json",
-        "https://ds.renanleonel.com/r/tooltip.json",
-        "https://ds.renanleonel.com/r/use-intersection.json",
-        "https://ds.renanleonel.com/r/use-url-state.json",
-        "https://ds.renanleonel.com/r/utils.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/empty.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/skeleton.json",
+        "https://ui.renanleonel.com/r/timeline.json",
+        "https://ui.renanleonel.com/r/toggle-group.json",
+        "https://ui.renanleonel.com/r/tooltip.json",
+        "https://ui.renanleonel.com/r/use-intersection.json",
+        "https://ui.renanleonel.com/r/use-url-state.json",
+        "https://ui.renanleonel.com/r/utils.json"
       ],
       "files": [
         {
@@ -2437,16 +2437,16 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/alert.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/collapsible.json",
-        "https://ds.renanleonel.com/r/copy-button.json",
-        "https://ds.renanleonel.com/r/error-state.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/scroll-area.json",
-        "https://ds.renanleonel.com/r/spinner.json",
-        "https://ds.renanleonel.com/r/tooltip.json"
+        "https://ui.renanleonel.com/r/alert.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/collapsible.json",
+        "https://ui.renanleonel.com/r/copy-button.json",
+        "https://ui.renanleonel.com/r/error-state.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/scroll-area.json",
+        "https://ui.renanleonel.com/r/spinner.json",
+        "https://ui.renanleonel.com/r/tooltip.json"
       ],
       "files": [
         {
@@ -2478,14 +2478,14 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/command-palette.json",
-        "https://ds.renanleonel.com/r/drawer.json",
-        "https://ds.renanleonel.com/r/dropdown-menu.json",
-        "https://ds.renanleonel.com/r/hotkey.json",
-        "https://ds.renanleonel.com/r/scroll-area.json",
-        "https://ds.renanleonel.com/r/tooltip.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/command-palette.json",
+        "https://ui.renanleonel.com/r/drawer.json",
+        "https://ui.renanleonel.com/r/dropdown-menu.json",
+        "https://ui.renanleonel.com/r/hotkey.json",
+        "https://ui.renanleonel.com/r/scroll-area.json",
+        "https://ui.renanleonel.com/r/tooltip.json"
       ],
       "files": [
         {
@@ -2506,12 +2506,12 @@
         "zod@^4.6.7"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/checkbox.json",
-        "https://ds.renanleonel.com/r/form.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/input.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/checkbox.json",
+        "https://ui.renanleonel.com/r/form.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/input.json"
       ],
       "files": [
         {
@@ -2533,11 +2533,11 @@
         "sonner@^2.0.8"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/tabs.json",
-        "https://ds.renanleonel.com/r/use-url-state.json"
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/tabs.json",
+        "https://ui.renanleonel.com/r/use-url-state.json"
       ],
       "files": [
         {
@@ -2558,15 +2558,15 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/command.json",
-        "https://ds.renanleonel.com/r/hotkey.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/kbd.json",
-        "https://ds.renanleonel.com/r/spinner.json",
-        "https://ds.renanleonel.com/r/use-controllable-state.json",
-        "https://ds.renanleonel.com/r/use-debounce.json",
-        "https://ds.renanleonel.com/r/use-local-storage.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/command.json",
+        "https://ui.renanleonel.com/r/hotkey.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/kbd.json",
+        "https://ui.renanleonel.com/r/spinner.json",
+        "https://ui.renanleonel.com/r/use-controllable-state.json",
+        "https://ui.renanleonel.com/r/use-debounce.json",
+        "https://ui.renanleonel.com/r/use-local-storage.json"
       ],
       "files": [
         {
@@ -2592,12 +2592,12 @@
         "recharts@3.8.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/card.json",
-        "https://ds.renanleonel.com/r/chart.json",
-        "https://ds.renanleonel.com/r/tabs.json",
-        "https://ds.renanleonel.com/r/use-url-state.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/card.json",
+        "https://ui.renanleonel.com/r/chart.json",
+        "https://ui.renanleonel.com/r/tabs.json",
+        "https://ui.renanleonel.com/r/use-url-state.json"
       ],
       "files": [
         {
@@ -2624,19 +2624,19 @@
         "sonner@^2.0.8"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/checkbox.json",
-        "https://ds.renanleonel.com/r/dropdown-menu.json",
-        "https://ds.renanleonel.com/r/empty.json",
-        "https://ds.renanleonel.com/r/error-state.json",
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/skeleton.json",
-        "https://ds.renanleonel.com/r/sonner.json",
-        "https://ds.renanleonel.com/r/table.json",
-        "https://ds.renanleonel.com/r/use-debounce.json",
-        "https://ds.renanleonel.com/r/use-url-state.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/checkbox.json",
+        "https://ui.renanleonel.com/r/dropdown-menu.json",
+        "https://ui.renanleonel.com/r/empty.json",
+        "https://ui.renanleonel.com/r/error-state.json",
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/skeleton.json",
+        "https://ui.renanleonel.com/r/sonner.json",
+        "https://ui.renanleonel.com/r/table.json",
+        "https://ui.renanleonel.com/r/use-debounce.json",
+        "https://ui.renanleonel.com/r/use-url-state.json"
       ],
       "files": [
         {
@@ -2661,13 +2661,13 @@
         "sonner@^2.0.8"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/field.json",
-        "https://ds.renanleonel.com/r/input.json",
-        "https://ds.renanleonel.com/r/select.json",
-        "https://ds.renanleonel.com/r/spinner.json",
-        "https://ds.renanleonel.com/r/switch.json",
-        "https://ds.renanleonel.com/r/table.json"
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/field.json",
+        "https://ui.renanleonel.com/r/input.json",
+        "https://ui.renanleonel.com/r/select.json",
+        "https://ui.renanleonel.com/r/spinner.json",
+        "https://ui.renanleonel.com/r/switch.json",
+        "https://ui.renanleonel.com/r/table.json"
       ],
       "files": [
         {
@@ -2692,7 +2692,7 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json"
+        "https://ui.renanleonel.com/r/button.json"
       ],
       "files": [
         {
@@ -2715,25 +2715,25 @@
         "sonner@^2.0.8"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/alert-dialog.json",
-        "https://ds.renanleonel.com/r/breadcrumb.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/context-menu.json",
-        "https://ds.renanleonel.com/r/dialog.json",
-        "https://ds.renanleonel.com/r/dropdown-menu.json",
-        "https://ds.renanleonel.com/r/empty.json",
-        "https://ds.renanleonel.com/r/file-dropzone.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/inline-edit.json",
-        "https://ds.renanleonel.com/r/meter.json",
-        "https://ds.renanleonel.com/r/progress.json",
-        "https://ds.renanleonel.com/r/select.json",
-        "https://ds.renanleonel.com/r/sheet.json",
-        "https://ds.renanleonel.com/r/toggle-group.json",
-        "https://ds.renanleonel.com/r/tree.json",
-        "https://ds.renanleonel.com/r/use-controllable-state.json",
-        "https://ds.renanleonel.com/r/use-media-query.json",
-        "https://ds.renanleonel.com/r/use-url-state.json"
+        "https://ui.renanleonel.com/r/alert-dialog.json",
+        "https://ui.renanleonel.com/r/breadcrumb.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/context-menu.json",
+        "https://ui.renanleonel.com/r/dialog.json",
+        "https://ui.renanleonel.com/r/dropdown-menu.json",
+        "https://ui.renanleonel.com/r/empty.json",
+        "https://ui.renanleonel.com/r/file-dropzone.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/inline-edit.json",
+        "https://ui.renanleonel.com/r/meter.json",
+        "https://ui.renanleonel.com/r/progress.json",
+        "https://ui.renanleonel.com/r/select.json",
+        "https://ui.renanleonel.com/r/sheet.json",
+        "https://ui.renanleonel.com/r/toggle-group.json",
+        "https://ui.renanleonel.com/r/tree.json",
+        "https://ui.renanleonel.com/r/use-controllable-state.json",
+        "https://ui.renanleonel.com/r/use-media-query.json",
+        "https://ui.renanleonel.com/r/use-url-state.json"
       ],
       "files": [
         {
@@ -2776,15 +2776,15 @@
         "sonner@^2.0.8"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/checkbox.json",
-        "https://ds.renanleonel.com/r/dropdown-menu.json",
-        "https://ds.renanleonel.com/r/select.json",
-        "https://ds.renanleonel.com/r/sonner.json",
-        "https://ds.renanleonel.com/r/use-url-state.json",
-        "https://ds.renanleonel.com/r/utils.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/checkbox.json",
+        "https://ui.renanleonel.com/r/dropdown-menu.json",
+        "https://ui.renanleonel.com/r/select.json",
+        "https://ui.renanleonel.com/r/sonner.json",
+        "https://ui.renanleonel.com/r/use-url-state.json",
+        "https://ui.renanleonel.com/r/utils.json"
       ],
       "files": [
         {
@@ -2810,25 +2810,25 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/checkbox.json",
-        "https://ds.renanleonel.com/r/dropdown-menu.json",
-        "https://ds.renanleonel.com/r/empty.json",
-        "https://ds.renanleonel.com/r/hotkey.json",
-        "https://ds.renanleonel.com/r/input.json",
-        "https://ds.renanleonel.com/r/resizable.json",
-        "https://ds.renanleonel.com/r/sonner.json",
-        "https://ds.renanleonel.com/r/tabs.json",
-        "https://ds.renanleonel.com/r/textarea.json",
-        "https://ds.renanleonel.com/r/toolbar.json",
-        "https://ds.renanleonel.com/r/tooltip.json",
-        "https://ds.renanleonel.com/r/use-debounce.json",
-        "https://ds.renanleonel.com/r/use-media-query.json",
-        "https://ds.renanleonel.com/r/use-url-state.json",
-        "https://ds.renanleonel.com/r/utils.json",
-        "https://ds.renanleonel.com/r/virtual-list.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/checkbox.json",
+        "https://ui.renanleonel.com/r/dropdown-menu.json",
+        "https://ui.renanleonel.com/r/empty.json",
+        "https://ui.renanleonel.com/r/hotkey.json",
+        "https://ui.renanleonel.com/r/input.json",
+        "https://ui.renanleonel.com/r/resizable.json",
+        "https://ui.renanleonel.com/r/sonner.json",
+        "https://ui.renanleonel.com/r/tabs.json",
+        "https://ui.renanleonel.com/r/textarea.json",
+        "https://ui.renanleonel.com/r/toolbar.json",
+        "https://ui.renanleonel.com/r/tooltip.json",
+        "https://ui.renanleonel.com/r/use-debounce.json",
+        "https://ui.renanleonel.com/r/use-media-query.json",
+        "https://ui.renanleonel.com/r/use-url-state.json",
+        "https://ui.renanleonel.com/r/utils.json",
+        "https://ui.renanleonel.com/r/virtual-list.json"
       ],
       "files": [
         {
@@ -2856,14 +2856,14 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/empty.json",
-        "https://ds.renanleonel.com/r/skeleton.json",
-        "https://ds.renanleonel.com/r/tabs.json",
-        "https://ds.renanleonel.com/r/use-url-state.json",
-        "https://ds.renanleonel.com/r/utils.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/empty.json",
+        "https://ui.renanleonel.com/r/skeleton.json",
+        "https://ui.renanleonel.com/r/tabs.json",
+        "https://ui.renanleonel.com/r/use-url-state.json",
+        "https://ui.renanleonel.com/r/utils.json"
       ],
       "files": [
         {
@@ -2892,21 +2892,21 @@
         "sonner@^2.0.8"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar-group.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/context-menu.json",
-        "https://ds.renanleonel.com/r/field.json",
-        "https://ds.renanleonel.com/r/input.json",
-        "https://ds.renanleonel.com/r/multi-select.json",
-        "https://ds.renanleonel.com/r/scroll-area.json",
-        "https://ds.renanleonel.com/r/select.json",
-        "https://ds.renanleonel.com/r/sheet.json",
-        "https://ds.renanleonel.com/r/sonner.json",
-        "https://ds.renanleonel.com/r/spinner.json",
-        "https://ds.renanleonel.com/r/switch.json",
-        "https://ds.renanleonel.com/r/use-media-query.json",
-        "https://ds.renanleonel.com/r/use-url-state.json"
+        "https://ui.renanleonel.com/r/avatar-group.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/context-menu.json",
+        "https://ui.renanleonel.com/r/field.json",
+        "https://ui.renanleonel.com/r/input.json",
+        "https://ui.renanleonel.com/r/multi-select.json",
+        "https://ui.renanleonel.com/r/scroll-area.json",
+        "https://ui.renanleonel.com/r/select.json",
+        "https://ui.renanleonel.com/r/sheet.json",
+        "https://ui.renanleonel.com/r/sonner.json",
+        "https://ui.renanleonel.com/r/spinner.json",
+        "https://ui.renanleonel.com/r/switch.json",
+        "https://ui.renanleonel.com/r/use-media-query.json",
+        "https://ui.renanleonel.com/r/use-url-state.json"
       ],
       "files": [
         {
@@ -2951,12 +2951,12 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/language-select.json",
-        "https://ds.renanleonel.com/r/sheet.json",
-        "https://ds.renanleonel.com/r/theme-toggle.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/language-select.json",
+        "https://ui.renanleonel.com/r/sheet.json",
+        "https://ui.renanleonel.com/r/theme-toggle.json"
       ],
       "files": [
         {
@@ -2981,13 +2981,13 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/empty.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/popover.json",
-        "https://ds.renanleonel.com/r/sonner.json",
-        "https://ds.renanleonel.com/r/tabs.json",
-        "https://ds.renanleonel.com/r/tooltip.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/empty.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/popover.json",
+        "https://ui.renanleonel.com/r/sonner.json",
+        "https://ui.renanleonel.com/r/tabs.json",
+        "https://ui.renanleonel.com/r/tooltip.json"
       ],
       "files": [
         {
@@ -3008,16 +3008,16 @@
         "zod@^4.6.7"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/form.json",
-        "https://ds.renanleonel.com/r/icon-tile.json",
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/input.json",
-        "https://ds.renanleonel.com/r/radio-group.json",
-        "https://ds.renanleonel.com/r/select.json",
-        "https://ds.renanleonel.com/r/textarea.json",
-        "https://ds.renanleonel.com/r/tooltip.json",
-        "https://ds.renanleonel.com/r/use-url-state.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/form.json",
+        "https://ui.renanleonel.com/r/icon-tile.json",
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/input.json",
+        "https://ui.renanleonel.com/r/radio-group.json",
+        "https://ui.renanleonel.com/r/select.json",
+        "https://ui.renanleonel.com/r/textarea.json",
+        "https://ui.renanleonel.com/r/tooltip.json",
+        "https://ui.renanleonel.com/r/use-url-state.json"
       ],
       "files": [
         {
@@ -3052,12 +3052,12 @@
         "lucide-react@^1.72.0"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/accordion.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/tabs.json",
-        "https://ds.renanleonel.com/r/tooltip.json",
-        "https://ds.renanleonel.com/r/use-url-state.json"
+        "https://ui.renanleonel.com/r/accordion.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/tabs.json",
+        "https://ui.renanleonel.com/r/tooltip.json",
+        "https://ui.renanleonel.com/r/use-url-state.json"
       ],
       "files": [
         {
@@ -3079,23 +3079,23 @@
         "zod@^4.6.7"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/calendar.json",
-        "https://ds.renanleonel.com/r/date-picker.json",
-        "https://ds.renanleonel.com/r/dialog.json",
-        "https://ds.renanleonel.com/r/empty.json",
-        "https://ds.renanleonel.com/r/form.json",
-        "https://ds.renanleonel.com/r/input.json",
-        "https://ds.renanleonel.com/r/popover.json",
-        "https://ds.renanleonel.com/r/skeleton.json",
-        "https://ds.renanleonel.com/r/sonner.json",
-        "https://ds.renanleonel.com/r/swatch-picker.json",
-        "https://ds.renanleonel.com/r/switch.json",
-        "https://ds.renanleonel.com/r/tabs.json",
-        "https://ds.renanleonel.com/r/textarea.json",
-        "https://ds.renanleonel.com/r/time-input.json",
-        "https://ds.renanleonel.com/r/timezone-select.json",
-        "https://ds.renanleonel.com/r/use-url-state.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/calendar.json",
+        "https://ui.renanleonel.com/r/date-picker.json",
+        "https://ui.renanleonel.com/r/dialog.json",
+        "https://ui.renanleonel.com/r/empty.json",
+        "https://ui.renanleonel.com/r/form.json",
+        "https://ui.renanleonel.com/r/input.json",
+        "https://ui.renanleonel.com/r/popover.json",
+        "https://ui.renanleonel.com/r/skeleton.json",
+        "https://ui.renanleonel.com/r/sonner.json",
+        "https://ui.renanleonel.com/r/swatch-picker.json",
+        "https://ui.renanleonel.com/r/switch.json",
+        "https://ui.renanleonel.com/r/tabs.json",
+        "https://ui.renanleonel.com/r/textarea.json",
+        "https://ui.renanleonel.com/r/time-input.json",
+        "https://ui.renanleonel.com/r/timezone-select.json",
+        "https://ui.renanleonel.com/r/use-url-state.json"
       ],
       "files": [
         {
@@ -3142,28 +3142,28 @@
         "zod@^4.6.7"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/avatar.json",
-        "https://ds.renanleonel.com/r/badge.json",
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/dialog.json",
-        "https://ds.renanleonel.com/r/dropdown-menu.json",
-        "https://ds.renanleonel.com/r/field.json",
-        "https://ds.renanleonel.com/r/form.json",
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/input.json",
-        "https://ds.renanleonel.com/r/language-select.json",
-        "https://ds.renanleonel.com/r/select.json",
-        "https://ds.renanleonel.com/r/settings-list.json",
-        "https://ds.renanleonel.com/r/sonner.json",
-        "https://ds.renanleonel.com/r/swatch-picker.json",
-        "https://ds.renanleonel.com/r/switch.json",
-        "https://ds.renanleonel.com/r/theme-toggle.json",
-        "https://ds.renanleonel.com/r/timezone-select.json",
-        "https://ds.renanleonel.com/r/toggle-group.json",
-        "https://ds.renanleonel.com/r/token-input.json",
-        "https://ds.renanleonel.com/r/unsaved-changes-bar.json",
-        "https://ds.renanleonel.com/r/use-media-query.json",
-        "https://ds.renanleonel.com/r/utils.json"
+        "https://ui.renanleonel.com/r/avatar.json",
+        "https://ui.renanleonel.com/r/badge.json",
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/dialog.json",
+        "https://ui.renanleonel.com/r/dropdown-menu.json",
+        "https://ui.renanleonel.com/r/field.json",
+        "https://ui.renanleonel.com/r/form.json",
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/input.json",
+        "https://ui.renanleonel.com/r/language-select.json",
+        "https://ui.renanleonel.com/r/select.json",
+        "https://ui.renanleonel.com/r/settings-list.json",
+        "https://ui.renanleonel.com/r/sonner.json",
+        "https://ui.renanleonel.com/r/swatch-picker.json",
+        "https://ui.renanleonel.com/r/switch.json",
+        "https://ui.renanleonel.com/r/theme-toggle.json",
+        "https://ui.renanleonel.com/r/timezone-select.json",
+        "https://ui.renanleonel.com/r/toggle-group.json",
+        "https://ui.renanleonel.com/r/token-input.json",
+        "https://ui.renanleonel.com/r/unsaved-changes-bar.json",
+        "https://ui.renanleonel.com/r/use-media-query.json",
+        "https://ui.renanleonel.com/r/utils.json"
       ],
       "files": [
         {
@@ -3189,10 +3189,10 @@
         "sonner@^2.0.8"
       ],
       "registryDependencies": [
-        "https://ds.renanleonel.com/r/button.json",
-        "https://ds.renanleonel.com/r/input-group.json",
-        "https://ds.renanleonel.com/r/language-select.json",
-        "https://ds.renanleonel.com/r/theme-toggle.json"
+        "https://ui.renanleonel.com/r/button.json",
+        "https://ui.renanleonel.com/r/input-group.json",
+        "https://ui.renanleonel.com/r/language-select.json",
+        "https://ui.renanleonel.com/r/theme-toggle.json"
       ],
       "files": [
         {

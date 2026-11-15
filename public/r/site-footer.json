@@ -9,10 +9,10 @@
     "sonner@^2.0.8"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/button.json",
-    "https://ds.renanleonel.com/r/input-group.json",
-    "https://ds.renanleonel.com/r/language-select.json",
-    "https://ds.renanleonel.com/r/theme-toggle.json"
+    "https://ui.renanleonel.com/r/button.json",
+    "https://ui.renanleonel.com/r/input-group.json",
+    "https://ui.renanleonel.com/r/language-select.json",
+    "https://ui.renanleonel.com/r/theme-toggle.json"
   ],
   "files": [
     {

@@ -8,9 +8,9 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://ds.renanleonel.com/r/input-group.json",
-    "https://ds.renanleonel.com/r/popover.json",
-    "https://ds.renanleonel.com/r/use-hotkey-press.json"
+    "https://ui.renanleonel.com/r/input-group.json",
+    "https://ui.renanleonel.com/r/popover.json",
+    "https://ui.renanleonel.com/r/use-hotkey-press.json"
   ],
   "files": [
     {

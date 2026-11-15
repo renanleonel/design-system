@@ -44,7 +44,7 @@ public/llms.txt · public/llms-full.txt
 public/tokens/<theme>.tokens.json
    │  shadcn build        (pnpm registry:build runs both steps)
    ▼
-public/r/*.json  ──►  npx shadcn add https://ds.renanleonel.com/r/<item>.json
+public/r/*.json  ──►  npx shadcn add https://ui.renanleonel.com/r/<item>.json
 ```
 
 - `registry:gen` throws when a ui file lacks a catalog entry or a demo file.

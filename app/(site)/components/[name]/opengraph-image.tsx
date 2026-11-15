@@ -6,11 +6,11 @@ import { ogImage } from "@/lib/og"
 export { contentType, size } from "@/lib/og"
 export const alt = "A renanleonel/ui component"
 
+// Rendered on the first request and cached from then on: prerendering one
+// image per component tripled the build.
 export function generateStaticParams() {
-  return getComponents().map((c) => ({ name: c.name }))
+  return []
 }
-
-export const dynamicParams = false
 
 export default async function Image({
   params,
