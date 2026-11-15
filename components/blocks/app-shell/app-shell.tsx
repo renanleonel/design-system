@@ -35,6 +35,7 @@ import {
   type PaletteCommand,
 } from "@/components/blocks/command-palette/command-palette"
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Tooltip,
   TooltipContent,
@@ -688,9 +689,17 @@ function SidebarBody({
           </>
         )}
       </button>
-      <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
+      {/* Overlay bar, so a native scrollbar never takes width from the nav;
+          the rail is too narrow for one, and the edge fade shows there is more. */}
+      <ScrollArea
+        fade
+        className={cn(
+          "flex-1",
+          rail && "**:data-[slot=scroll-area-scrollbar]:hidden"
+        )}
+      >
         <SidebarNav sections={sections} rail={rail} {...nav} />
-      </div>
+      </ScrollArea>
       {footerItems && (
         <div className="flex flex-col gap-0.5">
           {footerItems.map((item, i) => (

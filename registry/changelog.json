@@ -27,6 +27,10 @@
   ],
   "app-shell": [
     {
+      "date": "2026-11-15",
+      "change": "sidebar nav scrolls in a ScrollArea with edge fades: no native scrollbar over the items, none at all in the icon rail"
+    },
+    {
       "date": "2026-11-14",
       "change": "Mod+K now opens the command-palette block (recents, nested pages); new `commands` prop adds actions after the nav pages"
     },

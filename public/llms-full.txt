@@ -1521,10 +1521,11 @@ Changelog:
 Install: `npx shadcn add https://ds.renanleonel.com/r/app-shell.json`
 
 npm: @base-ui/react@^1.9.0, @tanstack/react-hotkeys@0.25.0, cn@^0.5.2, lucide-react@^1.72.0
-Needs: avatar, button, command-palette, drawer, dropdown-menu, hotkey, tooltip
+Needs: avatar, button, command-palette, drawer, dropdown-menu, hotkey, scroll-area, tooltip
 Exports: AppShell, AppShellContent, AppShellHeader, NavItem, NavSection, SidebarMotion, useAppShell
 
 Changelog:
+- 2026-11-15: sidebar nav scrolls in a ScrollArea with edge fades: no native scrollbar over the items, none at all in the icon rail
 - 2026-11-14: Mod+K now opens the command-palette block (recents, nested pages); new `commands` prop adds actions after the nav pages
 - 2026-11-14: lighthouse and react doctor pass across docs site and registry
 - 2026-11-13: stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills
