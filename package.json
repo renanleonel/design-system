@@ -19,6 +19,7 @@
     "test:interaction": "playwright test",
     "test:visual": "playwright test -c playwright.visual.config.ts",
     "mcp:smoke": "node scripts/mcp-smoke.mjs",
+    "favicon": "node scripts/gen-favicon.mjs",
     "format:check": "oxfmt --check \"**/*.{ts,tsx}\""
   },
   "dependencies": {
