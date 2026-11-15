@@ -52,3 +52,6 @@ next-env.d.ts
 tests/visual/__screenshots__/**/*-win32.png
 tests/visual/__screenshots__/**/*-darwin.png
 /tests/visual/.local/
+
+.vercel
+.env*
