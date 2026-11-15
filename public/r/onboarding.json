@@ -9,16 +9,16 @@
     "zod@^4.6.7"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/form.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/radio-group.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/textarea.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/form.json",
+    "https://ds.renanleonel.com/r/icon-tile.json",
+    "https://ds.renanleonel.com/r/input-group.json",
+    "https://ds.renanleonel.com/r/input.json",
+    "https://ds.renanleonel.com/r/radio-group.json",
+    "https://ds.renanleonel.com/r/select.json",
+    "https://ds.renanleonel.com/r/textarea.json",
+    "https://ds.renanleonel.com/r/tooltip.json",
+    "https://ds.renanleonel.com/r/use-url-state.json"
   ],
   "files": [
     {

@@ -10,9 +10,9 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-hotkey-press.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/utils.json"
+    "https://ds.renanleonel.com/r/hotkey.json",
+    "https://ds.renanleonel.com/r/use-hotkey-press.json",
+    "https://ds.renanleonel.com/r/utils.json"
   ],
   "files": [
     {

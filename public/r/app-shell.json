@@ -10,13 +10,13 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/command-palette.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/drawer.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/hotkey.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
+    "https://ds.renanleonel.com/r/avatar.json",
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/command-palette.json",
+    "https://ds.renanleonel.com/r/drawer.json",
+    "https://ds.renanleonel.com/r/dropdown-menu.json",
+    "https://ds.renanleonel.com/r/hotkey.json",
+    "https://ds.renanleonel.com/r/tooltip.json"
   ],
   "files": [
     {

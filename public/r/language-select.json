@@ -8,7 +8,7 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/select.json"
+    "https://ds.renanleonel.com/r/select.json"
   ],
   "files": [
     {

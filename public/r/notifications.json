@@ -8,13 +8,13 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/empty.json",
+    "https://ds.renanleonel.com/r/icon-tile.json",
+    "https://ds.renanleonel.com/r/popover.json",
+    "https://ds.renanleonel.com/r/sonner.json",
+    "https://ds.renanleonel.com/r/tabs.json",
+    "https://ds.renanleonel.com/r/tooltip.json"
   ],
   "files": [
     {

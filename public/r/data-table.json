@@ -10,19 +10,19 @@
     "sonner@^2.0.8"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/checkbox.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dropdown-menu.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/empty.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/error-state.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/skeleton.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/sonner.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/table.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-debounce.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
+    "https://ds.renanleonel.com/r/avatar.json",
+    "https://ds.renanleonel.com/r/badge.json",
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/checkbox.json",
+    "https://ds.renanleonel.com/r/dropdown-menu.json",
+    "https://ds.renanleonel.com/r/empty.json",
+    "https://ds.renanleonel.com/r/error-state.json",
+    "https://ds.renanleonel.com/r/input-group.json",
+    "https://ds.renanleonel.com/r/skeleton.json",
+    "https://ds.renanleonel.com/r/sonner.json",
+    "https://ds.renanleonel.com/r/table.json",
+    "https://ds.renanleonel.com/r/use-debounce.json",
+    "https://ds.renanleonel.com/r/use-url-state.json"
   ],
   "files": [
     {

@@ -8,16 +8,16 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/collapsible.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/copy-button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/error-state.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/icon-tile.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/scroll-area.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json"
+    "https://ds.renanleonel.com/r/alert.json",
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/collapsible.json",
+    "https://ds.renanleonel.com/r/copy-button.json",
+    "https://ds.renanleonel.com/r/error-state.json",
+    "https://ds.renanleonel.com/r/icon-tile.json",
+    "https://ds.renanleonel.com/r/input-group.json",
+    "https://ds.renanleonel.com/r/scroll-area.json",
+    "https://ds.renanleonel.com/r/spinner.json",
+    "https://ds.renanleonel.com/r/tooltip.json"
   ],
   "files": [
     {

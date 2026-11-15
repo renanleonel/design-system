@@ -5,7 +5,7 @@ Personal design system: a [shadcn](https://ui.shadcn.com) registry on [Base UI](
 ## Install
 
 ```bash
-R=https://raw.githubusercontent.com/renanleonel/design-system/main/public/r
+R=https://ds.renanleonel.com/r
 
 npx shadcn init $R/base.json                            # new project: tokens, utils, every component
 npx shadcn add $R/theme-caffeine.json                   # a theme from this registry (neutral, caffeine, amethyst-haze)
@@ -18,7 +18,7 @@ Or register the namespace once in the project's `components.json` and add items 
 
 ```json
 "registries": {
-  "@renanleonel": "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/{name}.json"
+  "@renanleonel": "https://ds.renanleonel.com/r/{name}.json"
 }
 ```
 

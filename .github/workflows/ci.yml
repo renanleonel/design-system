@@ -79,6 +79,16 @@ jobs:
       - name: Interaction tests
         if: matrix.shard == 1
         run: pnpm test:interaction
+      # Every /mcp tool, against the production build this shard already made.
+      - name: MCP smoke test
+        if: matrix.shard == 1
+        run: |
+          pnpm start -p 3240 &
+          for i in $(seq 30); do
+            curl -sf http://localhost:3240/llms.txt > /dev/null && break
+            sleep 1
+          done
+          pnpm mcp:smoke http://localhost:3240/mcp
       - uses: actions/upload-artifact@v4
         if: failure() && matrix.shard == 1
         with:
@@ -166,7 +176,7 @@ jobs:
           npx -y shadcn@4.23.0 init -t next -b base -p nova -n consumer --no-monorepo -y
           mkdir consumer/r
           cp "$GITHUB_WORKSPACE"/public/r/*.json consumer/r/
-          sed -i 's#https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/#./r/#g' consumer/r/*.json
+          sed -i 's#https://ds.renanleonel.com/r/#./r/#g' consumer/r/*.json
           cd consumer
           npx -y shadcn@4.23.0 add ./r/base.json ./r/app-shell.json ./r/data-table.json ./r/settings.json ./r/billing.json ./r/auth.json -y --overwrite
           npx tsc --noEmit

@@ -9,10 +9,10 @@
     "react-colorful@^5.8.1"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/swatch-picker.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-controllable-state.json"
+    "https://ds.renanleonel.com/r/input-group.json",
+    "https://ds.renanleonel.com/r/popover.json",
+    "https://ds.renanleonel.com/r/swatch-picker.json",
+    "https://ds.renanleonel.com/r/use-controllable-state.json"
   ],
   "files": [
     {

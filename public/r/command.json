@@ -9,8 +9,8 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/dialog.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json"
+    "https://ds.renanleonel.com/r/dialog.json",
+    "https://ds.renanleonel.com/r/input-group.json"
   ],
   "files": [
     {

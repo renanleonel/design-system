@@ -8,9 +8,9 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-copy-to-clipboard.json"
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/tooltip.json",
+    "https://ds.renanleonel.com/r/use-copy-to-clipboard.json"
   ],
   "files": [
     {

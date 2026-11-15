@@ -6,7 +6,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs"
 
 const BASE_URL = (
   process.env.REGISTRY_URL ??
-  "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r"
+  "https://ds.renanleonel.com/r"
 ).replace(/\/$/, "")
 
 const registry = JSON.parse(readFileSync("registry.json", "utf8"))

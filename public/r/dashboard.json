@@ -9,12 +9,12 @@
     "recharts@3.8.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/avatar.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/card.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/chart.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
+    "https://ds.renanleonel.com/r/avatar.json",
+    "https://ds.renanleonel.com/r/badge.json",
+    "https://ds.renanleonel.com/r/card.json",
+    "https://ds.renanleonel.com/r/chart.json",
+    "https://ds.renanleonel.com/r/tabs.json",
+    "https://ds.renanleonel.com/r/use-url-state.json"
   ],
   "files": [
     {

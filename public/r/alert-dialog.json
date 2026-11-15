@@ -8,7 +8,7 @@
     "cn@^0.5.2"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json"
+    "https://ds.renanleonel.com/r/button.json"
   ],
   "files": [
     {

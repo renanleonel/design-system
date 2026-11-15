@@ -6,7 +6,7 @@ import { root, dark, theme, css } from "../registry/tokens.mjs"
 
 const BASE_URL =
   process.env.REGISTRY_URL ??
-  "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r"
+  "https://ds.renanleonel.com/r"
 const NAME = "renanleonel"
 const IGNORED_DEPS = new Set(["react", "react-dom", "next"])
 

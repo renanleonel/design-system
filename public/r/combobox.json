@@ -10,8 +10,8 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input-group.json"
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/input-group.json"
   ],
   "files": [
     {

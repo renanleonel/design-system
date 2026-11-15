@@ -9,9 +9,9 @@
     "sonner@^2.0.8"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/input.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/spinner.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-controllable-state.json"
+    "https://ds.renanleonel.com/r/input.json",
+    "https://ds.renanleonel.com/r/spinner.json",
+    "https://ds.renanleonel.com/r/use-controllable-state.json"
   ],
   "files": [
     {

@@ -9,7 +9,7 @@
     "cn@^0.5.2"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/separator.json"
+    "https://ds.renanleonel.com/r/separator.json"
   ],
   "files": [
     {

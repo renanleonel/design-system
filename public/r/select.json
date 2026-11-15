@@ -9,8 +9,8 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/native-select.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json"
+    "https://ds.renanleonel.com/r/native-select.json",
+    "https://ds.renanleonel.com/r/use-media-query.json"
   ],
   "files": [
     {

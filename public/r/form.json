@@ -11,10 +11,10 @@
     "zod@^4.6.7"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/alert.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/field.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/settings-list.json"
+    "https://ds.renanleonel.com/r/alert.json",
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/field.json",
+    "https://ds.renanleonel.com/r/settings-list.json"
   ],
   "files": [
     {

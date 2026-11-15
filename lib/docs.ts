@@ -9,7 +9,7 @@ import { z } from "zod"
 import catalog from "@/registry/catalog.json"
 
 export const REGISTRY_URL =
-  "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r"
+  "https://ds.renanleonel.com/r"
 export const GITHUB_URL = "https://github.com/renanleonel/design-system"
 
 type CatalogEntry = {

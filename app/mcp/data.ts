@@ -12,7 +12,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 
 export const RAW_BASE =
-  "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r"
+  "https://ds.renanleonel.com/r"
 export const NAMESPACE = "@renanleonel"
 export const SITE_REPO = "https://github.com/renanleonel/design-system"
 

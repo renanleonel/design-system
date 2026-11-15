@@ -8,12 +8,12 @@
     "lucide-react@^1.72.0"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/accordion.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/badge.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tabs.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/tooltip.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-url-state.json"
+    "https://ds.renanleonel.com/r/accordion.json",
+    "https://ds.renanleonel.com/r/badge.json",
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/tabs.json",
+    "https://ds.renanleonel.com/r/tooltip.json",
+    "https://ds.renanleonel.com/r/use-url-state.json"
   ],
   "files": [
     {

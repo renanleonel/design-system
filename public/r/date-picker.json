@@ -10,11 +10,11 @@
     "react-day-picker@^10.0.2"
   ],
   "registryDependencies": [
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/button.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/calendar.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/popover.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/time-input.json",
-    "https://raw.githubusercontent.com/renanleonel/design-system/main/public/r/use-media-query.json"
+    "https://ds.renanleonel.com/r/button.json",
+    "https://ds.renanleonel.com/r/calendar.json",
+    "https://ds.renanleonel.com/r/popover.json",
+    "https://ds.renanleonel.com/r/time-input.json",
+    "https://ds.renanleonel.com/r/use-media-query.json"
   ],
   "files": [
     {
