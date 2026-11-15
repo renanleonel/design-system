@@ -42,12 +42,12 @@ The server reads the `registries` in the project's `components.json`. Agents wit
 A second, read-only MCP server ships with the docs site at `/mcp` (Streamable HTTP, no auth). Where the shadcn MCP installs items, this one explains them: usage stories (`get_examples`), design rules (`get_rules`), `--ds-*` tokens (`get_tokens`), full item source and dependencies (`get_item`), plus `list_items`, `search` and `get_changelog`. It reads the committed registry output, so new items appear without any list to maintain.
 
 ```bash
-claude mcp add --transport http renanleonel-ui <docs-site-url>/mcp
+claude mcp add --transport http renanleonel-ui https://ds.renanleonel.com/mcp
 ```
 
 ```json
 // Cursor: .cursor/mcp.json
-{ "mcpServers": { "renanleonel-ui": { "url": "<docs-site-url>/mcp" } } }
+{ "mcpServers": { "renanleonel-ui": { "url": "https://ds.renanleonel.com/mcp" } } }
 ```
 
 Check a running instance with `pnpm mcp:smoke [url]` (default `http://localhost:3000/mcp`).
