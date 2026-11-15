@@ -10,6 +10,7 @@
 //        AUDIT_URL=http://localhost:3000 pnpm audit:ui   (audits a running server)
 import { execSync, spawn } from "node:child_process"
 import { readFileSync } from "node:fs"
+import { availableParallelism } from "node:os"
 import AxeBuilder from "@axe-core/playwright"
 import { chromium } from "playwright"
 
@@ -111,6 +112,12 @@ const VIEWPORTS = [
 ]
 const SCHEMES = ["light", "dark"]
 const TOLERANCE = 0.5
+// AUDIT_CONCURRENCY=n audits n pages at once (default: CPU count, max 12).
+const CONCURRENCY = Math.max(
+  1,
+  Number(process.env.AUDIT_CONCURRENCY) ||
+    Math.min(availableParallelism(), 12)
+)
 
 // Accessibility (axe-core, WCAG 2.2 A/AA), desktop only (structure doesn't
 // change with the viewport; contrast does with the theme, so both schemes).
@@ -244,7 +251,18 @@ async function selectChecks(page, scope = "") {
       .then(() => true)
       .catch(() => false)
     if (!opened) continue // native select on touch
-    await page.waitForTimeout(350)
+    // The open animation scales the popup; under load 350ms alone can end mid-animation.
+    await popup.evaluate(async (el) => {
+      await new Promise((r) => setTimeout(r, 350))
+      const deadline = Date.now() + 3000
+      for (;;) {
+        await new Promise((r) => requestAnimationFrame(r))
+        const running = el
+          .getAnimations({ subtree: true })
+          .some((a) => a.playState === "running" || a.playState === "pending")
+        if (!running || Date.now() > deadline) break
+      }
+    })
     const m = await page.evaluate(() => {
       const t = document.querySelector(
         "[data-slot=select-trigger][aria-expanded=true]"
@@ -290,10 +308,148 @@ function stopServer() {
   } catch {}
 }
 
+async function auditPage({ context, vp, path }) {
+  const page = await context.newPage()
+  try {
+    const errors = []
+    page.on("pageerror", (e) => errors.push(`uncaught: ${e.message}`))
+    page.on(
+      "console",
+      (msg) =>
+        msg.type() === "error" && errors.push(`console: ${msg.text()}`)
+    )
+    // Pages full of iframes (the blocks gallery) never go fully idle:
+    // wait for load, then give the network a few seconds to settle.
+    const target = RTL
+      ? url + path + (path.includes("?") ? "&" : "?") + "dir=rtl"
+      : url + path
+    await page.goto(target, { waitUntil: "load" })
+    await page
+      .waitForLoadState("networkidle", { timeout: 5000 })
+      .catch(() => {})
+    await page.evaluate(() => document.fonts.ready)
+
+    const issues = [...(await page.evaluate(staticChecks, TOLERANCE))]
+    if (vp.name === "desktop") issues.push(...(await a11yChecks(page)))
+    if (vp.name === "desktop") {
+      issues.push(...(await selectChecks(page)))
+      // Dialogs: open each, audit inside, close.
+      const triggers = page.locator(
+        "[data-slot=dialog-trigger]:visible:not([disabled]):not([data-disabled])"
+      )
+      for (let i = 0; i < (await triggers.count()); i++) {
+        try {
+          await triggers.nth(i).click({ timeout: 3000 })
+        } catch (error) {
+          const reason = error.message.split("\n")[0]
+          issues.push(`dialog #${i} could not be opened: ${reason}`)
+          continue
+        }
+        await page.waitForTimeout(400)
+        issues.push(
+          ...(await page.evaluate(staticChecks, TOLERANCE)).map(
+            (x) => `dialog: ${x}`
+          )
+        )
+        issues.push(
+          ...(await selectChecks(page, "[data-slot=dialog-content]")).map(
+            (x) => `dialog: ${x}`
+          )
+        )
+        await page.keyboard.press("Escape")
+        await page.waitForTimeout(400)
+      }
+    }
+    if (vp.name === "desktop") {
+      // Dropdown menus: open each (up to 12 per page). Rendering their
+      // content must not throw (e.g. a label outside its group).
+      const menus = page.locator(
+        // Skips menus inside hidden, inert regions (a bulk bar with no selection).
+        "[data-slot=dropdown-menu-trigger]:visible:not([disabled]):not([data-disabled]):not([inert] *)"
+      )
+      const count = Math.min(await menus.count(), 12)
+      for (let i = 0; i < count; i++) {
+        try {
+          await menus.nth(i).click({ timeout: 3000 })
+        } catch (error) {
+          const reason = error.message.split("\n")[0]
+          issues.push(`menu #${i} could not be opened: ${reason}`)
+          continue
+        }
+        await page.waitForTimeout(250)
+        await page.keyboard.press("Escape")
+        await page.waitForTimeout(250)
+      }
+    }
+    if (vp.name === "desktop") {
+      // Other popups: open the first few of each kind and run the layout
+      // and axe checks while they're open (menus, panels, hover cards).
+      const POPUPS = [
+        ["menubar", "[data-slot=menubar-trigger]", "click"],
+        ["navigation menu", "[data-slot=navigation-menu-trigger]", "click"],
+        ["popover", "[data-slot=popover-trigger]", "click"],
+        ["context menu", "[data-slot=context-menu-trigger]", "context"],
+        ["preview card", "[data-slot=preview-card-trigger]", "hover"],
+      ]
+      for (const [label, slot, how] of POPUPS) {
+        const triggers = page.locator(
+          `${slot}:visible:not([disabled]):not([data-disabled]):not([inert] *)`
+        )
+        const count = Math.min(await triggers.count(), 3)
+        for (let i = 0; i < count; i++) {
+          const trigger = triggers.nth(i)
+          try {
+            if (how === "hover") await trigger.hover({ timeout: 3000 })
+            else
+              await trigger.click({
+                timeout: 3000,
+                button: how === "context" ? "right" : "left",
+              })
+          } catch (error) {
+            const reason = error.message.split("\n")[0]
+            issues.push(`${label} #${i} could not be opened: ${reason}`)
+            continue
+          }
+          await page.waitForTimeout(how === "hover" ? 900 : 400)
+          issues.push(
+            ...(await page.evaluate(staticChecks, TOLERANCE)).map(
+              (x) => `${label}: ${x}`
+            ),
+            ...(await a11yChecks(page)).map((x) => `${label}: ${x}`)
+          )
+          await page.keyboard.press("Escape")
+          await page.mouse.move(0, 0)
+          await page.waitForTimeout(300)
+        }
+      }
+    }
+    if (vp.name === "desktop") {
+      // Command palette (Mod+K), on pages that have one: opening it must not throw.
+      await page.keyboard.press("Control+K")
+      await page.waitForTimeout(400)
+      if (await page.locator("[cmdk-root]").count()) {
+        issues.push(
+          ...(await page.evaluate(staticChecks, TOLERANCE)).map(
+            (x) => `palette: ${x}`
+          )
+        )
+        await page.keyboard.press("Escape")
+        await page.waitForTimeout(300)
+      }
+    }
+    issues.push(...errors)
+    return issues
+  } finally {
+    await page.close()
+  }
+}
+
 const url = await baseUrl()
 const browser = await chromium.launch()
 const failures = []
 try {
+  // Results flush in task order, so output matches a sequential run.
+  const tasks = []
   for (const scheme of SCHEMES) {
     for (const vp of VIEWPORTS) {
       const context = await browser.newContext({
@@ -305,143 +461,34 @@ try {
         (s) => localStorage.setItem("theme", s),
         scheme
       )
-      for (const path of PAGES) {
-        const page = await context.newPage()
-        const errors = []
-        page.on("pageerror", (e) => errors.push(`uncaught: ${e.message}`))
-        page.on(
-          "console",
-          (msg) =>
-            msg.type() === "error" && errors.push(`console: ${msg.text()}`)
-        )
-        // Pages full of iframes (the blocks gallery) never go fully idle:
-        // wait for load, then give the network a few seconds to settle.
-        const target = RTL
-          ? url + path + (path.includes("?") ? "&" : "?") + "dir=rtl"
-          : url + path
-        await page.goto(target, { waitUntil: "load" })
-        await page
-          .waitForLoadState("networkidle", { timeout: 5000 })
-          .catch(() => {})
-        await page.evaluate(() => document.fonts.ready)
-
-        const where = `${path} · ${vp.name} · ${scheme}`
-        const issues = [...(await page.evaluate(staticChecks, TOLERANCE))]
-        if (vp.name === "desktop") issues.push(...(await a11yChecks(page)))
-        if (vp.name === "desktop") {
-          issues.push(...(await selectChecks(page)))
-          // Dialogs: open each, audit inside, close.
-          const triggers = page.locator(
-            "[data-slot=dialog-trigger]:visible:not([disabled]):not([data-disabled])"
-          )
-          for (let i = 0; i < (await triggers.count()); i++) {
-            try {
-              await triggers.nth(i).click({ timeout: 3000 })
-            } catch (error) {
-              const reason = error.message.split("\n")[0]
-              issues.push(`dialog #${i} could not be opened: ${reason}`)
-              continue
-            }
-            await page.waitForTimeout(400)
-            issues.push(
-              ...(await page.evaluate(staticChecks, TOLERANCE)).map(
-                (x) => `dialog: ${x}`
-              )
-            )
-            issues.push(
-              ...(await selectChecks(page, "[data-slot=dialog-content]")).map(
-                (x) => `dialog: ${x}`
-              )
-            )
-            await page.keyboard.press("Escape")
-            await page.waitForTimeout(400)
-          }
-        }
-        if (vp.name === "desktop") {
-          // Dropdown menus: open each (up to 12 per page). Rendering their
-          // content must not throw (e.g. a label outside its group).
-          const menus = page.locator(
-            // Skips menus inside hidden, inert regions (a bulk bar with no selection).
-            "[data-slot=dropdown-menu-trigger]:visible:not([disabled]):not([data-disabled]):not([inert] *)"
-          )
-          const count = Math.min(await menus.count(), 12)
-          for (let i = 0; i < count; i++) {
-            try {
-              await menus.nth(i).click({ timeout: 3000 })
-            } catch (error) {
-              const reason = error.message.split("\n")[0]
-              issues.push(`menu #${i} could not be opened: ${reason}`)
-              continue
-            }
-            await page.waitForTimeout(250)
-            await page.keyboard.press("Escape")
-            await page.waitForTimeout(250)
-          }
-        }
-        if (vp.name === "desktop") {
-          // Other popups: open the first few of each kind and run the layout
-          // and axe checks while they're open (menus, panels, hover cards).
-          const POPUPS = [
-            ["menubar", "[data-slot=menubar-trigger]", "click"],
-            ["navigation menu", "[data-slot=navigation-menu-trigger]", "click"],
-            ["popover", "[data-slot=popover-trigger]", "click"],
-            ["context menu", "[data-slot=context-menu-trigger]", "context"],
-            ["preview card", "[data-slot=preview-card-trigger]", "hover"],
-          ]
-          for (const [label, slot, how] of POPUPS) {
-            const triggers = page.locator(
-              `${slot}:visible:not([disabled]):not([data-disabled]):not([inert] *)`
-            )
-            const count = Math.min(await triggers.count(), 3)
-            for (let i = 0; i < count; i++) {
-              const trigger = triggers.nth(i)
-              try {
-                if (how === "hover") await trigger.hover({ timeout: 3000 })
-                else
-                  await trigger.click({
-                    timeout: 3000,
-                    button: how === "context" ? "right" : "left",
-                  })
-              } catch (error) {
-                const reason = error.message.split("\n")[0]
-                issues.push(`${label} #${i} could not be opened: ${reason}`)
-                continue
-              }
-              await page.waitForTimeout(how === "hover" ? 900 : 400)
-              issues.push(
-                ...(await page.evaluate(staticChecks, TOLERANCE)).map(
-                  (x) => `${label}: ${x}`
-                ),
-                ...(await a11yChecks(page)).map((x) => `${label}: ${x}`)
-              )
-              await page.keyboard.press("Escape")
-              await page.mouse.move(0, 0)
-              await page.waitForTimeout(300)
-            }
-          }
-        }
-        if (vp.name === "desktop") {
-          // Command palette (Mod+K), on pages that have one: opening it must not throw.
-          await page.keyboard.press("Control+K")
-          await page.waitForTimeout(400)
-          if (await page.locator("[cmdk-root]").count()) {
-            issues.push(
-              ...(await page.evaluate(staticChecks, TOLERANCE)).map(
-                (x) => `palette: ${x}`
-              )
-            )
-            await page.keyboard.press("Escape")
-            await page.waitForTimeout(300)
-          }
-        }
-        issues.push(...errors)
-        for (const issue of new Set(issues)) failures.push(`${where}: ${issue}`)
-        console.log(`${issues.length ? "✗" : "✓"} ${where}`)
-        await page.close()
-      }
-      await context.close()
+      for (const path of PAGES) tasks.push({ context, vp, scheme, path })
     }
   }
+  const results = new Array(tasks.length)
+  let next = 0
+  let flushed = 0
+  const flush = () => {
+    while (flushed < tasks.length && results[flushed]) {
+      const { issues, where } = results[flushed++]
+      for (const issue of new Set(issues)) failures.push(`${where}: ${issue}`)
+      console.log(`${issues.length ? "✗" : "✓"} ${where}`)
+    }
+  }
+  const worker = async () => {
+    while (next < tasks.length) {
+      const i = next++
+      const t = tasks[i]
+      const where = `${t.path} · ${t.vp.name} · ${t.scheme}`
+      const issues = await auditPage(t).catch((e) => [
+        `audit crashed: ${e.message.split("\n")[0]}`,
+      ])
+      results[i] = { issues, where }
+      flush()
+    }
+  }
+  await Promise.all(
+    Array.from({ length: Math.min(CONCURRENCY, tasks.length) }, worker)
+  )
 } finally {
   await browser.close()
   stopServer()
