@@ -464,7 +464,7 @@ try {
       for (const path of PAGES) tasks.push({ context, vp, scheme, path })
     }
   }
-  const results = new Array(tasks.length)
+  const results = Array.from({ length: tasks.length })
   let next = 0
   let flushed = 0
   const flush = () => {
