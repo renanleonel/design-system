@@ -42,11 +42,11 @@ Run the `break-ui` skill. Where it leaves a choice open, this repo decides:
 ## Checks before pushing
 
 ```bash
-pnpm typecheck && pnpm lint && pnpm check:contrast && pnpm registry:build && pnpm check:size && pnpm build && pnpm audit:ui
+pnpm lint && pnpm format:check && pnpm typecheck && pnpm check:contrast && pnpm registry:build && pnpm check:size && pnpm build && pnpm audit:ui
 ```
 
 - `audit:ui` starts `next start` on :3210, so run `pnpm build` first (or point `AUDIT_URL` at a running server). It fails on icons off their label's center by >0.5px, horizontal overflow, select popups narrower than or offset from their trigger, unnamed icon-only buttons, console errors, and any axe WCAG 2.2 A/AA violation. It opens every select, dialog and dropdown menu, and runs the layout and axe checks with the first few menubars, navigation menus, popovers, context menus and preview cards open (Base UI focus guards are excluded from axe).
-- Narrow it: `AUDIT_PAGES=/blocks/projects,/themes` or `AUDIT_SHARD=2/4`.
+- Narrow it: `AUDIT_PAGES=/blocks/projects,/themes` or `AUDIT_SHARD=2/4`. Pages are audited in parallel, one per CPU up to 12 (`AUDIT_CONCURRENCY=n` overrides); output order and exit code are the same as a sequential run.
 - Mirrored: `AUDIT_DIR=rtl` appends `?dir=rtl` to every audited URL (not in CI; it doubles the runtime). Any docs page also renders RTL with `?dir=rtl`, or the RTL button above a component preview.
 - Debug one axe failure: `node scripts/axe-detail.mjs /path [rule]` prints the failing HTML.
 - Commit the generated files with the change; CI fails when `registry:build` produces a diff.

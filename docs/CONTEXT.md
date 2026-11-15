@@ -4,7 +4,7 @@ How the repo is laid out and how source becomes an installable registry. Terms a
 
 ## Stack
 
-Next.js 16 (App Router, Turbopack) · React 19 · Tailwind v4 · Base UI · shadcn CLI 4 (`base-nova` style) · TanStack Table v8 · TanStack Virtual · react-resizable-panels · React Hook Form + zod · Recharts 3 · dnd-kit · `@tanstack/react-hotkeys` · Playwright + axe-core for the audit. pnpm only.
+Next.js 16 (App Router, Turbopack) · React 19 · Tailwind v4 · Base UI · shadcn CLI 4 (`base-nova` style) · TanStack Table v8 · TanStack Virtual · react-resizable-panels · React Hook Form + zod · Recharts 3 · dnd-kit · `@tanstack/react-hotkeys` · Playwright + axe-core for the audit · oxlint + oxfmt (`.oxlintrc.json`, `.oxfmtrc.json`; no ESLint or Prettier). pnpm only.
 
 ## Map
 
@@ -55,4 +55,4 @@ public/r/*.json  ──►  npx shadcn add https://ds.renanleonel.com/r/<item>.j
 
 ## CI
 
-`.github/workflows/ci.yml`: typecheck, lint, contrast, registry-is-up-to-date (`git diff --exit-code` on generated files), `check:size` (gzip and npm-dependency budget per item), `audit:ui` in 4 shards, and a fresh-project install of the registry.
+`.github/workflows/ci.yml`: lint (oxlint), format check (oxfmt), typecheck, contrast, registry-is-up-to-date (`git diff --exit-code` on generated files), `check:size` (gzip and npm-dependency budget per item), `audit:ui` in 4 shards (pages in parallel inside each) with the interaction tests and the MCP smoke test on shard 1, visual regression in 2 shards, and a fresh-project install of the registry.

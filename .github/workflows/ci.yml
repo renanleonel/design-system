@@ -1,9 +1,12 @@
 name: CI
 
 on:
+  # Root markdown (README, AGENTS, CLAUDE) feeds no check; `docs/*.md` does.
   push:
     branches: [main]
+    paths-ignore: ["*.md"]
   pull_request:
+    paths-ignore: ["*.md"]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -22,8 +25,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm typecheck
       - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm typecheck
       - name: Contrast (every theme and tone, light and dark)
         run: pnpm check:contrast
 

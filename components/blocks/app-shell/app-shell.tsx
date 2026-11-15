@@ -669,10 +669,7 @@ function SidebarBody({
           the rail is too narrow for one, and the edge fade shows there is more. */}
       <ScrollArea
         fade
-        className={cn(
-          "flex-1",
-          rail && "**:data-[slot=scroll-area-scrollbar]:hidden"
-        )}
+        className="flex-1 group-data-collapsed/sidebar:**:data-[slot=scroll-area-scrollbar]:hidden"
       >
         <SidebarNav sections={sections} rail={rail} {...nav} />
       </ScrollArea>

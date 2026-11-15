@@ -2,6 +2,8 @@
 
 Personal design system: a [shadcn](https://ui.shadcn.com) registry on [Base UI](https://base-ui.com), themeable with any [tweakcn](https://tweakcn.com) theme. Accessible by default (axe WCAG 2.2 AA audited on every page), responsive down to 320px, light and dark.
 
+Docs and live previews: [ds.renanleonel.com](https://ds.renanleonel.com).
+
 ## Install
 
 ```bash
@@ -54,9 +56,9 @@ Check a running instance with `pnpm mcp:smoke [url]` (default `http://localhost:
 
 ## What's inside
 
-- **55 components** (`components/ui`): inputs, forms (React Hook Form + zod), overlays that become drawers and sheets on mobile, feedback states, charts, sortable lists, hotkeys. Browse them at `/components`.
-- **Hooks:** `use-hotkey-press`, `use-media-query`, `use-url-state`.
-- **Blocks** (full screens, router-agnostic, preview at `/blocks`):
+- **83 components** (`components/ui`): inputs, forms (React Hook Form + zod), overlays that become drawers and sheets on mobile, feedback states, charts, sortable lists, hotkeys. Browse them at `/components`.
+- **9 hooks:** `use-controllable-state`, `use-copy-to-clipboard`, `use-debounce`, `use-hotkey-press`, `use-intersection`, `use-local-storage`, `use-media-query`, `use-mounted`, `use-url-state`.
+- **22 blocks** (full screens, router-agnostic, preview at `/blocks`):
 
 | Block | What's in it |
 | --- | --- |
@@ -64,6 +66,14 @@ Check a running instance with `pnpm mcp:smoke [url]` (default `http://localhost:
 | `data-table` | Search, filters, sort and pages in the URL; bulk actions; every loading state |
 | `grouped-table` | Collapsible groups, pinned header and bands, calculation footer |
 | `infinite-table` | Cursor pagination that loads ahead, inline retry, end mark |
+| `editable-table` | Cells that edit in place and save one at a time, with rollback and spreadsheet keys |
+| `kanban` | Columns with WIP limits; drag by pointer, touch or keyboard; optimistic moves |
+| `schedule` | Month, week and day calendar with overlapping events and click-to-create |
+| `inbox` | Resizable list and detail, thread and reply, J/K/E/X keys |
+| `file-manager` | Folder tree, grid and list views, context menu, upload progress; virtualized |
+| `ai-chat` | Streaming Markdown answers, tool calls, regenerate and feedback |
+| `activity-feed` | Day-grouped timeline with type filters in the URL |
+| `command-palette` | Mod+K palette with recents, nested pages and async search |
 | `dashboard` | KPI tiles with sparklines, charts, activity |
 | `settings` · `billing` | Profile, members and roles, typed delete · plans, usage meters, invoices |
 | `auth` | Sign in, sign up, password reset, Google and SSO |
@@ -98,9 +108,11 @@ Build a theme visually at `/themes/builder` (live preview, contrast check, tweak
 pnpm install
 pnpm dev              # docs site: /, /components, /blocks, /themes
 pnpm registry:build   # regenerate registry.json, app/ds-tokens.css, public/r (commit the output)
+pnpm lint             # oxlint (.oxlintrc.json)
+pnpm format           # oxfmt (.oxfmtrc.json); `pnpm format:check` in CI
 ```
 
-Before pushing: `pnpm typecheck && pnpm lint && pnpm check:contrast && pnpm registry:build && pnpm build && pnpm audit:ui`.
+Before pushing: `pnpm lint && pnpm format:check && pnpm typecheck && pnpm check:contrast && pnpm registry:build && pnpm build && pnpm audit:ui`.
 
 | Doc | For |
 | --- | --- |
