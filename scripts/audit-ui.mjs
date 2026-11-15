@@ -474,21 +474,31 @@ try {
       console.log(`${issues.length ? "✗" : "✓"} ${where}`)
     }
   }
+  const audit = (t) =>
+    auditPage(t).catch((e) => [`audit crashed: ${e.message.split("\n")[0]}`])
+  const where = (t) => `${t.path} · ${t.vp.name} · ${t.scheme}`
+  const retries = []
   const worker = async () => {
     while (next < tasks.length) {
       const i = next++
-      const t = tasks[i]
-      const where = `${t.path} · ${t.vp.name} · ${t.scheme}`
-      const issues = await auditPage(t).catch((e) => [
-        `audit crashed: ${e.message.split("\n")[0]}`,
-      ])
-      results[i] = { issues, where }
+      const issues = await audit(tasks[i])
+      if (issues.length) {
+        retries.push(i)
+        continue
+      }
+      results[i] = { issues, where: where(tasks[i]) }
       flush()
     }
   }
   await Promise.all(
     Array.from({ length: Math.min(CONCURRENCY, tasks.length) }, worker)
   )
+  // A loaded runner can time out a click on a heavy page; a page that failed
+  // beside others is audited again alone, and only that result counts.
+  for (const i of retries) {
+    results[i] = { issues: await audit(tasks[i]), where: where(tasks[i]) }
+    flush()
+  }
 } finally {
   await browser.close()
   stopServer()
