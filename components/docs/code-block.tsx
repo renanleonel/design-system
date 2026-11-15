@@ -1,7 +1,6 @@
 import { CodeFigure } from "@/components/docs/code-figure"
 import { highlight } from "@/lib/docs"
 
-/** Highlighted at build time (shiki, light and dark), with a copy button. */
 export async function CodeBlock({
   code,
   lang = "tsx",

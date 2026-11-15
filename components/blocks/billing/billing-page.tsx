@@ -133,7 +133,6 @@ function PlanCard({ plan, yearly }: { plan: Plan; yearly: boolean }) {
   )
 }
 
-/** A usage meter: label and value on one line, a track that turns amber near the limit. */
 function Usage({
   label,
   value,

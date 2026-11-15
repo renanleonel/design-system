@@ -30,7 +30,6 @@ export type PricingPlan = {
   monthly: number | null
   features: string[]
   cta: string
-  /** The recommended plan: ring, badge, primary button. */
   highlighted?: boolean
 }
 
@@ -57,7 +56,6 @@ function priceFor(plan: PricingPlan, period: Period, yearlyDiscount: number) {
     : plan.monthly
 }
 
-/** Monthly / yearly as a segmented control, with the yearly saving inline. */
 export function PeriodToggle({
   value,
   onValueChange,
@@ -82,11 +80,6 @@ export function PeriodToggle({
   )
 }
 
-/**
- * Plan cards. Prices are per seat per month; switching the period swaps the
- * number with a short fade-up (the new value enters, nothing slides around),
- * and yearly shows what's billed once a year. Cards reflow by container width.
- */
 export function PricingPlans({
   plans,
   period,
@@ -211,11 +204,6 @@ function RowLabel({ row }: { row: ComparisonRow }) {
   )
 }
 
-/**
- * Every feature by plan. Wide containers get a real table with a sticky plan
- * row; narrow ones pick one plan at a time (a 4-column table doesn't fit a
- * phone, and sideways scrolling hides the plan names).
- */
 export function ComparisonTable({
   plans,
   groups,
@@ -312,7 +300,6 @@ export function ComparisonTable({
   )
 }
 
-/** Questions beside a short intro and a way to reach a person. */
 export function PricingFaq({
   items,
   title = "Questions",
@@ -350,7 +337,6 @@ export function PricingFaq({
   )
 }
 
-/** The closing call to action on a tinted band. */
 export function CtaBand({
   title,
   description,
@@ -380,8 +366,6 @@ export function CtaBand({
     </div>
   )
 }
-
-// --- Sample page ---------------------------------------------------------------
 
 export const SAMPLE_PLANS: PricingPlan[] = [
   {
@@ -500,11 +484,6 @@ export const SAMPLE_FAQ = [
   },
 ]
 
-/**
- * A full pricing page: heading, period toggle (in the URL as `?period=`),
- * plans, comparison, FAQ and a closing call to action. `contactHref` adds a
- * "Talk to us" link under the FAQ (a sales page or a mailto:).
- */
 export function PricingPage({
   plans = SAMPLE_PLANS,
   comparison = SAMPLE_COMPARISON,

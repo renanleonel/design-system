@@ -18,7 +18,6 @@ export function pressInstantly(element: HTMLElement | null | undefined) {
   )
 }
 
-/** Presses the element in `ref` when `hotkey` fires. No hotkey registers nothing. */
 export function useHotkeyPress(
   ref: React.RefObject<HTMLElement | null>,
   hotkey: RegisterableHotkey | null | undefined,
@@ -47,7 +46,6 @@ export function toAriaKeyShortcuts(
     : chord("")
 }
 
-/** Merges refs into one callback ref. */
 export function mergeRefs<T>(...refs: Array<React.Ref<T> | undefined>) {
   return (node: T | null) => {
     for (const ref of refs) {

@@ -9,7 +9,6 @@ const RUNNERS = [
   { id: "bun", run: "bunx --bun" },
 ]
 
-/** `shadcn add <url>` for each package manager. */
 export function InstallCommand({ command }: { command: string }) {
   return (
     <Tabs

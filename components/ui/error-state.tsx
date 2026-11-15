@@ -12,10 +12,6 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 
-/**
- * A region that failed to load (interaction.md: say what failed, keep the rest
- * of the screen usable, offer retry). Render it per section, not per page.
- */
 function ErrorState({
   title = "Couldn't load this",
   description = "Check your connection and try again.",
@@ -28,7 +24,6 @@ function ErrorState({
   description?: React.ReactNode
   onRetry?: () => void
   retrying?: boolean
-  /** Shown small so support can trace a 5xx. */
   requestId?: string
   className?: string
 }) {

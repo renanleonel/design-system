@@ -20,17 +20,14 @@ type CalendarProps = React.ComponentProps<typeof Calendar>
 
 type FieldProps = {
   placeholder?: string
-  /** date-fns pattern for the field's text. */
   dateFormat?: string
   disabled?: boolean
   id?: string
   /** Submits the value as ISO (`2026-11-13`; a range as `2026-11-01/2026-11-15`). */
   name?: string
   required?: boolean
-  /** Shows a clear button while a value is set (optional fields). */
   clearable?: boolean
   className?: string
-  /** On the field's button, so a form can focus it on error. */
   ref?: React.Ref<HTMLButtonElement>
   /**
    * Fires when the calendar closes, not when focus moves into it, so a form
@@ -41,12 +38,9 @@ type FieldProps = {
   "aria-describedby"?: string
   "aria-label"?: string
   "aria-labelledby"?: string
-  /** `dropdown`: month and year pickers in the caption (birth dates, far dates). */
   captionLayout?: CalendarProps["captionLayout"]
-  /** First and last month reachable (and listed in the year picker). */
   startMonth?: Date
   endMonth?: Date
-  /** Days that can't be picked: `{ before: new Date() }`, `{ dayOfWeek: [0, 6] }`. */
   disabledDays?: Matcher | Matcher[]
   calendarProps?: Omit<
     CalendarProps,
@@ -56,7 +50,6 @@ type FieldProps = {
 
 const iso = (d: Date) => format(d, "yyyy-MM-dd")
 
-/** The closed field: looks and behaves like a Select trigger. */
 function DateField({
   text,
   placeholder,
@@ -88,7 +81,6 @@ function DateField({
         data-empty={!text || undefined}
         className={cn(
           "group/date-field flex h-control w-full min-w-0 items-center gap-2 rounded-control border border-input bg-transparent ps-2.5 pe-2 text-start text-sm whitespace-nowrap focus-ring transition-colors outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-empty:text-muted-foreground dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-          // Room for the clear button, which sits before the chevron.
           canClear && "[&>span]:pe-6"
         )}
         {...props}
@@ -116,12 +108,7 @@ function DateField({
   )
 }
 
-/**
- * A form field that opens a calendar (a bottom sheet on phones). Picking a day
- * closes it and returns focus to the field; the calendar opens on the
- * selected day (or today) with keyboard focus there. Works with `FormField`:
- * spread `field`, then map `value` / `onValueChange`.
- */
+/** Works with `FormField`: spread `field`, then map `value` / `onValueChange`. */
 function DatePicker({
   value,
   defaultValue,
@@ -193,11 +180,6 @@ function DatePicker({
   )
 }
 
-/**
- * A form field for a start and end date: two months side by side (one on
- * phones). The first click starts a range, the second ends it and closes the
- * calendar; picking again starts over.
- */
 function DateRangePicker({
   value,
   defaultValue,
@@ -271,7 +253,6 @@ function DateRangePicker({
           disabled={disabledDays}
           onSelect={(next) => {
             set(next)
-            // Second click completes the range.
             if (next?.from && next.to && range?.from && !range.to) {
               setOpen(false)
               onBlur?.()
@@ -284,13 +265,7 @@ function DateRangePicker({
   )
 }
 
-/**
- * A date and a time in one field: the calendar with a column of time slots
- * beside it (a row under it on phones). Picking a day keeps the time already
- * set; picking a time completes the value and closes it. Until a time is
- * picked, a new day starts at `defaultTime`. `name` submits local ISO
- * (`2026-11-13T09:30`).
- */
+/** Until a time is picked, a new day starts at `defaultTime`. `name` submits local ISO (`2026-11-13T09:30`). */
 function DateTimePicker({
   value,
   defaultValue,
@@ -313,9 +288,7 @@ function DateTimePicker({
   value?: Date | null
   defaultValue?: Date | null
   onValueChange?: (date: Date | undefined) => void
-  /** Minutes between time slots. */
   interval?: number
-  /** "HH:mm" a day gets when picked before any time. */
   defaultTime?: string
 }) {
   const [open, setOpen] = React.useState(false)
@@ -377,7 +350,6 @@ function DateTimePicker({
           }}
           {...calendarProps}
         />
-        {/* Same height as the calendar beside it, scrolling inside. */}
         <div className="relative max-sm:border-t sm:w-32 sm:border-s">
           <TimeSlots
             aria-label="Time"

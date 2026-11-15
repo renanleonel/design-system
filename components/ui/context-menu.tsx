@@ -18,7 +18,6 @@ import {
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu"
 
-// The rows are the dropdown menu's own, so both menus look and behave the same.
 const ContextMenuGroup = DropdownMenuGroup
 const ContextMenuLabel = DropdownMenuLabel
 const ContextMenuItem = DropdownMenuItem
@@ -34,7 +33,6 @@ function ContextMenu({ ...props }: ContextMenuPrimitive.Root.Props) {
   return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />
 }
 
-/** The region that opens the menu on right click or long press. */
 function ContextMenuTrigger({ ...props }: ContextMenuPrimitive.Trigger.Props) {
   return (
     <ContextMenuPrimitive.Trigger data-slot="context-menu-trigger" {...props} />

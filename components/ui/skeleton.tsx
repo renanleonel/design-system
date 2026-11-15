@@ -1,6 +1,5 @@
 import { cn } from "cn"
 
-/** A placeholder block. Shape it like the content it stands in for. */
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -15,11 +14,7 @@ function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-/**
- * Wraps the skeletons of one loading region. Names what is loading for screen
- * readers, and appears only after 200ms, so fast responses never flash a
- * skeleton (`delay={false}` shows it at once).
- */
+/** Appears only after 200ms so fast responses never flash a skeleton (`delay={false}` shows it at once). */
 function SkeletonGroup({
   label,
   delay = true,
@@ -27,7 +22,6 @@ function SkeletonGroup({
   children,
   ...props
 }: React.ComponentProps<"div"> & {
-  /** e.g. "Loading your projects" */
   label: string
   delay?: boolean
 }) {

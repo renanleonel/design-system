@@ -4,11 +4,8 @@ import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area"
 import { cn } from "cn"
 
 type ScrollAreaProps = ScrollAreaPrimitive.Root.Props & {
-  /** Which scrollbars to render. */
   orientation?: "vertical" | "horizontal" | "both"
-  /** Fades the edges that still have content beyond them. */
   fade?: boolean
-  /** Props for the scrolling viewport (aria-label, className, ref). */
   viewportProps?: ScrollAreaPrimitive.Viewport.Props
 }
 
@@ -59,7 +56,6 @@ function ScrollArea({
   )
 }
 
-/** Overlay bars: invisible until hover or scroll, 10px wide with a 24px hit area on touch. */
 function ScrollBar({
   className,
   orientation = "vertical",

@@ -30,13 +30,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group"
 
-/* ------------------------------------------------------------------ layout */
-
-/**
- * Auth page frame. Without `media`: a centered card on the tray tone. With
- * `media`: a split screen, the form on the page background and the media on
- * an inset panel at `mediaSide` (hidden below lg, where the form stays alone).
- */
+/** The `media` panel is hidden below lg, where the form stays alone. */
 function AuthLayout({
   logo,
   title,
@@ -50,7 +44,6 @@ function AuthLayout({
   title: string
   description?: React.ReactNode
   footer?: React.ReactNode
-  /** `<AuthShowcase />`, `<AuthImage src alt />` or anything else. */
   media?: React.ReactNode
   mediaSide?: "start" | "end"
   children: React.ReactNode
@@ -121,7 +114,6 @@ function AuthLayout({
   )
 }
 
-/** A full-bleed image for the media panel, with the 1px inset outline from surfaces.md. */
 function AuthImage({ src, alt }: { src: string; alt: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element -- router/framework-agnostic block
@@ -133,11 +125,7 @@ function AuthImage({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-/**
- * Default media when you have no photography: the brand on top, a real product
- * preview in the middle (pass any UI, it's rendered inert and hidden from screen
- * readers as a duplicate), and one customer quote with three proof points.
- */
+/** The product preview is rendered inert and hidden from screen readers as a duplicate. */
 function AuthShowcase({
   logo,
   brand,
@@ -156,7 +144,6 @@ function AuthShowcase({
 }: {
   logo?: React.ReactNode
   brand?: string
-  /** A screenshot or live UI of the product, shown scaled down. */
   preview?: React.ReactNode
   quote?: string
   author?: { name: string; role: string; initials: string }
@@ -209,8 +196,6 @@ function AuthShowcase({
   )
 }
 
-/* -------------------------------------------------------------- controls */
-
 /** Google's mark. Brand rules require the four-color G, so it ignores currentColor. */
 function GoogleIcon(props: React.ComponentProps<"svg">) {
   return (
@@ -235,15 +220,7 @@ function GoogleIcon(props: React.ComponentProps<"svg">) {
   )
 }
 
-/**
- * "Continue with Google". Wire it to your auth library:
- *   onClick={() => signIn("google")}                          // Auth.js / NextAuth
- *   onClick={() => authClient.signIn.social({ provider: "google" })}  // Better Auth
- *   onClick={() => supabase.auth.signInWithOAuth({ provider: "google" })}
- *   href="/api/auth/google"                                    // server redirect
- * Stays busy until the page navigates away; on a thrown error it resets and
- * reports through `onError`.
- */
+/** Stays busy until the page navigates away; on a thrown error it resets and reports through `onError`. */
 function GoogleButton({
   onClick,
   href,
@@ -335,7 +312,6 @@ function Divider({ children }: { children: React.ReactNode }) {
   )
 }
 
-/** Social / SSO buttons above the email form, with the "or" divider. */
 function Providers({
   onGoogle,
   onSso,
@@ -360,18 +336,13 @@ function Providers({
   )
 }
 
-/* ----------------------------------------------------------------- forms */
-
 const signInSchema = z.object({
   email: z.email("Enter an email like name@company.com"),
   password: z.string().min(1, "Enter your password"),
 })
 type SignInValues = z.output<typeof signInSchema>
 
-/**
- * Email + password sign in. `onSubmit` throws to show a banner (the message is
- * shown as-is, so make it say what to do): "That email and password don't match."
- */
+/** `onSubmit` throws to show a banner; the message is shown as-is, so make it say what to do. */
 function SignInForm({
   onSubmit,
   onGoogle,
@@ -444,10 +415,6 @@ const signUpSchema = z.object({
 })
 type SignUpValues = z.output<typeof signUpSchema>
 
-/**
- * Sign up with live password rules. The rules list is the password's error:
- * unmet rules turn red once the field is invalid, instead of a second message.
- */
 function SignUpForm({
   onSubmit,
   onGoogle,
@@ -564,10 +531,7 @@ const resetSchema = z.object({
   email: z.email("Enter an email like name@company.com"),
 })
 
-/**
- * Request a reset link. Always ends on "check your inbox" (never reveal whether
- * an account exists).
- */
+/** Always ends on "check your inbox": never reveal whether an account exists. */
 function ResetPasswordForm({
   onSubmit,
   signInHref = "#",

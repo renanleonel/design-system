@@ -9,17 +9,13 @@ import { useControllableState } from "@/hooks/use-controllable-state"
 type StepStatus = "complete" | "current" | "upcoming" | "error"
 
 type StepperStep = {
-  /** Stable key for the step; defaults to its title (when text) plus a counter for repeats. */
   id?: string
   title: React.ReactNode
   description?: React.ReactNode
-  /** Marks the step as failed, whatever the current position. */
   error?: boolean
-  /** Not clickable even when the stepper is. */
   disabled?: boolean
 }
 
-/** One key per step: its `id`, else its text title, with a counter for repeats. */
 function stepKeys(steps: StepperStep[]) {
   const seen = new Map<string, number>()
   return steps.map((step) => {
@@ -71,18 +67,7 @@ function StepMarker({ status, index }: { status: StepStatus; index: number }) {
   )
 }
 
-/**
- * Progress through a multi-step flow: checkout, onboarding, a wizard. `value`
- * is the zero-based current step (or `steps.length` when everything is done);
- * earlier steps are complete, later ones upcoming, and a step with `error`
- * shows as failed. Controlled (`value` + `onValueChange`) or uncontrolled
- * (`defaultValue`). With `clickable`, steps are buttons that call
- * `onValueChange`.
- *
- * `orientation="horizontal"` lays the steps in a row once the stepper itself
- * is wide enough (a container query, 32rem) and stacks them below that, so it
- * never needs a media query or overflows a phone.
- */
+/** `value` is the zero-based current step (`steps.length` when everything is done). */
 function Stepper({
   steps,
   value,
@@ -94,12 +79,10 @@ function Stepper({
   ...props
 }: Omit<React.ComponentProps<"ol">, "children" | "defaultValue"> & {
   steps: StepperStep[]
-  /** Zero-based index of the current step. */
   value?: number
   defaultValue?: number
   onValueChange?: (value: number) => void
   orientation?: "horizontal" | "vertical"
-  /** Steps become buttons that jump to that step. */
   clickable?: boolean
 }) {
   const [current, setCurrent] = useControllableState({
@@ -139,7 +122,6 @@ function Stepper({
                 horizontal && "@lg:flex-1 @lg:pb-0"
               )}
             >
-              {/* The rule to the next step: down in a stack, across in a row. */}
               {!last && (
                 <span
                   aria-hidden

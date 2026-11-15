@@ -27,7 +27,6 @@ type Template = {
   subject: string
   body: string
   labels?: string[]
-  /** Minutes before `now` of the newest message. */
   ago: number
   replies?: { fromMe?: boolean; body: string; gap: number }[]
 }
@@ -133,10 +132,6 @@ const TEMPLATES: Template[] = [
 
 const MS = 60_000
 
-/**
- * Deterministic sample mail relative to `now`. `count` above the template
- * count repeats them with older timestamps, for large-list demos.
- */
 export function buildSampleThreads(now: Date, count = TEMPLATES.length) {
   const threads: MailThread[] = []
   for (let i = 0; i < count; i++) {
@@ -166,7 +161,6 @@ export function buildSampleThreads(now: Date, count = TEMPLATES.length) {
         body: reply.body,
       })
     })
-    // Repeats get a number so subjects stay distinct.
     const subject = i < TEMPLATES.length ? t.subject : `${t.subject} (#${i})`
     threads.push({
       id: `thread-${i}`,

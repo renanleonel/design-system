@@ -77,7 +77,6 @@ import { useMediaQuery } from "@/hooks/use-media-query"
 import { useBoardDrag } from "./use-board-drag"
 import { useBoardOperations } from "./use-board-operations"
 
-/** Cards a column renders before "Show N more" (keeps a 200-card column fast). */
 const PAGE = 50
 
 const PRIORITY: Record<
@@ -113,11 +112,6 @@ type Lookups = {
   columns: Map<string, KanbanColumn>
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Card                                                                      */
-/* -------------------------------------------------------------------------- */
-
-/** The card's look; also what the drag overlay shows. */
 function CardFace({
   card,
   lookups,
@@ -327,10 +321,6 @@ function SortableCard({
   )
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Column                                                                    */
-/* -------------------------------------------------------------------------- */
-
 function WipBadge({ count, limit }: { count: number; limit?: number }) {
   if (limit === undefined)
     return (
@@ -360,9 +350,7 @@ function Column({
   onAdd,
 }: {
   column: KanbanColumn
-  /** Visible cards (after the filter). */
   cards: KanbanCard[]
-  /** All cards in the column, for the count and the limit. */
   total: number
   overHighlight: boolean
   children: (shown: KanbanCard[]) => React.ReactNode
@@ -494,10 +482,6 @@ function Column({
   )
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Details sheet                                                             */
-/* -------------------------------------------------------------------------- */
-
 function CardSheet({
   card,
   columns,
@@ -625,26 +609,10 @@ function CardSheet({
   )
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Board                                                                     */
-/* -------------------------------------------------------------------------- */
-
 /**
- * A kanban board (dnd-kit).
- * - Drag cards within and across columns, and columns by their grip. Pointer
- *   drags start after 4px; touch drags after a short press, so the board still
- *   scrolls sideways under a finger.
- * - Keyboard: focus a card (or a column grip), Space to lift, arrows to move
- *   (left/right changes column), Space to drop, Escape to cancel. Enter opens
- *   the card. Moves are announced to screen readers.
- * - Moves are optimistic: the card lands at once while `onMoveCard` runs; if it
- *   rejects the card goes back and a toast offers Retry. Same for columns,
- *   new cards and duplicates.
- * - Right click (long press on touch) opens a menu: move, duplicate, delete.
- * - Columns render 50 cards, then "Show N more"; `visible` filters cards
- *   without losing their order.
- * - Give it a height (a `fill` page): the board scrolls sideways, each column
- *   scrolls on its own.
+ * Moves are optimistic: a callback that rejects rolls its change back and a toast offers Retry.
+ * Pointer drags start after 4px, touch drags after a short press so the board still scrolls sideways.
+ * Give it a height (a `fill` page): the board scrolls sideways, each column on its own.
  */
 function KanbanBoard({
   columns: initialColumns,

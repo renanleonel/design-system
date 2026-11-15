@@ -1,7 +1,6 @@
 import { readdirSync, readFileSync, statSync } from "node:fs"
 import path from "node:path"
 
-/** Every ui component with a docs page (`/components/<name>`), from the registry. */
 export function componentNames(): string[] {
   const registry = JSON.parse(readFileSync("registry.json", "utf8")) as {
     items: { name: string; type: string }[]
@@ -12,7 +11,6 @@ export function componentNames(): string[] {
 }
 
 export type BlockRoute = {
-  /** URL path, e.g. `/blocks/settings/general`. */
   route: string
   /** The demo route reads `?data=worst`. */
   worst: boolean

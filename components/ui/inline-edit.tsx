@@ -9,16 +9,6 @@ import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
 import { useControllableState } from "@/hooks/use-controllable-state"
 
-/**
- * Text that turns into an input on click (or Enter on the focused text).
- * Enter and blur save, Escape cancels. Saving is optimistic, like the editable
- * table: the new text shows at once while `onSubmit` runs; if it throws, the
- * text rolls back, the error is announced and a toast offers Retry. `validate`
- * runs first; a message keeps the field open with the error under it.
- *
- * Controlled (`value` + `onValueChange`) or uncontrolled (`defaultValue`).
- * The value only changes after `onSubmit` resolves.
- */
 function InlineEdit({
   value,
   defaultValue = "",
@@ -33,20 +23,14 @@ function InlineEdit({
 }: {
   value?: string
   defaultValue?: string
-  /** Fires with the saved value, after `onSubmit` resolves. */
   onValueChange?: (value: string) => void
   /** Persists the new value. Throw (or reject) to roll back. */
   onSubmit?: (value: string) => void | Promise<unknown>
-  /** Returns an error message to block the save, or nothing when valid. */
   validate?: (value: string) => string | null | undefined | void
-  /** Names the field for screen readers ("Project name"). */
   label: string
-  /** Shown, muted, while the value is empty. */
   placeholder?: string
   disabled?: boolean
-  /** Styles the wrapper (width, margins). */
   className?: string
-  /** Styles the text and the input together (size, weight). */
   inputClassName?: string
 }) {
   const [saved, setSaved] = useControllableState({
@@ -57,7 +41,6 @@ function InlineEdit({
   const [editing, setEditing] = React.useState(false)
   const [draft, setDraft] = React.useState(saved)
   const [error, setError] = React.useState<string | null>(null)
-  // The optimistic value while onSubmit runs.
   const [pending, setPending] = React.useState<string | null>(null)
   const [status, setStatus] = React.useState("")
   const errorId = React.useId()
@@ -192,7 +175,6 @@ function InlineEditField({
   draft: string
   inputClassName?: string
   onDraftChange: (value: string) => void
-  /** Enter commits (`false`), blur commits (`true`). */
   onCommit: (fromBlur: boolean) => void
   onCancel: () => void
 }) {
@@ -242,7 +224,6 @@ function InlineEditTrigger({
   invalid: boolean
   describedBy?: string
   inputClassName?: string
-  /** Set when the field just closed so focus returns to this button. */
   refocusRef: React.RefObject<boolean>
   onOpen: () => void
 }) {

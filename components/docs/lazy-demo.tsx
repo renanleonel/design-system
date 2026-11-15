@@ -18,7 +18,6 @@ export function LazyDemo({
 }: {
   name: string
   story: string
-  /** Placeholder size; match the demo's height to keep the swap still. */
   className?: string
 }) {
   const ref = React.useRef<HTMLDivElement>(null)

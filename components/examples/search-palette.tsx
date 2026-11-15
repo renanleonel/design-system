@@ -94,7 +94,6 @@ const ROWS: Row[] = [
   },
 ]
 
-/** Bolds the part of `text` that matches `query` (case-insensitive). */
 function Highlight({ text, query }: { text: string; query: string }) {
   const q = query.trim()
   const at = q ? text.toLowerCase().indexOf(q.toLowerCase()) : -1

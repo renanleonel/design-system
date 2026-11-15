@@ -18,11 +18,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData, TValue> {
-    /** Numbers align to the trailing edge (layout.md). */
     align?: "start" | "end"
-    /** Hidden while the table is narrower than 42rem. */
     hideOnMobile?: boolean
-    /** Skeleton bar width while loading, e.g. "w-24". */
     skeleton?: string
   }
 }
@@ -31,17 +28,10 @@ export type CursorPage<T> = {
   items: T[]
   /** Opaque cursor for the next page; null on the last page. */
   nextCursor: string | null
-  /** Total matches, when the API knows it cheaply. */
   total?: number
 }
 
-/**
- * Cursor pagination state with the same shape as TanStack Query's
- * `useInfiniteQuery` result, so `InfiniteTable` takes either. Reset it with a
- * `key` when the filters change. Already on TanStack Query? Use
- * `useInfiniteQuery({ queryKey, queryFn: ({ pageParam }) => fetchPage(pageParam),
- * initialPageParam: null, getNextPageParam: (p) => p.nextCursor })` instead.
- */
+/** Same shape as TanStack Query's `useInfiniteQuery` result, so `InfiniteTable` takes either. Reset it with a `key` when the filters change. */
 export function useCursorPages<T>(
   fetchPage: (cursor: string | null) => Promise<CursorPage<T>>
 ) {
@@ -91,11 +81,6 @@ const cellClass = (meta?: Meta) =>
     meta?.hideOnMobile && "hidden @2xl/table:table-cell"
   )
 
-/**
- * Feeds grow without bound: render only the rows near the viewport, with
- * spacer rows standing in for the rest (keeps native table layout and the
- * pinned header).
- */
 function useVirtualRows(scroller: Scroller, ids: string[]) {
   // eslint-disable-next-line react-hooks/incompatible-library -- TanStack Virtual returns non-memoizable functions by design
   const virtualizer = useVirtualizer({
@@ -118,10 +103,8 @@ function useVirtualRows(scroller: Scroller, ids: string[]) {
 }
 
 /**
- * Watches the end of the list. A new callback (after each page, or a state
- * change) re-observes, and a fresh observer reports at once, so a page that
- * doesn't fill the screen loads the next one too. No effect needed: React 19
- * runs the returned cleanup when the ref changes.
+ * A new callback re-observes and a fresh observer reports at once, so a page that doesn't fill
+ * the screen loads the next. No effect: React 19 runs the ref cleanup when the ref changes.
  */
 function useEndSentinel(
   scroller: Scroller,
@@ -149,7 +132,6 @@ function useEndSentinel(
   )
 }
 
-/** The rows in the virtual window, with spacers standing in for the rest. */
 function VirtualRows<TData>({
   rows,
   virtual,
@@ -216,7 +198,6 @@ function SkeletonRows({ count, metas }: { count: number; metas: Meta[] }) {
   ))
 }
 
-/** The last row's copy: retry, loading, progress with Load more, or the end. */
 function FeedStatus({
   count,
   total,
@@ -298,14 +279,7 @@ function BackToTop({
   )
 }
 
-/**
- * A table that loads the next page as you near the end (cursor pagination).
- * The header stays pinned; the next page starts loading 600px before the end,
- * so scrolling rarely waits. Loading, failure and the end each get a row, and a
- * "Load more" button stands in for scrolling (keyboard, screen readers). Give
- * it a height so it scrolls inside (`className="h-[600px]"`, or `flex-1 min-h-0`
- * inside `AppShellContent fill`).
- */
+/** Give it a height so it scrolls inside (`className="h-[600px]"`, or `flex-1 min-h-0` inside `AppShellContent fill`). */
 function InfiniteTable<TData>({
   columns,
   rows,
@@ -328,7 +302,6 @@ function InfiniteTable<TData>({
   isError: boolean
   fetchNextPage: () => unknown
   noun?: Noun
-  /** Shown when the first page comes back empty. */
   empty?: React.ReactNode
   className?: string
 }) {
@@ -408,7 +381,6 @@ function InfiniteTable<TData>({
 
             <tr ref={sentinel}>
               <td colSpan={span} className="h-14 px-3 text-center">
-                {/* Announces progress; the visible copy matches. */}
                 <div
                   role="status"
                   className="flex items-center justify-center gap-3 text-sm text-muted-foreground"

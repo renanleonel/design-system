@@ -19,13 +19,10 @@ import { SwatchPicker, type Swatch } from "@/components/ui/swatch-picker"
 import { useControllableState } from "@/hooks/use-controllable-state"
 
 export type ColorPreset = {
-  /** A hex color (`#1a73e8`). */
   value: string
-  /** Read by screen readers and shown as a tooltip. */
   label: string
 }
 
-/** `#abc` / `#aabbcc` (+ alpha digits when `alpha`) to lowercase `#rrggbb[aa]`. */
 function parseHex(text: string, alpha: boolean): string | null {
   const match = /^#?([0-9a-f]+)$/i.exec(text.trim())
   if (!match) return null
@@ -36,7 +33,6 @@ function parseHex(text: string, alpha: boolean): string | null {
   return `#${digits}`
 }
 
-/** Whether a dark or light check mark reads on this color. */
 function checkColor(hex: string) {
   const parsed = parseHex(hex, true)
   if (!parsed) return undefined
@@ -45,7 +41,6 @@ function checkColor(hex: string) {
   return luminance > 0.55 ? "var(--foreground)" : "var(--background)"
 }
 
-// Checkerboard under translucent colors, built from theme vars.
 const CHECKER =
   "repeating-conic-gradient(var(--muted) 0 25%, var(--background) 0 50%)"
 
@@ -65,10 +60,7 @@ function ColorDot({ color, className }: { color: string; className?: string }) {
   )
 }
 
-/**
- * react-colorful's parts, restyled with theme vars. Library selectors are one
- * class deep, so these two-class selectors win without `!important`.
- */
+/** Library selectors are one class deep, so these two-class selectors win without `!important`. */
 const PICKER_STYLES = cn(
   String.raw`[&_.react-colorful]:h-auto! [&_.react-colorful]:w-full! [&_.react-colorful]:gap-3!`,
   String.raw`[&_.react-colorful\_\_saturation]:h-36! [&_.react-colorful\_\_saturation]:rounded-lg!`,
@@ -80,13 +72,7 @@ const PICKER_STYLES = cn(
   String.raw`[&_.react-colorful\_\_pointer]:size-5! [&_.react-colorful\_\_pointer]:border-2! [&_.react-colorful\_\_pointer]:border-background! [&_.react-colorful\_\_pointer]:shadow-[0_0_0_1px_color-mix(in_oklch,var(--foreground)_35%,transparent)]!`
 )
 
-/**
- * A color field: a swatch and hex value that open a saturation / hue (and
- * optionally alpha) area, a hex input and preset swatches. The value is a
- * lowercase hex string, `#rrggbb` (`#rrggbbaa` with `alpha`). Invalid hex typed
- * into the input never reaches `onValueChange` and reverts on blur. Name it with
- * `aria-label` or `aria-labelledby`.
- */
+/** Invalid hex typed into the input never reaches `onValueChange` and reverts on blur. Name it with `aria-label` or `aria-labelledby`. */
 function ColorPicker({
   value,
   defaultValue = "#000000",
@@ -103,12 +89,9 @@ function ColorPicker({
   value?: string
   defaultValue?: string
   onValueChange?: (value: string) => void
-  /** Adds an opacity slider and 8-digit hex. */
   alpha?: boolean
-  /** Quick picks under the hex input. */
   presets?: ColorPreset[]
   disabled?: boolean
-  /** Submits the hex value with a form. */
   name?: string
   id?: string
   className?: string

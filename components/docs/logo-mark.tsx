@@ -8,12 +8,6 @@ const BLOCKS = [
   [13, 13],
 ] as const
 
-/**
- * The renanleonel/ui mark: a registry of blocks, the last one still tilted
- * mid-placement. Blocks fade in once on load (40ms stagger); hovering the
- * parent `group/logo` snaps the last block into the grid. Reduced motion
- * keeps it still.
- */
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg

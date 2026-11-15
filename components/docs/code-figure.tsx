@@ -2,7 +2,6 @@ import { cn } from "cn"
 
 import { CopyButton } from "@/components/docs/copy-button"
 
-/** Pre-highlighted code (shiki HTML) with a copy button; shared by server and client views. */
 export function CodeFigure({
   html,
   code,

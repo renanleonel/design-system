@@ -172,10 +172,6 @@ export const SAMPLE_CARDS: KanbanCard[] = [
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-/**
- * Stand-in for your API. Closing an unassigned card is refused, like a
- * server-side rule the client doesn't know about; `failAll` refuses everything.
- */
 async function saveMove(
   toColumnId: string,
   card: KanbanCard | undefined,
@@ -189,11 +185,6 @@ async function saveMove(
 
 const toList = (value: string) => (value ? value.split(",") : [])
 
-/**
- * Task board: filter by assignee and label (kept in the URL), drag cards and
- * columns, open a card in a sheet. Every change is optimistic and rolls back
- * when the stand-in API refuses it.
- */
 export function TasksBoard({
   columns = SAMPLE_COLUMNS,
   cards = SAMPLE_CARDS,

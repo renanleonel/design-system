@@ -2,7 +2,6 @@ import { addDays, startOfDay } from "date-fns"
 
 import type { ScheduleEvent } from "./schedule-utils"
 
-/** A believable fortnight around `now`, so a demo and a first install both look lived in. */
 export function createSampleEvents(now: Date): ScheduleEvent[] {
   const day = (offset: number, h = 0, m = 0) => {
     const d = addDays(startOfDay(now), offset)

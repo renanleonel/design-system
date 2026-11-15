@@ -9,12 +9,7 @@ import type { RegisterableHotkey } from "@tanstack/react-hotkeys"
 import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-/**
- * Light/dark in one button. Which icon shows is decided by CSS (`.dark`), not
- * by `resolvedTheme`, which is unknown during SSR, so there is no hydration
- * flash. The icons swap with a quick rotate-and-fade; with a `hotkey` the
- * switch is instant, like every keyboard action.
- */
+/** The icon is chosen by CSS (`.dark`), not `resolvedTheme`, which is unknown during SSR: no hydration flash. */
 function ThemeToggle({
   hotkey,
   className,
@@ -48,7 +43,6 @@ function ThemeToggle({
 }
 
 const noop = () => () => {}
-/** True after hydration: the stored theme only exists in the browser. */
 const useMounted = () =>
   React.useSyncExternalStore(
     noop,
@@ -62,11 +56,6 @@ const MODES = [
   { value: "dark", label: "Dark", icon: <MoonIcon /> },
 ]
 
-/**
- * System / light / dark as a joined segmented control, for settings pages and
- * footers. Shows nothing selected until mounted (the stored choice is only
- * known in the browser), then the saved one.
- */
 function ThemeSwitcher({
   showLabels = false,
   className,

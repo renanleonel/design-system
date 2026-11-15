@@ -6,7 +6,6 @@ import { cn } from "cn"
 import { ArrowLeftIcon } from "lucide-react"
 
 const noop = () => () => {}
-/** True inside an iframe (the blocks gallery previews), after hydration. */
 const useEmbedded = () =>
   React.useSyncExternalStore(
     noop,

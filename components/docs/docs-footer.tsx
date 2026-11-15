@@ -9,7 +9,6 @@ import { LogoMark } from "@/components/docs/logo-mark"
 
 const EMAIL = "renanleonel0@gmail.com"
 
-/** The docs site's footer: every link resolves (pages here, or the repo). */
 export function DocsFooter({ githubUrl }: { githubUrl: string }) {
   const blob = (path: string) => `${githubUrl}/blob/main/${path}`
   return (

@@ -20,7 +20,6 @@ function Toolbar({ className, ...props }: ToolbarPrimitive.Root.Props) {
   )
 }
 
-/** Takes `Button`'s variants and sizes; defaults to a small ghost button. */
 function ToolbarButton({
   className,
   variant = "ghost",

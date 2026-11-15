@@ -2,27 +2,20 @@
 
 import * as React from "react"
 
-/** How long `copied` stays true after a successful copy. */
 export const COPIED_RESET_MS = 1500
 
 /**
- * Copies text to the clipboard and reports it:
- *
  * ```tsx
  * const { copy, copied, error } = useCopyToClipboard()
  * <button onClick={() => copy(url)}>{copied ? "Copied" : "Copy"}</button>
  * ```
  *
  * `copy` resolves `true` on success and `false` when the Clipboard API is
- * missing (insecure context, old browser) or the browser refuses (permission,
- * no user gesture); it never throws. `copied` resets after `resetAfter` ms;
- * `error` holds the failure until the next attempt or `reset()`. `copy` and
- * `reset` are stable, and the pending timer is dropped on unmount.
+ * missing or refused; it never throws.
  */
 export function useCopyToClipboard({
   resetAfter = COPIED_RESET_MS,
 }: {
-  /** Milliseconds until `copied` goes back to false. */
   resetAfter?: number
 } = {}) {
   const [copied, setCopied] = React.useState(false)

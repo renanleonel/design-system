@@ -18,13 +18,6 @@ import {
 
 type Option = { value: string; label: string }
 
-/**
- * Pick several values as removable tags, with type-to-filter (interaction.md:
- * 8+ options want a searchable control). Values are plain strings; labels come
- * from `options`. Backspace in the empty input removes the last tag. The list
- * is virtualized, so thousands of options stay fast. At rest, tags past
- * `maxVisible` fold into a "+N" chip; focusing the field shows them all.
- */
 function MultiSelect({
   options,
   value,
@@ -46,19 +39,16 @@ function MultiSelect({
   defaultValue?: string[]
   onValueChange?: (value: string[]) => void
   placeholder?: string
-  /** Tags shown while the field is not focused; the rest fold into "+N". */
   maxVisible?: number
   emptyMessage?: React.ReactNode
   id?: string
   name?: string
   disabled?: boolean
   className?: string
-  /** Forwarded to the text input, so a form can focus it on error. */
   ref?: React.Ref<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
   "aria-invalid"?: boolean | "true" | "false"
   "aria-describedby"?: string
-  /** Names the field when there's no visible <label htmlFor={id}>. */
   "aria-label"?: string
   "aria-labelledby"?: string
 }) {

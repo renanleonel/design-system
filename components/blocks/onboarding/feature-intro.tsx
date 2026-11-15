@@ -1,20 +1,5 @@
 import { cn } from "cn"
 
-/**
- * First run of a product area ("Projects — Where it all starts"): the page is
- * the empty state. A two-line title (the second muted), pill actions, art
- * bleeding off the top-trailing corner over a faint column grid, and an
- * optional hint near the bottom. Everything enters once with a short fade-up
- * (`@starting-style`, no JS); reduced motion skips it.
- *
- *   <FeatureIntro
- *     title="Projects"
- *     tagline="Where it all starts"
- *     actions={<><Button>…</Button><Button variant="ghost">Import</Button></>}
- *     art={<IntroArt />}
- *     hint={<>Not sure where to start? <a>Use a template</a></>}
- *   />
- */
 export function FeatureIntro({
   title,
   tagline,
@@ -41,7 +26,6 @@ export function FeatureIntro({
         className
       )}
     >
-      {/* Column grid, fading out toward the bottom. */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-[repeating-linear-gradient(90deg,var(--border)_0_1px,transparent_1px_3rem)] [mask-image:linear-gradient(to_bottom,black,transparent_75%)] opacity-50"
@@ -89,11 +73,7 @@ export function FeatureIntro({
   )
 }
 
-/**
- * Sample art for FeatureIntro: soft-lit shapes in the chart palette, drawn in
- * CSS (swap for your own renders). Static: FeatureIntro gives any `art` one
- * entrance, so the pieces don't animate a second time inside it.
- */
+/** Static: FeatureIntro gives any `art` one entrance, so the pieces don't animate a second time inside it. */
 export function IntroArt() {
   const piece = "absolute"
   const light =

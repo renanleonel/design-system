@@ -18,7 +18,6 @@ import {
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu"
 
-// The rows are the dropdown menu's own, so every menu looks and behaves the same.
 const MenubarGroup = DropdownMenuGroup
 const MenubarLabel = DropdownMenuLabel
 const MenubarItem = DropdownMenuItem
@@ -43,7 +42,6 @@ function Menubar({ className, ...props }: MenubarPrimitive.Props) {
   )
 }
 
-/** One top-level menu: a `MenubarTrigger` and its `MenubarContent`. */
 function MenubarMenu({ ...props }: MenuPrimitive.Root.Props) {
   return <MenuPrimitive.Root data-slot="menubar-menu" {...props} />
 }

@@ -17,12 +17,7 @@ function toItemList<Value>(items: unknown): Item<Value>[] {
   )
 }
 
-/**
- * On touch devices a single select with `items` renders the platform's native
- * picker (interaction.md: native controls on mobile); its children are ignored
- * there. `native` forces it on (`true`) or off (`false`). In native mode, pass
- * `id` / `aria-label` / `placeholder` here, since the trigger isn't rendered.
- */
+/** In native mode, pass `id` / `aria-label` / `placeholder` here, since the trigger isn't rendered. */
 function Select<Value, Multiple extends boolean | undefined = false>({
   native = "touch",
   id,

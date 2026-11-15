@@ -27,11 +27,6 @@ const toggleVariants = cva(
   }
 )
 
-/**
- * A two-state button (bold on/off). `pressed` / `onPressedChange`.
- * `pressedChildren` swaps the icon and label while on ("Bookmark" →
- * "Bookmarked"); both stay laid out in one cell, so the width never jumps.
- */
 function Toggle({
   className,
   variant = "default",
@@ -41,7 +36,6 @@ function Toggle({
   ...props
 }: TogglePrimitive.Props &
   VariantProps<typeof toggleVariants> & {
-    /** Shown instead of `children` while pressed. */
     pressedChildren?: React.ReactNode
   }) {
   return (

@@ -40,12 +40,7 @@ const subscribeClock = (onChange: () => void) => {
 const minute = () => Math.floor(Date.now() / 60_000) * 60_000
 const serverMinute = () => 0
 
-/**
- * Month, week and day calendar. The view (`?view=`) and the date (`?date=`)
- * live in the URL. Week and month fall back to an agenda list when the block is
- * narrower than 42rem (container query), so a phone gets a list, not a grid.
- * Events are held in state; `onEventsChange` hands the new list to the parent.
- */
+/** Events are held in state; `onEventsChange` hands the new list to the parent. */
 export function Schedule({
   events: initialEvents,
   locale = enUS,
@@ -58,14 +53,11 @@ export function Schedule({
   className,
 }: {
   events: ScheduleEvent[]
-  /** A date-fns locale: sets the week start, date and time formats, and the UI language (en, pt). */
   locale?: Locale
   /** Overrides the locale's first day of the week (0 = Sunday). */
   weekStartsOn?: Day
-  /** Pin "now" (demos, tests); otherwise the clock starts after mount. */
   now?: Date
   defaultView?: ScheduleView
-  /** Time zone preselected in the create dialog. */
   timeZone?: string
   strings?: Partial<ScheduleStrings>
   onEventsChange?: (events: ScheduleEvent[]) => void

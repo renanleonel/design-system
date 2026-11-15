@@ -39,7 +39,6 @@ test("shows the empty state when nothing matches", async ({ page }) => {
 })
 
 test("the clear button empties a selected value", async ({ page }) => {
-  // Second story: starts on Lisbon and has a clear button.
   const box = page.getByRole("combobox", { name: "Timezone" }).nth(1)
   await expect(box).toHaveValue("Lisbon")
   await page.getByRole("button", { name: "Clear" }).first().click()

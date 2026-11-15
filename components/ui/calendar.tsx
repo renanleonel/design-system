@@ -176,7 +176,6 @@ function Calendar({
             <ChevronDownIcon className={cn("size-4", className)} {...props} />
           )
         },
-        // Month and year pickers are our Select, not the browser's <select>.
         Dropdown: CalendarDropdown,
         DayButton: ({ ...props }) => <CalendarDayButton {...props} />,
         WeekNumber: ({ children, ...props }) => {
@@ -217,7 +216,6 @@ function CalendarDropdown({
         } as React.ChangeEvent<HTMLSelectElement>)
       }
       disabled={disabled}
-      // Inside a calendar popup: our list, not the platform picker.
       native={false}
     >
       <SelectTrigger

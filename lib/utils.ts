@@ -9,11 +9,6 @@ const NAME_SUFFIXES = /^(jr|sr|ii|iii|iv|neto|filho|j[uú]nior|sobrinho)\.?$/i
 // Built once on first use; avatars call initials() for every row of a list.
 let graphemes: Intl.Segmenter | undefined
 
-/**
- * Up to two initials for an avatar fallback: first and last word, skipping
- * particles ("dos", "de la") and suffixes (Jr, III, Neto). Counts graphemes,
- * so accents, emoji and CJK stay whole; an email-only name uses its local part.
- */
 export function initials(name: string) {
   let words = name.trim().split(/\s+/).filter(Boolean)
   if (words.length === 1 && words[0].includes("@")) {
@@ -36,14 +31,7 @@ export function initials(name: string) {
   return picked.map(first).join("").toLocaleUpperCase()
 }
 
-/**
- * Optical centering (typography.md): wraps bare text children in a span whose
- * box is trimmed to cap height and baseline (`text-box`), so `items-center`
- * puts icons on the text's visual center instead of the font's line box, for
- * any font. Elements pass through untouched. A label too long for its box
- * ends in an ellipsis: `overflow-x: clip` keeps the trimmed box's ascenders
- * and descenders painting (`hidden` would cut them), so pass a `title`.
- */
+/** `overflow-x: clip` keeps the trimmed box's ascenders and descenders painting (`hidden` would cut them), so a label too long for its box needs a `title`. */
 export function opticalText(children: React.ReactNode) {
   return React.Children.map(children, (child) =>
     typeof child === "string" || typeof child === "number"

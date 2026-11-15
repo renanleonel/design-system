@@ -8,12 +8,7 @@ import { cn } from "cn"
 
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 
-/**
- * Shows a hotkey for the user's platform: `Mod+K` reads ⌘K on macOS, Ctrl K elsewhere.
- * `keys` draws key caps; `text` is the quiet inline form used in menus.
- * The platform is only known in the browser, so labels skip the hydration check;
- * set `HotkeysProvider defaultOptions.platform` from the request to render it right on the server.
- */
+/** The platform is only known in the browser, so labels skip the hydration check; set `HotkeysProvider defaultOptions.platform` from the request to render it right on the server. */
 function Hotkey({
   hotkey,
   variant = "keys",
@@ -24,14 +19,12 @@ function Hotkey({
   className?: string
 }) {
   const format = useFormatForDisplay()
-  // One chord -> its key labels. A sequence is formatted step by step.
   const partsOf = (chord: unknown) =>
     (format as (chord: unknown, options: { parts: true }) => string[])(chord, {
       parts: true,
     })
 
   if (variant === "text") {
-    // The library's own string: "⌘E" on macOS, "Ctrl+E" elsewhere.
     const label = (chord: unknown) =>
       (format as (chord: unknown) => string)(chord)
     return (

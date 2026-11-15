@@ -4,10 +4,7 @@ import * as React from "react"
 
 import { CopyButton } from "@/components/ui/copy-button"
 
-// A small Markdown subset for model output, with no dependency: paragraphs,
-// headings, lists, fenced code (copy button, unclosed fences while streaming),
-// inline code, bold, italics and http(s) links. React escapes every string, so
-// model output can't inject markup.
+// No dependency: React escapes every string, so model output can't inject markup.
 
 // `key` is the block's first source line: it stays put as streamed text grows.
 type Block = { key: number } & (
@@ -92,7 +89,6 @@ function parse(source: string): Block[] {
   return blocks
 }
 
-// `code`, **bold**, *italic*, [label](https://…) and bare https:// URLs.
 const INLINE =
   /(`[^`\n]+`)|(\*\*[^*\n]+\*\*)|(\*[^*\n]+\*)|(\[[^\]\n]+\]\(https?:\/\/[^)\s]+\))|(https?:\/\/[^\s<>()]+[^\s<>().,;:!?'"])/g
 
@@ -203,10 +199,6 @@ function CodeBlock({
   )
 }
 
-/**
- * Renders model output. `caret` is placed at the end of the last block, so a
- * streaming caret stays on the line being written.
- */
 export function Markdown({
   content,
   caret,

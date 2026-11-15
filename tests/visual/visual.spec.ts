@@ -26,7 +26,6 @@ async function settle(page: Page, url: string, scheme: string) {
   await page.waitForTimeout(700)
 }
 
-// --- Component pages: the main preview, not the docs chrome ---------------
 const components = componentNames()
 for (const scheme of SCHEMES) {
   test.describe(`components ${scheme} 1280`, () => {
@@ -44,7 +43,6 @@ for (const scheme of SCHEMES) {
   })
 }
 
-// --- Blocks: each demo route, default data and ?data=worst ----------------
 const VIEWPORTS = [
   { name: "1280", width: 1280, height: 900 },
   { name: "320", width: 320, height: 800 },
@@ -77,7 +75,6 @@ for (const scheme of SCHEMES) {
   }
 }
 
-// --- RTL: a handful of directional components -----------------------------
 const RTL = ["tabs", "breadcrumb", "pagination", "carousel", "dropdown-menu"]
 test.describe("components rtl light 1280", () => {
   test.use({ colorScheme: "light", viewport: { width: 1280, height: 900 } })

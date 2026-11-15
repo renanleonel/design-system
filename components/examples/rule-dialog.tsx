@@ -220,7 +220,6 @@ export function RuleDialog() {
         Edit rule
       </DialogTrigger>
       <DialogContent className="gap-0 p-0 sm:max-w-2xl" showCloseButton={false}>
-        {/* Close sits in the header row, centered with the title block. */}
         <DialogHeader className="flex-row items-center gap-3 border-b p-4">
           <IconTile tone="amber" size="lg">
             <GitForkIcon />

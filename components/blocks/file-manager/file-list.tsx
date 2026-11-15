@@ -50,12 +50,6 @@ function useWidth(ref: React.RefObject<HTMLElement | null>) {
   return width
 }
 
-/**
- * The folder's contents as a virtualized listbox, in a grid or a list. Rows
- * are measured by formula (fixed heights), so 5,000 files cost the same as 50.
- * The active item is a mounted `aria-activedescendant`; right click or long
- * press opens `menu` for it.
- */
 export function FileList({
   items,
   view,
@@ -89,7 +83,6 @@ export function FileList({
   onSort: (key: SortKey) => void
   onItemClick: (entry: FileEntry, e: React.MouseEvent) => void
   onItemOpen: (entry: FileEntry) => void
-  /** Right click / long press / the menu key, with the item under it (if any). */
   onContextItem: (entry: FileEntry | null) => void
   onKey: (key: ListKey) => void
   onRenamed: (entry: FileEntry, name: string) => void | Promise<void>
@@ -129,7 +122,6 @@ export function FileList({
     },
   })
 
-  // After a rename the keyboard returns to the list.
   const focusList = () =>
     requestAnimationFrame(() =>
       scroller.current?.focus({ preventScroll: true })
@@ -420,7 +412,6 @@ function RenameField({
   return (
     <div
       className="min-w-0"
-      // Opens the editor once, as the field appears.
       ref={(el) => {
         if (el && !started.current) {
           started.current = true
@@ -457,7 +448,6 @@ type ItemProps = {
   count: number
   onClick: (e: React.MouseEvent) => void
   onDoubleClick: () => void
-  /** The rename field, while this item is being renamed. */
   name?: React.ReactNode
 }
 

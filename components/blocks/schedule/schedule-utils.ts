@@ -36,7 +36,6 @@ export type ScheduleEvent = {
   tone?: EventTone
   location?: string
   description?: string
-  /** IANA id the event was created in; shown in the details. */
   timeZone?: string
 }
 
@@ -51,7 +50,6 @@ export const TONE_CLASS: Record<EventTone, string> = {
   gray: "bg-tone-gray/12 text-tone-gray [--tone:var(--ds-tone-gray)]",
 }
 
-/** Only the `--tone` variable, for markers on a neutral surface. */
 export const TONE_VAR: Record<EventTone, string> = {
   blue: "[--tone:var(--ds-tone-blue)]",
   green: "[--tone:var(--ds-tone-green)]",
@@ -84,7 +82,6 @@ export function weekDays(date: Date, locale: Locale, override?: Day) {
   return Array.from({ length: 7 }, (_, i) => addDays(start, i))
 }
 
-/** Every week of the month as 7 days, padded to whole weeks. */
 export function monthWeeks(date: Date, locale: Locale, override?: Day) {
   const opts = { locale, weekStartsOn: weekStart(locale, override) }
   const first = startOfWeek(startOfMonth(date), opts)
@@ -105,7 +102,6 @@ export function lastDay(event: ScheduleEvent) {
   return startOfDay(end)
 }
 
-/** All-day and multi-day events live in the all-day row / banner lanes. */
 export const isBanner = (event: ScheduleEvent) =>
   event.allDay ||
   differenceInCalendarDays(lastDay(event), startOfDay(event.start)) > 0
@@ -135,12 +131,10 @@ export type Banner = {
   startIdx: number
   endIdx: number
   lane: number
-  /** Began before the first visible day / continues after the last. */
   fromBefore: boolean
   toAfter: boolean
 }
 
-/** Lanes for banner events across a run of days (a week row, or the all-day row). */
 export function layoutBanners(events: ScheduleEvent[], days: Date[]) {
   const first = startOfDay(days[0])
   const lastIdx = days.length - 1
@@ -179,7 +173,6 @@ export function layoutBanners(events: ScheduleEvent[], days: Date[]) {
 
 export type Placed = {
   event: ScheduleEvent
-  /** Minutes from midnight. */
   top: number
   bottom: number
   col: number
@@ -196,11 +189,6 @@ export type Overflow = {
 
 const MIN_MINUTES = 20
 
-/**
- * Overlap layout for one day column: events that touch form a cluster; inside
- * it each event takes the first free column and all share the cluster's width.
- * Clusters wider than `cap` columns fold the rest into one "+N" block.
- */
 export function layoutDay(events: ScheduleEvent[], day: Date, cap: number) {
   const dayStart = startOfDay(day).getTime()
   const segs = events
@@ -274,15 +262,12 @@ export function layoutDay(events: ScheduleEvent[], day: Date, cap: number) {
   return { placed, overflow }
 }
 
-/** Snaps a pointer offset (0..1 of the day) to the nearest earlier half hour. */
 export function slotAt(day: Date, fraction: number) {
   const minutes = Math.min(23.5 * 60, Math.floor((fraction * 1440) / 30) * 30)
   const date = startOfDay(day)
   date.setMinutes(minutes)
   return date
 }
-
-// ---- Locale and strings --------------------------------------------------
 
 export const uses12h = (locale: Locale) =>
   /[ap]\.?m/i.test(format(new Date(2000, 0, 1, 13), "p", { locale }))

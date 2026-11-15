@@ -25,7 +25,6 @@ type SingleProps = {
   onValueChange?: (id: string | null) => void
 }
 type MultipleProps = {
-  /** Checkbox rows; the popup stays open while picking. */
   multiple: true
   value?: string[]
   defaultValue?: string[]
@@ -35,7 +34,6 @@ type MultipleProps = {
 const toIds = (v: string | string[] | null | undefined) =>
   v == null ? [] : Array.isArray(v) ? v : [v]
 
-/** Ids of every ancestor of `ids`, so the tree opens on the current pick. */
 function ancestorsOf(nodes: TreeNode[], ids: string[]) {
   const parent = new Map<string, string>()
   const walk = (list: TreeNode[], up: string | null) => {
@@ -56,7 +54,6 @@ function ancestorsOf(nodes: TreeNode[], ids: string[]) {
   return [...out]
 }
 
-/** The trigger's content: placeholder, the picked node, or tags plus "+N". */
 function TreeSelectValue({
   selected,
   multiple,
@@ -123,7 +120,6 @@ function TreeSelectTags({
   )
 }
 
-/** Selection count (announced) and Clear. */
 function TreeSelectFooter({
   count,
   onClear,
@@ -151,14 +147,6 @@ function TreeSelectFooter({
   )
 }
 
-/**
- * A select whose options are a tree: a trigger like `Select` that opens a
- * searchable `Tree` in a popover (a bottom sheet below 640px). Pick one node
- * (closes on pick) or, with `multiple`, check several (shown as tags, past
- * `maxVisible` folded into "+N"). Typing filters; ArrowDown moves from the
- * search box into the tree; Escape closes. The tree opens on the ancestors of
- * the current value. `name` posts the ids with a form.
- */
 function TreeSelect({
   nodes,
   placeholder = "Select…",
@@ -183,17 +171,13 @@ function TreeSelect({
   placeholder?: string
   searchPlaceholder?: string
   emptyMessage?: React.ReactNode
-  /** Tags shown in the trigger before the rest fold into "+N" (multiple). */
   maxVisible?: number
-  /** Shows a Clear action in the popup (always on with `multiple`). */
   clearable?: boolean
-  /** Folders open the first time the popup opens, besides the value's ancestors. */
   defaultExpanded?: string[]
   id?: string
   name?: string
   disabled?: boolean
   className?: string
-  /** The trigger button, so a form can focus it on error. */
   ref?: React.Ref<HTMLButtonElement>
   onBlur?: React.FocusEventHandler<HTMLButtonElement>
   "aria-label"?: string

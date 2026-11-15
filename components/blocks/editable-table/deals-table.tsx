@@ -117,10 +117,6 @@ const brl = new Intl.NumberFormat("en-US", {
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-/**
- * Stand-in for your API. Deals over R$1M are refused, like a server-side rule
- * the client doesn't know about; `failAll` refuses everything.
- */
 async function saveDeal(change: CellChange<Deal>, failAll: boolean) {
   await wait(600 + Math.random() * 600)
   if (failAll) throw new Error("The server is unavailable. Try again.")
@@ -189,7 +185,6 @@ const columns: EditableColumn<Deal>[] = [
   },
 ]
 
-/** The pipeline: every cell saves on its own, optimistically. */
 export function DealsTable({
   initialDeals = SAMPLE,
 }: {

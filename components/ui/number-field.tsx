@@ -9,23 +9,14 @@ const stepperClasses =
   "hit-area inline-flex h-full w-9 shrink-0 motion-press items-center justify-center text-muted-foreground outline-none select-none hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-(--ds-focus-ring) disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4"
 
 type NumberFieldProps = NumberFieldPrimitive.Root.Props & {
-  /** Visible label. Omit it and pass `aria-label` on the input instead. */
+  /** Omit it and pass `aria-label` on the input instead. */
   label?: React.ReactNode
-  /** Drag the label sideways to change the value (mouse and pen; arrows still work). */
   scrub?: boolean
-  /** Hides the − and + buttons for a plain numeric field. */
   hideSteppers?: boolean
-  /** Names the input when there's no `label`. */
   "aria-label"?: string
   placeholder?: string
 }
 
-/**
- * Numeric input with stepper buttons. `format` takes `Intl.NumberFormat`
- * options (currency, percent, units); the value stays a plain number.
- * Min/max clamp on blur, arrows step by `step`, Shift by `largeStep`, Alt by
- * `smallStep`.
- */
 function NumberField({
   className,
   label,
@@ -134,7 +125,6 @@ function NumberFieldIncrement({
   )
 }
 
-/** A label that doubles as a drag handle: slide left or right to change the value. */
 function NumberFieldScrubLabel({
   className,
   children,

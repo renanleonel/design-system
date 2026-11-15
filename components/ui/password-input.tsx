@@ -11,12 +11,6 @@ import {
   InputGroupText,
 } from "@/components/ui/input-group"
 
-/**
- * A password field with a show/hide toggle and a Caps Lock warning. Defaults
- * to `autoComplete="current-password"`; pass `"new-password"` on sign-up so
- * password managers offer to generate one. Showing the password keeps focus
- * and the caret where they were.
- */
 function PasswordInput({
   className,
   autoComplete = "current-password",

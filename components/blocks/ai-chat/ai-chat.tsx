@@ -58,14 +58,8 @@ export type ChatMessage = {
   /** Plain text for the user; a Markdown subset for the assistant. */
   content: string
   attachments?: ChatAttachment[]
-  /** Assistant only: tools called before (or while) writing the answer. */
   toolCalls?: ToolCall[]
-  /**
-   * Assistant only. `streaming` shows the caret, `stopped` the user cancelled,
-   * `error` keeps the partial text and offers Retry.
-   */
   status?: "streaming" | "done" | "stopped" | "error"
-  /** Shown when `status` is `error`. */
   error?: string
   feedback?: "up" | "down" | null
 }
@@ -79,21 +73,16 @@ export type ChatSuggestion = {
 
 export type AiChatProps = {
   messages: ChatMessage[]
-  /** A response is being written: the send button becomes Stop. */
   streaming?: boolean
   onSend: (text: string, attachments: ChatAttachment[]) => void
   onStop?: () => void
-  /** Regenerate the last answer, or retry one that failed. */
   onRetry?: (messageId: string) => void
   onFeedback?: (messageId: string, value: "up" | "down" | null) => void
   /** Maps picked files to chips. Omit to hide the attach button. */
   onAttach?: (files: File[]) => ChatAttachment[]
-  /** Starting prompts for the empty state. */
   suggestions?: ChatSuggestion[]
-  /** The conversation itself failed to load. */
   loadError?: string
   onReload?: () => void
-  /** Turns the composer off and says why ("You've reached today's limit"). */
   disabledReason?: string
   placeholder?: string
   defaultDraft?: string
@@ -104,10 +93,6 @@ export type AiChatProps = {
 // How close to the bottom still counts as "following" the stream.
 const STICK_THRESHOLD = 48
 
-/**
- * Keeps the viewport pinned to the bottom while content grows, until the user
- * scrolls up; scrolling back down (or Jump to latest) re-pins it.
- */
 function useStickToBottom(active: boolean) {
   const viewportRef = React.useRef<HTMLDivElement>(null)
   const contentRef = React.useRef<HTMLDivElement>(null)
@@ -596,7 +581,6 @@ function ComposerActions({
           <TooltipContent>Attach files</TooltipContent>
         </Tooltip>
       )}
-      {/* Spacer; the keyboard hint shows when there's room and a keyboard. */}
       <span className="min-w-0 flex-1 truncate text-xs font-normal text-muted-foreground @max-lg/chat:invisible pointer-coarse:invisible">
         {disabled ? "" : "Enter to send · Shift+Enter for a new line"}
       </span>
@@ -745,12 +729,6 @@ function Composer({
   )
 }
 
-/**
- * A full chat surface: message list with Markdown answers, tool-call rows and
- * a streaming caret, auto-scroll that lets go when you scroll up, message
- * actions, and a composer (Enter sends, Shift+Enter breaks the line) with
- * attachments and Stop. Data and callbacks come in through props.
- */
 export function AiChat({
   messages,
   streaming = false,

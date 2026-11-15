@@ -5,12 +5,7 @@ import { cn } from "cn"
 
 import { Button } from "@/components/ui/button"
 
-/**
- * A floating bar for pages that save as a whole (settings): it rises in once
- * something changed, with Discard and Save (Mod+S) beside the edits instead of
- * at the top of the page. Place it last inside the `<form>`: Save submits it.
- * While open, leaving the page asks first.
- */
+/** Place it last inside the `<form>`: Save submits it. */
 function UnsavedChangesBar({
   open,
   onDiscard,
@@ -19,16 +14,13 @@ function UnsavedChangesBar({
   saveLabel = "Save changes",
   className,
 }: {
-  /** Usually `form.formState.isDirty`. */
   open: boolean
   onDiscard: () => void
-  /** Busy state on Save (`form.formState.isSubmitting`). */
   saving?: boolean
   message?: React.ReactNode
   saveLabel?: React.ReactNode
   className?: string
 }) {
-  // Subscription only: warn before closing the tab with edits pending.
   React.useEffect(() => {
     if (!open) return
     const warn = (e: BeforeUnloadEvent) => e.preventDefault()

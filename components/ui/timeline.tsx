@@ -1,12 +1,6 @@
 import * as React from "react"
 import { cn } from "cn"
 
-/**
- * A vertical history of events, newest first by convention: audit logs,
- * order status, deploys. Each item gets a marker (a dot, or an icon) joined
- * to the next by a rule. Past ~50 events, show the latest and a "Show more",
- * or render items in a `VirtualList`.
- */
 function Timeline({ className, ...props }: React.ComponentProps<"ol">) {
   return (
     <ol
@@ -34,7 +28,6 @@ function TimelineItem({
   children,
   ...props
 }: React.ComponentProps<"li"> & {
-  /** Shown in a 24px tile; omit for a dot. */
   icon?: React.ReactNode
   tone?: keyof typeof MARKER_TONE
 }) {
@@ -47,7 +40,6 @@ function TimelineItem({
       )}
       {...props}
     >
-      {/* The rule to the next item; the last item has none. */}
       <span
         aria-hidden
         className="absolute start-3 top-7 bottom-1 w-px -translate-x-1/2 bg-border group-last/timeline-item:hidden rtl:translate-x-1/2"
@@ -57,7 +49,6 @@ function TimelineItem({
         className={cn(
           "flex size-6 items-center justify-center rounded-full [&_svg]:size-3.5",
           MARKER_TONE[tone],
-          // Icon: the tone on a 12% tint of itself, like Badge tone. Dot: solid.
           icon
             ? "bg-current/12"
             : "after:size-2 after:rounded-full after:bg-current"
@@ -93,7 +84,6 @@ function TimelineTitle({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
-/** Pass `dateTime` (ISO) so the moment is machine-readable. */
 function TimelineTime({ className, ...props }: React.ComponentProps<"time">) {
   return (
     <time

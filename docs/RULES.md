@@ -95,3 +95,10 @@ Fast by default, not after a complaint.
 - **Charts:** series colors `--ds-chart-1…8` (`fill-series-N`), assigned in order. 2+ series get a legend, every chart a tooltip, one y-axis, bars ≤24px with 4px rounded ends, `isAnimationActive={false}`.
 - **Reordering:** `Sortable` / `SortableItem` / `SortableHandle` (dnd-kit): pointer + keyboard (Space, arrows, Space; Escape cancels), announcements via `getLabel`, works in dialogs (capture-phase keyboard sensor).
 - **Contrast:** `pnpm check:contrast` checks every theme and tone (text 4.5:1, focus ring 3:1, light and dark); `--fix` nudges OKLCH lightness only.
+
+## Comments
+
+- A comment earns its place only by saying what the code cannot: why it is written this way (browser or library quirk, a11y requirement, timing, where a number comes from) or a gotcha that a caller would get wrong. Never describe what a component, prop or function does or looks like.
+- No section dividers, no commented-out code, no notes about past changes.
+- Lint and doctor disables carry their reason on the same line (`-- why`).
+- The JSDoc above a story in `components/demos` is content: the docs site and the MCP show it as the story's description.

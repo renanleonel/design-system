@@ -16,14 +16,10 @@ export type ToolCallStatus = "running" | "done" | "error"
 
 export type ToolCall = {
   id: string
-  /** Tool name as the model called it: `search_docs`. */
   name: string
   status: ToolCallStatus
-  /** Arguments; objects are shown as JSON. */
   args?: unknown
-  /** Output once done; objects are shown as JSON. */
   result?: unknown
-  /** First line of the failure, shown in the row and in full when expanded. */
   error?: string
   /** Already formatted: "1.2s". */
   duration?: string
@@ -45,7 +41,6 @@ function format(value: unknown) {
   }
 }
 
-/** One line of the arguments for the collapsed row: `query: "billing", limit: 5`. */
 function summarize(args: unknown) {
   if (args === undefined || args === null) return ""
   if (typeof args !== "object") return String(args)
@@ -103,7 +98,6 @@ function Section({
         aria-label={label}
         className={cn(
           "max-h-64 overflow-auto rounded-lg bg-background px-2.5 py-2 font-mono text-xs leading-relaxed focus-ring outline-none",
-          // Errors wrap so the whole message reads without scrolling.
           tone === "red" && "wrap-anywhere whitespace-pre-wrap text-tone-red"
         )}
       >
@@ -113,11 +107,6 @@ function Section({
   )
 }
 
-/**
- * A tool call as one inspectable row: status, name, arguments at a glance and
- * the duration; expand for the full arguments and result. Failed calls open by
- * default so the error is never hidden.
- */
 export function ToolCallCard({ call }: { call: ToolCall }) {
   const args = format(call.args)
   const result = format(call.result)
@@ -182,10 +171,6 @@ export function ToolCallCard({ call }: { call: ToolCall }) {
   )
 }
 
-/**
- * Several calls in one message: up to three show as rows; more collapse into
- * a "6 tool calls" summary (open while running or when one failed).
- */
 export function ToolCallList({ calls }: { calls: ToolCall[] }) {
   const running = calls.some((c) => c.status === "running")
   const failed = calls.filter((c) => c.status === "error").length

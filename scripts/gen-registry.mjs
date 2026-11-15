@@ -66,7 +66,6 @@ function fileItems(dir, type) {
     })
 }
 
-// Titles and descriptions come from the docs catalog (registry/catalog.json).
 const CATALOG = JSON.parse(readFileSync("registry/catalog.json", "utf8"))
 const ui = fileItems("components/ui", "registry:ui").map((item) => {
   const entry = CATALOG.components[item.name]

@@ -36,7 +36,6 @@ import { DemoFooter } from "@/components/playground/demo-footer"
 import { Button } from "@/components/ui/button"
 import { useUrlState } from "@/hooks/use-url-state"
 
-/** Header and footer around the marketing demos, wired to Next.js. */
 export function DemoMarketingFrame({
   children,
 }: {
@@ -78,7 +77,6 @@ const wordmark = (icon: React.ReactNode, name: string) => (
   </span>
 )
 
-/** A landing page assembled from the marketing and pricing blocks. */
 export function DemoLanding() {
   const [periodParam, setPeriod] = useUrlState("period", "yearly")
   const period: Period = periodParam === "monthly" ? "monthly" : "yearly"

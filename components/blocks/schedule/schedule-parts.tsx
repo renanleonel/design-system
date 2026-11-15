@@ -54,14 +54,12 @@ export type Overlay = { anchor: HTMLElement } & (
   | { kind: "more"; events: ScheduleEvent[]; title: string }
 )
 
-/** The date one step (a day, week or month, per `view`) before or after `date`. */
 export function stepDate(view: ScheduleView, date: Date, dir: 1 | -1) {
   if (view === "month") return addMonths(date, dir)
   if (view === "week") return addWeeks(date, dir)
   return addDays(date, dir)
 }
 
-/** The days a view shows, the agenda fallback's days, and the header label. */
 export function rangeFor(
   view: ScheduleView,
   date: Date,
@@ -106,7 +104,6 @@ export function ScheduleToolbar({
   view: ScheduleView
   date: Date
   rangeLabel: string
-  /** True when `date` is already today, so the Today button is disabled. */
   todayActive: boolean
   locale: Locale
   weekStartsOn?: Day
@@ -205,7 +202,6 @@ export function ScheduleToolbar({
   )
 }
 
-/** The day grid, or (week and month) the grid wide and the agenda narrow. */
 export function ScheduleBody({
   view,
   date,
@@ -245,7 +241,6 @@ export function ScheduleBody({
   )
 }
 
-/** The popover for one event, or for the events a "+N more" cell hides. */
 export function EventOverlay({
   overlay,
   returnFocus,

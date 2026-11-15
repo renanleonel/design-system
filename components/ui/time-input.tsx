@@ -24,7 +24,6 @@ const toMinutes = (time: string) => {
 const toTime = (minutes: number) =>
   `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`
 
-/** "HH:mm" every `interval` minutes, inside `min`/`max` (inclusive). */
 function timeSlots(interval: number, min?: string, max?: string) {
   const from = min ? toMinutes(min) : 0
   const to = max ? toMinutes(max) : 24 * 60 - 1
@@ -43,7 +42,6 @@ function setNative(input: HTMLInputElement, value: string) {
   input.dispatchEvent(new Event("input", { bubbles: true }))
 }
 
-/** The browser's locale and 12/24h, like the native field beside it. */
 const defaultLabel = (time: string) =>
   new Date(
     2000,
@@ -52,11 +50,7 @@ const defaultLabel = (time: string) =>
     ...(time.split(":").map(Number) as [number, number])
   ).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })
 
-/**
- * A column of time slots: arrows, Home and End move between them, the picked
- * one is marked, and it opens scrolled to the value (or the next slot after
- * it). Rendered only inside an open popover, so the browser locale is safe.
- */
+/** Rendered only inside an open popover, so the browser locale is safe. */
 function TimeSlots({
   value,
   interval = 30,
@@ -72,7 +66,6 @@ function TimeSlots({
   interval?: number
   min?: string
   max?: string
-  /** Slots shown but not pickable (before a range's start). */
   isDisabled?: (time: string) => boolean
   onPick: (time: string) => void
   formatLabel?: (time: string) => string
@@ -84,7 +77,6 @@ function TimeSlots({
     [interval, min, max]
   )
   const current = value?.slice(0, 5)
-  // The slot to land on: the value, else the first one after it.
   const target =
     slots.find((t) => t === current) ??
     (current ? slots.find((t) => t > current) : undefined) ??
@@ -149,7 +141,6 @@ function TimeSlots({
 function centerInList(el: HTMLElement | null) {
   const list = el?.parentElement
   if (!el || !list) return
-  // Vertical column, or a horizontal row (DateTimePicker on phones).
   list.scrollTop = el.offsetTop - (list.clientHeight - el.offsetHeight) / 2
   const left = el.offsetLeft - (list.clientWidth - el.offsetWidth) / 2
   // In RTL, scrollLeft runs from 0 (the start edge) down to -(scrollWidth - clientWidth).
@@ -157,20 +148,12 @@ function centerInList(el: HTMLElement | null) {
   list.scrollLeft = rtl ? left - (list.scrollWidth - list.clientWidth) : left
 }
 
-/** Focus the landing slot when a slot list opens (keyboard and pointer alike). */
 const focusTarget = (popup: HTMLElement | null) =>
   popup?.querySelector<HTMLElement>("[data-target]") ?? true
 
 const nativeTime =
   "tabular-nums scheme-light dark:scheme-dark [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit-fields-wrapper]:p-0"
 
-/**
- * A time of day ("HH:mm", or "HH:mm:ss" with `step` under 60). Type it in the
- * browser's own segmented field (arrows, the locale's 12/24h), or open the
- * clock for a styled list of slots every `interval` minutes within
- * `min`/`max`. Picking sets the value like typing does, so `onChange` and
- * form libraries see it. `className` sizes the field.
- */
 function TimeInput({
   className,
   step = 60,
@@ -181,7 +164,6 @@ function TimeInput({
   ref,
   ...props
 }: Omit<React.ComponentProps<"input">, "type" | "min" | "max"> & {
-  /** Minutes between slots in the list. */
   interval?: number
   min?: string
   max?: string
@@ -256,7 +238,6 @@ function TimeInput({
 
 type TimeRange = { from?: string; to?: string }
 
-/** "8h 30m" between two "HH:mm" (overnight wraps past midnight). */
 function duration(range: TimeRange) {
   if (!range.from || !range.to) return undefined
   const total =
@@ -267,12 +248,6 @@ function duration(range: TimeRange) {
   return [h && `${h}h`, m && `${m}m`].filter(Boolean).join(" ")
 }
 
-/**
- * A start and end time as one field: type either side, or open the clock for
- * two slot columns (pick the start, then the end; the end can't come first).
- * Shows the length ("8h 30m") once both are set. `name` submits
- * `09:00/17:30`.
- */
 function TimeRangeInput({
   value,
   defaultValue,
@@ -295,9 +270,7 @@ function TimeRangeInput({
   value?: TimeRange | null
   defaultValue?: TimeRange | null
   onValueChange?: (range: TimeRange) => void
-  /** Minutes between slots in the list. */
   interval?: number
-  /** Seconds per arrow press in the typed fields. */
   step?: number
   min?: string
   max?: string
@@ -305,7 +278,6 @@ function TimeRangeInput({
   name?: string
   required?: boolean
   disabled?: boolean
-  /** On the start field, so a `<label htmlFor>` focuses it. */
   id?: string
   className?: string
   "aria-label"?: string
@@ -416,7 +388,6 @@ function TimeRangeInput({
                 }
                 onPick={(time) => {
                   if (side === "from") {
-                    // A start at or after the end clears the end.
                     const keepEnd = range.to && range.to.slice(0, 5) > time
                     set({ from: time, to: keepEnd ? range.to : undefined })
                     // Move on to the end column once it re-renders.

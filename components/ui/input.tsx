@@ -12,17 +12,9 @@ const inputClasses =
   "h-control w-full min-w-0 rounded-control border border-input bg-transparent px-2.5 py-1 text-base focus-ring transition-colors outline-none placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 pointer-fine:text-sm"
 
 type InputProps = React.ComponentProps<"input"> & {
-  /**
-   * Shows an X that empties the field and returns focus to it. When set,
-   * `className` styles the wrapper (width, margins), not the `<input>`.
-   */
+  /** When set, `className` styles the wrapper (width, margins), not the `<input>`. */
   clearable?: boolean
-  /** Fires after the X empties the field, on top of `onChange`. */
   onClear?: () => void
-  /**
-   * Adds a copy button for the value (share links, API keys, ids). Read-only
-   * copyable fields also select their text on focus.
-   */
   copyable?: boolean
 }
 
@@ -71,7 +63,6 @@ function CopyButton({
   offset,
 }: {
   getValue: () => string
-  /** Sits left of a clear button. */
   offset?: boolean
 }) {
   const [copied, setCopied] = React.useState(false)
@@ -110,7 +101,6 @@ function CopyButton({
 
 type FieldProps = Omit<InputProps, "clearable" | "copyable">
 
-/** Clears the field the way typing does, refocuses it, then calls `onClear`. */
 function useClear(
   inputRef: React.RefObject<HTMLInputElement | null>,
   onClear?: () => void
@@ -124,10 +114,6 @@ function useClear(
   }
 }
 
-/**
- * `type="file"`: the picked file's name (or "3 files") in place of the
- * browser's "Choose File" button, with an X to unselect.
- */
 function FileInput({
   className,
   onClear,
@@ -185,7 +171,6 @@ function FileInput({
   )
 }
 
-/** A text field with a clear X (`clearable`) and/or a copy button (`copyable`). */
 function AffixedInput({
   className,
   type,
@@ -242,12 +227,6 @@ function AffixedInput({
   )
 }
 
-/**
- * Single-line text field. `clearable` adds an X while there's a value.
- * `type="file"` renders as a field that shows the picked file's name (or
- * "3 files") in place of the browser's "Choose File" button, with an X to
- * unselect. `copyable` adds a copy button (a check confirms the copy).
- */
 function Input({
   className,
   type,

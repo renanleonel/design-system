@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/input-group"
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
 
-/** Lets `ComboboxVirtualList` scroll keyboard-highlighted rows into view. */
 const VirtualScroll = React.createContext<React.RefObject<
   ((index: number) => void) | null
 > | null>(null)
@@ -211,18 +210,12 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
   )
 }
 
-/**
- * A `ComboboxList` that renders only the rows in view, for long lists
- * (hundreds of options and up). Set `virtualized` and `items` on `Combobox`;
- * `children` renders one filtered item.
- */
 function ComboboxVirtualList<Item>({
   children,
   estimateSize = 36,
   className,
 }: {
   children: (item: Item, index: number) => React.ReactNode
-  /** Row height before measuring; 36px rows (44px on touch) by default. */
   estimateSize?: number
   className?: string
 }) {
@@ -292,8 +285,6 @@ function ComboboxItem({
       )}
       {...props}
     >
-      {/* Content fills the row, so trailing metadata (`ms-auto`) ends at the
-          row's padding; the check only takes space on the selected row. */}
       <span className="flex min-w-0 flex-1 items-center gap-2">{children}</span>
       <ComboboxPrimitive.ItemIndicator
         render={
@@ -395,7 +386,6 @@ function ComboboxChip({
       )}
       {...props}
     >
-      {/* User-entered labels: one line, ellipsis, full text on hover. */}
       <span
         className="truncate"
         title={typeof children === "string" ? children : undefined}

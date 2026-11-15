@@ -20,7 +20,7 @@ Each doc is the single source of truth for its topic; read the ones your task to
 | --- | --- |
 | [`docs/CONTEXT.md`](docs/CONTEXT.md) | First time here: directory map, the generate → build pipeline, what's generated vs hand-written |
 | [`docs/DOMAIN.md`](docs/DOMAIN.md) | A term is unclear: registry item, block, token layer, tone, catalog, story, example |
-| [`docs/RULES.md`](docs/RULES.md) | Writing or reviewing anything in `components/ui` or `hooks`: tokens, focus, motion, states, effects, forms, hotkeys, a11y |
+| [`docs/RULES.md`](docs/RULES.md) | Writing or reviewing anything in `components/ui` or `hooks`: tokens, focus, motion, states, effects, forms, hotkeys, a11y, comments |
 | [`docs/BLOCKS.md`](docs/BLOCKS.md) | Building a screen in `components/blocks` or a demo route: tables, sidebars, page width, URL state, sample data |
 | [`docs/COMPOSITION.md`](docs/COMPOSITION.md) | Composing a card, panel, dialog or palette: surfaces, alignment, type, color, spacing |
 | [`docs/WORKFLOWS.md`](docs/WORKFLOWS.md) | Adding a component, block, theme or token; the checks before pushing |

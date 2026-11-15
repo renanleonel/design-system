@@ -3,11 +3,6 @@
 import { Slider as SliderPrimitive } from "@base-ui/react/slider"
 import { cn } from "cn"
 
-/**
- * One value or a range (pass an array). Arrow keys step, Shift+arrows step
- * by 10, Home/End jump to the ends. The thumb's hit area is 32px (44px on
- * touch) and it grows slightly while dragged.
- */
 function Slider({
   className,
   defaultValue,

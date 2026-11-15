@@ -5,11 +5,6 @@ import * as React from "react"
 type SetState<T> = (next: T | ((prev: T) => T)) => void
 
 /**
- * State that a parent may own. Pass `value` to control it, or leave it
- * `undefined` and the hook keeps its own copy seeded from `defaultValue`.
- * `onChange` fires on every change either way, and only when the value
- * actually changes (`Object.is`).
- *
  * ```tsx
  * const [count, setCount] = useControllableState({
  *   value: props.value,

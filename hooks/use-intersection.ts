@@ -3,19 +3,13 @@
 import * as React from "react"
 
 type Options = {
-  /** Scroll container to observe against. Defaults to the viewport. */
   root?: Element | Document | null
   rootMargin?: string
   threshold?: number | number[]
-  /** Stop observing after the first time the element intersects. */
   once?: boolean
 }
 
 /**
- * Observes an element with `IntersectionObserver`. Returns a ref callback to
- * put on the element and the latest entry plus a boolean. Nothing is observed
- * on the server; `isIntersecting` starts `false`.
- *
  * ```tsx
  * const [ref, { isIntersecting }] = useIntersection({ once: true, rootMargin: "100px" })
  * <div ref={ref}>{isIntersecting ? <HeavyChart /> : null}</div>

@@ -14,10 +14,7 @@ function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
   )
 }
 
-/**
- * One option. The dot grows in from half size (never from 0) in 150ms; the
- * hit area extends past the circle like Checkbox's.
- */
+/** The dot grows from half size, never from 0. */
 function RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {
   return (
     <RadioPrimitive.Root

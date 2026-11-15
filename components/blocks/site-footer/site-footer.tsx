@@ -29,12 +29,6 @@ export type FooterColumn = {
 
 export type SocialLink = { label: string; href: string; icon: React.ReactNode }
 
-/**
- * A marketing site footer: brand and tagline, link columns, an optional
- * newsletter field, then a bottom row with the copyright, status, language
- * (when `onLanguageChange` is set, i.e. the site is translated) and theme. Columns reflow from 2 to 4 with the container; links are plain `<a>`
- * (pass `linkComponent` for your router).
- */
 export function SiteFooter({
   brand,
   tagline,
@@ -60,7 +54,6 @@ export function SiteFooter({
   /** e.g. { label: "All systems normal", href: "https://status…" } */
   status?: { label: string; href: string; tone?: "green" | "amber" | "red" }
   language?: string
-  /** Shows the language picker. Leave it out on a single-language site. */
   onLanguageChange?: (value: string) => void
   linkComponent?: React.ComponentType<
     React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }

@@ -30,7 +30,6 @@ const buttonVariants = cva(
         destructive:
           "bg-tone-red/12 text-tone-red [--ds-focus-ring:var(--destructive)] hover:bg-tone-red/20",
         link: "text-primary underline-offset-4 hover:underline",
-        // White surface with the ring shadow: secondary actions on a tray.
         surface:
           "bg-card text-foreground shadow-border hover:shadow-border-hover aria-expanded:shadow-border-hover",
       },
@@ -68,11 +67,8 @@ function Button({
   ...props
 }: ButtonPrimitive.Props &
   VariantProps<typeof buttonVariants> & {
-    /** Busy state: keeps the label, slides a spinner in, blocks clicks, keeps focus. */
     loading?: boolean
-    /** Presses the button from anywhere, e.g. `"Mod+S"`. Off while disabled or loading. */
     hotkey?: RegisterableHotkey
-    /** Shows the hotkey as key caps at the end of the label. */
     showHotkey?: boolean
   }) {
   const innerRef = React.useRef<HTMLButtonElement>(null)

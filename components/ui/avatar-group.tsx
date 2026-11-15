@@ -14,7 +14,6 @@ import {
 
 type AvatarStackPerson = {
   name: string
-  /** Picture URL; initials show while it loads or when it's missing. */
   src?: string
 }
 
@@ -24,10 +23,8 @@ const SIZE = {
   lg: "h-10 min-w-10 text-sm",
 } as const
 
-/** The popover lists this many; past it, a count (no virtual list needed). */
 const LIST_LIMIT = 100
 
-/** 999 -> "999", 12_400 -> "12K": keeps the +N chip from growing. */
 const COMPACT_COUNT = new Intl.NumberFormat("en", {
   notation: "compact",
   maximumFractionDigits: 1,
@@ -37,7 +34,6 @@ function formatCount(n: number) {
   return n < 1000 ? String(n) : COMPACT_COUNT.format(n)
 }
 
-/** Pairs each person with a key: their name, plus a counter for repeats. */
 function keyPeople(people: AvatarStackPerson[]) {
   const seen = new Map<string, number>()
   return people.map((person) => {
@@ -47,16 +43,6 @@ function keyPeople(people: AvatarStackPerson[]) {
   })
 }
 
-/**
- * Overlapping avatars for a list of people: members, assignees, viewers. Shows
- * the first `max` and a "+N" chip that opens a popover listing everyone else
- * (a popover rather than a tooltip, so it works on touch and with the
- * keyboard). Each avatar carries the person's name for screen readers and as a
- * hover title. Sizes match `Avatar`.
- *
- * `avatar.tsx` also exports `AvatarGroup` for composing avatars by hand; this
- * builds the whole stack from data.
- */
 function AvatarStack({
   people,
   max = 4,
@@ -66,10 +52,8 @@ function AvatarStack({
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
   people: AvatarStackPerson[]
-  /** Avatars shown before the +N chip. */
   max?: number
   size?: keyof typeof SIZE
-  /** Names the group for screen readers, and titles the overflow list. */
   label?: string
 }) {
   const keyed = keyPeople(people)

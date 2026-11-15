@@ -95,11 +95,6 @@ const DATE_FORMATS = [
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
-/**
- * Workspace-wide preferences as a flat settings list: one row per setting,
- * saved together. Edits raise an unsaved-changes bar (Discard, Save or
- * Mod+S); the theme is per device and applies at once.
- */
 export function GeneralSettings({ host = "acme.app" }: { host?: string }) {
   const form = useZodForm(schema, { defaultValues: DEFAULTS })
   const ids = {

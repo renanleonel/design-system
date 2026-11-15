@@ -10,7 +10,6 @@ const item = (page: Page, name: string) =>
 async function openTree(page: Page) {
   await trigger(page).click()
   await expect(page.getByRole("tree")).toBeVisible()
-  // Focus moves from the search box into the tree.
   await page.getByRole("searchbox", { name: "Search files" }).press("ArrowDown")
   await expect(page.getByRole("tree")).toBeFocused()
 }
@@ -59,7 +58,7 @@ test("keyboard navigation reaches a nested item and selects it", async ({
   await tree.press("ArrowRight") // expand (site)
   await tree.press("ArrowRight") // into page.tsx
   await tree.press("Enter")
-  await expect(page.getByRole("tree")).toHaveCount(0) // popup closed on pick
+  await expect(page.getByRole("tree")).toHaveCount(0)
   await expect(trigger(page)).toContainText("page.tsx")
 })
 

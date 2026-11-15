@@ -27,17 +27,14 @@ export type PaletteCommand = {
   /** Unique across every page of the palette. */
   id: string
   label: string
-  /** A second, quieter line. */
   description?: string
   /** Group heading, in order of first appearance. Defaults to "Actions". */
   group?: string
   icon?: React.ReactNode
   tone?: VariantProps<typeof iconTileVariants>["tone"]
-  /** Extra words that find the command. */
   keywords?: string[]
   /** Shown beside the label; register it yourself (the palette only displays it). */
   shortcut?: RegisterableHotkey
-  /** Selecting opens these as a nested page instead of running the command. */
   children?: PaletteCommand[]
   onSelect?: () => void
 }
@@ -72,13 +69,6 @@ function flatten(
   return out
 }
 
-/**
- * ⌘K command palette on `Command`: grouped commands, nested pages ("Change
- * theme" opens its own list; Backspace on an empty input goes back), optional
- * async search with loading, empty and error states, and recent commands kept
- * in `localStorage`. Filtering is accent- and case-insensitive. At most 80 rows
- * render, so a long list stays fast; typing narrows it.
- */
 function CommandPalette({
   commands,
   open: openProp,
@@ -98,7 +88,6 @@ function CommandPalette({
   onOpenChange?: (open: boolean) => void
   /** Toggles the palette from anywhere. `null` leaves registering it to you. */
   hotkey?: RegisterableHotkey | null
-  /** Looks up results beyond `commands` as the user types (debounced). */
   search?: (query: string, signal: AbortSignal) => Promise<PaletteCommand[]>
   searchGroup?: string
   recentKey?: string
@@ -138,7 +127,6 @@ function CommandPalette({
     setOpen(next)
   }
 
-  // What the list shows.
   const local = visibleCommands(flat, page, q)
   const ranked = q ? [...local].sort((a, b) => rank(a, q) - rank(b, q)) : local
   const shown = ranked.slice(0, MAX_ROWS)
@@ -272,7 +260,6 @@ function CommandPalette({
 
 const EMPTY: string[] = []
 
-/** The page's own children, matches of the query, or the top level. */
 function visibleCommands(
   flat: Flat[],
   page: PaletteCommand | undefined,
@@ -360,7 +347,6 @@ function Hints({
   )
 }
 
-/** Label starts with the query, then label contains it, then keywords only. */
 function rank(f: Flat, q: string) {
   const label = fold(f.command.label)
   return label.startsWith(q) ? 0 : label.includes(q) ? 1 : 2
@@ -437,7 +423,6 @@ function Row({
 }: {
   command: PaletteCommand
   value?: string
-  /** Parent pages, shown when a search finds a command inside a nested page. */
   path?: string[]
   onRun: (command: PaletteCommand) => void
 }) {

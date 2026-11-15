@@ -5,7 +5,6 @@ import { cn } from "cn"
 import { useDocsDir } from "@/components/docs/docs-direction"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-/** Preview / Code switch for a story. Both panes come from the server. */
 export function PreviewTabs({
   preview,
   code,

@@ -16,12 +16,6 @@ import {
 } from "@/components/ui/drawer"
 import { useIsMobile } from "@/hooks/use-media-query"
 
-/**
- * Responsive by default: a centered modal on desktop, a swipeable bottom drawer
- * below 640px (interaction.md: "on mobile prefer a bottom sheet"). Every part
- * reads the mode from context, so callers write one tree. `responsive={false}`
- * keeps the modal everywhere.
- */
 const DialogModeContext = React.createContext<"dialog" | "drawer">("dialog")
 const useDialogMode = () => React.useContext(DialogModeContext)
 

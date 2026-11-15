@@ -14,11 +14,9 @@ import {
 import { InputGroupAddon } from "@/components/ui/input-group"
 
 type Zone = {
-  /** IANA id, e.g. "America/Sao_Paulo". */
   value: string
-  /** "America / Sao Paulo". */
   label: string
-  /** "GMT-3"; empty until mounted (it depends on the date, DST). */
+  /** Empty until mounted: it depends on the date (DST). */
   offset: string
   minutes: number
 }
@@ -71,13 +69,7 @@ function zones(withOffsets: boolean): Zone[] {
   return cached
 }
 
-/**
- * Search every IANA time zone (~420) by city, region or offset ("GMT-3"). The
- * list is virtualized. Offsets follow today's date (DST) and appear after
- * mount, so server and client render the same. Values are IANA ids; default
- * to the browser's with `Intl.DateTimeFormat().resolvedOptions().timeZone`
- * read in an event or after mount.
- */
+/** Offsets follow today's date (DST) and appear after mount, so server and client render the same. */
 function TimezoneSelect({
   value,
   defaultValue,

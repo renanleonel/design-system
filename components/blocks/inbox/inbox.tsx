@@ -66,7 +66,6 @@ export type MailPerson = { name: string; email: string }
 export type MailMessage = {
   id: string
   from: MailPerson
-  /** ISO timestamp. */
   at: string
   body: string
 }
@@ -79,9 +78,7 @@ export type MailThread = {
   id: string
   folder: MailFolder
   subject: string
-  /** The other side of the conversation: shown as the row's sender. */
   participant: MailPerson
-  /** Label ids. */
   labels: string[]
   unread: boolean
   /** Oldest first; the last one drives the row's time and snippet. */
@@ -109,8 +106,6 @@ const EMPTY_COPY: Record<MailFolder, { title: string; description: string }> = {
   },
 }
 
-/* Time ------------------------------------------------------------------ */
-
 const timeFmt = new Intl.DateTimeFormat("en", {
   hour: "numeric",
   minute: "2-digit",
@@ -126,7 +121,6 @@ const fullFmt = new Intl.DateTimeFormat("en", {
   timeStyle: "short",
 })
 
-/** Today: the time. This year: "Nov 12". Older: with the year. */
 function listTime(iso: string, now: Date) {
   const d = new Date(iso)
   if (d.toDateString() === now.toDateString()) return timeFmt.format(d)
@@ -137,12 +131,6 @@ const lastOf = (t: MailThread) => t.messages[t.messages.length - 1]
 const snippetOf = (t: MailThread) =>
   (lastOf(t)?.body ?? "").replace(/\s+/g, " ").slice(0, 160)
 
-/* State ----------------------------------------------------------------- */
-
-/**
- * The mailbox's data and its mutations. Archiving runs right away and offers
- * undo (no confirm dialog); everything else is reversible by doing it again.
- */
 export function useMailbox(initial: MailThread[]) {
   const [threads, setThreads] = React.useState(initial)
 
@@ -207,8 +195,6 @@ export function useMailbox(initial: MailThread[]) {
   return { threads, setRead, moveTo, setLabel, reply }
 }
 
-/* Row ------------------------------------------------------------------- */
-
 const ThreadRow = React.memo(function ThreadRow({
   thread,
   labels,
@@ -240,7 +226,6 @@ const ThreadRow = React.memo(function ThreadRow({
       className={cn(
         "group/row relative flex items-start gap-3 border-b px-3 py-2.5 transition-colors hover:bg-muted/50",
         (open || selected) && "bg-muted",
-        // The keyboard cursor: a bar on the leading edge.
         active &&
           "before:absolute before:inset-y-0 before:start-0 before:w-0.5 before:bg-primary"
       )}
@@ -318,8 +303,6 @@ const ThreadRow = React.memo(function ThreadRow({
   )
 })
 
-/* Label menu ------------------------------------------------------------ */
-
 function LabelMenu({
   labels,
   threads,
@@ -370,8 +353,6 @@ function ActionTooltip({
     </Tooltip>
   )
 }
-
-/* Detail ---------------------------------------------------------------- */
 
 function MessageView({
   message,
@@ -467,7 +448,6 @@ function ThreadDetail({
     if (!body) return
     onReply(body)
     setDraft("")
-    // The new message opens; older ones stay as they were.
     setExpanded((s) =>
       new Set(s).add(`${thread.id}-r${thread.messages.length}`)
     )
@@ -624,7 +604,6 @@ function SelectionBar({
   onSetLabel,
 }: {
   folder: MailFolder
-  /** Conversations in this view. */
   total: number
   selectedIds: string[]
   selectedThreads: MailThread[]
@@ -781,7 +760,6 @@ function ThreadListPane({
 }: {
   /** What the search box shows (ahead of the URL while debouncing). */
   query: string
-  /** The committed search term from the URL. */
   q: string
   searchRef: React.RefObject<HTMLInputElement | null>
   listRef: React.RefObject<HTMLDivElement | null>
@@ -895,20 +873,10 @@ function ThreadListPane({
   )
 }
 
-/* Inbox ----------------------------------------------------------------- */
-
 const NO_LABELS: MailLabel[] = []
 const SPLIT_QUERY = "(min-width: 900px)"
 
-/**
- * Mail-style list and detail. Desktop splits into resizable panes; below that
- * the list and the open conversation take turns (the open thread is in the
- * URL, so Back returns to the list). Search, folder and thread live in the URL.
- *
- * Keys: J/K move the cursor (and follow it when a thread is open), O opens,
- * X selects, E archives the selection or cursor, Shift+I marks read, R replies,
- * `/` searches, Esc clears.
- */
+/** The open thread is in the URL, so Back returns to the list. */
 export function Inbox({
   threads: initial,
   labels = NO_LABELS,
@@ -989,7 +957,6 @@ export function Inbox({
   const selectedThreads = selectedIds.flatMap((id) => byId.get(id) ?? [])
   const openThread = openId ? byId.get(openId) : undefined
 
-  /* Actions */
   const open = React.useCallback(
     (id: string) => {
       setActiveId(id)
@@ -1058,11 +1025,9 @@ export function Inbox({
         )
       ]
     setActiveId(next.id)
-    // With a pane open, the cursor carries the pane along.
     if (split && openId) open(next.id)
   }
 
-  /* Keep the cursor row on screen. */
   React.useEffect(() => {
     if (!activeId) return
     listRef.current
@@ -1116,7 +1081,6 @@ export function Inbox({
 
   const showDetail = !!openThread
 
-  /* Panes */
   const list = (
     <ThreadListPane
       query={query}

@@ -21,12 +21,9 @@ export const ROOT_ID = "root"
 export type FileEntry = {
   id: string
   name: string
-  /** `null` for the top level. */
   parentId: string | null
   type: "folder" | "file"
-  /** Bytes; folders have none. */
   size?: number
-  /** ISO date. */
   modified: string
 }
 
@@ -58,7 +55,6 @@ register("ppt pptx key", <PresentationIcon />, "amber", "Presentation")
 register("zip rar 7z tar gz", <FileArchiveIcon />, "gray", "Archive")
 register("ts tsx js json html css py sh", <FileCodeIcon />, "gray", "Code")
 
-/** Icon, tone and a spoken kind for an entry, from its type and extension. */
 export function describe(entry: Pick<FileEntry, "name" | "type">) {
   if (entry.type === "folder")
     return { icon: <FolderIcon />, tone: "amber" as Tone, kind: "Folder" }
@@ -95,7 +91,6 @@ const COLLATOR = new Intl.Collator("pt-BR", {
   sensitivity: "base",
 })
 
-/** Folders first, then by `key`; ties fall back to the name. */
 export function sortEntries(
   entries: FileEntry[],
   key: SortKey,
@@ -131,7 +126,6 @@ export function indexEntries(entries: FileEntry[]): FileIndex {
   return { byId, children }
 }
 
-/** Folder ids from the top level down to (and including) `id`. */
 export function pathTo(index: FileIndex, id: string) {
   const path: FileEntry[] = []
   let at = index.byId.get(id)
@@ -143,7 +137,6 @@ export function pathTo(index: FileIndex, id: string) {
   return path
 }
 
-/** Every id under `id`, `id` included. */
 export function subtreeIds(index: FileIndex, id: string) {
   const out = new Set<string>()
   const stack = [id]
@@ -156,7 +149,6 @@ export function subtreeIds(index: FileIndex, id: string) {
   return out
 }
 
-/** Folders only, as tree nodes under a root node. `exclude` hides folders (and what's under them). */
 export function folderTree(
   index: FileIndex,
   rootLabel: string,

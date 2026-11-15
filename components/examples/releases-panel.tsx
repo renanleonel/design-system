@@ -180,7 +180,6 @@ export function ReleasesPanel() {
             <DataItem label="Checks">24 / 24</DataItem>
             <DataItem label="Bundle">1.2 MB</DataItem>
           </DataList>
-          {/* Pinned to the bottom so the card reads as one ticket at any height. */}
           <div className="mt-auto flex flex-col gap-4">
             <TearLine />
             <div className="flex items-center gap-3">

@@ -18,7 +18,6 @@ function formatBytes(bytes: number) {
   return `${value.toFixed(value < 10 ? 1 : 0)} ${units[unit]}`
 }
 
-/** `accept` like the input attribute: ".pdf,image/*". */
 // A stable key per File object, so removing one file doesn't remount the rest.
 const fileKeys = new WeakMap<File, string>()
 let nextFileKey = 0
@@ -41,12 +40,6 @@ function matchesAccept(file: File, accept?: string) {
   })
 }
 
-/**
- * Drop files or browse for them. The whole zone is one button (Enter/Space
- * opens the picker), it lights up while files are dragged over the window
- * part it covers, and files that are too big or of the wrong type are listed
- * with the reason instead of silently dropped.
- */
 function FileDropzone({
   value,
   defaultValue = [],
@@ -68,10 +61,8 @@ function FileDropzone({
   accept?: string
   multiple?: boolean
   maxFiles?: number
-  /** Bytes. */
   maxSize?: number
   disabled?: boolean
-  /** e.g. "PDF or PNG, up to 10 MB" */
   hint?: React.ReactNode
   id?: string
   className?: string

@@ -2,21 +2,13 @@
 
 import * as React from "react"
 
-/** Delay for inputs that trigger work: URL writes, filtering, requests. */
 export const DEBOUNCE_MS = 300
 
 type Debounced<Args extends unknown[]> = ((...args: Args) => void) & {
-  /** Drops the pending call. */
   cancel: () => void
-  /** Runs the pending call now (Enter, blur, submit). */
   flush: () => void
 }
 
-/**
- * Wraps `fn` so it runs once typing pauses for `delay` ms. Always calls the
- * latest `fn`; the returned function is stable. Pending calls are dropped on
- * unmount.
- */
 export function useDebouncedCallback<Args extends unknown[]>(
   fn: (...args: Args) => void,
   delay = DEBOUNCE_MS
@@ -65,9 +57,6 @@ function createDebounced<Args extends unknown[]>(
 }
 
 /**
- * State with an instant value for the input and a debounced copy for the
- * expensive part (filtering, a query key, the URL):
- *
  * ```tsx
  * const [query, debouncedQuery, setQuery] = useDebouncedState("")
  * <Input value={query} onChange={(e) => setQuery(e.target.value)} />

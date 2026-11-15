@@ -46,24 +46,18 @@ import { setSearchParams, useSearchParams } from "@/hooks/use-url-state"
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData, TValue> {
-    /** Label for the sort button, the footer menu and screen readers. */
     label?: string
-    /** Numbers align to the trailing edge (layout.md). */
     align?: "start" | "end"
-    /** Numeric columns get sum, average, min and max in the footer. */
     numeric?: boolean
-    /** Formats footer results of a numeric column (e.g. currency). */
     format?: (value: number) => string
   }
 }
 
 export type GroupOption = {
-  /** Column id to group by; also the `?group=` value. */
   id: string
   label: string
   /** Group order. Values not listed follow, alphabetically. */
   order?: string[]
-  /** The group band's label (e.g. a Badge). Defaults to the value. */
   render?: (value: string) => React.ReactNode
 }
 
@@ -112,7 +106,6 @@ function sortingFrom(sortParam: string): SortingState {
     : []
 }
 
-/** Rows split by the grouping column, in the group's order, then alphabetically. */
 function groupRows<TData>(rows: Row<TData>[], group: GroupOption | undefined) {
   if (!group) return [{ value: "", rows }]
   const map = new Map<string, Row<TData>[]>()
@@ -128,10 +121,6 @@ function groupRows<TData>(rows: Row<TData>[], group: GroupOption | undefined) {
     .map(([value, rows]) => ({ value, rows }))
 }
 
-/**
- * Bands and rows flattened into one virtual list: only what's near the
- * viewport renders, so thousands of rows scroll like dozens.
- */
 function flatten<TData>(
   groups: { value: string; rows: Row<TData>[] }[],
   group: GroupOption | undefined,
@@ -158,7 +147,6 @@ function flatten<TData>(
   return { entries, spans }
 }
 
-/** The virtualizer plus what the groups need to place themselves in its window. */
 function useGroupWindow<TData>(
   entries: Entry<TData>[],
   spans: GroupSpan<TData>[]
@@ -401,10 +389,7 @@ function DataRow<TData>({
   )
 }
 
-/**
- * One group's tbody: its band, then the rows inside the rendered range.
- * Spacers keep the tbody its full height so the band stays pinned over all of it.
- */
+/** Spacers keep the tbody its full height so the band stays pinned over all of it. */
 function GroupBody<TData>({
   groupSpan,
   group,
@@ -483,7 +468,6 @@ function formatResult(
   return result.toLocaleString("en-US")
 }
 
-/** A footer cell: pick a calculation for the column and show its result. */
 function CalcCell<TData>({
   column,
   rows,
@@ -563,7 +547,6 @@ function CalcCell<TData>({
   )
 }
 
-/** Floats over the table's bottom edge; fades and rises in, leaves faster. */
 function FloatingBulkBar<TData>({
   selected,
   count,
@@ -607,13 +590,7 @@ function FloatingBulkBar<TData>({
   )
 }
 
-/**
- * A spreadsheet-style table split into groups. The column header, each group's
- * band and the calculation footer stay pinned while the body scrolls; groups
- * collapse; row numbers run across groups. Group and sort live in the URL
- * (`?group=`, `?sort=`). Give it a height (`className="h-[600px]"`, or
- * `flex-1 min-h-0` inside `AppShellContent fill`) so the body scrolls inside it.
- */
+/** Give it a height (`className="h-[600px]"`, or `flex-1 min-h-0` inside `AppShellContent fill`) so the body scrolls inside it. */
 function GroupedTable<TData>({
   columns: userColumns,
   data,
@@ -628,12 +605,10 @@ function GroupedTable<TData>({
   columns: ColumnDef<TData>[]
   data: TData[]
   getRowId: (row: TData) => string
-  /** Names the row for its checkbox ("Select Acme"). Defaults to its number. */
   getRowLabel?: (row: TData) => string
   groupOptions: GroupOption[]
   defaultGroup?: string
   noun?: Noun
-  /** Actions for the floating bar shown while rows are selected. */
   bulkActions?: (rows: TData[], clear: () => void) => React.ReactNode
   className?: string
 }) {
@@ -673,7 +648,6 @@ function GroupedTable<TData>({
 
   const selected = table.getSelectedRowModel().rows.map((r) => r.original)
   const clearSelection = () => setRowSelection({})
-  // The bar fades out with its last count instead of flashing "0 selected".
   const [shownCount, setShownCount] = React.useState(0)
   if (selected.length > 0 && selected.length !== shownCount)
     setShownCount(selected.length)
@@ -818,7 +792,6 @@ type GroupSpan<TData> = {
   value: string
   rows: Row<TData>[]
   open: boolean
-  /** First and last entry index (band, then rows). */
   a: number
   b: number
 }
@@ -851,7 +824,6 @@ const HEAD = cn(
   STICKY,
   "top-0 z-20 h-10 bg-card px-2 text-start align-middle text-xs font-medium whitespace-nowrap text-muted-foreground shadow-[inset_0_-1px_var(--border)]"
 )
-// Group bands pin under the 40px header while their rows scroll past.
 const BAND = cn(
   STICKY,
   "top-10 z-10 h-9 bg-muted px-2 text-start align-middle font-normal whitespace-nowrap shadow-[inset_0_-1px_var(--border)]"

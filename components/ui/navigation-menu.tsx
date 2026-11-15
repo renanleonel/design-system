@@ -5,14 +5,10 @@ import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/naviga
 import { cn } from "cn"
 import { ChevronDownIcon } from "lucide-react"
 
-/** Shared by triggers and plain top-level links, so both read as one bar. */
 const navigationMenuTriggerClassName =
   "group/navigation-menu-trigger hit-area inline-flex min-h-control-sm max-w-full items-center justify-center gap-1 rounded-control px-3 py-1 text-start text-sm font-medium outline-hidden select-none hover:bg-accent/60 focus-visible:bg-accent data-popup-open:bg-accent data-active:bg-accent data-disabled:pointer-events-none data-disabled:opacity-50"
 
-/**
- * The bar. Its panels share one popup that resizes and slides between them,
- * so pass `NavigationMenuList` as the child.
- */
+/** Pass `NavigationMenuList` as the child: the panels share one popup. */
 function NavigationMenu({
   className,
   children,
@@ -115,7 +111,6 @@ function NavigationMenuContent({
   )
 }
 
-/** A link in a panel (title and description). A top-level link takes `navigationMenuTriggerClassName`. */
 function NavigationMenuLink({
   className,
   ...props

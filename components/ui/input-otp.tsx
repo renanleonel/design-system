@@ -5,11 +5,6 @@ import { cn } from "cn"
 import { OTPInput, OTPInputContext } from "input-otp"
 import { MinusIcon } from "lucide-react"
 
-/**
- * One-time codes (2FA, email verification). Paste fills every slot,
- * `autoComplete="one-time-code"` lets iOS and Android offer the SMS code, and
- * `onComplete` fires on the last digit.
- */
 function InputOTP({
   className,
   containerClassName,

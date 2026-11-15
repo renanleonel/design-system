@@ -6,17 +6,8 @@ import { XIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-/** Splits pasted or typed text into tokens. */
 const SEPARATORS = /[,;\n\t]+/
 
-/**
- * Free-form values as removable tokens: emails, keywords, domains. Enter,
- * comma or Tab adds what's typed (Tab only when there's text); pasting a
- * list adds each entry; blur keeps a half-typed one. Backspace in the empty
- * input removes the last token. Duplicates are skipped (case-insensitive).
- * Tokens that fail `validate` stay, marked invalid with the reason as their
- * title, so people see what to fix instead of losing what they typed.
- */
 function TokenInput({
   value,
   defaultValue = [],
@@ -35,13 +26,10 @@ function TokenInput({
   value?: string[]
   defaultValue?: string[]
   onValueChange?: (value: string[]) => void
-  /** Returns an error message for an invalid token, or nothing. */
   validate?: (token: string) => string | undefined
-  /** Stops adding once reached. */
   max?: number
   placeholder?: string
   id?: string
-  /** Submits the tokens comma-joined. */
   name?: string
   disabled?: boolean
   className?: string
@@ -99,7 +87,6 @@ function TokenInput({
       data-disabled={disabled || undefined}
       // Inactive controls are exempt from contrast (WCAG 1.4.3); say so.
       aria-disabled={disabled || undefined}
-      // Clicking the padding or between tokens types into the input.
       onPointerDown={(e) => {
         if (e.target === e.currentTarget) {
           e.preventDefault()

@@ -69,7 +69,6 @@ const DENSITIES = [
   { label: "Comfortable", value: "2.5rem" },
 ]
 
-/** Background tokens and the text token that sits on them. */
 const PAIRS = [
   ["background", "foreground"],
   ["card", "card-foreground"],
@@ -94,7 +93,6 @@ const TONES = [
 
 const noopSubscribe = () => () => {}
 
-/** "amethyst-haze" → "Amethyst Haze" */
 const titleOf = (name: string) =>
   name
     .split(/[-_\s]+/)
@@ -223,7 +221,6 @@ function Section({
   )
 }
 
-/** One theme as a pickable card, drawn in its own colors. */
 function ThemeCard({
   name,
   vars,

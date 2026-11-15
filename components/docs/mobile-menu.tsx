@@ -4,7 +4,6 @@ import { DocsNav } from "@/components/docs/docs-nav"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import type { NavGroup } from "@/lib/docs"
 
-/** The phone nav sheet. Loaded on first open; focus returns to the menu button. */
 export default function MobileMenu({
   nav,
   open,

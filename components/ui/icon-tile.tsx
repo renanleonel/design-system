@@ -1,10 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
-/**
- * An icon on a rounded, tinted square: the leading visual of list rows, dialog
- * headers and palette results. The tile sets the icon size; the tone colors both.
- */
 const iconTileVariants = cva(
   "inline-flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {

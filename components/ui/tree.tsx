@@ -6,12 +6,10 @@ import { cn } from "cn"
 import { CheckIcon, ChevronRightIcon } from "lucide-react"
 
 export type TreeNode = {
-  /** Unique across the whole tree. */
   id: string
   label: string
   icon?: React.ReactNode
   children?: TreeNode[]
-  /** Focusable but not selectable. */
   disabled?: boolean
 }
 
@@ -19,7 +17,6 @@ type Row = {
   node: TreeNode
   depth: number
   parentId: string | null
-  /** Children shown under this row (all of them, or the filter's matches). */
   kids: TreeNode[]
   open: boolean
   setSize: number
@@ -32,21 +29,17 @@ const TYPEAHEAD_MS = 500
 
 type SingleProps = {
   multiple?: false
-  /** Selected node id. */
   value?: string | null
   defaultValue?: string | null
   onValueChange?: (id: string, node: TreeNode) => void
 }
 type MultipleProps = {
-  /** Checkbox rows; each node toggles on its own. */
   multiple: true
-  /** Selected node ids. */
   value?: string[]
   defaultValue?: string[]
   onValueChange?: (ids: string[], node: TreeNode) => void
 }
 
-/** Ids of nodes whose label contains `query`, plus every ancestor; null without a query. */
 function matchIds(nodes: TreeNode[], query: string) {
   if (!query) return null
   const keep = new Set<string>()
@@ -65,7 +58,6 @@ function matchIds(nodes: TreeNode[], query: string) {
   return keep
 }
 
-/** The visible rows, depth-first. While filtering, matches show with every ancestor open. */
 function flattenRows(
   nodes: TreeNode[],
   included: Set<string> | null,
@@ -96,7 +88,6 @@ function flattenRows(
   return out
 }
 
-/** The first row from `start` (wrapping) whose label starts with `needle`. */
 function findByPrefix(rows: Row[], needle: string, start: number) {
   for (let i = 0; i < rows.length; i++) {
     const index = (start + i) % rows.length
@@ -105,18 +96,7 @@ function findByPrefix(rows: Row[], needle: string, start: number) {
   return -1
 }
 
-/**
- * A file-explorer style tree (WAI-ARIA tree pattern). Only the rows in view
- * render, so it stays fast at tens of thousands of nodes. Focus stays on the
- * tree and moves with `aria-activedescendant`: arrows move and open/close,
- * Home/End jump, Enter/Space select, `*` opens siblings, typing jumps to a
- * label. Pointer: the chevron opens and closes without selecting; the rest of
- * the row selects (double-click also opens a folder). The highlight covers
- * only the icon and label, from the row's indent. `multiple` turns rows into
- * checkboxes. `filter` shows matches with their ancestors (debounce it, see
- * `useDebouncedState`). Give it a height; it scrolls inside (`max-h-96`
- * default).
- */
+/** Give it a height; it scrolls inside (`max-h-96` default). Debounce `filter` (see `useDebouncedState`). */
 function Tree({
   nodes,
   expanded,
@@ -131,16 +111,12 @@ function Tree({
   ...selection
 }: (SingleProps | MultipleProps) & {
   nodes: TreeNode[]
-  /** Open node ids. */
   expanded?: string[]
   defaultExpanded?: string[]
   onExpandedChange?: (ids: string[]) => void
-  /** Shows nodes whose label contains this text, with their ancestors open. */
   filter?: string
-  /** Shown when `filter` matches nothing. */
   empty?: React.ReactNode
   className?: string
-  /** The scrolling `role="tree"` element, e.g. to focus it. */
   ref?: React.Ref<HTMLDivElement>
   "aria-label"?: string
   "aria-labelledby"?: string
@@ -163,7 +139,6 @@ function Tree({
     onExpandedChange?.(next)
   }
 
-  // Filtering: matches plus every ancestor, all shown open.
   const query = filter.trim().toLowerCase()
   const included = React.useMemo(() => matchIds(nodes, query), [nodes, query])
   const rows = React.useMemo(
@@ -177,7 +152,6 @@ function Tree({
   )
 
   const [activeId, setActiveId] = React.useState<string | null>(null)
-  // The active row falls back to the selection, then the first row.
   const activeIndex =
     indexOf.get(activeId ?? "") ?? indexOf.get(selectedIds[0] ?? "") ?? 0
   const active = rows[activeIndex]
@@ -384,7 +358,6 @@ function TreeRow({
   multiple: boolean
   query: string
   onSelect: () => void
-  /** The chevron: opens and closes, never selects. */
   onToggle: () => void
   onDoubleClick: () => void
 }) {
@@ -419,8 +392,7 @@ function TreeRow({
       )}
     >
       {row.kids.length ? (
-        // Opens and closes only, never selects. Not a button: focus
-        // stays on the tree (aria-activedescendant).
+        // Not a button: focus stays on the tree (aria-activedescendant).
         <span
           aria-hidden
           data-slot="tree-toggle"
@@ -489,7 +461,6 @@ function Highlight({ text, query }: { text: string; query: string }) {
 const toIds = (v: string | string[] | null | undefined) =>
   v == null ? [] : Array.isArray(v) ? v : [v]
 
-/** Every node by id, e.g. to show the labels of selected ids. */
 function indexTree(nodes: TreeNode[]) {
   const map = new Map<string, TreeNode>()
   const walk = (list: TreeNode[]) => {

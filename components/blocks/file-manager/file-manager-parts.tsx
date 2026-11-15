@@ -117,7 +117,6 @@ export const SORTS = [
 
 const NO_FILES: File[] = []
 
-/** Breadcrumb path; past four levels the middle collapses into a menu. */
 export function Crumbs({
   path,
   rootLabel,
@@ -191,7 +190,6 @@ export function Crumbs({
   )
 }
 
-/** Bulk actions while something is selected; item count and sort otherwise. */
 export function Toolbar({
   selected,
   itemCount,
@@ -321,7 +319,6 @@ export function Toolbar({
   )
 }
 
-/** The context menu for the items under the pointer (or the folder itself). */
 export function ItemMenu({
   targets,
   onUpload,
@@ -581,7 +578,6 @@ export function MoveDialog({
   onClose: () => void
   onMove: (entries: FileEntry[], to: string) => void
 }) {
-  // A folder can't move into itself or anything under it.
   const nodes = React.useMemo(() => {
     const blocked = new Set<string>()
     for (const e of entries ?? [])
@@ -654,7 +650,6 @@ export function EmptyFolder({
   )
 }
 
-/** Breadcrumb row: the folder-sheet opener (narrow), the path, and Upload. */
 export function PathBar({
   path,
   rootLabel,
@@ -688,7 +683,6 @@ export function PathBar({
   )
 }
 
-/** The folder tree as a sheet, for widths where the sidebar is hidden. */
 export function FolderSheet({
   open,
   onOpenChange,

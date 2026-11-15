@@ -33,14 +33,11 @@ export type EditableColumn<Row> = {
   id: string
   header: string
   value: (row: Row) => CellValue
-  /** How the cell edits; leave out for a read-only column. */
   editor?: CellEditor
-  /** Display; defaults to the value as text. */
   render?: (value: CellValue, row: Row) => React.ReactNode
   /** Runs before saving; return a message to keep the old value. */
   validate?: (value: CellValue, row: Row) => string | undefined
   align?: "start" | "end"
-  /** Width and other classes for the column's cells, e.g. `w-40`. */
   className?: string
 }
 
@@ -71,11 +68,6 @@ function parse(
   return n
 }
 
-/**
- * Optimistic, per-cell saves. The new value shows at once (`valueAt`) while
- * `onCommit` runs; a failure rolls it back, keeps an error and offers Retry.
- * The newest save per cell wins over an older one still in flight.
- */
 function useOptimisticCells<Row>({
   getRowId,
   getRowLabel,
@@ -126,7 +118,6 @@ function useOptimisticCells<Row>({
       return
     }
 
-    // Optimistic: show the value now, remember which save this is.
     const mine = ++seq.current
     latest.current.set(key, mine)
     setError(key, null)
@@ -180,7 +171,6 @@ function useOptimisticCells<Row>({
   return { pending, errors, status, valueAt, commitText }
 }
 
-/** Where an arrow, Home or End key moves the active cell (Ctrl/⌘ for corners). */
 function moveFor(
   key: string,
   { r, c }: Pos,
@@ -251,15 +241,8 @@ function SaveSummary({ saving, failed }: { saving: number; failed: number }) {
 type Editing = { pos: Pos; initial: string; typed: boolean }
 
 /**
- * A grid whose cells edit in place and save one at a time, optimistically.
- *
- * - The new value shows at once with a spinner while `onCommit` runs. Resolve
- *   after your data holds the new value (setState, `setQueryData`); reject to
- *   roll the cell back: it keeps an error ring and a toast offers Retry.
- *   A newer save of the same cell wins over an older one still in flight.
- * - Keyboard (WAI-ARIA data grid): arrows move, Home/End jump in the row,
- *   Enter or F2 or typing edits, Enter saves and moves down, Tab saves and
- *   moves right, Escape cancels. Double-click edits.
+ * Resolve `onCommit` after your data holds the new value (setState, `setQueryData`); reject to
+ * roll the cell back. A newer save of the same cell wins over an older one still in flight.
  */
 export function EditableTable<Row>({
   rows,
@@ -273,7 +256,6 @@ export function EditableTable<Row>({
   rows: Row[]
   columns: EditableColumn<Row>[]
   getRowId: (row: Row) => string
-  /** Names the row in announcements and toasts ("Value for Acme"). */
   getRowLabel: (row: Row) => string
   onCommit: (change: CellChange<Row>) => Promise<void>
   "aria-label": string
@@ -348,7 +330,6 @@ export function EditableTable<Row>({
     const editor = columns[here.c]?.editor
     const typing = e.key.length === 1 && !mod && !e.altKey
     if (editor && editor.type !== "select" && typing) {
-      // Typing replaces the value, like a spreadsheet.
       e.preventDefault()
       startEdit(here, e.key)
     }
@@ -510,7 +491,6 @@ function CellEditorControl({
   editor: CellEditor
   label: string
   initial: string
-  /** Editing began with a keystroke (`initial` is that key). */
   typed: boolean
   align?: "start" | "end"
   pos: Pos

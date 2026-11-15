@@ -20,12 +20,6 @@ type LinkComponent = React.ComponentType<
 
 export type MarketingLink = { label: string; href: string }
 
-/**
- * The marketing site's top bar: brand, links, theme and language, sign-in and
- * the primary call to action. Sticky with a translucent blur; below `md` the
- * links move into a sheet that also carries both actions, so the bar keeps
- * just the brand, the primary action and the menu button.
- */
 export function MarketingHeader({
   brand,
   links,
@@ -40,7 +34,6 @@ export function MarketingHeader({
   links: MarketingLink[]
   currentPath?: string
   signInHref?: string
-  /** The primary action, e.g. { label: "Start for free", href: "/sign-up" }. */
   cta?: { label: string; href: string }
   showLanguage?: boolean
   linkComponent?: LinkComponent

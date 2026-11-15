@@ -35,7 +35,6 @@ function useCarousel() {
   return context
 }
 
-/** Reads one primitive from the embla API and re-renders when it changes. */
 function useEmblaValue<T extends number | boolean>(
   api: UseEmblaCarouselType[1],
   read: (api: EmblaApi) => T,
@@ -70,12 +69,7 @@ function SlideProvider({
   return <SlideContext.Provider value={value}>{children}</SlideContext.Provider>
 }
 
-/**
- * A swipeable, keyboard-operable set of slides (embla). Compose
- * `CarouselContent` > `CarouselItem`, plus `CarouselPrevious` / `CarouselNext`
- * and `CarouselDots`. Arrow keys move while focus is inside; reduced motion
- * makes every move a jump. Give it an `aria-label`.
- */
+/** Give it an `aria-label`. */
 function Carousel({
   orientation = "horizontal",
   opts,
@@ -88,12 +82,9 @@ function Carousel({
   ...props
 }: React.ComponentProps<"section"> & {
   orientation?: "horizontal" | "vertical"
-  /** embla options (`loop`, `align`, `slidesToScroll`, `startIndex` ...). */
   opts?: EmblaOptions
   plugins?: Parameters<typeof useEmblaCarousel>[1]
-  /** Receives the embla API for anything the parts don't cover. */
   setApi?: (api: EmblaApi) => void
-  /** Reading direction; defaults to the surrounding `DirectionProvider`. */
   dir?: "ltr" | "rtl"
 }) {
   const inherited = useDirection()
@@ -213,7 +204,7 @@ function Carousel({
   )
 }
 
-/** The scrolling track. In a vertical carousel give it a height (`h-64`). */
+/** In a vertical carousel give it a height (`h-64`). */
 function CarouselContent({
   className,
   children,
@@ -253,7 +244,6 @@ function CarouselContent({
   )
 }
 
-/** One slide. Named "2 of 5" unless you pass an `aria-label`. */
 function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   const { orientation } = useCarousel()
   const { index, count } = React.useContext(SlideContext)
@@ -339,7 +329,6 @@ function CarouselNext({
   )
 }
 
-/** One dot per scroll snap; the current one is stretched and `aria-current`. */
 function CarouselDots({ className, ...props }: React.ComponentProps<"div">) {
   const { snapCount, selectedIndex, scrollTo, orientation } = useCarousel()
   const snapList = React.useMemo(

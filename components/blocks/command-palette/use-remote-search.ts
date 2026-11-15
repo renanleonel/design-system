@@ -10,11 +10,7 @@ type Remote =
 
 const NONE: PaletteCommand[] = []
 
-/**
- * Debounced async lookup behind the palette. Results are tagged with the query
- * they answer, so "loading" is derived (the input has moved on) and a stale
- * answer never shows.
- */
+/** Results are tagged with the query they answer, so "loading" is derived and a stale answer never shows. */
 export function useRemoteSearch(
   lookup:
     | ((query: string, signal: AbortSignal) => Promise<PaletteCommand[]>)

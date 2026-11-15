@@ -22,10 +22,6 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart"
 
-/**
- * Round axis ticks (dataviz: clean numbers): 0 up to the first "nice" value
- * above the max, in about `count` steps of 1, 2, 2.5 or 5 × 10^n.
- */
 function niceTicks(max: number, count = 4) {
   const raw = max / count
   const magnitude = 10 ** Math.floor(Math.log10(raw || 1))

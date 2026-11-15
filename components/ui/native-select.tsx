@@ -2,11 +2,7 @@ import * as React from "react"
 import { cn } from "cn"
 import { ChevronDownIcon } from "lucide-react"
 
-/**
- * Customizable select (`appearance: base-select`, Chromium 135+): the open
- * list is drawn like `SelectContent` (popover surface, 36px rows, check at
- * the end). Elsewhere the OS picker shows, following the color scheme.
- */
+/** `appearance: base-select` (Chromium 135+); elsewhere the OS picker shows. */
 const picker = [
   "supports-[appearance:base-select]:[appearance:base-select] [&::picker-icon]:hidden",
   "[&::picker(select)]:[appearance:base-select] [&::picker(select)]:my-1.5 [&::picker(select)]:max-h-72 [&::picker(select)]:rounded-lg [&::picker(select)]:border-0 [&::picker(select)]:bg-popover [&::picker(select)]:p-1 [&::picker(select)]:text-popover-foreground [&::picker(select)]:shadow-popover",

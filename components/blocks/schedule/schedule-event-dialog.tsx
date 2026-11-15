@@ -92,7 +92,6 @@ export function EventDialog({
   strings,
   timeZone,
 }: {
-  /** The slot the dialog opens on; `null` keeps it closed. */
   start: Date | null
   onClose: () => void
   onCreate: (event: ScheduleEvent) => void
@@ -111,7 +110,6 @@ export function EventDialog({
         </DialogHeader>
         {start && (
           <EventForm
-            // A fresh form per slot.
             key={start.getTime()}
             start={start}
             onClose={onClose}

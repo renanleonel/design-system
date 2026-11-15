@@ -49,7 +49,6 @@ const MOTIONS: { value: SidebarMotion; label: string; hint: string }[] = [
   },
 ]
 
-/** Wires the router-agnostic AppShell to Next.js (Link, pathname, push). */
 export function DemoShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()

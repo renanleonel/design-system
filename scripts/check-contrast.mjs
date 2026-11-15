@@ -17,7 +17,6 @@ const lightnessOf = (v) => {
 const withLightness = (v, l) =>
   v.trim().replace(OKLCH, (_, _l, _p, rest) => `oklch(${l.toFixed(4)}${rest}`)
 
-// Moves `key` away from `other` in lightness until the pair reaches `min`.
 function nudge(vars, key, other, min) {
   const l0 = lightnessOf(vars[key])
   if (l0 == null) return false

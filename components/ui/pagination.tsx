@@ -122,9 +122,7 @@ function PaginationEllipsis({
 }
 
 /**
- * The pages to show around `page` (1-based): first, last, the current page
- * with `siblings` on each side, and "ellipsis" for each gap. Always the same
- * number of slots, so the row never changes width while paging.
+ * Always the same number of slots, so the row never changes width while paging.
  *
  *   getPageRange(6, 20) // [1, "ellipsis", 5, 6, 7, "ellipsis", 20]
  */

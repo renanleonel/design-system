@@ -80,17 +80,8 @@ type DragFrom = "handle" | "item"
 const SortableDragFromContext = React.createContext<DragFrom>("handle")
 
 /**
- * A vertically reorderable list (dnd-kit).
- * - Pointer: drag by the handle (`dragFrom="handle"`, default) or anywhere on
- *   the row (`dragFrom="item"`); neighbours slide out of the way. Rows don't
- *   select text, so a drag never highlights it.
- * - Keyboard: focus the handle (or the row with `dragFrom="item"`), Space to
- *   lift, arrows to move, Space to drop, Escape to cancel. Moves are announced
- *   to screen readers via `getLabel`.
- * - `dragFrom="item"` turns the whole row into the drag button, so keep
- *   interactive controls (inputs, buttons, links) out of those rows; use the
- *   handle mode for rows that contain them.
- * - Reduced motion: items jump into place instead of sliding.
+ * With `dragFrom="item"` the whole row is the drag button, so keep interactive
+ * controls (inputs, buttons, links) out of those rows; use handle mode for them.
  *
  *   <Sortable items={rows} getId={(r) => r.id} onReorder={setRows} getLabel={(r) => r.name}>
  *     {rows.map((r) => (
@@ -111,9 +102,7 @@ function Sortable<T>({
   items: T[]
   getId: (item: T) => UniqueIdentifier
   onReorder: (items: T[]) => void
-  /** Human name of an item, for screen reader announcements. */
   getLabel?: (item: T) => string
-  /** Where a drag starts: the grip only, or anywhere on the row. */
   dragFrom?: DragFrom
   children: React.ReactNode
 }) {
@@ -177,10 +166,6 @@ function Sortable<T>({
   )
 }
 
-/**
- * One row. Its position animates (on-screen movement: ease-in-out); the row
- * being dragged lifts with a shadow and a slight scale.
- */
 function SortableItem({
   id,
   dragFrom: dragFromProp,
@@ -188,7 +173,6 @@ function SortableItem({
   children,
 }: {
   id: UniqueIdentifier
-  /** Overrides the list's `dragFrom` for this row. */
   dragFrom?: DragFrom
   className?: string
   children: React.ReactNode
@@ -247,11 +231,6 @@ function SortableItem({
   )
 }
 
-/**
- * The grip that starts a drag (pointer or keyboard). Must be inside a
- * SortableItem. With `dragFrom="item"` it is only a visual cue: the row is the
- * button, so the grip renders as a decorative icon.
- */
 function SortableHandle({
   label = "Reorder",
   className,

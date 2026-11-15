@@ -34,7 +34,6 @@ const color = (value) => {
 
 const px = (v) => (/^-?[\d.]+$/.test(v) ? `${v}${+v === 0 ? "px" : ""}` : v)
 
-// "0 1px 2px -1px oklch(0 0 0 / 0.06), ..." -> DTCG shadow layers.
 function splitTop(text, sep) {
   const parts = []
   let depth = 0

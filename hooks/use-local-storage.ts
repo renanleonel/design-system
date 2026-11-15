@@ -38,14 +38,11 @@ function subscribe(key: string, onChange: () => void) {
 }
 
 /**
- * State persisted to `localStorage` as JSON and kept in sync across tabs.
- * The server (and hydration) renders `initialValue`; every storage access is
- * wrapped, so private mode and corrupt JSON fall back to it instead of
- * throwing. `setValue` accepts a value or an updater; both setters are stable.
+ * The server (and hydration) renders `initialValue`; private mode and corrupt
+ * JSON fall back to it instead of throwing.
  *
  * ```tsx
  * const [view, setView, resetView] = useLocalStorage<"grid" | "list">("view", "grid")
- * <Button onClick={() => setView("list")}>List</Button>
  * ```
  */
 export function useLocalStorage<T>(
@@ -53,7 +50,6 @@ export function useLocalStorage<T>(
   initialValue: T,
   { serialize = JSON.stringify, deserialize = JSON.parse }: Options<T> = {}
 ) {
-  // Keep the latest options without re-subscribing.
   const initialRef = React.useRef(initialValue)
   const codec = React.useRef({ serialize, deserialize })
   React.useLayoutEffect(() => {

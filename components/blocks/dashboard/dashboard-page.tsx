@@ -52,12 +52,7 @@ function WhenNear({ children }: { children: React.ReactNode }) {
   return <div ref={ref} aria-hidden className="h-64 w-full" />
 }
 
-// --- Stat tile -------------------------------------------------------------
-
-/**
- * A 12-point trend: the line in a quiet ink, the latest point in the accent.
- * Fixed size (no stretched viewBox), so the 2px line and dot stay round.
- */
+// Fixed size (no stretched viewBox), so the 2px line and dot stay round.
 function Sparkline({
   values,
   width = 96,
@@ -116,11 +111,6 @@ type Stat = {
   trend: number[]
 }
 
-/**
- * Label, value, delta vs the previous period, and a sparkline. The delta's
- * color says good or bad (direction × upIsGood) and its arrow says which way,
- * so meaning never rides on color alone.
- */
 function StatTile({ stat, period }: { stat: Stat; period: string }) {
   const up = stat.delta >= 0
   const good = up === (stat.upIsGood ?? true)
@@ -264,14 +254,7 @@ const TOP_PROJECTS = [
 const compact = (n: number) =>
   n.toLocaleString("en-US", { notation: "compact", maximumFractionDigits: 1 })
 
-// --- Page --------------------------------------------------------------------
-
-/**
- * A product dashboard: KPI tiles, a revenue trend, signups by channel, recent
- * activity and top projects. The range lives in the URL (`?range=7d`), so a
- * shared link opens the same view. Swap `sampleData` for your queries.
- * `activityHref` adds a "View all" link to the activity card.
- */
+/** Swap `sampleData` for your queries. */
 export function DashboardPage({
   activityHref,
 }: { activityHref?: string } = {}) {

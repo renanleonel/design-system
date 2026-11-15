@@ -29,7 +29,6 @@ const tabsListVariants = cva(
       variant: {
         default: "bg-muted",
         line: "gap-1 bg-transparent",
-        // Pill track with a sliding thumb (Base UI Tabs.Indicator).
         segmented:
           "relative isolate rounded-full bg-muted p-1 group-data-horizontal/tabs:h-auto",
       },
@@ -55,8 +54,7 @@ function TabsList({
     >
       {children}
       {variant === "segmented" && (
-        // Moves between tabs (on-screen movement: ease-in-out); instant under
-        // reduced motion. Sized from the CSS vars Base UI sets on the list.
+        // Sized from the CSS vars Base UI sets on the list.
         <TabsPrimitive.Indicator
           data-slot="tabs-indicator"
           className="absolute top-(--active-tab-top) left-0 -z-10 h-(--active-tab-height) w-(--active-tab-width) translate-x-(--active-tab-left) rounded-full bg-background shadow-sm transition-[translate,width] duration-(--ds-duration-popover) ease-in-out motion-reduce:transition-none dark:bg-[color-mix(in_oklch,var(--foreground)_16%,var(--muted))]"

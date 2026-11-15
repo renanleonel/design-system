@@ -43,7 +43,6 @@ function TooltipContent({
     TooltipPrimitive.Positioner.Props,
     "align" | "alignOffset" | "side" | "sideOffset"
   > & {
-    /** Shows the trigger's hotkey after the label. */
     hotkey?: RegisterableHotkey
   }) {
   return (
@@ -77,14 +76,7 @@ const isClipped = (el: HTMLElement | null) =>
   !!el &&
   (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1)
 
-/**
- * Text that truncates (or clamps to `lines`) and shows the full text in a
- * tooltip only while it's actually cut off: in a fixed-width table column,
- * a sidebar, a card title. Measured when the tooltip would open, so resizing
- * needs no listeners. Opens after 200ms (it reveals text already on screen,
- * so it needn't wait as long as a hint). The full text stays in the DOM for
- * screen readers.
- */
+/** Measured when the tooltip would open, so resizing needs no listeners. */
 function TooltipOverflow({
   children,
   content,
@@ -95,13 +87,10 @@ function TooltipOverflow({
   className,
 }: {
   children: React.ReactNode
-  /** Tooltip text; defaults to `children`. */
   content?: React.ReactNode
-  /** Clamp to this many lines instead of one truncated line. */
   lines?: number
   side?: React.ComponentProps<typeof TooltipContent>["side"]
   align?: React.ComponentProps<typeof TooltipContent>["align"]
-  /** Hover time before it opens, in ms. */
   delay?: number
   className?: string
 }) {

@@ -17,10 +17,6 @@ import {
   type KanbanColumn,
 } from "./board-model"
 
-/**
- * Drag state and handlers. While a card is dragged, its in-flight position
- * lives in `draft`; it commits on drop through `applyMove`.
- */
 export function useBoardDrag({
   columns,
   cards,

@@ -30,7 +30,6 @@ export function CopyButton({
         timer.current = setTimeout(() => setCopied(false), 1500)
       }}
     >
-      {/* Both icons stay mounted; the swap is a quick crossfade. */}
       <span className="relative size-4">
         <CopyIcon
           className={cn(

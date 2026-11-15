@@ -3,12 +3,6 @@ import { cn } from "cn"
 
 import { Label } from "@/components/ui/label"
 
-/**
- * A flat list of settings: one row per setting, separated by hairlines, no
- * cards. Rows lay out by the list's own width (container query), so it works
- * beside a sidebar. For grouped forms (profile, members) use sections with
- * cards instead.
- */
 function SettingsList({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -19,16 +13,7 @@ function SettingsList({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-/**
- * One setting: title and description on the leading side, the control in a
- * fixed-width column on the trailing side; stacked when narrow. Short controls
- * (buttons, swatches) keep their size; inputs and selects with `w-full` fill
- * the column.
- *
- * Name the control: `htmlFor` makes the title its `<label>`; for a group
- * (radios, swatches, several fields) give the group `aria-labelledby={labelId}`.
- * `descriptionId` goes on the control's `aria-describedby`.
- */
+/** Name the control: `htmlFor` makes the title its `<label>`; for a group give it `aria-labelledby={labelId}`. `descriptionId` goes on the control's `aria-describedby`. */
 function SettingsRow({
   label,
   description,
@@ -41,7 +26,6 @@ function SettingsRow({
 }: {
   label: React.ReactNode
   description?: React.ReactNode
-  /** Status or plan marker beside the title (a `Badge`). */
   badge?: React.ReactNode
   htmlFor?: string
   labelId?: string

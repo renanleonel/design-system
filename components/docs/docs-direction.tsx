@@ -35,7 +35,6 @@ export function useDocsDir(): [Dir, (next: Dir) => void] {
   return [dir, set]
 }
 
-/** Sets `dir` on <html> and wraps the tree in Base UI's DirectionProvider. */
 export function DocsDirection({ children }: { children: React.ReactNode }) {
   const [dir] = useDocsDir()
   React.useEffect(() => {

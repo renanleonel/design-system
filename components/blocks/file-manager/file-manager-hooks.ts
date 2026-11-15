@@ -26,7 +26,6 @@ export type Selection = {
 
 export type SetSelection = (patch: Partial<Omit<Selection, "folder">>) => void
 
-/** Folder, view and sort live in the URL; bad values fall back to defaults. */
 export function useFolderParams(
   index: ReturnType<typeof indexEntries>,
   initialFolder: string | undefined
@@ -70,7 +69,6 @@ export function useFolderParams(
   }
 }
 
-/** Tree state: ancestors of the current folder open whenever it changes. */
 export function useExpandedFolders(folderId: string, ancestors: string[]) {
   const [expanded, setExpanded] = React.useState(() => [ROOT_ID, ...ancestors])
   const [seenFolder, setSeenFolder] = React.useState(folderId)
@@ -83,7 +81,6 @@ export function useExpandedFolders(folderId: string, ancestors: string[]) {
 
 let nextUploadId = 0
 
-/** Runs uploads and tracks their progress; finished files are handed to `onAdded`. */
 export function useUploads({
   upload,
   parentId,
@@ -138,7 +135,6 @@ export function useUploads({
   return { uploads, startUploads }
 }
 
-/** Click and keyboard handling for the list: ranges, toggles and the shortcut keys. */
 export function useListHandlers({
   items,
   sel,
@@ -193,7 +189,6 @@ export function useListHandlers({
       if (!ids.delete(entry.id)) ids.add(entry.id)
       setSel({ ids, anchor: entry.id, active: entry.id })
     } else if (touch) {
-      // A tap opens when nothing is selected; long press selects.
       open(entry)
     } else {
       setSel({ ids: new Set([entry.id]), anchor: entry.id, active: entry.id })
@@ -258,7 +253,6 @@ export function useListHandlers({
   return { onItemClick, onKey }
 }
 
-/** Selection belongs to the folder it was made in; the cursor falls back to the first item. */
 export function useFolderSelection(
   folderId: string,
   index: ReturnType<typeof indexEntries>,
@@ -289,7 +283,6 @@ export function useFolderSelection(
   return { sel, setSel, activeId, selectedEntries }
 }
 
-/** Rename, delete, move and download: each reports to its callback first and rolls back on a throw. */
 export function useEntryActions({
   index,
   rootLabel,
@@ -309,7 +302,6 @@ export function useEntryActions({
   onMove?: (entries: FileEntry[], to: string | null) => void | Promise<void>
   onDelete?: (entries: FileEntry[]) => void | Promise<void>
   onDownload?: (entries: FileEntry[]) => void
-  /** Each runs once its change has been applied. */
   onRenamed: () => void
   onRemoved: () => void
   onMoved: () => void
@@ -376,7 +368,6 @@ export function useEntryActions({
   return { validateName, rename, remove, move, download }
 }
 
-/** Items the context menu acts on: the selection, or the one under the pointer. */
 export function useContextTargets(
   sel: Selection,
   setSel: SetSelection,

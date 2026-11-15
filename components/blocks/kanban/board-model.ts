@@ -3,7 +3,6 @@ export type Priority = "urgent" | "high" | "medium" | "low"
 export type KanbanColumn = {
   id: string
   title: string
-  /** Work-in-progress limit: the column warns at the limit and past it. */
   wipLimit?: number
 }
 
@@ -27,7 +26,6 @@ export type KanbanCard = {
   priority: Priority
 }
 
-/** What a move changed: enough to persist it, or to undo it. */
 export type CardMove = {
   cardId: string
   fromColumnId: string
@@ -38,10 +36,6 @@ export type CardMove = {
   beforeId: string | null
 }
 
-/**
- * Cards live in one flat list; a column's order is the order of its cards in
- * it. Places `id` in `columnId`, right before `beforeId` (or last).
- */
 export function placeCard(
   cards: KanbanCard[],
   id: string,
@@ -54,14 +48,12 @@ export function placeCard(
   const moved = { ...card, columnId }
   let index = beforeId ? rest.findIndex((c) => c.id === beforeId) : -1
   if (index < 0) {
-    // Last in the column: right after its final card, else at the end.
     const last = rest.findLastIndex((c) => c.columnId === columnId)
     index = last < 0 ? rest.length : last + 1
   }
   return [...rest.slice(0, index), moved, ...rest.slice(index)]
 }
 
-/** The card after `id` within its own column, in the flat list. */
 export function nextInColumn(cards: KanbanCard[], id: string): string | null {
   const index = cards.findIndex((c) => c.id === id)
   if (index < 0) return null

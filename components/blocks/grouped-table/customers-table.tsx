@@ -153,7 +153,6 @@ const columns: ColumnDef<Customer>[] = [
         href={`#${row.original.id}`}
         className="flex max-w-56 items-center gap-2 rounded-sm font-medium focus-ring hover:underline"
       >
-        {/* Monogram tile tinted by the series palette, so logos never 404. */}
         <span
           aria-hidden
           className={`grid size-5 shrink-0 place-items-center rounded-[5px] text-[10px] font-semibold text-white ${LOGO[row.index % LOGO.length]}`}
@@ -260,7 +259,6 @@ const groupOptions: GroupOption[] = [
   { id: "country", label: "Country" },
 ]
 
-/** CRM customers grouped by rating, size, owner or country. */
 export function CustomersTable({ className }: { className?: string }) {
   const [customers, setCustomers] = React.useState(SAMPLE_CUSTOMERS)
   const [favorites, setFavorites] = React.useState<Set<string>>(new Set())

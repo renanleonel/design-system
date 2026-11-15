@@ -40,7 +40,6 @@ function DropdownMenuContent({
   >) {
   return (
     <MenuPrimitive.Portal>
-      {/* Below 640px the menu is a bottom sheet over a dimmed page. */}
       <MenuPrimitive.Backdrop className="fixed inset-0 z-50 bg-black/10 motion-backdrop [--ds-duration-modal:300ms] sm:hidden" />
       <MenuPrimitive.Positioner
         className="isolate z-50 outline-none max-sm:fixed! max-sm:inset-x-0! max-sm:top-auto! max-sm:bottom-0! max-sm:transform-none!"
@@ -62,7 +61,6 @@ function DropdownMenuContent({
   )
 }
 
-/** True inside a Group or RadioGroup, where a label can name the group. */
 const InGroupContext = React.createContext(false)
 
 function DropdownMenuGroup({ ...props }: MenuPrimitive.Group.Props) {
@@ -73,11 +71,7 @@ function DropdownMenuGroup({ ...props }: MenuPrimitive.Group.Props) {
   )
 }
 
-/**
- * A heading in the menu. Inside `DropdownMenuGroup` / `DropdownMenuRadioGroup`
- * it labels the group for screen readers; anywhere else it's a plain heading
- * (Base UI's GroupLabel throws outside a group).
- */
+/** Outside a group it's a plain heading (Base UI's GroupLabel throws there). */
 
 function DropdownMenuLabel({
   className,
@@ -124,11 +118,7 @@ function DropdownMenuItem({
 }: MenuPrimitive.Item.Props & {
   inset?: boolean
   variant?: "default" | "destructive"
-  /**
-   * Shown at the end of the item, and fires it while the menu is open. For a
-   * shortcut that also works with the menu closed, register the same hotkey on the
-   * action itself (`useHotkey`) and pass it here only for display.
-   */
+  /** For a shortcut that also works with the menu closed, register the same hotkey on the action (`useHotkey`) and pass it here only for display. */
   hotkey?: RegisterableHotkey
 }) {
   const innerRef = React.useRef<HTMLDivElement>(null)

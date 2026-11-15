@@ -7,11 +7,6 @@ import { IconTile } from "@/components/ui/icon-tile"
 const ENTER =
   "transition-[opacity,translate] duration-(--ds-duration-reveal) ease-out starting:translate-y-2 starting:opacity-0 motion-reduce:transition-opacity motion-reduce:delay-0"
 
-/**
- * The opening section: an announcement pill, a balanced headline, one line of
- * description, actions, then the product in a frame with a soft glow. Enters
- * once with a staggered fade-up (no JS).
- */
 export function Hero({
   announcement,
   title,
@@ -20,12 +15,10 @@ export function Hero({
   media,
   className,
 }: {
-  /** e.g. { label: "Charts are here", href: "/changelog" } */
   announcement?: { label: React.ReactNode; href: string }
   title: React.ReactNode
   description?: React.ReactNode
   actions?: React.ReactNode
-  /** A screenshot, video or live preview; framed and glowing. */
   media?: React.ReactNode
   className?: string
 }) {
@@ -98,7 +91,6 @@ export function Hero({
   )
 }
 
-/** "Trusted by" row: muted logos that reflow, full color on hover. */
 export function LogoCloud({
   title,
   logos,
@@ -135,7 +127,6 @@ export function LogoCloud({
 
 type Tone = "blue" | "green" | "amber" | "orange" | "red" | "purple" | "gray"
 
-/** A heading and a grid of features, each an icon tile, title and sentence. */
 export function FeatureGrid({
   eyebrow,
   title,
@@ -194,10 +185,6 @@ export type Testimonial = {
   initials: string
 }
 
-/**
- * Quotes in balanced columns. The first one is featured: larger, spanning the
- * width above the rest.
- */
 export function Testimonials({
   title,
   items,

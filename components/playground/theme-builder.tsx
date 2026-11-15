@@ -113,7 +113,6 @@ const slug = (text: string) =>
 
 const noopSubscribe = () => () => {}
 
-/** Edits from `?edits=`, keeping only values the builder itself could write. */
 function readEdits(raw: string | null): Edits {
   if (!raw) return EMPTY
   try {

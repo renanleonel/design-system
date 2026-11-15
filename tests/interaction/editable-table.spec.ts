@@ -34,12 +34,10 @@ test("editing a cell shows the new value at once and then saves", async ({
   await editor.fill("40000")
   await editor.press("Enter")
 
-  // Optimistic: the new value and a spinner show while the save runs.
   await expect(value).toContainText("R$40,000")
   await expect(value.getByLabel("Saving")).toBeVisible()
   await expect(page.getByText("Saving 1 change…")).toBeVisible()
 
-  // Saved: spinner gone, summary back to idle, value stays.
   await expect(value.getByLabel("Saving")).toHaveCount(0)
   await expect(page.getByText("All changes saved")).toBeVisible()
   await expect(value).toContainText("R$40,000")
@@ -64,9 +62,9 @@ test("a failing save rolls the cell back and keeps an error", async ({
   const editor = page.getByRole("textbox", { name: "Value for Seat expansion" })
   await editor.fill("2000000")
   await editor.press("Enter")
-  await expect(value).toContainText("R$2,000,000") // optimistic
+  await expect(value).toContainText("R$2,000,000")
 
-  await expect(value).toContainText("R$32,500") // rolled back
+  await expect(value).toContainText("R$32,500")
   await expect(value).toHaveAttribute("aria-invalid", "true")
   await expect(page.getByText("1 change not saved")).toBeVisible()
   await expect(
@@ -84,7 +82,7 @@ test("the server-error switch fails every save, and Retry is offered", async ({
   await editor.fill("Seat growth")
   await editor.press("Enter")
 
-  await expect(name).toContainText("Seat expansion") // rolled back
+  await expect(name).toContainText("Seat expansion")
   await expect(name).toHaveAttribute("aria-invalid", "true")
   await expect(page.getByRole("button", { name: "Retry" })).toBeVisible()
 })

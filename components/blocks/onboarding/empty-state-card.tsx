@@ -1,11 +1,5 @@
 import { cn } from "cn"
 
-/**
- * The compact first-run card for a list page ("Add your products"): what goes
- * here, one primary and one secondary action, and up to four media tiles
- * showing the kind of thing that will fill it. The tiles drop below the text
- * on narrow containers (container query, so it follows its column).
- */
 export function EmptyStateCard({
   title,
   description,
@@ -16,7 +10,6 @@ export function EmptyStateCard({
   title: React.ReactNode
   description?: React.ReactNode
   actions?: React.ReactNode
-  /** Up to four decorative tiles (images or icons). */
   tiles?: React.ReactNode[]
   className?: string
 }) {

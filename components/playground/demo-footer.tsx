@@ -7,7 +7,6 @@ import { SiteFooter } from "@/components/blocks/site-footer/site-footer"
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-/** SiteFooter filled with a sample company's links (block demos only). */
 export function DemoFooter() {
   const [language, setLanguage] = React.useState("en")
   return (

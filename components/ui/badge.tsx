@@ -22,7 +22,6 @@ const badgeVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         plain: "",
       },
-      // Status pill: the tone's text on a 12% tint of itself (contrast-checked).
       tone: {
         gray: "bg-tone-gray/12 text-tone-gray",
         blue: "bg-tone-blue/12 text-tone-blue",
@@ -57,7 +56,6 @@ function Badge({
     defaultTagName: "span",
     props: mergeProps<"span">(
       {
-        // A tone replaces the variant's colors.
         className: cn(
           badgeVariants({ variant: tone ? "plain" : variant, tone, size }),
           className

@@ -11,7 +11,6 @@ const alertVariants = cva(
         destructive:
           "bg-card text-destructive *:data-[slot=alert-description]:text-destructive *:[svg]:text-current",
       },
-      // Inline callout: tinted fill, no border, the tone carries the meaning.
       tone: {
         gray: "border-transparent bg-tone-gray/10 text-tone-gray *:data-[slot=alert-description]:text-tone-gray",
         blue: "border-transparent bg-tone-blue/10 text-tone-blue *:data-[slot=alert-description]:text-tone-blue",

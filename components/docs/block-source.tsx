@@ -34,7 +34,6 @@ function File({ registry, path }: { registry: string; path: string }) {
   return <CodeFigure html={file.html} code={file.code} title={file.path} />
 }
 
-/** One file of a block's source, fetched the first time a Code tab shows it. */
 export function BlockSource({
   registry,
   path,

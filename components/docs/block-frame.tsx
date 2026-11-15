@@ -50,11 +50,6 @@ const DEVICES = [
   { id: "mobile", label: "Phone", width: "375px", icon: <SmartphoneIcon /> },
 ] as const
 
-/**
- * A block running in an iframe at a device width, with its source beside it.
- * The frame's width animates between devices, so the layout visibly reflows.
- * `variants` (layouts of one block) add a switch that swaps the frame's URL.
- */
 export function BlockFrame({
   title,
   src: defaultSrc,
@@ -66,7 +61,6 @@ export function BlockFrame({
   variants?: { label: string; src: string }[]
   files: { path: string; code: React.ReactNode }[]
 }) {
-  // The picked layout, if any; otherwise the block's default URL.
   const [picked, setPicked] = React.useState<string | null>(null)
   const src = picked ?? defaultSrc
   const [device, setDevice] = React.useState<string>("desktop")

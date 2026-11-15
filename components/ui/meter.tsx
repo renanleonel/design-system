@@ -8,7 +8,7 @@ const meterIndicatorVariants = cva(
   "h-full rounded-full transition-[width] duration-(--ds-duration-fill) ease-out motion-reduce:transition-none",
   {
     variants: {
-      // Same tones as Badge. The bar is a graphic (3:1), so the full tone color.
+      // The bar is a graphic (3:1 contrast), so it uses the full tone color.
       tone: {
         default: "bg-primary",
         gray: "bg-tone-gray",
@@ -27,11 +27,6 @@ const meterIndicatorVariants = cva(
 type MeterProps = MeterPrimitive.Root.Props &
   VariantProps<typeof meterIndicatorVariants>
 
-/**
- * A value within a known range (storage used, seats taken), as opposed to
- * `Progress`, which tracks a task. Children are the label and value; the
- * track and bar follow. Pick the `tone` from the value (green, amber, red).
- */
 function Meter({ className, children, tone, ...props }: MeterProps) {
   return (
     <MeterPrimitive.Root

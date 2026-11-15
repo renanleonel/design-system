@@ -47,11 +47,8 @@ export type ViewContext = {
   strings: ScheduleStrings
   weekStartsOn?: Day
   now: Date
-  /** Opens the details popover for an event, anchored to the clicked element. */
   onSelect: (event: ScheduleEvent, anchor: HTMLElement) => void
-  /** Opens the list popover for events folded into "+N". */
   onMore: (events: ScheduleEvent[], anchor: HTMLElement, title: string) => void
-  /** Opens the create dialog at a start time. */
   onCreate: (start: Date) => void
   onOpenDay: (day: Date) => void
 }
@@ -107,8 +104,6 @@ function DayNumber({
     </button>
   )
 }
-
-// ---- Time grid (week and day) -------------------------------------------
 
 const GUTTER = "grid-cols-[3rem_repeat(var(--cols),minmax(0,1fr))]"
 
@@ -374,8 +369,6 @@ export function TimeGrid({
   )
 }
 
-// ---- Month grid ----------------------------------------------------------
-
 const MONTH_ROWS = 3
 
 function MonthCell({
@@ -568,8 +561,6 @@ export function MonthGrid({
     </div>
   )
 }
-
-// ---- Agenda (narrow containers) -----------------------------------------
 
 export function Agenda({
   days,

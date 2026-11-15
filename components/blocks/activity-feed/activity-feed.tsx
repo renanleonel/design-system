@@ -56,19 +56,13 @@ export type ActivityEvent = {
   id: string
   type: ActivityType
   actor: { name: string }
-  /** ISO timestamp. */
   at: string
-  /** What it happened to: a task, a document, a pull request. */
   target: string
   href?: string
-  /** `comment` and `mention`: the text. */
   body?: string
-  /** `status`: the two states. */
   from?: string
   to?: string
-  /** `assignment`: who it went to. */
   assignee?: string
-  /** `upload`: the file. */
   file?: { name: string; size: string }
 }
 
@@ -77,9 +71,7 @@ const TYPES: Record<
   {
     icon: React.ReactNode
     tone: "blue" | "purple" | "amber" | "green" | "orange"
-    /** Filter label. */
     label: string
-    /** Used in "+3 more …". */
     noun: string
   }
 > = {
@@ -119,8 +111,6 @@ const TYPE_IDS = Object.keys(TYPES) as ActivityType[]
 /** A run of this many same-type, same-actor events collapses behind its first. */
 const MIN_RUN = 4
 
-/* Time ------------------------------------------------------------------ */
-
 const clock = new Intl.DateTimeFormat("en", {
   hour: "numeric",
   minute: "2-digit",
@@ -153,7 +143,6 @@ function dayLabel(d: Date, now: Date) {
   return (d.getFullYear() === now.getFullYear() ? dayLong : dayYear).format(d)
 }
 
-/** Minutes and hours for the recent past; the clock time once the day heading says which day. */
 function relative(d: Date, now: Date) {
   const s = Math.max(0, (now.getTime() - d.getTime()) / 1000)
   if (s < 60) return "Just now"
@@ -163,14 +152,7 @@ function relative(d: Date, now: Date) {
   return clock.format(d)
 }
 
-/* Pages ----------------------------------------------------------------- */
-
-/**
- * Client paging over events you already hold, shaped like `useInfiniteQuery`:
- * `loadMore` appends a page after `delay` ms. Swap it for your own fetching;
- * `ActivityFeed` only needs `events`, `hasMore`, `loading` and `error`.
- * `failOnce` makes the page after that many events fail once, for retry demos.
- */
+/** `ActivityFeed` only needs `events`, `hasMore`, `loading` and `error`: swap this for your own fetching. */
 export function useActivityPages(
   all: ActivityEvent[],
   {
@@ -209,8 +191,6 @@ export function useActivityPages(
     loadMore,
   }
 }
-
-/* Rows ------------------------------------------------------------------ */
 
 function Name({ children }: { children: React.ReactNode }) {
   return <span className="font-medium text-foreground">{children}</span>
@@ -335,15 +315,12 @@ function EventItem({ e, now }: { e: ActivityEvent; now: Date }) {
   )
 }
 
-/* Grouping -------------------------------------------------------------- */
-
 type Entry =
   | { kind: "event"; event: ActivityEvent }
   | { kind: "run"; id: string; type: ActivityType; rest: ActivityEvent[] }
 
 type Day = { key: string; date: Date; entries: Entry[] }
 
-/** Groups newest-first events by day, folding long same-type, same-actor runs. */
 function group(events: ActivityEvent[]): Day[] {
   const days: { key: string; date: Date; events: ActivityEvent[] }[] = []
   for (const e of events) {
@@ -380,15 +357,7 @@ function group(events: ActivityEvent[]): Day[] {
   })
 }
 
-/* Feed ------------------------------------------------------------------ */
-
-/**
- * A day-grouped activity feed on `Timeline`. Filters by event type (in the
- * URL as `?type=comment,status`), folds runs of similar events ("+5 more
- * status changes") and loads the next page as the end nears, with a Load more
- * button for keyboard and screen readers. It holds no data: pass `events`
- * newest first, or take them from `useActivityPages`.
- */
+/** Holds no data: pass `events` newest first, or take them from `useActivityPages`. */
 export function ActivityFeed({
   events,
   hasMore = false,
@@ -403,7 +372,6 @@ export function ActivityFeed({
   loading?: boolean
   error?: string | null
   onLoadMore?: () => void
-  /** Reference for "Today" and relative times. Defaults to the current time. */
   now?: Date | string
   className?: string
 }) {

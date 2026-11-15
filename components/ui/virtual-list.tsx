@@ -4,14 +4,7 @@ import * as React from "react"
 import { useVirtualizer } from "@tanstack/react-virtual"
 import { cn } from "cn"
 
-/**
- * A scrolling list that renders only the items in view, for feeds, logs and
- * any list that can grow past ~100 items. Items may differ in height; each is
- * measured once rendered. Give it a height (`max-h-96` default, or `h-full`
- * inside a sized parent). `onEndReached` fires as the end comes within
- * `endThreshold` items, for loading the next page; it can fire more than once,
- * so guard requests already in flight (`useCursorPages` does).
- */
+/** Give it a height (`max-h-96` default, or `h-full` inside a sized parent). `onEndReached` can fire more than once, so guard requests already in flight (`useCursorPages` does). */
 function VirtualList<T>({
   items,
   getKey,
@@ -28,9 +21,7 @@ function VirtualList<T>({
   items: readonly T[]
   getKey: (item: T, index: number) => string | number
   renderItem: (item: T, index: number) => React.ReactNode
-  /** Typical item height in px, used before an item is measured. */
   estimateSize?: number
-  /** Space between items in px. */
   gap?: number
   overscan?: number
   onEndReached?: () => void

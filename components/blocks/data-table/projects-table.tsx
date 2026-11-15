@@ -205,7 +205,6 @@ const columns: ColumnDef<Project>[] = [
   },
 ]
 
-/** Demo: the projects list. `?demo=loading|error|empty` shows each state. */
 export function ProjectsTable({
   state = "ready",
 }: {

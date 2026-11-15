@@ -58,7 +58,6 @@ const ROLES = [
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
-/** One settings section: what it is on the leading column, the controls on a card. */
 function SettingsSection({
   title,
   description,

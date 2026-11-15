@@ -18,25 +18,15 @@ type CopyButtonProps = Omit<
 > & {
   /** Text to copy; a function is read at click time (current input value, selection). */
   value: string | (() => string)
-  /** Accessible name and tooltip while idle. Name what is copied: "Copy API key". */
+  /** Name what is copied: "Copy API key". */
   label?: string
-  /** Tooltip after a successful copy. */
   copiedLabel?: string
-  /** Milliseconds the check stays before it swaps back. */
   resetAfter?: number
-  /** Runs after a successful copy. */
   onCopy?: (value: string) => void
-  /** Runs when the browser refuses or has no Clipboard API. */
   onCopyError?: (error: Error) => void
 }
 
-/**
- * An icon button that copies a value. A check replaces the copy icon for a
- * moment, the tooltip changes to "Copied", and a live region announces the
- * result to screen readers. Needs a secure context (https or localhost); where
- * the Clipboard API is missing it says "Couldn't copy" instead of failing
- * silently.
- */
+/** Needs a secure context (https or localhost); without the Clipboard API it says "Couldn't copy". */
 function CopyButton({
   value,
   label = "Copy",
@@ -73,8 +63,6 @@ function CopyButton({
             />
           }
         >
-          {/* Two stacked icons cross-fade with a small scale; reduced motion
-              keeps the fade and drops the scale. */}
           <span aria-hidden className="relative block size-4">
             <CopyIcon
               className={cn(

@@ -47,7 +47,6 @@ export type UploadFn = (
   signal: AbortSignal
 ) => Promise<void>
 
-/** Demo uploader: climbs to 100% in about two seconds; names containing "error" fail. */
 export const simulateUpload: UploadFn = (file, onProgress, signal) =>
   new Promise((resolve, reject) => {
     let percent = 0
@@ -68,16 +67,11 @@ const NO_ENTRIES: FileEntry[] = []
 export type FileManagerProps = {
   /** The files, when the parent owns them. Pair with `onFilesChange`. */
   files?: FileEntry[]
-  /** The files to start with when `files` is left out. */
   defaultFiles?: FileEntry[]
-  /** Called with the next list after every rename, move, delete or upload. */
   onFilesChange?: (files: FileEntry[]) => void
-  /** Bytes the plan allows. */
   storageTotal: number
-  /** Bytes used by things outside `files` (backups, other drives). */
   storageOther?: number
   rootLabel?: string
-  /** The folder to show when the URL has none. */
   initialFolder?: string
   upload?: UploadFn
   onRename?: (entry: FileEntry, name: string) => void | Promise<void>
@@ -90,15 +84,8 @@ export type FileManagerProps = {
 }
 
 /**
- * A file browser: folder tree, breadcrumb path, grid and list views, multi
- * select (click, Shift, Ctrl/Cmd, or the keyboard), a context menu (open,
- * rename, move, download, delete), uploads with progress and a storage meter.
- * Folder, view and sort live in the URL (`?folder=&view=&sort=&dir=`). Below
- * the `3xl` container width the tree moves into a sheet.
- *
- * It keeps its own copy of the files (seeded from `defaultFiles`, or driven by
- * `files` + `onFilesChange`) and reports every change through the callbacks; a
- * callback that throws or rejects rolls that change back.
+ * Keeps its own copy of the files (seeded from `defaultFiles`, or driven by `files` + `onFilesChange`);
+ * a callback that throws or rejects rolls that change back.
  */
 export function FileManager({
   files,

@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/command"
 import type { NavGroup } from "@/lib/docs"
 
-/** The ⌘K palette. Loaded on first open so cmdk stays out of every page's bundle. */
 export default function SiteSearch({
   nav,
   open,

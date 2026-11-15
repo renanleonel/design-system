@@ -1,11 +1,5 @@
 import { cn } from "cn"
 
-/**
- * Label/value pairs ("Region  eu-west-1"): quiet label over a medium value,
- * numbers tabular. `layout="row"` spreads short pairs across one line (wrapping
- * on narrow widths); `layout="stack"` puts label and value on one line each row,
- * value at the trailing edge.
- */
 function DataList({
   layout = "row",
   className,

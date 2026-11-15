@@ -107,10 +107,6 @@ export const SAMPLE_NOTIFICATIONS: Notification[] = [
   },
 ]
 
-/**
- * Notification state with the actions the menu and the feed need. Archiving
- * runs right away and offers undo (no confirm dialog).
- */
 export function useNotifications(initial: Notification[]) {
   const [items, setItems] = React.useState(initial)
   const [archived, setArchived] = React.useState<Notification[]>([])
@@ -182,7 +178,6 @@ function NotificationRow({
           {item.time}
         </p>
       </div>
-      {/* Actions sit above the row link; visible on hover/focus, always on touch. */}
       <div className="relative z-10 flex shrink-0 items-start gap-0.5 opacity-0 transition-opacity group-focus-within/row:opacity-100 group-hover/row:opacity-100 pointer-coarse:opacity-100">
         <Tooltip>
           <TooltipTrigger
@@ -248,10 +243,6 @@ function CaughtUp({ archived }: { archived?: boolean }) {
   )
 }
 
-/**
- * The bell in the header: an unread count, a popover with All / Unread, and
- * Shift+N to open it from anywhere.
- */
 export function NotificationsMenu({
   items,
   unread,
@@ -349,7 +340,6 @@ export function NotificationsMenu({
   )
 }
 
-/** The full feed (an Inbox page): All / Unread / Archived, archive with undo. */
 export function NotificationsFeed({
   items,
   archived,

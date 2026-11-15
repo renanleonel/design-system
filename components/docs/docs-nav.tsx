@@ -6,7 +6,6 @@ import { cn } from "cn"
 
 import type { NavGroup } from "@/lib/docs"
 
-/** The grouped page list: the desktop sidebar and the mobile menu. */
 export function DocsNav({
   groups,
   onNavigate,

@@ -65,16 +65,10 @@ import { setSearchParams, useSearchParams } from "@/hooks/use-url-state"
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData, TValue> {
-    /** Hidden below md, so phones keep the identity and status columns. */
     hideOnMobile?: boolean
-    /**
-     * Takes the leftover width and truncates its content, so the table always
-     * fits its container (one per table, usually the identity column).
-     */
+    /** One per table: takes the leftover width and truncates its content. */
     grow?: boolean
-    /** Numbers align to the trailing edge (layout.md). */
     align?: "start" | "end"
-    /** Label for the sort button and screen readers. */
     label?: string
   }
 }
@@ -107,7 +101,6 @@ function cellClass<TData>(column: Column<TData>) {
   )
 }
 
-/** View state from the URL: search, page, sort and one param per filter. */
 function useUrlView(filters: FacetFilter[]) {
   const params = useSearchParams()
   const query = params.get("q") ?? ""
@@ -139,11 +132,7 @@ function useUrlView(filters: FacetFilter[]) {
   return { params, query, page, sortParam, sorting, columnFilters }
 }
 
-/**
- * Search input state: local for instant typing, written to the URL (`q`) once
- * typing pauses (each URL write re-filters the table), and re-adopted when the
- * URL changes elsewhere (Back, clear filters).
- */
+// Local for instant typing; the URL write (`q`) waits for a typing pause because each write re-filters the table.
 function useUrlSearch(query: string) {
   const [draft, setDraft] = React.useState(query)
   const [lastQuery, setLastQuery] = React.useState(query)
@@ -421,12 +410,7 @@ function Pager({
   )
 }
 
-/**
- * A table whose view state lives in the URL (q, sort, page and one param per
- * filter), so any view can be shared and Back works. Client-side model for
- * up to a few thousand rows; for server data, feed `data` from a query keyed
- * on the same params.
- */
+/** Client-side model for up to a few thousand rows; for server data, feed `data` from a query keyed on the same params. */
 function DataTable<TData>({
   columns: userColumns,
   data,
@@ -446,9 +430,7 @@ function DataTable<TData>({
   getRowId: (row: TData) => string
   searchPlaceholder?: string
   filters?: FacetFilter[]
-  /** Shown in a bar while rows are selected. */
   bulkActions?: (rows: TData[], clear: () => void) => React.ReactNode
-  /** First-use empty state, when there is no data at all. */
   emptyState?: React.ReactNode
   noun?: Noun
 }) {

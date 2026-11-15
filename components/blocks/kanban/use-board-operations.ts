@@ -14,20 +14,12 @@ import {
 import { toastUndo } from "@/components/ui/sonner"
 
 export type BoardCallbacks = {
-  /** Persist a move. Reject to roll it back. */
   onMoveCard?: (move: CardMove) => Promise<void>
-  /** Persist the new column order. Reject to roll it back. */
   onMoveColumns?: (columnIds: string[]) => Promise<void>
-  /** Persist a new card (added or duplicated). Reject to remove it again. */
   onCreateCard?: (card: KanbanCard) => Promise<void>
-  /** Persist a delete. Reject to bring the card back. */
   onDeleteCard?: (card: KanbanCard) => Promise<void>
 }
 
-/**
- * The board's data and its optimistic operations: each change lands at once
- * while the callback runs, and rolls back with a toast (Retry) if it rejects.
- */
 export function useBoardOperations(
   initialColumns: KanbanColumn[],
   initialCards: KanbanCard[],

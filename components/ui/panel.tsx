@@ -1,22 +1,5 @@
 import { cn } from "cn"
 
-/**
- * Nested surfaces: a tinted tray that holds white cards (surfaces.md).
- *
- * - Radii are concentric: a card's radius is the tray's minus the tray padding,
- *   computed from `--ds-panel-radius` / `--ds-panel-pad`, so changing either
- *   keeps every corner parallel.
- * - The header text sits on the same edge as the cards' content
- *   (tray padding + card padding), so the column reads as one straight line.
- * - Controls inside default to pill shape (`--ds-radius-control: 9999px`).
- *
- *   <Panel>
- *     <PanelHeader icon={<BriefcaseIcon />} title="Releases" actions={<Tabs …/>} />
- *     <PanelContent className="md:grid-cols-[1.1fr_1fr]">
- *       <PanelCard>…</PanelCard>
- *     </PanelContent>
- *   </Panel>
- */
 function Panel({ className, ...props }: React.ComponentProps<"section">) {
   return (
     <section
@@ -77,7 +60,6 @@ function PanelHeader({
   )
 }
 
-/** Grid of cards. Pass the column template per breakpoint; one column on mobile. */
 function PanelContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -91,13 +73,11 @@ function PanelContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-/** A white card inside the tray, radius concentric with it. */
 function PanelCard({
   className,
   interactive = false,
   ...props
 }: React.ComponentProps<"div"> & {
-  /** Clickable cards lift on hover (static cards never do). */
   interactive?: boolean
 }) {
   return (
@@ -114,7 +94,6 @@ function PanelCard({
   )
 }
 
-/** Bottom row of actions on the tray: one primary, then round secondaries. */
 function PanelActions({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

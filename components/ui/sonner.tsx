@@ -17,7 +17,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
     <Sonner
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
-      // The icon carries the status in its tone; the surface stays neutral.
       icons={{
         success: <CircleCheckIcon className="size-4 text-tone-green" />,
         info: <InfoIcon className="size-4 text-tone-blue" />,
@@ -29,7 +28,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
         {
           "--normal-bg": "var(--popover)",
           "--normal-text": "var(--popover-foreground)",
-          // One elevation per surface: the popover shadow, no border.
           "--normal-border": "transparent",
           "--border-radius": "var(--radius)",
         } as React.CSSProperties
@@ -48,10 +46,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
   )
 }
 
-/**
- * "Deleted. Undo" (interaction.md: prefer undo over confirm for reversible
- * actions). Run the action right away, and offer to revert it for 10s.
- */
 function toastUndo(
   message: React.ReactNode,
   { onUndo, duration = 10_000 }: { onUndo: () => void; duration?: number }

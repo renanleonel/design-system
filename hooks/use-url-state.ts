@@ -2,9 +2,6 @@
 
 import * as React from "react"
 
-// Shareable view state lives in the URL (interaction.md: filters, sort, search,
-// tab, page). Framework-agnostic: reads location with useSyncExternalStore and
-// writes with the History API, so it works in Next.js and Vite alike.
 const EVENT = "ds:urlchange"
 
 function subscribe(onChange: () => void) {
@@ -19,7 +16,6 @@ function subscribe(onChange: () => void) {
 const getSearch = () => window.location.search
 const getServerSearch = () => ""
 
-/** All current query params (re-renders when the URL changes). */
 export function useSearchParams() {
   const search = React.useSyncExternalStore(
     subscribe,
@@ -54,7 +50,6 @@ export function setSearchParams(
   window.dispatchEvent(new Event(EVENT))
 }
 
-/** One param as state: `[value, setValue]`, falling back to `fallback` when absent. */
 export function useUrlState(
   key: string,
   fallback = "",

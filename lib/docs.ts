@@ -1,5 +1,3 @@
-// Docs data, read at build time on the server: the registry, the catalog
-// (registry/catalog.json) and the demo files (components/demos/<name>.tsx).
 import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 import { cache } from "react"
@@ -49,7 +47,6 @@ export function registryItem(name: string) {
   return registryItems().find((i) => i.name === name)
 }
 
-/** Every registry:ui item, in catalog group order, then alphabetically. */
 export const getComponents = cache((): DocEntry[] => {
   const entries = catalog.components as Record<string, CatalogEntry>
   const groups: string[] = catalog.groups
@@ -103,7 +100,6 @@ export const getNav = cache((): NavGroup[] => {
 export const installCommand = (name: string) =>
   `shadcn@latest add ${REGISTRY_URL}/${name}.json`
 
-/** `import { A, B } from "@/components/ui/x"` from the file's export list. */
 export function importLine(name: string) {
   const src = read(`components/ui/${name}.tsx`)
   const block = src.match(/^export \{([^}]*)\}/m)?.[1] ?? ""
@@ -117,15 +113,10 @@ export function importLine(name: string) {
     : `import { ${names.join(", ")} } from ${from}`
 }
 
-// --- Demos -----------------------------------------------------------------
-
 export type Story = {
-  /** Export name, e.g. `WithIcon`. */
   id: string
-  /** "With icon" */
   title: string
   description?: string
-  /** Self-contained source: the imports and helpers it uses, then the story. */
   code: string
 }
 
@@ -138,12 +129,6 @@ const humanize = (id: string) =>
 const uses = (code: string, id: string) =>
   new RegExp(`(?<![\\w.])${id.replace("$", "\\$")}(?!\\w)`).test(code)
 
-/**
- * Splits a demo file into stories. Every `export function Name()` is a story
- * (Storybook CSF style), with an optional `/** … *\/` description above it.
- * Each story's code keeps only the imports and top-level helpers it uses, so
- * it can be copied as is.
- */
 export const getStories = cache((name: string): Story[] => {
   const path = `components/demos/${name}.tsx`
   if (!existsSync(join(/*turbopackIgnore: true*/ process.cwd(), path)))
@@ -158,7 +143,6 @@ export const getStories = cache((name: string): Story[] => {
     if (
       /^(\/\*\*|import |export |function |const |type |"use client")/.test(line)
     ) {
-      // A doc comment owns the declaration right after it.
       if (
         /^(export |function |const |type )/.test(line) &&
         lines[i - 1]?.endsWith("*/") &&
@@ -229,7 +213,6 @@ export const getStories = cache((name: string): Story[] => {
   }
 
   return stories.map((story) => {
-    // Helpers used by the story, and helpers used by those helpers.
     const used = new Set<(typeof helpers)[number]>()
     const visit = (code: string) => {
       for (const h of helpers)
@@ -258,8 +241,6 @@ export const getStories = cache((name: string): Story[] => {
     return { ...story, code: `${importText}\n\n${body}\n` }
   })
 })
-
-// --- Code highlighting -----------------------------------------------------
 
 // One highlighter for the whole build (react `cache` is per request).
 let highlighterPromise: ReturnType<typeof createHighlighter> | undefined

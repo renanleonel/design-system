@@ -60,7 +60,6 @@ const ACTORS = [
   "API",
 ]
 
-// 1,240 deterministic events, newest first (same on server and client).
 const ALL_EVENTS: ActivityEvent[] = Array.from({ length: 1240 }, (_, i) => {
   const event = EVENTS[(i * 7) % EVENTS.length]
   return {
@@ -78,10 +77,7 @@ const ALL_EVENTS: ActivityEvent[] = Array.from({ length: 1240 }, (_, i) => {
   }
 })
 
-/**
- * Stands in for `GET /events?cursor=&limit=&level=`. The cursor is the last
- * event's id: stable while new events arrive, unlike an offset.
- */
+/** The cursor is the last event's id: stable while new events arrive, unlike an offset. */
 async function listEvents({
   cursor,
   level,
@@ -98,7 +94,6 @@ async function listEvents({
     ? ALL_EVENTS.filter((e) => e.level === level)
     : ALL_EVENTS
   const start = cursor ? matches.findIndex((e) => e.id === cursor) + 1 : 0
-  // ?demo=error: the third page fails once, so Retry has something to do.
   if (failOnce && start >= 80) {
     failOnce.current = true
     throw new Error("Network error")
@@ -185,7 +180,6 @@ const LEVELS = [
   { value: "error", label: "Errors" },
 ]
 
-/** Audit log with level filter (`?level=`), loaded 40 events at a time. */
 export function ActivityLog({ className }: { className?: string }) {
   const params = useSearchParams()
   const level = params.get("level")

@@ -8,7 +8,6 @@ function PreviewCard({ ...props }: PreviewCardPrimitive.Root.Props) {
   return <PreviewCardPrimitive.Root data-slot="preview-card" {...props} />
 }
 
-/** A real link. Hovering or focusing it previews the destination; touch follows the link. */
 function PreviewCardTrigger({
   className,
   ...props

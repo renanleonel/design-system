@@ -18,7 +18,6 @@ function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
         data-slot="checkbox-indicator"
         className="grid place-content-center text-current transition-none [&>svg]:size-3.5"
       >
-        {/* Mixed state (some rows selected) shows a dash, never a check. */}
         <CheckIcon className="in-data-indeterminate:hidden" />
         <MinusIcon className="hidden in-data-indeterminate:block" />
       </CheckboxPrimitive.Indicator>

@@ -48,7 +48,6 @@ export const collisionDetection: CollisionDetection = (args) => {
   const hit = closestCorners(args)[0]
   if (!hit) return []
   if (!isColumnKey(hit.id)) return [hit]
-  // Over a column: prefer its nearest card, else the (empty) column itself.
   const inside = args.droppableContainers.filter(
     (c) => c.data.current?.columnId === columnOfKey(hit.id)
   )
@@ -57,7 +56,6 @@ export const collisionDetection: CollisionDetection = (args) => {
     : [hit]
 }
 
-/** Screen reader announcements for picking up, moving and dropping. */
 export function boardAnnouncements({
   columns,
   shown,

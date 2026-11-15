@@ -33,16 +33,11 @@ const FILES = [
   ["screenshot-2026-11-12.png", "612 KB"],
 ]
 
-/** A tiny deterministic generator, so server and client agree. */
 function lcg(seed: number) {
   let s = seed
   return () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296
 }
 
-/**
- * `count` events, newest first, relative to `now`. Every so often a burst of
- * status changes by one person (to show the collapsed runs).
- */
 export function buildSampleActivity(now: Date, count = 120): ActivityEvent[] {
   const rand = lcg(7)
   const events: ActivityEvent[] = []

@@ -8,24 +8,12 @@ import { CheckIcon } from "lucide-react"
 
 export type Swatch = {
   value: string
-  /** Read by screen readers and shown as a tooltip ("Blue"). */
   label: string
-  /** Any CSS color; prefer tokens (`var(--ds-tone-blue)`). */
   color: string
-  /**
-   * Check mark color. Defaults to the page background, which contrasts with
-   * tone colors in both themes (dark tones in light, pale tones in dark).
-   */
   foreground?: string
   disabled?: boolean
 }
 
-/**
- * Pick one color from a row of swatches: accent colors, labels, themes. A
- * radio group (arrows move and pick); the chosen swatch gets a ring in its own
- * color and a check, so it never relies on color alone. Name it with
- * `aria-label` or `aria-labelledby`.
- */
 function SwatchPicker({
   swatches,
   value,
@@ -80,7 +68,6 @@ function SwatchPicker({
             "group/swatch hit-area relative flex shrink-0 motion-press items-center justify-center rounded-full bg-(--swatch) text-(--swatch-fg) outline-none",
             // Hairline so pale swatches still read against the page (3:1).
             "shadow-[inset_0_0_0_1px_color-mix(in_oklch,var(--foreground)_15%,transparent)]",
-            // Chosen: a gap, then a ring in the swatch's own color.
             "data-checked:shadow-[0_0_0_2px_var(--background),0_0_0_4px_var(--swatch)]",
             "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--ds-focus-ring)",
             "data-disabled:cursor-not-allowed",

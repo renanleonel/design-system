@@ -38,7 +38,6 @@ function AccordionTrigger({
         {...props}
       >
         {children}
-        {/* One chevron that turns, instead of swapping icons. */}
         <ChevronDownIcon
           data-slot="accordion-trigger-icon"
           className="pointer-events-none shrink-0 transition-transform duration-(--ds-duration-popover) ease-out group-aria-expanded/accordion-trigger:rotate-180 motion-reduce:transition-none"

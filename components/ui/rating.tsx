@@ -9,12 +9,6 @@ import { StarIcon } from "lucide-react"
 const plural = (n: number) =>
   `${n.toLocaleString("en-US")} ${n === 1 ? "star" : "stars"}`
 
-/**
- * A star rating. Interactive, it's a radio group: arrows move and pick,
- * hovering previews. With `readOnly` it's an image named "4.5 out of 5 stars"
- * and shows fractions, for review summaries. `allowHalf` splits each star
- * into two targets (left half, right half), so arrows step by 0.5.
- */
 function Rating({
   value,
   defaultValue,
@@ -33,9 +27,7 @@ function Rating({
   defaultValue?: number | null
   onValueChange?: (value: number) => void
   max?: number
-  /** Display only; accepts fractions (4.5). */
   readOnly?: boolean
-  /** Interactive half stars: values 0.5, 1, 1.5 … `max`. */
   allowHalf?: boolean
   disabled?: boolean
   name?: string
@@ -129,7 +121,6 @@ function Rating({
   )
 }
 
-/** An outlined star with `fill` (0–1) of it painted from the leading edge. */
 function Star({ fill, className }: { fill: number; className?: string }) {
   return (
     <span aria-hidden className={cn("relative inline-flex", className)}>
@@ -139,7 +130,6 @@ function Star({ fill, className }: { fill: number; className?: string }) {
           className="absolute inset-y-0 start-0 overflow-hidden"
           style={{ width: `${fill * 100}%` }}
         >
-          {/* Full-size star, clipped by the wrapper's width. */}
           <StarIcon
             className={cn(
               "max-w-none fill-tone-amber text-tone-amber",

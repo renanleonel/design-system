@@ -35,11 +35,7 @@ const COPY: Record<
   },
 }
 
-/**
- * Full-page errors: what happened, whose fault it is, and the way out. Pass
- * `onRetry` for transient failures and `requestId` so support can trace a 5xx.
- * Links are plain `<a>` (or your router's Link via `render`).
- */
+/** Links are plain `<a>` (or your router's Link via `render`). */
 export function ErrorPage({
   variant,
   title,

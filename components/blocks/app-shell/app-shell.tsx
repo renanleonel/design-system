@@ -47,11 +47,9 @@ export type NavItem = {
   label: string
   href: string
   icon: React.ReactNode
-  /** Trailing count or status, e.g. unread items. */
   badge?: React.ReactNode
   /** Usually a sequence: ["G", "P"] goes to Projects. */
   hotkey?: RegisterableHotkey
-  /** Sub-pages: a collapsible group with a guide line under the parent's icon. */
   items?: Omit<NavItem, "items">[]
 }
 export type NavSection = { label?: string; items: NavItem[] }
@@ -87,19 +85,11 @@ function instantly(change: () => void) {
   )
 }
 
-/**
- * `variant="fade"`: labels stay mounted and the icons never move. How the
- * labels leave and return is set per `motion` through CSS variables on the
- * sidebar (`SIDEBAR_MOTION`): delay, per-row stagger (`--i`, top down),
- * duration, drift and blur. Keyboard toggles (Mod+B) skip all of it; reduced
- * motion keeps only the fade.
- */
 const FADE_LABEL =
   "whitespace-nowrap opacity-[var(--sb-label-o,1)] transition-[opacity,filter,translate] duration-[var(--sb-dur,150ms)] ease-out delay-[calc(var(--sb-delay,0ms)_+_min(var(--i,0),6)*var(--sb-stagger,0ms))] group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:translate-x-[var(--sb-drift,-4px)] group-data-collapsed/sidebar:rtl:translate-x-[calc(var(--sb-drift,-4px)*-1)] group-data-collapsed/sidebar:opacity-0 group-data-collapsed/sidebar:blur-[var(--sb-blur,2px)] in-data-ds-instant:transition-none motion-reduce:translate-x-0 motion-reduce:blur-none motion-reduce:delay-0"
 
 export type SidebarMotion = "ease-out" | "cascade" | "scrub"
 
-/** Rail width (icons only) and the drag width under which it snaps to it. */
 const RAIL = 60
 const SNAP = 160
 const MAX_WIDTH = 360
@@ -134,7 +124,6 @@ const SIDEBAR_MOTION: Record<
     in: { ...fadeOnly, delay: 60 },
     width: { duration: 200, ease: EASE_OUT },
   },
-  // Labels drift left and fade from the top down; the width moves in one motion.
   cascade: {
     // Stagger stops after 6 rows (FADE_LABEL), so in lands by ~300ms.
     out: { delay: 0, stagger: 12, duration: 140, drift: -8, blur: 2 },
@@ -152,11 +141,6 @@ const SIDEBAR_MOTION: Record<
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value))
 
-/**
- * The sidebar's trailing edge: drag to resize (below 160px it settles to the
- * icon rail), double-click or Enter to collapse/expand, arrows to resize by
- * 16px. A 2px line shows on hover and while dragging.
- */
 function ResizeHandle({
   width,
   dragging,
@@ -222,7 +206,6 @@ function ResizeHandle({
             }}
             onDoubleClick={onToggle}
             onKeyDown={(event) => {
-              // Escape mid-drag puts the sidebar back where the drag began.
               if (event.key === "Escape" && dragging && origin.current) {
                 const to = origin.current.width
                 origin.current = null
@@ -327,11 +310,6 @@ function NavLink({
   )
 }
 
-/**
- * A parent with sub-pages. Open while one of them is current; the panel's
- * height animates. In the rail the group folds away (smoothly, so the icons
- * below glide up) and clicking the parent expands the sidebar on it.
- */
 function NavGroup({
   item,
   activeHref,
@@ -406,7 +384,6 @@ function NavGroup({
         trigger
       )}
       <Collapsible.Panel className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-(--ds-duration-popover) ease-out group-data-collapsed/sidebar:h-0 in-data-ds-instant:transition-none data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none">
-        {/* The guide line sits under the parent's icon (row padding + half the icon). */}
         <div className="ms-4.5 flex flex-col gap-0.5 border-s border-sidebar-border ps-2 pt-0.5">
           {children.map((child, i) => (
             <NavLink
@@ -507,11 +484,9 @@ function UserMenu({
   )
 }
 
-/** Leaf links: groups contribute their sub-pages, plain items themselves. */
 const leaves = (items: NavItem[]) =>
   items.flatMap((item) => (item.items?.length ? item.items : [item]))
 
-/** Only the most specific matching link is current (/blocks/projects, not also /blocks). */
 function activeHrefFor(items: NavItem[], currentPath: string) {
   return items
     .map((item) => item.href)
@@ -565,10 +540,6 @@ function NavEntry({
   )
 }
 
-/**
- * Running index for the staggered label fade-in: section labels and items in
- * reading order; a group's sub-items take the indices after it.
- */
 function staggerOrder(sections: NavSection[], showLabels: boolean) {
   let index = 0
   return sections.map((section) => {
@@ -622,7 +593,6 @@ function SidebarNav({
 type ShellUser = { name: string; email: string; initials: string }
 type Workspace = { name: string; logo: React.ReactNode; plan?: string }
 
-/** Workspace, search, nav, footer links and the account menu: the rail and the phone drawer. */
 function SidebarBody({
   rail,
   workspace,
@@ -736,7 +706,6 @@ function assignLocation(href: string) {
   window.location.assign(href)
 }
 
-/** Mod+K: every nav page (with its sequence hotkey), then any extra commands. */
 function navCommands(
   sections: NavSection[],
   onNavigate: (href: string) => void
@@ -753,11 +722,6 @@ function navCommands(
   )
 }
 
-/**
- * Fade variant: what the sidebar shows right now. Ease out snaps to the rail
- * as soon as a drag crosses 160px; cascade and scrub keep following the
- * pointer until it's released.
- */
 function fadeState({
   motion,
   collapsed,
@@ -812,7 +776,6 @@ function useSidebarDrag({
   collapsed: boolean
   setCollapsed: (collapsed: boolean) => void
 }) {
-  // The expanded width, and the live width while dragging.
   const [width, setWidth] = React.useState(defaultWidth)
   const [dragging, setDragging] = React.useState(false)
   const [dragBelowSnap, setDragBelowSnap] = React.useState(false)
@@ -830,7 +793,6 @@ function useSidebarDrag({
     const el = asideRef.current
     if (!el) return
     el.style.setProperty("--sb-drag-w", `${next}px`)
-    // Scrub: labels fade with the width between the rail and 160px.
     if (motion === "scrub")
       el.style.setProperty(
         "--sb-label-o",
@@ -862,19 +824,8 @@ function useSidebarDrag({
 }
 
 /**
- * The frame every app page sits in: a tinted sidebar and the page on an inset
- * white surface (nested surfaces, docs/COMPOSITION.md).
- *
- * - Desktop: drag the edge to resize; under 160px (or Mod+B) it settles to an
- *   icon rail with tooltips. Labels leave per `motion` (ease-out, cascade,
- *   scrub) and the icons never move.
- * - Mobile (< md): the sidebar becomes a sheet opened from the header.
- * - Mod+K opens the command-palette block over every nav item plus any
- *   `commands`; each item can have its own sequence hotkey (G then P).
- * - Router-agnostic: pass `currentPath`, and `linkComponent` / `onNavigate`
- *   from your router (defaults to plain links).
- *
  * Pages render `<AppShellHeader title actions />` first, then their content.
+ * Pass `currentPath`, `linkComponent` and `onNavigate` from your router (plain links by default).
  */
 function AppShell({
   workspace,
@@ -903,21 +854,12 @@ function AppShell({
   settingsHref?: string
   onSignOut?: () => void
   defaultCollapsed?: boolean
-  /**
-   * `fade` (the DS standard for resizable sidebars): labels stay mounted and
-   * leave per `motion`, the edge resizes, icons never move. `classic`: the old
-   * rail (labels unmount, icons center), no resizing.
-   */
+  /** `motion`, `resizable` and `defaultWidth` (px) apply to `fade` only; `classic` does not resize. */
   variant?: "fade" | "classic"
-  /** Fade variant: how the labels leave and return (see SIDEBAR_MOTION). */
   motion?: SidebarMotion
-  /** Fade variant: drag the trailing edge to resize; under 160px it settles to icons. */
   resizable?: boolean
-  /** Fade variant: expanded width in px. */
   defaultWidth?: number
-  /** Pinned above the account menu (Settings, Help…). */
   footerItems?: NavItem[]
-  /** Extra Mod+K commands after the nav pages (actions, nested pages). */
   commands?: PaletteCommand[]
   children: React.ReactNode
 }) {
@@ -1019,7 +961,6 @@ function AppShell({
             )}
           </aside>
 
-          {/* Phones: a start-side drawer that tracks the finger and swipes away. */}
           <Drawer
             open={mobileOpen}
             onOpenChange={setMobileOpen}
@@ -1064,7 +1005,6 @@ function AppShell({
   )
 }
 
-/** Page header: sidebar toggle (mobile menu), title + description, trailing actions. */
 function AppShellHeader({
   title,
   description,
@@ -1131,14 +1071,9 @@ function AppShellHeader({
 }
 
 /**
- * Page body with the standard gutter, sharing the header's leading edge.
- * Narrow pages add a max width (`max-w-4xl`) but stay start-aligned, never centered.
- */
-/**
- * The page body. Cap reading-width pages with a class (`max-w-4xl`); they
- * center in the space beside the sidebar. `fill` makes it take exactly the height left under the
- * header (for a table or board that scrolls inside itself); without it the
- * window scrolls.
+ * `fill` takes exactly the height left under the header, for a table or board that scrolls
+ * inside itself; otherwise the window scrolls. Cap reading-width pages with a class
+ * (`max-w-4xl`); they center beside the sidebar.
  */
 function AppShellContent({
   className,
@@ -1150,7 +1085,6 @@ function AppShellContent({
       data-slot="app-shell-content"
       data-fill={fill || undefined}
       className={cn(
-        // mx-auto: a page that caps its width (max-w-4xl) sits centered.
         "mx-auto flex w-full flex-col gap-6 p-4 md:p-6",
         fill && "min-h-0 flex-1",
         className

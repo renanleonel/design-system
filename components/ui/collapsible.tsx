@@ -7,10 +7,6 @@ function Collapsible({ ...props }: CollapsiblePrimitive.Root.Props) {
   return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />
 }
 
-/**
- * Unstyled on purpose: pass a `Button` through `render`, or style it as a
- * row. Chevrons inside rotate with `group-data-panel-open/collapsible-trigger`.
- */
 function CollapsibleTrigger({
   className,
   ...props
@@ -27,7 +23,6 @@ function CollapsibleTrigger({
   )
 }
 
-/** Same height-and-fade transition as the accordion panel. */
 function CollapsibleContent({
   className,
   ...props

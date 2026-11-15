@@ -15,17 +15,10 @@ export type ChecklistItem = {
   id: string
   title: string
   description: React.ReactNode
-  /** The action that completes it ("Create project"). */
   action?: { label: string; href?: string; onClick?: () => void }
   done: boolean
 }
 
-/**
- * "Get started" on the dashboard: progress, then the tasks. The next open task
- * is expanded with its action; done tasks collapse to a struck line with a
- * check. Any task can be opened. Hide it with the X; when every task is done
- * it says so and offers to go away.
- */
 export function GetStartedChecklist({
   title = "Get started",
   items,

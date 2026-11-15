@@ -32,8 +32,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
 import { setSearchParams, useUrlState } from "@/hooks/use-url-state"
 
-// --- Schemas ---------------------------------------------------------------------
-
 const slugify = (value: string) =>
   value
     .toLowerCase()
@@ -120,9 +118,6 @@ const PLANS = [
   },
 ]
 
-// --- Pieces ----------------------------------------------------------------------
-
-/** Step list: done steps get a check and can be revisited, upcoming ones can't. */
 function Stepper({
   current,
   completed,
@@ -224,8 +219,6 @@ function StepFooter({
     </div>
   )
 }
-
-// --- Steps -----------------------------------------------------------------------
 
 function WorkspaceStep({
   defaults,
@@ -433,15 +426,6 @@ function PlanStep({
   )
 }
 
-// --- Wizard ----------------------------------------------------------------------
-
-/**
- * First-run setup: workspace → team → plan → done. The step lives in the URL
- * (`?step=team`), so back/forward and refresh work; a step can't be opened
- * before the ones it depends on. Each step validates on its own, values are
- * kept when going back, and the content slides in the direction you move.
- * `onComplete` runs on the last step; a throw shows its message in a banner.
- */
 /**
  * The step to show, derived during render: the one in the URL, but never past
  * the first unfinished one. `completed` counts finished steps (0–3).
@@ -495,8 +479,8 @@ export function SetupWizard({
   continueHref = "/",
 }: {
   brand: React.ReactNode
+  /** Throw to show the error as a banner on the last step. */
   onComplete: (values: SetupValues) => Promise<void> | void
-  /** Where "Go to dashboard" leads when done. */
   continueHref?: string
 }) {
   const [stepParam] = useUrlState("step", "workspace", "push")
