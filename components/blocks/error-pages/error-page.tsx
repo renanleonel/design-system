@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button"
 
 type Variant = "not-found" | "forbidden" | "server-error" | "maintenance"
 
-const COPY: Record<Variant, { code: string; title: string; description: string }> = {
+const COPY: Record<
+  Variant,
+  { code: string; title: string; description: string }
+> = {
   "not-found": {
     code: "404",
     title: "This page doesn't exist",
@@ -75,7 +78,9 @@ export function ErrorPage({
           <span className="sr-only">Error {copy.code}: </span>
           {title ?? copy.title}
         </h1>
-        <p className="text-muted-foreground">{description ?? copy.description}</p>
+        <p className="text-muted-foreground">
+          {description ?? copy.description}
+        </p>
         <div className="mt-2 flex flex-wrap justify-center gap-2">
           {onRetry && (
             <Button onClick={onRetry}>
@@ -88,7 +93,10 @@ export function ErrorPage({
             render={<a href={homeHref} />}
             nativeButton={false}
           >
-            <ArrowLeftIcon data-icon="inline-start" className="rtl:rotate-180" />
+            <ArrowLeftIcon
+              data-icon="inline-start"
+              className="rtl:rotate-180"
+            />
             Back home
           </Button>
           {supportHref && (

@@ -197,7 +197,10 @@ function ResizeHandle({
               const start = origin.current
               if (!start) return
               // The handle is on the sidebar's trailing edge: in RTL, moving left widens it.
-              const flip = getComputedStyle(event.currentTarget).direction === "rtl" ? -1 : 1
+              const flip =
+                getComputedStyle(event.currentTarget).direction === "rtl"
+                  ? -1
+                  : 1
               const dx = (event.clientX - start.x) * flip
               if (!dragging && Math.abs(dx) < 3) return
               if (!dragging) onDragStart()
@@ -225,13 +228,16 @@ function ResizeHandle({
                 origin.current = null
                 onDragEnd(to)
               } else if (event.key === "Enter") onToggle()
-              else if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+              else if (
+                event.key === "ArrowLeft" ||
+                event.key === "ArrowRight"
+              ) {
                 // Arrows follow the screen: in RTL the sidebar's edge faces left.
-                const rtl = getComputedStyle(event.currentTarget).direction === "rtl"
+                const rtl =
+                  getComputedStyle(event.currentTarget).direction === "rtl"
                 const toward = event.key === "ArrowRight" ? 1 : -1
                 onNudge(16 * toward * (rtl ? -1 : 1))
-              }
-              else return
+              } else return
               event.preventDefault()
             }}
             className="group/handle absolute inset-y-0 end-0 z-10 w-2 cursor-col-resize touch-none outline-none select-none focus-visible:[&>span]:opacity-100"
@@ -381,7 +387,7 @@ function NavGroup({
       {/* The wrapper fades with the labels (staggered); the chevron itself
           turns with the panel, on no delay. */}
       <span className={cn("flex", fade && FADE_LABEL)}>
-        <ChevronRightIcon className="text-muted-foreground rtl:-scale-x-100 transition-[rotate] duration-(--ds-duration-popover) ease-out group-data-panel-open/navtrigger:rotate-90 motion-reduce:transition-none" />
+        <ChevronRightIcon className="text-muted-foreground transition-[rotate] duration-(--ds-duration-popover) ease-out group-data-panel-open/navtrigger:rotate-90 motion-reduce:transition-none rtl:-scale-x-100" />
       </span>
     </Collapsible.Trigger>
   )

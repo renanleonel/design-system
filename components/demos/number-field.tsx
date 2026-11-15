@@ -87,11 +87,7 @@ export function States() {
 export function Empty() {
   return (
     <div className="w-full max-w-48">
-      <NumberField
-        label="Seats"
-        placeholder="Add seats"
-        min={1}
-      />
+      <NumberField label="Seats" placeholder="Add seats" min={1} />
     </div>
   )
 }
@@ -112,9 +108,17 @@ export function WorstCase() {
         label="Extreme"
         defaultValue={9876543210123}
         locale="pt-BR"
-        format={{ style: "currency", currency: "BRL", maximumFractionDigits: 0 }}
+        format={{
+          style: "currency",
+          currency: "BRL",
+          maximumFractionDigits: 0,
+        }}
       />
-      <NumberField label="Negative" defaultValue={-1234567.891} locale="en-US" />
+      <NumberField
+        label="Negative"
+        defaultValue={-1234567.891}
+        locale="en-US"
+      />
     </div>
   )
 }

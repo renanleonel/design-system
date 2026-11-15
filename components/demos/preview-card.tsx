@@ -45,8 +45,12 @@ export function WorstCase() {
         <p className="text-muted-foreground">
           maria.eduarda.albuquerque.cavalcanti@departamento-de-engenharia.empresa.com.br
         </p>
-        <p className="text-muted-foreground">Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-        <p>山田太郎さんは東京の開発チームでデザインシステムを担当しています。</p>
+        <p className="text-muted-foreground">
+          Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        </p>
+        <p>
+          山田太郎さんは東京の開発チームでデザインシステムを担当しています。
+        </p>
         <p>مهندسة برمجيات تعمل على نظام التصميم في فريق المنتج.</p>
       </PreviewCardContent>
     </PreviewCard>

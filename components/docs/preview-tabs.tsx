@@ -35,7 +35,8 @@ export function PreviewTabs({
       <TabsContent value="preview">
         <div
           data-slot="story-preview"
-          className="flex min-h-56 items-center justify-center rounded-xl px-4 py-10 shadow-border sm:px-10">
+          className="flex min-h-56 items-center justify-center rounded-xl px-4 py-10 shadow-border sm:px-10"
+        >
           {preview}
         </div>
       </TabsContent>

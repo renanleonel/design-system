@@ -36,7 +36,9 @@ for (const scheme of SCHEMES) {
         await settle(page, `/components/${name}`, scheme)
         const preview = page.locator("[data-slot=story-preview]").first()
         await expect(preview).toBeVisible()
-        await expect(preview).toHaveScreenshot(`components/${name}-${scheme}.png`)
+        await expect(preview).toHaveScreenshot(
+          `components/${name}-${scheme}.png`
+        )
       })
     }
   })

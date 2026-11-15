@@ -114,7 +114,12 @@ export function SignupsChart({
     <ChartContainer config={signupsConfig} className="aspect-auto h-64 w-full">
       <BarChart data={data} barGap={2} margin={{ left: 0, right: 8, top: 8 }}>
         <CartesianGrid vertical={false} />
-        <XAxis dataKey="week" tickLine={false} axisLine={false} tickMargin={8} />
+        <XAxis
+          dataKey="week"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+        />
         <YAxis
           tickLine={false}
           axisLine={false}

@@ -81,7 +81,7 @@ function AvatarStack({
       aria-label={label}
       data-slot="avatar-stack"
       className={cn(
-        "flex items-center *:not-first:-ms-2 *:ring-2 *:ring-background",
+        "flex items-center *:ring-2 *:ring-background *:not-first:-ms-2",
         className
       )}
       {...props}
@@ -118,15 +118,15 @@ function AvatarStack({
             </PopoverHeader>
             <ul className="-mx-1 flex max-h-64 flex-col overflow-y-auto">
               {rest.slice(0, LIST_LIMIT).map(({ person, key }) => (
-                <li
-                  key={key}
-                  className="flex min-h-9 items-center gap-2 px-1"
-                >
+                <li key={key} className="flex min-h-9 items-center gap-2 px-1">
                   <Avatar size="sm">
                     {person.src && <AvatarImage src={person.src} alt="" />}
                     <AvatarFallback>{initials(person.name)}</AvatarFallback>
                   </Avatar>
-                  <span className="min-w-0 truncate text-sm" title={person.name}>
+                  <span
+                    className="min-w-0 truncate text-sm"
+                    title={person.name}
+                  >
                     {person.name}
                   </span>
                 </li>

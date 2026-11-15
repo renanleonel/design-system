@@ -74,7 +74,7 @@ const PICKER_STYLES = cn(
   String.raw`[&_.react-colorful\_\_saturation]:h-36! [&_.react-colorful\_\_saturation]:rounded-lg!`,
   String.raw`[&_.react-colorful\_\_hue]:h-3! [&_.react-colorful\_\_hue]:rounded-full!`,
   String.raw`[&_.react-colorful\_\_alpha]:h-3! [&_.react-colorful\_\_alpha]:rounded-full!`,
-  String.raw`[&_.react-colorful\_\_hue]:mt-0! [&_.react-colorful\_\_alpha]:mt-0!`,
+  String.raw`[&_.react-colorful\_\_alpha]:mt-0! [&_.react-colorful\_\_hue]:mt-0!`,
   String.raw`[&_.react-colorful\_\_interactive]:rounded-[inherit]!`,
   String.raw`[&_.react-colorful\_\_interactive:focus-visible]:outline-2! [&_.react-colorful\_\_interactive:focus-visible]:outline-offset-2! [&_.react-colorful\_\_interactive:focus-visible]:outline-(--ds-focus-ring)!`,
   String.raw`[&_.react-colorful\_\_pointer]:size-5! [&_.react-colorful\_\_pointer]:border-2! [&_.react-colorful\_\_pointer]:border-background! [&_.react-colorful\_\_pointer]:shadow-[0_0_0_1px_color-mix(in_oklch,var(--foreground)_35%,transparent)]!`
@@ -166,7 +166,8 @@ function ColorPicker({
         <ColorDot color={color} />
         <span
           id={valueId}
-          className="min-w-0 flex-1 truncate font-mono text-xs tabular-nums uppercase">
+          className="min-w-0 flex-1 truncate font-mono text-xs uppercase tabular-nums"
+        >
           {color}
         </span>
         <ChevronDownIcon className="text-muted-foreground transition-transform duration-(--ds-duration-popover) ease-out group-data-popup-open/color-picker:rotate-180 motion-reduce:transition-none" />
@@ -206,7 +207,7 @@ function ColorPicker({
               aria-label="Hex color"
               aria-invalid={invalid || undefined}
               aria-describedby={invalid ? errorId : undefined}
-              className="font-mono tabular-nums uppercase"
+              className="font-mono uppercase tabular-nums"
             />
           </InputGroup>
           {invalid && (

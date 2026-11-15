@@ -39,7 +39,9 @@ export function Default() {
           </Field>
         </FieldGroup>
         <DialogFooter>
-          <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
+          <DialogClose render={<Button variant="outline" />}>
+            Cancel
+          </DialogClose>
           <DialogClose render={<Button />}>Save</DialogClose>
         </DialogFooter>
       </DialogContent>

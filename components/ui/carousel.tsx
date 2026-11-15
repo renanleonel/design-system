@@ -111,11 +111,7 @@ function Carousel({
 
   const canScrollPrev = useEmblaValue(api, (a) => a.canScrollPrev(), false)
   const canScrollNext = useEmblaValue(api, (a) => a.canScrollNext(), false)
-  const selectedIndex = useEmblaValue(
-    api,
-    (a) => a.selectedScrollSnap(),
-    0
-  )
+  const selectedIndex = useEmblaValue(api, (a) => a.selectedScrollSnap(), 0)
   const snapCount = useEmblaValue(api, (a) => a.scrollSnapList().length, 0)
 
   // Hands embla's API to the parent when it's created. `setApi` exists for
@@ -144,7 +140,8 @@ function Carousel({
     if (event.defaultPrevented) return
     // Typing in a nested field must not move the slides.
     const target = event.target as HTMLElement
-    if (target.closest("input, textarea, select, [contenteditable=true]")) return
+    if (target.closest("input, textarea, select, [contenteditable=true]"))
+      return
     const prevKey =
       orientation === "vertical"
         ? "ArrowUp"
@@ -241,7 +238,7 @@ function CarouselContent({
           "flex",
           orientation === "horizontal"
             ? "-ms-4 touch-pan-y touch-pinch-zoom"
-            : "-mt-4 h-full flex-col touch-pan-x touch-pinch-zoom",
+            : "-mt-4 h-full touch-pan-x touch-pinch-zoom flex-col",
           className
         )}
         {...props}
@@ -343,10 +340,7 @@ function CarouselNext({
 }
 
 /** One dot per scroll snap; the current one is stretched and `aria-current`. */
-function CarouselDots({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function CarouselDots({ className, ...props }: React.ComponentProps<"div">) {
   const { snapCount, selectedIndex, scrollTo, orientation } = useCarousel()
   const snapList = React.useMemo(
     () => Array.from({ length: snapCount }, (_, n) => n),

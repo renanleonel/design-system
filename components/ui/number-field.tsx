@@ -47,7 +47,9 @@ function NumberField({
     >
       {label != null &&
         (scrub ? (
-          <NumberFieldScrubLabel htmlFor={inputId}>{label}</NumberFieldScrubLabel>
+          <NumberFieldScrubLabel htmlFor={inputId}>
+            {label}
+          </NumberFieldScrubLabel>
         ) : (
           <label
             htmlFor={inputId}
@@ -74,7 +76,7 @@ function NumberFieldGroup({
     <NumberFieldPrimitive.Group
       data-slot="number-field-group"
       className={cn(
-        "group/number-field flex h-control w-full min-w-0 items-stretch overflow-hidden rounded-control border border-input transition-colors has-[[data-slot=number-field-input]:focus-visible]:outline-2 has-[[data-slot=number-field-input]:focus-visible]:outline-offset-2 has-[[data-slot=number-field-input]:focus-visible]:outline-(--ds-focus-ring) has-[[data-slot=number-field-input]:disabled]:bg-input/50 has-[[data-slot=number-field-input]:disabled]:opacity-50 has-[[data-slot=number-field-input][aria-invalid=true]]:border-destructive has-[[data-slot=number-field-input][aria-invalid=true]]:ring-3 has-[[data-slot=number-field-input][aria-invalid=true]]:ring-destructive/20 dark:bg-input/30 dark:has-[[data-slot=number-field-input][aria-invalid=true]]:ring-destructive/40",
+        "group/number-field flex h-control w-full min-w-0 items-stretch overflow-hidden rounded-control border border-input transition-colors has-[[data-slot=number-field-input]:disabled]:bg-input/50 has-[[data-slot=number-field-input]:disabled]:opacity-50 has-[[data-slot=number-field-input]:focus-visible]:outline-2 has-[[data-slot=number-field-input]:focus-visible]:outline-offset-2 has-[[data-slot=number-field-input]:focus-visible]:outline-(--ds-focus-ring) has-[[data-slot=number-field-input][aria-invalid=true]]:border-destructive has-[[data-slot=number-field-input][aria-invalid=true]]:ring-3 has-[[data-slot=number-field-input][aria-invalid=true]]:ring-destructive/20 dark:bg-input/30 dark:has-[[data-slot=number-field-input][aria-invalid=true]]:ring-destructive/40",
         className
       )}
       {...props}
@@ -90,7 +92,7 @@ function NumberFieldInput({
     <NumberFieldPrimitive.Input
       data-slot="number-field-input"
       className={cn(
-        "h-full min-w-0 flex-1 bg-transparent px-2.5 text-center text-base outline-none tabular-nums placeholder:text-muted-foreground disabled:cursor-not-allowed pointer-fine:text-sm",
+        "h-full min-w-0 flex-1 bg-transparent px-2.5 text-center text-base tabular-nums outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed pointer-fine:text-sm",
         className
       )}
       {...props}

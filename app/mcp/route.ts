@@ -34,9 +34,7 @@ function notFound(name: string) {
   const close = closeMatches(name)
   return fail(
     `No registry item named "${name}".` +
-      (close.length
-        ? ` Closest: ${close.join(", ")}.`
-        : " No close matches.") +
+      (close.length ? ` Closest: ${close.join(", ")}.` : " No close matches.") +
       ` Use list_items or search to browse (types: ${kinds().join(", ")}).`
   )
 }
@@ -56,7 +54,11 @@ function capped(parts: string[], hint: string) {
   return kept.join("\n")
 }
 
-const readOnly = { readOnlyHint: true, idempotentHint: true, openWorldHint: false }
+const readOnly = {
+  readOnlyHint: true,
+  idempotentHint: true,
+  openWorldHint: false,
+}
 
 const handler = createMcpHandler(
   (server) => {
@@ -77,7 +79,10 @@ const handler = createMcpHandler(
         annotations: readOnly,
       },
       async ({ type }) => {
-        const t = type?.trim().toLowerCase().replace(/^registry:/, "")
+        const t = type
+          ?.trim()
+          .toLowerCase()
+          .replace(/^registry:/, "")
         const all = items()
         const rows = t ? all.filter((i) => i.kind === t) : all
         if (!rows.length)
@@ -133,7 +138,10 @@ const handler = createMcpHandler(
         description:
           "Full details of one registry item: description, catalog notes, npm and registry dependencies, install command and raw URL, and the source files. Set include_source=false for metadata only. Large sources are truncated with a note.",
         inputSchema: z.object({
-          name: z.string().min(1).describe("Item name, e.g. 'button' or 'data-table'"),
+          name: z
+            .string()
+            .min(1)
+            .describe("Item name, e.g. 'button' or 'data-table'"),
           include_source: z
             .boolean()
             .optional()
@@ -161,9 +169,7 @@ const handler = createMcpHandler(
         const files = i.files.map(
           (f) => `\n## ${f.path}\n\`\`\`tsx\n${f.content}\n\`\`\``
         )
-        return text(
-          capped([head, ...files], `fetch the rest from ${i.url}`)
-        )
+        return text(capped([head, ...files], `fetch the rest from ${i.url}`))
       }
     )
 
@@ -221,9 +227,7 @@ const handler = createMcpHandler(
       },
       async ({ topic }) => {
         const all = sections()
-        const listing = all
-          .map((s) => `- ${s.topic}: ${s.heading}`)
-          .join("\n")
+        const listing = all.map((s) => `- ${s.topic}: ${s.heading}`).join("\n")
         const q = topic?.trim().toLowerCase()
         if (!q) return text(`Topics (pass one as "topic"):\n${listing}`)
         let hits = all.filter((s) => s.topic === q)
@@ -287,7 +291,10 @@ const handler = createMcpHandler(
         description:
           "Dated change entries per item, newest first. With a name: that item's history. Without: the 30 most recent changes across the registry.",
         inputSchema: z.object({
-          name: z.string().optional().describe("Item name; omit for recent changes"),
+          name: z
+            .string()
+            .optional()
+            .describe("Item name; omit for recent changes"),
         }),
         annotations: readOnly,
       },
@@ -297,16 +304,22 @@ const handler = createMcpHandler(
           const i = findItem(name)
           if (!i) return notFound(name)
           const entries = log[i.name] ?? []
-          if (!entries.length) return text(`No changelog entries for ${i.name}.`)
+          if (!entries.length)
+            return text(`No changelog entries for ${i.name}.`)
           return text(
             entries
-              .map((e) => `- ${e.date}: ${e.change}${e.commit ? ` (${e.commit})` : ""}`)
+              .map(
+                (e) =>
+                  `- ${e.date}: ${e.change}${e.commit ? ` (${e.commit})` : ""}`
+              )
               .join("\n")
           )
         }
         const rows = Object.entries(log)
           .flatMap(([n, es]) => es.map((e) => ({ n, ...e })))
-          .sort((a, b) => b.date.localeCompare(a.date) || a.n.localeCompare(b.n))
+          .sort(
+            (a, b) => b.date.localeCompare(a.date) || a.n.localeCompare(b.n)
+          )
         const top = rows.slice(0, 30)
         return text(
           [

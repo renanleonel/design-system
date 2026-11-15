@@ -101,7 +101,11 @@ export function GetStartedChecklist({
         {items.map((item) => {
           const open = item.id === expanded
           return (
-            <li key={item.id} data-done={item.done || undefined} className="group/task">
+            <li
+              key={item.id}
+              data-done={item.done || undefined}
+              className="group/task"
+            >
               <button
                 type="button"
                 aria-expanded={open}
@@ -131,7 +135,9 @@ export function GetStartedChecklist({
               <div
                 className={cn(
                   "grid transition-[grid-template-rows,opacity] duration-(--ds-duration-popover) ease-out motion-reduce:transition-none",
-                  open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                  open
+                    ? "grid-rows-[1fr] opacity-100"
+                    : "grid-rows-[0fr] opacity-0"
                 )}
                 inert={!open}
               >

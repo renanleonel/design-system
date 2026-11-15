@@ -77,7 +77,7 @@ function SwatchPicker({
             } as React.CSSProperties
           }
           className={cn(
-            "group/swatch hit-area relative flex shrink-0 items-center justify-center rounded-full bg-(--swatch) text-(--swatch-fg) motion-press outline-none",
+            "group/swatch hit-area relative flex shrink-0 motion-press items-center justify-center rounded-full bg-(--swatch) text-(--swatch-fg) outline-none",
             // Hairline so pale swatches still read against the page (3:1).
             "shadow-[inset_0_0_0_1px_color-mix(in_oklch,var(--foreground)_15%,transparent)]",
             // Chosen: a gap, then a ring in the swatch's own color.

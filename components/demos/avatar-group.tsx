@@ -71,7 +71,9 @@ export function WorstCase() {
         max={2}
         people={[
           { name: "Jo" },
-          { name: "ana.beatriz.fernandes.de.albuquerque@empresa-com-nome-muito-longo.com.br" },
+          {
+            name: "ana.beatriz.fernandes.de.albuquerque@empresa-com-nome-muito-longo.com.br",
+          },
           { name: "プロジェクト管理者" },
           { name: "مدير المشروع" },
         ]}

@@ -73,10 +73,9 @@ export default function Page() {
         }
         hint={
           <>
-            <strong>Don&apos;t have an idea yet?</strong> Start from a
-            template: a landing page, a dashboard or an API, deployed in a
-            minute and yours to change.{" "}
-            {/* _top leaves the gallery's preview frame. */}
+            <strong>Don&apos;t have an idea yet?</strong> Start from a template:
+            a landing page, a dashboard or an API, deployed in a minute and
+            yours to change. {/* _top leaves the gallery's preview frame. */}
             <Link
               href="/blocks"
               target="_top"

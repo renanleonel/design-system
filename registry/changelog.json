@@ -180,6 +180,10 @@
   ],
   "command": [
     {
+      "date": "2026-11-15",
+      "change": "CommandDialog fits short viewports: capped to the space below its anchor, the list scrolls instead of the popup being cut off"
+    },
+    {
       "date": "2026-11-13",
       "change": "stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills",
       "commit": "334efd2"

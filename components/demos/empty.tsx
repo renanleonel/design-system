@@ -41,7 +41,9 @@ export function NoResults() {
           <SearchXIcon />
         </EmptyMedia>
         <EmptyTitle>No projects match “billing”</EmptyTitle>
-        <EmptyDescription>Try another search or clear the filters.</EmptyDescription>
+        <EmptyDescription>
+          Try another search or clear the filters.
+        </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <Button variant="outline">Clear filters</Button>

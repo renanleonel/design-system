@@ -47,7 +47,10 @@ export function Vertical() {
       className="max-w-sm"
       steps={[
         { title: "Create account", description: "Email and password" },
-        { title: "Verify email", description: "Code sent to renan@example.com" },
+        {
+          title: "Verify email",
+          description: "Code sent to renan@example.com",
+        },
         { title: "Choose a plan", description: "Free, Pro or Team" },
         { title: "Invite your team" },
       ]}
@@ -66,7 +69,11 @@ export function Clickable() {
         { title: "Profile" },
         { title: "Workspace" },
         { title: "Billing" },
-        { title: "Review", disabled: true, description: "Locked until billing" },
+        {
+          title: "Review",
+          disabled: true,
+          description: "Locked until billing",
+        },
       ]}
     />
   )
@@ -80,7 +87,11 @@ export function WithError() {
       aria-label="Import progress"
       steps={[
         { title: "Upload" },
-        { title: "Map columns", error: true, description: "2 columns unmapped" },
+        {
+          title: "Map columns",
+          error: true,
+          description: "2 columns unmapped",
+        },
         { title: "Validate" },
         { title: "Import" },
       ]}
@@ -107,9 +118,15 @@ export function WorstCase() {
             description: "Titular da conta e responsável legal",
           },
           { title: "João Pedro de Oliveira Neto" },
-          { title: "プロジェクトの設定", description: "チームメンバーを招待する" },
+          {
+            title: "プロジェクトの設定",
+            description: "チームメンバーを招待する",
+          },
           { title: "إعداد المشروع", description: "دعوة أعضاء الفريق" },
-          { title: "Supercalifragilisticexpialidocious_unbreakable_word_0123456789" },
+          {
+            title:
+              "Supercalifragilisticexpialidocious_unbreakable_word_0123456789",
+          },
           { title: "Seis" },
           { title: "Sete", error: true },
           { title: "Oito" },
@@ -125,8 +142,14 @@ export function WorstCase() {
         aria-label="Long flow, stacked"
         className="max-w-xs"
         steps={[
-          { title: "Contrato de prestação de serviços de Maria Eduarda dos Santos" },
-          { title: "インボイスの確認と承認", description: "経理部門が確認します" },
+          {
+            title:
+              "Contrato de prestação de serviços de Maria Eduarda dos Santos",
+          },
+          {
+            title: "インボイスの確認と承認",
+            description: "経理部門が確認します",
+          },
           { title: "مراجعة الفاتورة", description: "سيتم المراجعة قريبا" },
         ]}
       />

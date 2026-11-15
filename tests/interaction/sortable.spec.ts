@@ -27,11 +27,11 @@ test("Space, arrows, Space reorders with the keyboard", async ({ page }) => {
   // dnd-kit announces the lift; arrow keys are only listened to after that.
   await expect(handle).toHaveAttribute("aria-pressed", "true")
   await page.keyboard.press("ArrowDown")
-  await expect(
-    page.getByText("Lint moved to position 2 of 4.")
-  ).toBeAttached()
+  await expect(page.getByText("Lint moved to position 2 of 4.")).toBeAttached()
   await page.keyboard.press("Space")
-  await expect(page.getByText("Dropped Lint at position 2 of 4.")).toBeAttached()
+  await expect(
+    page.getByText("Dropped Lint at position 2 of 4.")
+  ).toBeAttached()
   await expect(order(page)).toHaveText([
     "Run tests",
     "Lint",
@@ -46,9 +46,7 @@ test("Escape cancels a keyboard drag", async ({ page }) => {
   await page.keyboard.press("Space")
   await expect(handle).toHaveAttribute("aria-pressed", "true")
   await page.keyboard.press("ArrowDown")
-  await expect(
-    page.getByText("Lint moved to position 2 of 4.")
-  ).toBeAttached()
+  await expect(page.getByText("Lint moved to position 2 of 4.")).toBeAttached()
   await page.keyboard.press("Escape")
   await expect(page.getByText("Moving Lint cancelled.")).toBeAttached()
   await expect(order(page)).toHaveText(NAMES)

@@ -59,12 +59,52 @@ const KIND: Record<
 }
 
 export const SAMPLE_NOTIFICATIONS: Notification[] = [
-  { id: "n1", kind: "mention", title: "Ana mentioned you in Q3 roadmap", body: "“@renan can you check the billing numbers before Friday?”", time: "4 min ago", read: false },
-  { id: "n2", kind: "review", title: "João requested your review on #412", body: "Add usage meters to the billing page", time: "32 min ago", read: false },
-  { id: "n3", kind: "deploy", title: "acme-web deployed to production", body: "Build 1f3a9c2 finished in 48s", time: "1 h ago", read: false },
-  { id: "n4", kind: "invite", title: "Pedro joined the Growth team", time: "3 h ago", read: true },
-  { id: "n5", kind: "review", title: "Maria approved #407", body: "Sortable conditions in the rule dialog", time: "Yesterday", read: true },
-  { id: "n6", kind: "deploy", title: "billing-api deployed to staging", time: "Yesterday", read: true },
+  {
+    id: "n1",
+    kind: "mention",
+    title: "Ana mentioned you in Q3 roadmap",
+    body: "“@renan can you check the billing numbers before Friday?”",
+    time: "4 min ago",
+    read: false,
+  },
+  {
+    id: "n2",
+    kind: "review",
+    title: "João requested your review on #412",
+    body: "Add usage meters to the billing page",
+    time: "32 min ago",
+    read: false,
+  },
+  {
+    id: "n3",
+    kind: "deploy",
+    title: "acme-web deployed to production",
+    body: "Build 1f3a9c2 finished in 48s",
+    time: "1 h ago",
+    read: false,
+  },
+  {
+    id: "n4",
+    kind: "invite",
+    title: "Pedro joined the Growth team",
+    time: "3 h ago",
+    read: true,
+  },
+  {
+    id: "n5",
+    kind: "review",
+    title: "Maria approved #407",
+    body: "Sortable conditions in the rule dialog",
+    time: "Yesterday",
+    read: true,
+  },
+  {
+    id: "n6",
+    kind: "deploy",
+    title: "billing-api deployed to staging",
+    time: "Yesterday",
+    read: true,
+  },
 ]
 
 /**
@@ -129,7 +169,7 @@ function NotificationRow({
         <a
           href={item.href ?? "#"}
           onClick={() => onMarkRead(item.id)}
-          className="rounded-sm text-sm font-medium focus-ring after:absolute after:inset-0 group-not-data-unread/row:font-normal group-not-data-unread/row:text-muted-foreground"
+          className="rounded-sm text-sm font-medium focus-ring group-not-data-unread/row:font-normal group-not-data-unread/row:text-muted-foreground after:absolute after:inset-0"
         >
           {item.title}
         </a>
@@ -181,7 +221,7 @@ function NotificationRow({
       </div>
       <span
         aria-hidden
-        className="absolute top-4 end-2 size-2 rounded-full bg-primary transition-opacity group-not-data-unread/row:opacity-0 group-focus-within/row:opacity-0 group-hover/row:opacity-0 pointer-coarse:hidden"
+        className="absolute end-2 top-4 size-2 rounded-full bg-primary transition-opacity group-not-data-unread/row:opacity-0 group-focus-within/row:opacity-0 group-hover/row:opacity-0 pointer-coarse:hidden"
       />
       {!item.read && <span className="sr-only">Unread</span>}
     </li>
@@ -195,7 +235,9 @@ function CaughtUp({ archived }: { archived?: boolean }) {
         <EmptyMedia variant="icon">
           {archived ? <ArchiveIcon /> : <CheckCheckIcon />}
         </EmptyMedia>
-        <EmptyTitle>{archived ? "Nothing archived" : "You're all caught up"}</EmptyTitle>
+        <EmptyTitle>
+          {archived ? "Nothing archived" : "You're all caught up"}
+        </EmptyTitle>
         <EmptyDescription>
           {archived
             ? "Archived notifications show up here."
@@ -232,7 +274,9 @@ export function NotificationsMenu({
             variant="ghost"
             size="icon"
             hotkey="Shift+N"
-            aria-label={unread ? `Notifications, ${unread} unread` : "Notifications"}
+            aria-label={
+              unread ? `Notifications, ${unread} unread` : "Notifications"
+            }
             className="relative"
           />
         }
@@ -241,13 +285,16 @@ export function NotificationsMenu({
         {unread > 0 && (
           <span
             aria-hidden
-            className="absolute top-0.5 end-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.625rem] font-semibold text-primary-foreground tabular-nums ring-2 ring-background"
+            className="absolute end-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.625rem] font-semibold text-primary-foreground tabular-nums ring-2 ring-background"
           >
             {unread > 9 ? "9+" : unread}
           </span>
         )}
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-96 max-w-[calc(100vw-1rem)] gap-0 p-0">
+      <PopoverContent
+        align="end"
+        className="w-96 max-w-[calc(100vw-1rem)] gap-0 p-0"
+      >
         <div className="flex items-center justify-between gap-2 border-b px-3 py-2">
           <Tabs value={filter} onValueChange={(v) => setFilter(String(v))}>
             <TabsList variant="line" aria-label="Filter notifications">
@@ -255,7 +302,9 @@ export function NotificationsMenu({
               <TabsTrigger value="unread">
                 Unread
                 {unread > 0 && (
-                  <span className="text-muted-foreground tabular-nums">{unread}</span>
+                  <span className="text-muted-foreground tabular-nums">
+                    {unread}
+                  </span>
                 )}
               </TabsTrigger>
             </TabsList>
@@ -272,7 +321,12 @@ export function NotificationsMenu({
         {shown.length ? (
           <ul className="flex max-h-96 flex-col overflow-y-auto overscroll-contain p-1">
             {shown.map((item) => (
-              <NotificationRow key={item.id} item={item} onMarkRead={onMarkRead} compact />
+              <NotificationRow
+                key={item.id}
+                item={item}
+                onMarkRead={onMarkRead}
+                compact
+              />
             ))}
           </ul>
         ) : (
@@ -324,11 +378,18 @@ export function NotificationsFeed({
         <Tabs value={filter} onValueChange={(v) => setFilter(String(v))}>
           <TabsList variant="segmented" aria-label="Filter notifications">
             <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="unread">Unread {unread > 0 && unread}</TabsTrigger>
+            <TabsTrigger value="unread">
+              Unread {unread > 0 && unread}
+            </TabsTrigger>
             <TabsTrigger value="archived">Archived</TabsTrigger>
           </TabsList>
         </Tabs>
-        <Button variant="outline" size="sm" disabled={!unread} onClick={onMarkAllRead}>
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={!unread}
+          onClick={onMarkAllRead}
+        >
           <CheckCheckIcon data-icon="inline-start" />
           Mark all as read
         </Button>

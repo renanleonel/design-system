@@ -15,7 +15,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 // Facade: previews are whole block apps, so none boots until the visitor first
 // engages with the page (scroll, pointer, touch, key). Real visitors do that at
 // once; a page that's only been loaded doesn't pay for apps nobody looked at.
-const ENGAGE_EVENTS = ["pointermove", "pointerdown", "wheel", "scroll", "keydown", "touchstart"]
+const ENGAGE_EVENTS = [
+  "pointermove",
+  "pointerdown",
+  "wheel",
+  "scroll",
+  "keydown",
+  "touchstart",
+]
 let engaged = false
 function subscribeEngaged(notify: () => void) {
   if (engaged) return () => {}
@@ -31,7 +38,11 @@ function subscribeEngaged(notify: () => void) {
   }
 }
 const useEngaged = () =>
-  React.useSyncExternalStore(subscribeEngaged, () => engaged, () => false)
+  React.useSyncExternalStore(
+    subscribeEngaged,
+    () => engaged,
+    () => false
+  )
 
 const DEVICES = [
   { id: "desktop", label: "Desktop", width: "100%", icon: <MonitorIcon /> },

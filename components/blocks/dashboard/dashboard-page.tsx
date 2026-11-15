@@ -49,9 +49,7 @@ function WhenNear({ children }: { children: React.ReactNode }) {
   }, [near])
   if (near)
     return <React.Suspense fallback={chartFallback}>{children}</React.Suspense>
-  return (
-    <div ref={ref} aria-hidden className="h-64 w-full" />
-  )
+  return <div ref={ref} aria-hidden className="h-64 w-full" />
 }
 
 // --- Stat tile -------------------------------------------------------------
@@ -230,10 +228,30 @@ function sampleData(days: number) {
 }
 
 const ACTIVITY = [
-  { who: "Renan Leonel", initials: "RL", what: "deployed acme-web to production", when: "4 min ago" },
-  { who: "Ana Souza", initials: "AS", what: "invited 3 people to Growth", when: "1 h ago" },
-  { who: "João Silva", initials: "JS", what: "upgraded the workspace to Pro", when: "3 h ago" },
-  { who: "Pedro Santos", initials: "PS", what: "archived checkout-v1", when: "Yesterday" },
+  {
+    who: "Renan Leonel",
+    initials: "RL",
+    what: "deployed acme-web to production",
+    when: "4 min ago",
+  },
+  {
+    who: "Ana Souza",
+    initials: "AS",
+    what: "invited 3 people to Growth",
+    when: "1 h ago",
+  },
+  {
+    who: "João Silva",
+    initials: "JS",
+    what: "upgraded the workspace to Pro",
+    when: "3 h ago",
+  },
+  {
+    who: "Pedro Santos",
+    initials: "PS",
+    what: "archived checkout-v1",
+    when: "Yesterday",
+  },
 ]
 
 const TOP_PROJECTS = [
@@ -254,7 +272,9 @@ const compact = (n: number) =>
  * shared link opens the same view. Swap `sampleData` for your queries.
  * `activityHref` adds a "View all" link to the activity card.
  */
-export function DashboardPage({ activityHref }: { activityHref?: string } = {}) {
+export function DashboardPage({
+  activityHref,
+}: { activityHref?: string } = {}) {
   const [rangeValue, setRange] = useUrlState("range", "30d")
   const range = RANGES.find((r) => r.value === rangeValue) ?? RANGES[1]
   const { revenue, signups, stats } = React.useMemo(
@@ -331,9 +351,14 @@ export function DashboardPage({ activityHref }: { activityHref?: string } = {}) 
           <CardContent>
             <ul className="flex flex-col gap-4">
               {ACTIVITY.map((item) => (
-                <li key={item.who + item.what} className="flex items-center gap-3">
+                <li
+                  key={item.who + item.what}
+                  className="flex items-center gap-3"
+                >
                   <Avatar size="sm">
-                    <AvatarFallback className="text-xs">{item.initials}</AvatarFallback>
+                    <AvatarFallback className="text-xs">
+                      {item.initials}
+                    </AvatarFallback>
                   </Avatar>
                   <p className="min-w-0 flex-1 text-sm">
                     <span className="font-medium">{item.who}</span>{" "}
@@ -363,10 +388,15 @@ export function DashboardPage({ activityHref }: { activityHref?: string } = {}) 
                       {compact(project.requests)}
                     </span>
                   </div>
-                  <div aria-hidden className="h-1.5 overflow-hidden rounded-full bg-muted">
+                  <div
+                    aria-hidden
+                    className="h-1.5 overflow-hidden rounded-full bg-muted"
+                  >
                     <div
                       className="h-full rounded-full bg-series-1"
-                      style={{ width: `${(project.requests / maxRequests) * 100}%` }}
+                      style={{
+                        width: `${(project.requests / maxRequests) * 100}%`,
+                      }}
                     />
                   </div>
                 </li>

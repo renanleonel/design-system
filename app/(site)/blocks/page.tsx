@@ -11,7 +11,8 @@ export default function BlocksPage() {
   const blocks = getBlocks()
   // Variants of one registry item (the auth screens) show its source once.
   const firstOf = new Map<string, string>()
-  for (const b of blocks) if (!firstOf.has(b.registry)) firstOf.set(b.registry, b.id)
+  for (const b of blocks)
+    if (!firstOf.has(b.registry)) firstOf.set(b.registry, b.id)
   return (
     <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-16 px-4 py-10 md:px-6">
       <header className="flex max-w-2xl flex-col gap-2">
@@ -38,7 +39,10 @@ export default function BlocksPage() {
                   code: (
                     <p className="rounded-xl px-4 py-6 text-sm text-muted-foreground shadow-border">
                       Same source as{" "}
-                      <a href={`#${owner}`} className="font-medium text-foreground underline underline-offset-4">
+                      <a
+                        href={`#${owner}`}
+                        className="font-medium text-foreground underline underline-offset-4"
+                      >
                         {blocks.find((b) => b.id === owner)?.title}
                       </a>
                       .

@@ -217,9 +217,7 @@ function SortableItem({
     [whole, attributes, listeners, setActivatorNodeRef]
   )
   return (
-    <SortableHandleContext
-      value={handle}
-    >
+    <SortableHandleContext value={handle}>
       <div
         ref={setNodeRef}
         data-slot="sortable-item"

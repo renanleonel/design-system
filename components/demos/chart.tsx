@@ -42,14 +42,22 @@ export function Revenue() {
     <ChartContainer config={config} className="aspect-auto h-60 w-full">
       <AreaChart data={revenue} margin={{ left: 0, right: 8, top: 8 }}>
         <CartesianGrid vertical={false} />
-        <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+        />
         <YAxis
           tickLine={false}
           axisLine={false}
           width={40}
           tickFormatter={(v: number) => `$${compact(v)}`}
         />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
+        <ChartTooltip
+          cursor={false}
+          content={<ChartTooltipContent indicator="line" />}
+        />
         <Area
           dataKey="revenue"
           type="monotone"
@@ -79,14 +87,35 @@ export function Bars() {
   } satisfies ChartConfig
   return (
     <ChartContainer config={config} className="aspect-auto h-64 w-full">
-      <BarChart data={signups} barGap={2} margin={{ left: 0, right: 8, top: 8 }}>
+      <BarChart
+        data={signups}
+        barGap={2}
+        margin={{ left: 0, right: 8, top: 8 }}
+      >
         <CartesianGrid vertical={false} />
-        <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+        />
         <YAxis tickLine={false} axisLine={false} width={32} />
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar dataKey="organic" fill="var(--color-organic)" radius={[4, 4, 0, 0]} maxBarSize={24} isAnimationActive={false} />
-        <Bar dataKey="paid" fill="var(--color-paid)" radius={[4, 4, 0, 0]} maxBarSize={24} isAnimationActive={false} />
+        <Bar
+          dataKey="organic"
+          fill="var(--color-organic)"
+          radius={[4, 4, 0, 0]}
+          maxBarSize={24}
+          isAnimationActive={false}
+        />
+        <Bar
+          dataKey="paid"
+          fill="var(--color-paid)"
+          radius={[4, 4, 0, 0]}
+          maxBarSize={24}
+          isAnimationActive={false}
+        />
       </BarChart>
     </ChartContainer>
   )
@@ -110,7 +139,12 @@ export function Lines() {
     <ChartContainer config={config} className="aspect-auto h-64 w-full">
       <LineChart data={latency} margin={{ left: 0, right: 8, top: 8 }}>
         <CartesianGrid vertical={false} />
-        <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+        />
         <YAxis
           tickLine={false}
           axisLine={false}

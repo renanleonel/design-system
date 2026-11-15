@@ -95,10 +95,7 @@ function MenubarContent({
   )
 }
 
-function MenubarSubContent({
-  className,
-  ...props
-}: MenuPrimitive.Popup.Props) {
+function MenubarSubContent({ className, ...props }: MenuPrimitive.Popup.Props) {
   return (
     <MenuPrimitive.Portal>
       <MenuPrimitive.Positioner

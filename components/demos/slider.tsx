@@ -50,6 +50,11 @@ export function Range() {
 
 export function Disabled() {
   return (
-    <Slider defaultValue={40} disabled aria-label="Opacity" className="max-w-xs" />
+    <Slider
+      defaultValue={40}
+      disabled
+      aria-label="Opacity"
+      className="max-w-xs"
+    />
   )
 }

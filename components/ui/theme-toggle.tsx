@@ -35,7 +35,10 @@ function ThemeToggle({
       className={cn("relative", className)}
     >
       <SunIcon
-        className={cn(icon, "scale-50 -rotate-90 opacity-0 dark:scale-100 dark:rotate-0 dark:opacity-100")}
+        className={cn(
+          icon,
+          "scale-50 -rotate-90 opacity-0 dark:scale-100 dark:rotate-0 dark:opacity-100"
+        )}
       />
       <MoonIcon
         className={cn(icon, "dark:scale-50 dark:rotate-90 dark:opacity-0")}

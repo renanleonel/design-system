@@ -70,7 +70,7 @@ function ScrollBar({
       data-slot="scroll-area-scrollbar"
       orientation={orientation}
       className={cn(
-        "pointer-events-none flex touch-none p-0.5 opacity-0 transition-opacity duration-(--ds-duration-press) select-none data-hovering:pointer-events-auto data-hovering:opacity-100 data-scrolling:pointer-events-auto data-scrolling:opacity-100 data-scrolling:duration-0 data-horizontal:h-2.5 data-horizontal:flex-col data-vertical:w-2.5 motion-reduce:transition-none",
+        "pointer-events-none flex touch-none p-0.5 opacity-0 transition-opacity duration-(--ds-duration-press) select-none data-hovering:pointer-events-auto data-hovering:opacity-100 data-scrolling:pointer-events-auto data-scrolling:opacity-100 data-scrolling:duration-0 motion-reduce:transition-none data-horizontal:h-2.5 data-horizontal:flex-col data-vertical:w-2.5",
         className
       )}
       {...props}

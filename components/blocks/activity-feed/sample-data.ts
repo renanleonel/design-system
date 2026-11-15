@@ -51,11 +51,22 @@ export function buildSampleActivity(now: Date, count = 120): ActivityEvent[] {
     const burst = i % 23 >= 8 && i % 23 <= 13
     const type: ActivityType = burst
       ? "status"
-      : (["comment", "mention", "assignment", "upload", "comment", "status"] as const)[
-          Math.floor(rand() * 6)
-        ]
-    const actor = burst ? ACTORS[(Math.floor(i / 23) + 1) % ACTORS.length] : ACTORS[Math.floor(rand() * ACTORS.length)]
-    const target = burst ? TARGETS[Math.floor(i / 23) % TARGETS.length] : TARGETS[Math.floor(rand() * TARGETS.length)]
+      : (
+          [
+            "comment",
+            "mention",
+            "assignment",
+            "upload",
+            "comment",
+            "status",
+          ] as const
+        )[Math.floor(rand() * 6)]
+    const actor = burst
+      ? ACTORS[(Math.floor(i / 23) + 1) % ACTORS.length]
+      : ACTORS[Math.floor(rand() * ACTORS.length)]
+    const target = burst
+      ? TARGETS[Math.floor(i / 23) % TARGETS.length]
+      : TARGETS[Math.floor(rand() * TARGETS.length)]
     const from = Math.floor(rand() * 4)
     const file = FILES[Math.floor(rand() * FILES.length)]
     events.push({
@@ -70,7 +81,10 @@ export function buildSampleActivity(now: Date, count = 120): ActivityEvent[] {
           : undefined,
       from: type === "status" ? STATES[from] : undefined,
       to: type === "status" ? STATES[from + 1] : undefined,
-      assignee: type === "assignment" ? ACTORS[Math.floor(rand() * ACTORS.length)] : undefined,
+      assignee:
+        type === "assignment"
+          ? ACTORS[Math.floor(rand() * ACTORS.length)]
+          : undefined,
       file: type === "upload" ? { name: file[0], size: file[1] } : undefined,
     })
     t -= (burst ? 4 : 25 + Math.floor(rand() * 180)) * 60_000

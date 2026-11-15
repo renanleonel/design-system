@@ -164,9 +164,11 @@ export function useBoardOperations(
     } catch (error) {
       setColumns(previous)
       toast.error("Couldn't reorder the columns", {
-        description:
-          error instanceof Error ? error.message : "They went back.",
-        action: { label: "Retry", onClick: () => void reorderColumns(from, to) },
+        description: error instanceof Error ? error.message : "They went back.",
+        action: {
+          label: "Retry",
+          onClick: () => void reorderColumns(from, to),
+        },
       })
     }
   }

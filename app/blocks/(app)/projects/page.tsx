@@ -13,7 +13,10 @@ import { useSearchParams } from "@/hooks/use-url-state"
 export default function ProjectsPage() {
   // ?demo=loading | error | empty shows each state of the table.
   const demo = useSearchParams().get("demo") as
-    "loading" | "error" | "empty" | null
+    | "loading"
+    | "error"
+    | "empty"
+    | null
   return (
     <>
       <AppShellHeader

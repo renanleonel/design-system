@@ -83,11 +83,36 @@ const TYPES: Record<
     noun: string
   }
 > = {
-  comment: { icon: <MessageSquareIcon />, tone: "blue", label: "Comments", noun: "comments" },
-  status: { icon: <RepeatIcon />, tone: "purple", label: "Status", noun: "status changes" },
-  assignment: { icon: <UserPlusIcon />, tone: "amber", label: "Assignments", noun: "assignments" },
-  upload: { icon: <FileIcon />, tone: "green", label: "Files", noun: "uploads" },
-  mention: { icon: <AtSignIcon />, tone: "orange", label: "Mentions", noun: "mentions" },
+  comment: {
+    icon: <MessageSquareIcon />,
+    tone: "blue",
+    label: "Comments",
+    noun: "comments",
+  },
+  status: {
+    icon: <RepeatIcon />,
+    tone: "purple",
+    label: "Status",
+    noun: "status changes",
+  },
+  assignment: {
+    icon: <UserPlusIcon />,
+    tone: "amber",
+    label: "Assignments",
+    noun: "assignments",
+  },
+  upload: {
+    icon: <FileIcon />,
+    tone: "green",
+    label: "Files",
+    noun: "uploads",
+  },
+  mention: {
+    icon: <AtSignIcon />,
+    tone: "orange",
+    label: "Mentions",
+    noun: "mentions",
+  },
 }
 const TYPE_IDS = Object.keys(TYPES) as ActivityType[]
 
@@ -96,13 +121,26 @@ const MIN_RUN = 4
 
 /* Time ------------------------------------------------------------------ */
 
-const clock = new Intl.DateTimeFormat("en", { hour: "numeric", minute: "2-digit" })
-const full = new Intl.DateTimeFormat("en", { dateStyle: "full", timeStyle: "medium" })
-const dayLong = new Intl.DateTimeFormat("en", { weekday: "long", month: "short", day: "numeric" })
-const dayYear = new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" })
+const clock = new Intl.DateTimeFormat("en", {
+  hour: "numeric",
+  minute: "2-digit",
+})
+const full = new Intl.DateTimeFormat("en", {
+  dateStyle: "full",
+  timeStyle: "medium",
+})
+const dayLong = new Intl.DateTimeFormat("en", {
+  weekday: "long",
+  month: "short",
+  day: "numeric",
+})
+const dayYear = new Intl.DateTimeFormat("en", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+})
 
-const dayKey = (d: Date) =>
-  `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
+const dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
 
 function dayLabel(d: Date, now: Date) {
   const days = Math.round(
@@ -120,7 +158,8 @@ function relative(d: Date, now: Date) {
   const s = Math.max(0, (now.getTime() - d.getTime()) / 1000)
   if (s < 60) return "Just now"
   if (s < 3600) return `${Math.floor(s / 60)} min ago`
-  if (s < 86_400 && dayKey(d) === dayKey(now)) return `${Math.floor(s / 3600)} h ago`
+  if (s < 86_400 && dayKey(d) === dayKey(now))
+    return `${Math.floor(s / 3600)} h ago`
   return clock.format(d)
 }
 
@@ -134,7 +173,11 @@ function relative(d: Date, now: Date) {
  */
 export function useActivityPages(
   all: ActivityEvent[],
-  { pageSize = 20, delay = 600, failOnce }: { pageSize?: number; delay?: number; failOnce?: number } = {}
+  {
+    pageSize = 20,
+    delay = 600,
+    failOnce,
+  }: { pageSize?: number; delay?: number; failOnce?: number } = {}
 ) {
   const [count, setCount] = React.useState(() => Math.min(pageSize, all.length))
   const [loading, setLoading] = React.useState(false)
@@ -179,7 +222,11 @@ function EventTime({ at, now }: { at: string; now: Date }) {
     <Tooltip>
       <TooltipTrigger
         render={
-          <TimelineTime dateTime={at} suppressHydrationWarning className="cursor-default" />
+          <TimelineTime
+            dateTime={at}
+            suppressHydrationWarning
+            className="cursor-default"
+          />
         }
       >
         <span aria-hidden suppressHydrationWarning>
@@ -198,7 +245,7 @@ function Sentence({ e }: { e: ActivityEvent }) {
   const target = e.href ? (
     <a
       href={e.href}
-      className="font-medium text-foreground underline-offset-4 hover:underline focus-ring rounded-sm"
+      className="rounded-sm font-medium text-foreground underline-offset-4 focus-ring hover:underline"
     >
       {e.target}
     </a>
@@ -228,7 +275,7 @@ function Detail({ e }: { e: ActivityEvent }) {
     return (
       <blockquote
         dir="auto"
-        className="mt-1 line-clamp-3 border-s-2 ps-3 text-sm text-foreground [overflow-wrap:anywhere]"
+        className="mt-1 line-clamp-3 border-s-2 ps-3 text-sm [overflow-wrap:anywhere] text-foreground"
       >
         {e.body}
       </blockquote>
@@ -239,7 +286,10 @@ function Detail({ e }: { e: ActivityEvent }) {
         <Badge tone="gray" className="max-w-40">
           <span className="truncate">{e.from}</span>
         </Badge>
-        <ArrowRightIcon aria-label="to" className="size-3.5 text-muted-foreground rtl:rotate-180" />
+        <ArrowRightIcon
+          aria-label="to"
+          className="size-3.5 text-muted-foreground rtl:rotate-180"
+        />
         <Badge tone="purple" className="max-w-40">
           <span className="truncate">{e.to}</span>
         </Badge>
@@ -271,7 +321,7 @@ function EventItem({ e, now }: { e: ActivityEvent; now: Date }) {
           </Avatar>
           <TimelineTitle
             dir="auto"
-            className="min-w-0 flex-1 py-0.5 text-sm leading-snug font-normal text-muted-foreground [overflow-wrap:anywhere]"
+            className="min-w-0 flex-1 py-0.5 text-sm leading-snug font-normal [overflow-wrap:anywhere] text-muted-foreground"
           >
             <Name>{e.actor.name}</Name> <Sentence e={e} />
           </TimelineTitle>
@@ -305,7 +355,7 @@ function group(events: ActivityEvent[]): Day[] {
   }
   return days.map(({ key, date, events: list }) => {
     const entries: Entry[] = []
-    for (let i = 0; i < list.length; ) {
+    for (let i = 0; i < list.length;) {
       let j = i + 1
       while (
         j < list.length &&
@@ -321,7 +371,9 @@ function group(events: ActivityEvent[]): Day[] {
           type: list[i].type,
           rest: list.slice(i + 1, j),
         })
-      else for (let k = i + 1; k < j; k++) entries.push({ kind: "event", event: list[k] })
+      else
+        for (let k = i + 1; k < j; k++)
+          entries.push({ kind: "event", event: list[k] })
       i = j
     }
     return { key, date, entries }
@@ -366,14 +418,11 @@ export function ActivityFeed({
   )
   const [expanded, setExpanded] = React.useState<Set<string>>(new Set())
 
-  const shown = React.useMemo(
-    () => {
-      if (!active.length) return events
-      const wanted = new Set(active)
-      return events.filter((e) => wanted.has(e.type))
-    },
-    [events, active]
-  )
+  const shown = React.useMemo(() => {
+    if (!active.length) return events
+    const wanted = new Set(active)
+    return events.filter((e) => wanted.has(e.type))
+  }, [events, active])
   const days = React.useMemo(() => group(shown), [shown])
 
   // Load ahead of the end; the effect re-runs after each page, so a filter
@@ -461,7 +510,13 @@ export function ActivityFeed({
                 <Timeline>
                   {day.entries.map((entry) => {
                     if (entry.kind === "event")
-                      return <EventItem key={entry.event.id} e={entry.event} now={now} />
+                      return (
+                        <EventItem
+                          key={entry.event.id}
+                          e={entry.event}
+                          now={now}
+                        />
+                      )
                     const open = expanded.has(entry.id)
                     return (
                       <React.Fragment key={`run-${entry.id}`}>
@@ -485,7 +540,9 @@ export function ActivityFeed({
                           </Button>
                         </TimelineItem>
                         {open &&
-                          entry.rest.map((e) => <EventItem key={e.id} e={e} now={now} />)}
+                          entry.rest.map((e) => (
+                            <EventItem key={e.id} e={e} now={now} />
+                          ))}
                       </React.Fragment>
                     )
                   })}
@@ -497,7 +554,11 @@ export function ActivityFeed({
       )}
 
       {loading && (
-        <div role="status" aria-label="Loading activity" className="flex flex-col gap-4">
+        <div
+          role="status"
+          aria-label="Loading activity"
+          className="flex flex-col gap-4"
+        >
           {Array.from({ length: 3 }, (_, i) => (
             <div key={i} className="flex items-start gap-3">
               <Skeleton className="size-6 shrink-0 rounded-full" />
@@ -511,7 +572,10 @@ export function ActivityFeed({
       )}
 
       <div ref={sentinel} aria-hidden className="h-px" />
-      <div className="flex flex-col items-center gap-2 pb-2 text-sm text-muted-foreground" aria-live="polite">
+      <div
+        className="flex flex-col items-center gap-2 pb-2 text-sm text-muted-foreground"
+        aria-live="polite"
+      >
         {error ? (
           <>
             <span role="alert">{error}</span>
@@ -527,7 +591,9 @@ export function ActivityFeed({
             </Button>
           )
         ) : (
-          events.length > 0 && <span>You&apos;ve reached the start of the feed</span>
+          events.length > 0 && (
+            <span>You&apos;ve reached the start of the feed</span>
+          )
         )}
       </div>
     </div>

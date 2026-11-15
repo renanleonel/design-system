@@ -17,7 +17,5 @@ export function Default() {
 }
 
 export function Empty() {
-  return (
-    <TimezoneSelect aria-label="Time zone" className="w-full max-w-xs" />
-  )
+  return <TimezoneSelect aria-label="Time zone" className="w-full max-w-xs" />
 }

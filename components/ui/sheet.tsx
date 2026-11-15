@@ -83,7 +83,7 @@ function SheetContent({
             render={
               <Button
                 variant="ghost"
-                className="absolute top-[calc(--spacing(3)+env(safe-area-inset-top))] end-[calc(--spacing(3)+env(safe-area-inset-right))] group-data-[side=bottom]/sheet:top-3"
+                className="absolute end-[calc(--spacing(3)+env(safe-area-inset-right))] top-[calc(--spacing(3)+env(safe-area-inset-top))] group-data-[side=bottom]/sheet:top-3"
                 size="icon-sm"
               />
             }

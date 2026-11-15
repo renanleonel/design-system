@@ -54,7 +54,12 @@ function worstThreads(now: Date): MailThread[] {
       labels: [],
       unread: false,
       messages: [
-        { id: "w-short-1", from: { name: "Jo", email: "jo@a.test" }, at: at(30), body: "👍" },
+        {
+          id: "w-short-1",
+          from: { name: "Jo", email: "jo@a.test" },
+          at: at(30),
+          body: "👍",
+        },
       ],
     },
     {
@@ -63,7 +68,8 @@ function worstThreads(now: Date): MailThread[] {
       subject: "first.last+billing-notifications@example.com",
       participant: {
         name: "first.last+billing-notifications-and-more@a-very-long-company-domain-name.example.com",
-        email: "first.last+billing-notifications-and-more@a-very-long-company-domain-name.example.com",
+        email:
+          "first.last+billing-notifications-and-more@a-very-long-company-domain-name.example.com",
       },
       labels: ["billing"],
       unread: true,
@@ -72,7 +78,8 @@ function worstThreads(now: Date): MailThread[] {
           id: "w-email-1",
           from: {
             name: "first.last+billing-notifications-and-more@a-very-long-company-domain-name.example.com",
-            email: "first.last+billing-notifications-and-more@a-very-long-company-domain-name.example.com",
+            email:
+              "first.last+billing-notifications-and-more@a-very-long-company-domain-name.example.com",
           },
           at: at(45),
           body: "Please confirm the address above.",
@@ -150,7 +157,8 @@ function DemoInbox({ data }: { data: string | null }) {
           : data === "many"
             ? buildSampleThreads(now, 10_000).map((t, i) => ({
                 ...t,
-                folder: i % 17 === 0 ? ("archive" as const) : ("inbox" as const),
+                folder:
+                  i % 17 === 0 ? ("archive" as const) : ("inbox" as const),
               }))
             : buildSampleThreads(now)
   return (

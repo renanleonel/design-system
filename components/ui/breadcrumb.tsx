@@ -47,7 +47,10 @@ function BreadcrumbLink({
     defaultTagName: "a",
     props: mergeProps<"a">(
       {
-        className: cn("rounded-sm focus-ring transition-colors hover:text-foreground", className),
+        className: cn(
+          "rounded-sm focus-ring transition-colors hover:text-foreground",
+          className
+        ),
       },
       props
     ),
@@ -82,9 +85,7 @@ function BreadcrumbSeparator({
       className={cn("[&>svg]:size-3.5", className)}
       {...props}
     >
-      {children ?? (
-        <ChevronRightIcon className="rtl:rotate-180" />
-      )}
+      {children ?? <ChevronRightIcon className="rtl:rotate-180" />}
     </li>
   )
 }
@@ -104,8 +105,7 @@ function BreadcrumbEllipsis({
       )}
       {...props}
     >
-      <MoreHorizontalIcon
-      />
+      <MoreHorizontalIcon />
       <span className="sr-only">More</span>
     </span>
   )

@@ -456,9 +456,7 @@ function resolveStep(values: Partial<SetupValues>, stepParam: string) {
     0
   )
   const index =
-    stepParam === "done" && completed === 3
-      ? 3
-      : Math.min(requested, completed)
+    stepParam === "done" && completed === 3 ? 3 : Math.min(requested, completed)
   const step: StepId = index === 3 ? "done" : STEPS[index].id
   return { completed, index, step }
 }

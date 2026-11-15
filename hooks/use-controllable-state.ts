@@ -38,8 +38,11 @@ export function useControllableState<T>({
   })
 
   const setValue = React.useCallback<SetState<T>>((next) => {
-    const { current: prev, controlled: isControlled, onChange: notify } =
-      ref.current
+    const {
+      current: prev,
+      controlled: isControlled,
+      onChange: notify,
+    } = ref.current
     const resolved =
       typeof next === "function" ? (next as (prev: T) => T)(prev) : next
     if (Object.is(resolved, prev)) return

@@ -42,7 +42,9 @@ export function DisabledOption() {
   return (
     <SwatchPicker
       swatches={TONES.map((s) =>
-        s.value === "purple" ? { ...s, label: "Purple (Pro)", disabled: true } : s
+        s.value === "purple"
+          ? { ...s, label: "Purple (Pro)", disabled: true }
+          : s
       )}
       defaultValue="gray"
       aria-label="Accent color"

@@ -13,10 +13,26 @@ import {
 } from "@/components/blocks/onboarding/get-started-checklist"
 
 const TASKS: Omit<ChecklistItem, "done" | "action">[] = [
-  { id: "workspace", title: "Create your workspace", description: "Name it and pick a data region." },
-  { id: "project", title: "Create your first project", description: "Connect a repository and every push gets a preview URL." },
-  { id: "invite", title: "Invite your team", description: "Members can comment on previews and deploy." },
-  { id: "domain", title: "Add a custom domain", description: "Point your DNS at us; certificates are automatic." },
+  {
+    id: "workspace",
+    title: "Create your workspace",
+    description: "Name it and pick a data region.",
+  },
+  {
+    id: "project",
+    title: "Create your first project",
+    description: "Connect a repository and every push gets a preview URL.",
+  },
+  {
+    id: "invite",
+    title: "Invite your team",
+    description: "Members can comment on previews and deploy.",
+  },
+  {
+    id: "domain",
+    title: "Add a custom domain",
+    description: "Point your DNS at us; certificates are automatic.",
+  },
 ]
 const ACTIONS: Record<string, string> = {
   project: "Create project",
@@ -39,7 +55,10 @@ export default function Page() {
   }))
   return (
     <>
-      <AppShellHeader title="Dashboard" description="Revenue, usage and activity" />
+      <AppShellHeader
+        title="Dashboard"
+        description="Revenue, usage and activity"
+      />
       <AppShellContent className="gap-6">
         {!hidden && (
           <GetStartedChecklist

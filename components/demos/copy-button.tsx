@@ -19,9 +19,18 @@ export function Variants() {
     <div className="flex flex-wrap items-center gap-3">
       <CopyButton value="ghost" label="Copy ghost" />
       <CopyButton value="outline" variant="outline" label="Copy outline" />
-      <CopyButton value="secondary" variant="secondary" label="Copy secondary" />
+      <CopyButton
+        value="secondary"
+        variant="secondary"
+        label="Copy secondary"
+      />
       <CopyButton value="small" size="icon-xs" label="Copy small" />
-      <CopyButton value="large" size="icon-lg" variant="outline" label="Copy large" />
+      <CopyButton
+        value="large"
+        size="icon-lg"
+        variant="outline"
+        label="Copy large"
+      />
       <CopyButton value="x" disabled label="Copy disabled" />
     </div>
   )

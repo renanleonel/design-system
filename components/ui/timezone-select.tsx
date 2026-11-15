@@ -35,7 +35,10 @@ const labelOf = (id: string) => id.replaceAll("_", " ").replaceAll("/", " / ")
 
 function offsetOf(id: string, now: Date) {
   const name =
-    new Intl.DateTimeFormat("en-US", { timeZone: id, timeZoneName: "shortOffset" })
+    new Intl.DateTimeFormat("en-US", {
+      timeZone: id,
+      timeZoneName: "shortOffset",
+    })
       .formatToParts(now)
       .find((p) => p.type === "timeZoneName")?.value ?? "GMT"
   const m = /GMT([+-])(\d{1,2})(?::(\d{2}))?/.exec(name)
@@ -53,7 +56,12 @@ function zones(withOffsets: boolean): Zone[] {
       : []
   const all = ids.includes("UTC") ? ids : ["UTC", ...ids]
   if (!withOffsets)
-    return all.map((value) => ({ value, label: labelOf(value), offset: "", minutes: 0 }))
+    return all.map((value) => ({
+      value,
+      label: labelOf(value),
+      offset: "",
+      minutes: 0,
+    }))
   // ~420 formatters: build once per page load.
   if (cached) return cached
   const now = new Date()
@@ -98,7 +106,14 @@ function TimezoneSelect({
     [items]
   )
   const toZone = (v: string | null | undefined) =>
-    v == null ? v : (byValue.get(v) ?? { value: v, label: labelOf(v), offset: "", minutes: 0 })
+    v == null
+      ? v
+      : (byValue.get(v) ?? {
+          value: v,
+          label: labelOf(v),
+          offset: "",
+          minutes: 0,
+        })
 
   return (
     <Combobox
@@ -106,7 +121,9 @@ function TimezoneSelect({
       virtualized
       value={toZone(value)}
       defaultValue={toZone(defaultValue)}
-      onValueChange={(zone: Zone | null) => onValueChange?.(zone?.value ?? null)}
+      onValueChange={(zone: Zone | null) =>
+        onValueChange?.(zone?.value ?? null)
+      }
       itemToStringLabel={(zone: Zone) => zone.label}
       itemToStringValue={(zone: Zone) => zone.value}
       isItemEqualToValue={(a: Zone, b: Zone) => a.value === b.value}

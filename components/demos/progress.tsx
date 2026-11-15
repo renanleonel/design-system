@@ -3,7 +3,11 @@
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
-import { Progress, ProgressLabel, ProgressValue } from "@/components/ui/progress"
+import {
+  Progress,
+  ProgressLabel,
+  ProgressValue,
+} from "@/components/ui/progress"
 
 export function Default() {
   return (

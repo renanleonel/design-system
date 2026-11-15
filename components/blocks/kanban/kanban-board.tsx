@@ -90,13 +90,13 @@ const PRIORITY: Record<
   low: { label: "Low", tone: "gray" },
 }
 
-
 const dateFormat = new Intl.DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
   timeZone: "UTC",
 })
-const formatDue = (due: string) => dateFormat.format(new Date(`${due}T00:00:00Z`))
+const formatDue = (due: string) =>
+  dateFormat.format(new Date(`${due}T00:00:00Z`))
 
 // Today's date exists only in the browser: the server snapshot is empty, so
 // hydration matches and "overdue" appears right after.
@@ -203,7 +203,13 @@ function CardFace({
               label="Assignees"
             />
             {people.length > 3 && (
-              <span className="tabular-nums" title={people.slice(3).map((p) => p.name).join(", ")}>
+              <span
+                className="tabular-nums"
+                title={people
+                  .slice(3)
+                  .map((p) => p.name)
+                  .join(", ")}
+              >
                 +{people.length - 3}
               </span>
             )}
@@ -465,9 +471,7 @@ function Column({
           <ul className="flex min-h-16 flex-col gap-2 p-2 pt-1">
             {children(shown)}
             {cards.length === 0 && (
-              <li
-                className="list-none rounded-lg border border-dashed px-3 py-6 text-center text-sm text-muted-foreground"
-              >
+              <li className="list-none rounded-lg border border-dashed px-3 py-6 text-center text-sm text-muted-foreground">
                 {filtered ? "No cards match the filter" : "No cards yet"}
               </li>
             )}
@@ -729,7 +733,6 @@ function KanbanBoard({
     byColumn,
     columnById: lookups.columns,
   })
-
 
   const activeCard =
     activeId && !isColumnKey(activeId)

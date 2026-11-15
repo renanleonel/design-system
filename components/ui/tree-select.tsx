@@ -239,7 +239,7 @@ function TreeSelect({
         data-slot="tree-select-trigger"
         data-placeholder={selected.length === 0 || undefined}
         className={cn(
-          "group/tree-select flex h-auto min-h-control w-full min-w-0 items-center gap-1.5 rounded-control border border-input bg-transparent py-1 pe-2 ps-2.5 text-start text-sm focus-ring transition-colors outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          "group/tree-select flex h-auto min-h-control w-full min-w-0 items-center gap-1.5 rounded-control border border-input bg-transparent py-1 ps-2.5 pe-2 text-start text-sm focus-ring transition-colors outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
           multiple && selected.length > 0 && "ps-1",
           className
         )}

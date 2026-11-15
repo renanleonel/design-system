@@ -42,7 +42,9 @@ export function Small() {
         <CardDescription>May 2026</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="font-heading text-2xl font-semibold tabular-nums">$48,210</p>
+        <p className="font-heading text-2xl font-semibold tabular-nums">
+          $48,210
+        </p>
       </CardContent>
     </Card>
   )

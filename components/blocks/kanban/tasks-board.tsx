@@ -60,18 +60,114 @@ const card = (
 })
 
 export const SAMPLE_CARDS: KanbanCard[] = [
-  card("c1", "backlog", "Audit colour contrast in dark mode", "medium", ["design", "research"], ["maria"], "2026-12-02"),
-  card("c2", "backlog", "Document the sidebar resize handle", "low", ["docs"], []),
-  card("c3", "backlog", "Export invoices as CSV", "medium", ["feature"], ["lucas"], "2026-12-15", "Finance asked for a monthly export with one row per invoice."),
-  card("c4", "todo", "Fix focus loss after closing the dialog", "urgent", ["bug"], ["ana", "renan"], "2026-11-12", "Focus lands on the body instead of the trigger after Escape."),
-  card("c5", "todo", "Migrate uploads to signed URLs", "high", ["infra"], ["joao"], "2026-11-28"),
-  card("c6", "todo", "Empty state for the team page", "low", ["design"], ["maria"]),
-  card("c7", "doing", "Board: keyboard drag between columns", "high", ["feature"], ["renan"], "2026-11-20", "Space lifts, arrows move, Space drops."),
-  card("c8", "doing", "Rate limit the public API", "high", ["infra", "feature"], ["joao", "lucas"], "2026-11-25"),
-  card("c9", "review", "Tooltip delay on touch", "medium", ["bug"], ["ana"], "2026-11-18"),
-  card("c10", "review", "Onboarding checklist copy", "low", ["docs", "design"], ["maria", "renan"]),
-  card("c11", "done", "Ship the editable table", "medium", ["feature"], ["renan", "ana", "lucas"], "2026-11-10"),
-  card("c12", "done", "Lighthouse pass on the docs site", "medium", ["infra"], ["lucas"], "2026-11-08"),
+  card(
+    "c1",
+    "backlog",
+    "Audit colour contrast in dark mode",
+    "medium",
+    ["design", "research"],
+    ["maria"],
+    "2026-12-02"
+  ),
+  card(
+    "c2",
+    "backlog",
+    "Document the sidebar resize handle",
+    "low",
+    ["docs"],
+    []
+  ),
+  card(
+    "c3",
+    "backlog",
+    "Export invoices as CSV",
+    "medium",
+    ["feature"],
+    ["lucas"],
+    "2026-12-15",
+    "Finance asked for a monthly export with one row per invoice."
+  ),
+  card(
+    "c4",
+    "todo",
+    "Fix focus loss after closing the dialog",
+    "urgent",
+    ["bug"],
+    ["ana", "renan"],
+    "2026-11-12",
+    "Focus lands on the body instead of the trigger after Escape."
+  ),
+  card(
+    "c5",
+    "todo",
+    "Migrate uploads to signed URLs",
+    "high",
+    ["infra"],
+    ["joao"],
+    "2026-11-28"
+  ),
+  card(
+    "c6",
+    "todo",
+    "Empty state for the team page",
+    "low",
+    ["design"],
+    ["maria"]
+  ),
+  card(
+    "c7",
+    "doing",
+    "Board: keyboard drag between columns",
+    "high",
+    ["feature"],
+    ["renan"],
+    "2026-11-20",
+    "Space lifts, arrows move, Space drops."
+  ),
+  card(
+    "c8",
+    "doing",
+    "Rate limit the public API",
+    "high",
+    ["infra", "feature"],
+    ["joao", "lucas"],
+    "2026-11-25"
+  ),
+  card(
+    "c9",
+    "review",
+    "Tooltip delay on touch",
+    "medium",
+    ["bug"],
+    ["ana"],
+    "2026-11-18"
+  ),
+  card(
+    "c10",
+    "review",
+    "Onboarding checklist copy",
+    "low",
+    ["docs", "design"],
+    ["maria", "renan"]
+  ),
+  card(
+    "c11",
+    "done",
+    "Ship the editable table",
+    "medium",
+    ["feature"],
+    ["renan", "ana", "lucas"],
+    "2026-11-10"
+  ),
+  card(
+    "c12",
+    "done",
+    "Lighthouse pass on the docs site",
+    "medium",
+    ["infra"],
+    ["lucas"],
+    "2026-11-08"
+  ),
 ]
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -120,7 +216,8 @@ export function TasksBoard({
     const wantedAssignees = new Set(assignees)
     const wantedLabels = new Set(labelIds)
     return (c: KanbanCard) =>
-      (!wantedAssignees.size || c.assigneeIds.some((a) => wantedAssignees.has(a))) &&
+      (!wantedAssignees.size ||
+        c.assigneeIds.some((a) => wantedAssignees.has(a))) &&
       (!wantedLabels.size || c.labelIds.some((l) => wantedLabels.has(l)))
     // The URL strings are the stable identity of both lists.
     // eslint-disable-next-line react-hooks/exhaustive-deps

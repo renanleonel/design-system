@@ -144,8 +144,7 @@ function CommandPalette({
   const shown = ranked.slice(0, MAX_ROWS)
 
   const groups = groupByHeading(shown)
-  const recents =
-    !page && !q ? recentCommands(recent, byId, maxRecent) : []
+  const recents = !page && !q ? recentCommands(recent, byId, maxRecent) : []
 
   const run = (command: PaletteCommand) => {
     if (command.children) {
@@ -327,7 +326,10 @@ function Breadcrumb({
         <ArrowLeftIcon data-icon="inline-start" className="rtl:rotate-180" />
         Back
       </Button>
-      <span title={path} className="min-w-0 truncate text-xs text-muted-foreground">
+      <span
+        title={path}
+        className="min-w-0 truncate text-xs text-muted-foreground"
+      >
         {path}
       </span>
     </div>

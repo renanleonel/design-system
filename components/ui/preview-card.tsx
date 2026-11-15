@@ -17,7 +17,7 @@ function PreviewCardTrigger({
     <PreviewCardPrimitive.Trigger
       data-slot="preview-card-trigger"
       className={cn(
-        "rounded-sm underline decoration-muted-foreground/50 underline-offset-4 outline-hidden hover:decoration-foreground focus-ring data-popup-open:decoration-foreground",
+        "rounded-sm underline decoration-muted-foreground/50 underline-offset-4 outline-hidden focus-ring hover:decoration-foreground data-popup-open:decoration-foreground",
         className
       )}
       {...props}

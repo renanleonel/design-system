@@ -64,7 +64,9 @@ export function Default() {
             <MenubarLabel>Density</MenubarLabel>
             <MenubarRadioGroup value={density} onValueChange={setDensity}>
               <MenubarRadioItem value="compact">Compact</MenubarRadioItem>
-              <MenubarRadioItem value="comfortable">Comfortable</MenubarRadioItem>
+              <MenubarRadioItem value="comfortable">
+                Comfortable
+              </MenubarRadioItem>
             </MenubarRadioGroup>
           </MenubarGroup>
         </MenubarContent>
@@ -85,12 +87,16 @@ export function WorstCase() {
   return (
     <Menubar aria-label="Worst case">
       <MenubarMenu>
-        <MenubarTrigger>Arquivo de Maria Eduarda dos Santos Albuquerque Cavalcanti</MenubarTrigger>
+        <MenubarTrigger>
+          Arquivo de Maria Eduarda dos Santos Albuquerque Cavalcanti
+        </MenubarTrigger>
         <MenubarContent>
           <MenubarItem>
             Enviar para João Pedro de Oliveira Neto e toda a equipe de produto
           </MenubarItem>
-          <MenubarItem>Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</MenubarItem>
+          <MenubarItem>
+            Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          </MenubarItem>
           <MenubarItem>名前を付けて保存して共有フォルダに移動する</MenubarItem>
           <MenubarItem>حفظ نسخة من الملف في المجلد المشترك</MenubarItem>
         </MenubarContent>

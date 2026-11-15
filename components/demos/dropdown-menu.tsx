@@ -62,12 +62,18 @@ export function Default() {
 }
 
 export function CheckboxesAndRadios() {
-  const [columns, setColumns] = React.useState({ status: true, owner: true, updated: false })
+  const [columns, setColumns] = React.useState({
+    status: true,
+    owner: true,
+    updated: false,
+  })
   const [sort, setSort] = React.useState("updated")
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        render={<Button variant="outline" size="icon" aria-label="View options" />}
+        render={
+          <Button variant="outline" size="icon" aria-label="View options" />
+        }
       >
         <MoreHorizontalIcon />
       </DropdownMenuTrigger>
@@ -92,7 +98,9 @@ export function CheckboxesAndRadios() {
           <DropdownMenuLabel>Sort by</DropdownMenuLabel>
           <DropdownMenuRadioGroup value={sort} onValueChange={setSort}>
             <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="updated">Last updated</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="updated">
+              Last updated
+            </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuGroup>
       </DropdownMenuContent>

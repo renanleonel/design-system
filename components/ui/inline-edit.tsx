@@ -131,10 +131,7 @@ function InlineEdit({
   }
 
   return (
-    <div
-      data-slot="inline-edit"
-      className={cn("relative min-w-0", className)}
-    >
+    <div data-slot="inline-edit" className={cn("relative min-w-0", className)}>
       {editing ? (
         <InlineEditField
           label={label}
@@ -167,7 +164,7 @@ function InlineEdit({
         <p
           id={errorId}
           role="alert"
-          className="mt-1 text-sm text-destructive wrap-anywhere"
+          className="mt-1 text-sm wrap-anywhere text-destructive"
         >
           {error}
         </p>

@@ -57,7 +57,13 @@ function StoryView({ name, story }: { name: string; story: Story }) {
   )
 }
 
-function SectionHeading({ id, children }: { id: string; children: React.ReactNode }) {
+function SectionHeading({
+  id,
+  children,
+}: {
+  id: string
+  children: React.ReactNode
+}) {
   return (
     <h2
       id={id}
@@ -78,7 +84,12 @@ export default async function ComponentPage({
   const entry = components[index]
   const [main, ...examples] = getStories(name)
   const deps = (registryItem(name)?.registryDependencies ?? [])
-    .map((url) => url.split("/").pop()!.replace(/\.json$/, ""))
+    .map((url) =>
+      url
+        .split("/")
+        .pop()!
+        .replace(/\.json$/, "")
+    )
     .map((dep) => components.find((c) => c.name === dep))
     .filter((c) => c !== undefined)
   const prev = components[index - 1]
@@ -94,7 +105,7 @@ export default async function ComponentPage({
 
   return (
     <div className="flex gap-12">
-      <article className="flex min-w-0 max-w-3xl flex-1 flex-col gap-10">
+      <article className="flex max-w-3xl min-w-0 flex-1 flex-col gap-10">
         <header className="flex flex-col gap-2">
           <p className="text-sm text-muted-foreground">
             <Link href="/components" className="hover:text-foreground">

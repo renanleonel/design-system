@@ -54,9 +54,7 @@ export function Indeterminate() {
             id={`checkbox-${row}`}
             checked={checked.includes(row)}
             onCheckedChange={(on) =>
-              setChecked((c) =>
-                on ? [...c, row] : c.filter((r) => r !== row)
-              )
+              setChecked((c) => (on ? [...c, row] : c.filter((r) => r !== row)))
             }
           />
           <FieldLabel htmlFor={`checkbox-${row}`}>{row}</FieldLabel>

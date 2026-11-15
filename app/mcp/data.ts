@@ -11,8 +11,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 
-export const RAW_BASE =
-  "https://ds.renanleonel.com/r"
+export const RAW_BASE = "https://ds.renanleonel.com/r"
 export const NAMESPACE = "@renanleonel"
 export const SITE_REPO = "https://github.com/renanleonel/design-system"
 
@@ -150,7 +149,10 @@ export function items(): Item[] {
 }
 
 export const findItem = (name: string) => {
-  const n = name.trim().toLowerCase().replace(/^@renanleonel\//, "")
+  const n = name
+    .trim()
+    .toLowerCase()
+    .replace(/^@renanleonel\//, "")
   return items().find((i) => i.name === n)
 }
 
@@ -180,7 +182,10 @@ function distance(a: string, b: string) {
 
 /** Item names close to `input`: substring or small edit distance. */
 export function closeMatches(input: string, limit = 5): string[] {
-  const q = input.trim().toLowerCase().replace(/^@renanleonel\//, "")
+  const q = input
+    .trim()
+    .toLowerCase()
+    .replace(/^@renanleonel\//, "")
   return items()
     .map((i) => {
       const sub = q && (i.name.includes(q) || q.includes(i.name)) ? 0 : 99
@@ -298,7 +303,13 @@ export function stories(name: string): Story[] | null {
           ...(named
             ? named
                 .split(",")
-                .map((n) => n.trim().replace(/^type /, "").split(" as ").at(-1)!)
+                .map((n) =>
+                  n
+                    .trim()
+                    .replace(/^type /, "")
+                    .split(" as ")
+                    .at(-1)!
+                )
                 .filter(Boolean)
             : []),
         ],
@@ -323,9 +334,10 @@ export function stories(name: string): Story[] | null {
         }
     }
     visit(s.text)
-    const body = [...helpers.filter((h) => used.has(h)).map((h) => h.text), s.text].join(
-      "\n\n"
-    )
+    const body = [
+      ...helpers.filter((h) => used.has(h)).map((h) => h.text),
+      s.text,
+    ].join("\n\n")
     const importText = imports
       .filter((imp) => imp.names.some((n) => uses(body, n)))
       .map((imp) => imp.text)
@@ -340,7 +352,12 @@ export function stories(name: string): Story[] | null {
 
 // --- Docs (rules) ------------------------------------------------------------
 
-export type Section = { topic: string; heading: string; doc: string; body: string }
+export type Section = {
+  topic: string
+  heading: string
+  doc: string
+  body: string
+}
 
 const DOCS = [
   ["rules", "docs/RULES.md"],
@@ -361,7 +378,9 @@ export function sections(): Section[] {
   const out: Section[] = []
   for (const [doc, path] of DOCS) {
     if (!exists(path)) continue
-    const parts = read(path).replace(/\r\n/g, "\n").split(/^(?=## )/m)
+    const parts = read(path)
+      .replace(/\r\n/g, "\n")
+      .split(/^(?=## )/m)
     for (const part of parts) {
       const m = part.match(/^## (.+)\n/)
       if (!m) continue // preamble before the first heading

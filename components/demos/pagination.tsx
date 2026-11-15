@@ -34,7 +34,9 @@ export function Default() {
         {getPageRange(page, pageCount).map((item, i) => (
           // At most two gaps: one before the current page, one after.
           <PaginationItem
-            key={item === "ellipsis" ? (i === 1 ? "gap-start" : "gap-end") : item}
+            key={
+              item === "ellipsis" ? (i === 1 ? "gap-start" : "gap-end") : item
+            }
           >
             {item === "ellipsis" ? (
               <PaginationEllipsis />

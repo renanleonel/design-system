@@ -10,7 +10,11 @@ import {
   type DropdownProps,
 } from "react-day-picker"
 
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "lucide-react"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
@@ -40,7 +44,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        "group/calendar bg-background p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(8)] pointer-coarse:[--cell-size:min(--spacing(10),calc((100vw-3rem)/7))] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
+        "group/calendar bg-background p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(8)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent pointer-coarse:[--cell-size:min(--spacing(10),calc((100vw-3rem)/7))]",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className
@@ -161,7 +165,10 @@ function Calendar({
 
           if (orientation === "right") {
             return (
-              <ChevronRightIcon className={cn("size-4", className)} {...props} />
+              <ChevronRightIcon
+                className={cn("size-4", className)}
+                {...props}
+              />
             )
           }
 
@@ -171,9 +178,7 @@ function Calendar({
         },
         // Month and year pickers are our Select, not the browser's <select>.
         Dropdown: CalendarDropdown,
-        DayButton: ({ ...props }) => (
-          <CalendarDayButton {...props} />
-        ),
+        DayButton: ({ ...props }) => <CalendarDayButton {...props} />,
         WeekNumber: ({ children, ...props }) => {
           return (
             <td {...props}>

@@ -14,7 +14,10 @@ import {
 
 const products = [
   { title: "Analytics", description: "Track usage across every project." },
-  { title: "Automations", description: "Run workflows when something changes." },
+  {
+    title: "Automations",
+    description: "Run workflows when something changes.",
+  },
   { title: "Integrations", description: "Connect the tools your team uses." },
   { title: "Security", description: "Single sign-on, audit logs and roles." },
 ]

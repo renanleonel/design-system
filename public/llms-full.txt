@@ -418,6 +418,7 @@ Notes:
 - Arrow keys move, Enter runs, Escape closes the dialog.
 
 Changelog:
+- 2026-11-15: CommandDialog fits short viewports: capped to the space below its anchor, the list scrolls instead of the popup being cut off
 - 2026-11-13: stress-test pass with break-ui, mobile-native, gestures, motion and sonner skills
 - 2026-11-13: axe-core accessibility audit on every page, 4 parallel audit shards; fix every violation
 

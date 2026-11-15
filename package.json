@@ -7,8 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "lint": "oxlint --deny-warnings",
+    "format": "oxfmt \"**/*.{ts,tsx}\"",
     "typecheck": "next typegen && tsc --noEmit",
     "registry:gen": "node scripts/gen-registry.mjs && node scripts/gen-llms.mjs && node scripts/export-tokens.mjs",
     "tokens:export": "node scripts/export-tokens.mjs",
@@ -18,7 +18,8 @@
     "audit:ui": "node scripts/audit-ui.mjs",
     "test:interaction": "playwright test",
     "test:visual": "playwright test -c playwright.visual.config.ts",
-    "mcp:smoke": "node scripts/mcp-smoke.mjs"
+    "mcp:smoke": "node scripts/mcp-smoke.mjs",
+    "format:check": "oxfmt --check \"**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -62,11 +63,9 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.4.4",
+    "oxfmt": "^0.78.0",
+    "oxlint": "^1.93.0",
     "playwright": "1.65.0",
-    "prettier": "^3.9.10",
-    "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

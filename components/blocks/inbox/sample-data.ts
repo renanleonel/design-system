@@ -15,7 +15,10 @@ export const SAMPLE_LABELS: MailLabel[] = [
 const ANA = { name: "Ana Souza", email: "ana.souza@acme.dev" }
 const JOAO = { name: "João Silva", email: "joao.silva@acme.dev" }
 const PEDRO = { name: "Pedro Santos", email: "pedro@santos.example" }
-const MARIA = { name: "Maria Oliveira", email: "maria.oliveira@northwind.example" }
+const MARIA = {
+  name: "Maria Oliveira",
+  email: "maria.oliveira@northwind.example",
+}
 const LUCAS = { name: "Lucas Costa", email: "lucas.costa@acme.dev" }
 const BEATRIZ = { name: "Beatriz Lima", email: "beatriz@limastudio.example" }
 
@@ -37,7 +40,11 @@ const TEMPLATES: Template[] = [
     labels: ["work", "billing"],
     ago: 12,
     replies: [
-      { fromMe: true, gap: 90, body: "Looking at it now. The tier row double counts the annual plans." },
+      {
+        fromMe: true,
+        gap: 90,
+        body: "Looking at it now. The tier row double counts the annual plans.",
+      },
     ],
   },
   {
@@ -61,7 +68,11 @@ const TEMPLATES: Template[] = [
     labels: ["design"],
     ago: 60 * 7,
     replies: [
-      { fromMe: true, gap: 60, body: "Ficou ótimo! Só trocaria o ícone de upload, o resto pode seguir." },
+      {
+        fromMe: true,
+        gap: 60,
+        body: "Ficou ótimo! Só trocaria o ícone de upload, o resto pode seguir.",
+      },
       { gap: 20, body: "Combinado, troco hoje e te aviso." },
     ],
   },
@@ -131,7 +142,10 @@ export function buildSampleThreads(now: Date, count = TEMPLATES.length) {
   for (let i = 0; i < count; i++) {
     const t = TEMPLATES[i % TEMPLATES.length]
     // Repeats drift into the past so ordering stays stable.
-    const newest = now.getTime() - (t.ago + Math.floor(i / TEMPLATES.length) * 97) * MS - i * 13 * MS
+    const newest =
+      now.getTime() -
+      (t.ago + Math.floor(i / TEMPLATES.length) * 97) * MS -
+      i * 13 * MS
     const replies = t.replies ?? []
     let at = newest
     for (let r = replies.length - 1; r >= 0; r--) at -= replies[r].gap * MS

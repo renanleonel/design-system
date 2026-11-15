@@ -67,7 +67,8 @@ function generate(
 const WORST_COLUMNS: KanbanColumn[] = [
   {
     id: "k0",
-    title: "Em andamento: integração com o Banco Aurora e Transportes Rápido Sul",
+    title:
+      "Em andamento: integração com o Banco Aurora e Transportes Rápido Sul",
     wipLimit: 3,
   },
   { id: "k1", title: "Backlog" },

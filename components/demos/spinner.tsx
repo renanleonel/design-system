@@ -14,7 +14,10 @@ export function Default() {
 
 export function WithLabel() {
   return (
-    <p role="status" className="flex items-center gap-2 text-sm text-muted-foreground">
+    <p
+      role="status"
+      className="flex items-center gap-2 text-sm text-muted-foreground"
+    >
       <Spinner />
       Syncing 3 of 12 files…
     </p>

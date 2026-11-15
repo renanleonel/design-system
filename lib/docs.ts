@@ -8,8 +8,7 @@ import { z } from "zod"
 
 import catalog from "@/registry/catalog.json"
 
-export const REGISTRY_URL =
-  "https://ds.renanleonel.com/r"
+export const REGISTRY_URL = "https://ds.renanleonel.com/r"
 export const GITHUB_URL = "https://github.com/renanleonel/design-system"
 
 type CatalogEntry = {
@@ -32,7 +31,10 @@ const RegistrySchema = z.object({
 
 export type DocEntry = CatalogEntry & { name: string; href: string }
 export type BlockEntry = (typeof catalog.blocks)[number] & { href: string }
-export type NavGroup = { label: string; items: { title: string; href: string }[] }
+export type NavGroup = {
+  label: string
+  items: { title: string; href: string }[]
+}
 
 // Only runs at build time (every docs page is prerendered), so don't trace it.
 const read = (path: string) =>
@@ -66,8 +68,7 @@ export const getComponents = cache((): DocEntry[] => {
     .sort(
       (a, b) =>
         (groups.indexOf(a.group) + 1 || 99) -
-          (groups.indexOf(b.group) + 1 || 99) ||
-        a.title.localeCompare(b.title)
+          (groups.indexOf(b.group) + 1 || 99) || a.title.localeCompare(b.title)
     )
 })
 
@@ -109,7 +110,7 @@ export function importLine(name: string) {
   const names = block
     .split(",")
     .map((s) => s.trim())
-    .filter((s) => s && !s.startsWith("type ") && !/Variants$/.test(s))
+    .filter((s) => s && !s.startsWith("type ") && !s.endsWith("Variants"))
   const from = `"@/components/ui/${name}"`
   return names.length > 3
     ? `import {\n${names.map((n) => `  ${n},`).join("\n")}\n} from ${from}`
@@ -154,9 +155,16 @@ export const getStories = cache((name: string): Story[] => {
   const lines = src.split("\n")
   const starts: number[] = []
   lines.forEach((line, i) => {
-    if (/^(\/\*\*|import |export |function |const |type |"use client")/.test(line)) {
+    if (
+      /^(\/\*\*|import |export |function |const |type |"use client")/.test(line)
+    ) {
       // A doc comment owns the declaration right after it.
-      if (/^(export |function |const |type )/.test(line) && lines[i - 1]?.endsWith("*/") && starts.at(-1) !== undefined && lines[starts.at(-1)!]?.startsWith("/**"))
+      if (
+        /^(export |function |const |type )/.test(line) &&
+        lines[i - 1]?.endsWith("*/") &&
+        starts.at(-1) !== undefined &&
+        lines[starts.at(-1)!]?.startsWith("/**")
+      )
         return
       starts.push(i)
     }
@@ -187,7 +195,13 @@ export const getStories = cache((name: string): Story[] => {
           ...(named
             ? named
                 .split(",")
-                .map((n) => n.trim().replace(/^type /, "").split(" as ").at(-1)!)
+                .map((n) =>
+                  n
+                    .trim()
+                    .replace(/^type /, "")
+                    .split(" as ")
+                    .at(-1)!
+                )
                 .filter(Boolean)
             : []),
         ],

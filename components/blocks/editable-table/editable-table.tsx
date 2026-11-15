@@ -461,6 +461,7 @@ function GridCell<Row>({
       ref={(el) => register(`${pos.r}:${pos.c}`, el)}
       role="gridcell"
       tabIndex={active && !editing ? 0 : -1}
+      // oxlint-disable-next-line jsx-a11y/role-supports-aria-props -- ARIA 1.2 allows aria-readonly on gridcell
       aria-readonly={!editable || undefined}
       aria-busy={saving || undefined}
       aria-invalid={error ? true : undefined}

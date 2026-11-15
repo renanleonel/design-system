@@ -33,7 +33,9 @@ export function Default() {
       onSubmit={async (values) => {
         await wait(1000)
         if (values.name.toLowerCase() === "error")
-          throw new Error("We couldn't reach the server. Try again in a moment.")
+          throw new Error(
+            "We couldn't reach the server. Try again in a moment."
+          )
         toast.success(`Invited ${values.name}`)
         form.reset()
       }}

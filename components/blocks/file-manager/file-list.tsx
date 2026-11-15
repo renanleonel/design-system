@@ -275,7 +275,10 @@ export function FileList({
           <div
             // Until the width is known (server HTML) the grid's column count
             // is a guess: keep it invisible so the real layout doesn't shift it.
-            className={cn("relative w-full", grid && width === 0 && "invisible")}
+            className={cn(
+              "relative w-full",
+              grid && width === 0 && "invisible"
+            )}
             style={{ height: virtualizer.getTotalSize() }}
           >
             {virtualizer.getVirtualItems().map((row) => {

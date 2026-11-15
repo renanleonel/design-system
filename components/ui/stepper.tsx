@@ -23,7 +23,8 @@ type StepperStep = {
 function stepKeys(steps: StepperStep[]) {
   const seen = new Map<string, number>()
   return steps.map((step) => {
-    const base = step.id ?? (typeof step.title === "string" ? step.title : "step")
+    const base =
+      step.id ?? (typeof step.title === "string" ? step.title : "step")
     const n = seen.get(base) ?? 0
     seen.set(base, n + 1)
     return `${base}:${n}`
@@ -180,7 +181,7 @@ function Stepper({
                     <span className="sr-only">, {STATUS_LABEL[status]}</span>
                   </span>
                   {step.description && (
-                    <span className="text-sm text-muted-foreground wrap-anywhere">
+                    <span className="text-sm wrap-anywhere text-muted-foreground">
                       {step.description}
                     </span>
                   )}

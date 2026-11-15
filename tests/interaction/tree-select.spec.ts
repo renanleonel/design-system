@@ -26,7 +26,10 @@ test("the trigger shows the current value and opens on its folder", async ({
   await expect(trigger(page)).toContainText("tree.tsx")
   await trigger(page).click()
   // Ancestors of the value are open; other folders stay closed.
-  await expect(item(page, "components")).toHaveAttribute("aria-expanded", "true")
+  await expect(item(page, "components")).toHaveAttribute(
+    "aria-expanded",
+    "true"
+  )
   await expect(item(page, "ui")).toHaveAttribute("aria-expanded", "true")
   await expect(item(page, "tree.tsx")).toHaveAttribute("aria-selected", "true")
   await expect(item(page, "app")).toHaveAttribute("aria-expanded", "false")

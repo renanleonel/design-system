@@ -71,7 +71,8 @@ export function Clearable() {
 
 const CITIES = Array.from(
   { length: 10000 },
-  (_, i) => `${TIMEZONES[i % TIMEZONES.length]} ${Math.floor(i / TIMEZONES.length) + 1}`
+  (_, i) =>
+    `${TIMEZONES[i % TIMEZONES.length]} ${Math.floor(i / TIMEZONES.length) + 1}`
 )
 
 /**

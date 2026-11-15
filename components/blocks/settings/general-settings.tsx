@@ -39,11 +39,17 @@ const schema = z.object({
   slug: z
     .string()
     .trim()
-    .regex(/^[a-z0-9-]{3,40}$/, "Use 3–40 lowercase letters, numbers or dashes"),
+    .regex(
+      /^[a-z0-9-]{3,40}$/,
+      "Use 3–40 lowercase letters, numbers or dashes"
+    ),
   weekStart: z.enum(["monday", "sunday", "saturday"]),
   emailDomains: z
     .array(z.string())
-    .refine((all) => all.every((d) => DOMAIN.test(d)), "Fix or remove the invalid domains"),
+    .refine(
+      (all) => all.every((d) => DOMAIN.test(d)),
+      "Fix or remove the invalid domains"
+    ),
   accent: z.string(),
   language: z.string(),
   timezone: z.string().nullable(),
@@ -139,7 +145,11 @@ export function GeneralSettings({ host = "acme.app" }: { host?: string }) {
               <InputGroupAddon>
                 <InputGroupText>{host}/</InputGroupText>
               </InputGroupAddon>
-              <InputGroupInput spellCheck={false} autoComplete="off" {...field} />
+              <InputGroupInput
+                spellCheck={false}
+                autoComplete="off"
+                {...field}
+              />
             </InputGroup>
           )}
         />
@@ -155,7 +165,12 @@ export function GeneralSettings({ host = "acme.app" }: { host?: string }) {
               value={value}
               onValueChange={(v) => v && onChange(v)}
             >
-              <SelectTrigger {...field} ref={ref} onBlur={onBlur} className="w-full">
+              <SelectTrigger
+                {...field}
+                ref={ref}
+                onBlur={onBlur}
+                className="w-full"
+              >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -215,7 +230,9 @@ export function GeneralSettings({ host = "acme.app" }: { host?: string }) {
             name="language"
             render={({ field }) => (
               <Field className="w-full">
-                <FieldLabel htmlFor={`${ids.locale}-language`}>Language</FieldLabel>
+                <FieldLabel htmlFor={`${ids.locale}-language`}>
+                  Language
+                </FieldLabel>
                 <LanguageSelect
                   id={`${ids.locale}-language`}
                   size="default"
@@ -231,7 +248,9 @@ export function GeneralSettings({ host = "acme.app" }: { host?: string }) {
             name="timezone"
             render={({ field }) => (
               <Field className="w-full">
-                <FieldLabel htmlFor={`${ids.locale}-timezone`}>Time zone</FieldLabel>
+                <FieldLabel htmlFor={`${ids.locale}-timezone`}>
+                  Time zone
+                </FieldLabel>
                 <TimezoneSelect
                   id={`${ids.locale}-timezone`}
                   value={field.value}

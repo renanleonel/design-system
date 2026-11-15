@@ -38,7 +38,7 @@ function NavigationMenu({
         >
           <NavigationMenuPrimitive.Popup
             data-slot="navigation-menu-popup"
-            className="relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg bg-popover text-popover-foreground shadow-popover outline-none [transition-property:opacity,transform,width,height] duration-(--ds-duration-popover) ease-out data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
+            className="relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg bg-popover text-popover-foreground shadow-popover [transition-property:opacity,transform,width,height] duration-(--ds-duration-popover) ease-out outline-none data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
           >
             <NavigationMenuPrimitive.Viewport
               data-slot="navigation-menu-viewport"
@@ -58,7 +58,10 @@ function NavigationMenuList({
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
-      className={cn("relative flex max-w-full flex-wrap items-center gap-0.5", className)}
+      className={cn(
+        "relative flex max-w-full flex-wrap items-center gap-0.5",
+        className
+      )}
       {...props}
     />
   )
@@ -104,7 +107,7 @@ function NavigationMenuContent({
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
       className={cn(
-        "h-full w-[calc(100vw-2rem)] p-1.5 transition-[opacity,transform,translate] duration-(--ds-duration-popover) ease-out data-ending-style:opacity-0 data-starting-style:opacity-0 data-starting-style:data-[activation-direction=left]:-translate-x-1/4 data-starting-style:data-[activation-direction=right]:translate-x-1/4 data-ending-style:data-[activation-direction=left]:translate-x-1/4 data-ending-style:data-[activation-direction=right]:-translate-x-1/4 sm:w-max sm:max-w-lg",
+        "h-full w-[calc(100vw-2rem)] p-1.5 transition-[opacity,transform,translate] duration-(--ds-duration-popover) ease-out data-ending-style:opacity-0 data-starting-style:opacity-0 data-ending-style:data-[activation-direction=left]:translate-x-1/4 data-starting-style:data-[activation-direction=left]:-translate-x-1/4 data-ending-style:data-[activation-direction=right]:-translate-x-1/4 data-starting-style:data-[activation-direction=right]:translate-x-1/4 sm:w-max sm:max-w-lg",
         className
       )}
       {...props}

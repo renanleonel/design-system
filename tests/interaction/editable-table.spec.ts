@@ -5,7 +5,14 @@ import { hydrated } from "./helpers"
 // Display cells carry no label; find them by row text and column position.
 const row = (page: Page, deal: string) =>
   page.getByRole("row").filter({ hasText: deal })
-const COL = { name: 0, company: 1, owner: 2, stage: 3, value: 4, probability: 5 }
+const COL = {
+  name: 0,
+  company: 1,
+  owner: 2,
+  stage: 3,
+  value: 4,
+  probability: 5,
+}
 const at = (page: Page, deal: string, col: keyof typeof COL) =>
   row(page, deal).getByRole("gridcell").nth(COL[col])
 

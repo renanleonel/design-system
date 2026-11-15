@@ -52,7 +52,9 @@ function CommandDialog({
       </DialogHeader>
       <DialogContent
         className={cn(
-          "top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0",
+          // Anchored a third down, so the cap is the space below the anchor
+          // (not the centered dialog's 90dvh); the list shrinks and scrolls.
+          "top-1/3 flex max-h-[calc(66.667dvh-1rem)] translate-y-0 flex-col overflow-hidden rounded-xl! p-0",
           className
         )}
         showCloseButton={showCloseButton}

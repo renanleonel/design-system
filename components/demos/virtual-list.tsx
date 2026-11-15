@@ -32,7 +32,11 @@ const EVENTS: Event[] = Array.from({ length: 5000 }, (_, i) => ({
 }))
 
 const ago = (m: number) =>
-  m < 60 ? `${m}m` : m < 1440 ? `${Math.floor(m / 60)}h` : `${Math.floor(m / 1440)}d`
+  m < 60
+    ? `${m}m`
+    : m < 1440
+      ? `${Math.floor(m / 60)}h`
+      : `${Math.floor(m / 1440)}d`
 
 /** 5,000 events; only the ~10 in view are in the DOM. */
 export function Default() {

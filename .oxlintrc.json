@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "react", "nextjs", "jsx-a11y", "import"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    // Rendered accessibility is checked by `pnpm audit:ui` (axe); these are the
+    // static rules that catch what axe cannot see in unrendered states.
+    "jsx-a11y/prefer-tag-over-role": "off",
+    // Base UI `render={<a href />}` gets its content from the parent.
+    "jsx-a11y/anchor-has-content": "off",
+    // `Label` is the generic primitive; callers pass `htmlFor`.
+    "jsx-a11y/label-has-associated-control": "off",
+    // `role="list"` restores list semantics VoiceOver drops with `list-style: none`.
+    "jsx-a11y/no-redundant-roles": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/no-noninteractive-tabindex": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/interactive-supports-focus": "off"
+  },
+  "ignorePatterns": [".next/", ".claude/", "public/", "next-env.d.ts"]
+}

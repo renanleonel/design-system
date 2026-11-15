@@ -10,13 +10,22 @@ export function Default() {
         <TabsTrigger value="activity">Activity</TabsTrigger>
         <TabsTrigger value="settings">Settings</TabsTrigger>
       </TabsList>
-      <TabsContent value="overview" className="pt-3 text-sm text-muted-foreground">
+      <TabsContent
+        value="overview"
+        className="pt-3 text-sm text-muted-foreground"
+      >
         3 deployments this week.
       </TabsContent>
-      <TabsContent value="activity" className="pt-3 text-sm text-muted-foreground">
+      <TabsContent
+        value="activity"
+        className="pt-3 text-sm text-muted-foreground"
+      >
         Ana merged #412.
       </TabsContent>
-      <TabsContent value="settings" className="pt-3 text-sm text-muted-foreground">
+      <TabsContent
+        value="settings"
+        className="pt-3 text-sm text-muted-foreground"
+      >
         Builds run on every push.
       </TabsContent>
     </Tabs>

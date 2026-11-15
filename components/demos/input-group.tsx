@@ -45,7 +45,11 @@ export function WithButton() {
   const [copied, setCopied] = React.useState(false)
   return (
     <InputGroup className="max-w-xs">
-      <InputGroupInput readOnly value="demo_key_51Hq…9fA" aria-label="API key" />
+      <InputGroupInput
+        readOnly
+        value="demo_key_51Hq…9fA"
+        aria-label="API key"
+      />
       <InputGroupAddon align="inline-end">
         <InputGroupButton
           size="icon-xs"

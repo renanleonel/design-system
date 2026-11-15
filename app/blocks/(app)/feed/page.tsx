@@ -85,10 +85,12 @@ function worstEvents(now: Date): ActivityEvent[] {
       from: "Todo",
       to: "In progress",
     })),
-    ...buildSampleActivity(new Date(now.getTime() - 200 * 60_000), 30).map((e) => ({
-      ...e,
-      id: `w-s-${e.id}`,
-    })),
+    ...buildSampleActivity(new Date(now.getTime() - 200 * 60_000), 30).map(
+      (e) => ({
+        ...e,
+        id: `w-s-${e.id}`,
+      })
+    ),
   ]
 }
 

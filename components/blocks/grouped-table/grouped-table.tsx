@@ -146,7 +146,12 @@ function flatten<TData>(
     if (group) entries.push({ kind: "band", index: a })
     if (open)
       for (const row of rows)
-        entries.push({ kind: "row", index: entries.length, row, number: ++number })
+        entries.push({
+          kind: "row",
+          index: entries.length,
+          row,
+          number: ++number,
+        })
     else number += rows.length
     spans.push({ value, rows, open, a, b: entries.length - 1 })
   }
@@ -163,7 +168,8 @@ function useGroupWindow<TData>(
   const virtualizer = useVirtualizer({
     count: entries.length,
     getScrollElement: () => scroller.current,
-    estimateSize: (i) => (entries[i].kind === "band" ? BAND_HEIGHT : ROW_HEIGHT),
+    estimateSize: (i) =>
+      entries[i].kind === "band" ? BAND_HEIGHT : ROW_HEIGHT,
     overscan: 12,
     paddingStart: HEAD_HEIGHT,
     // Keyboard focus never lands under the pinned header and band.
@@ -579,10 +585,12 @@ function FloatingBulkBar<TData>({
         aria-label="Bulk actions"
         data-open={selected.length > 0 || undefined}
         inert={selected.length === 0}
-        className="pointer-events-auto flex max-w-full translate-y-2 items-center gap-1 overflow-x-auto [scrollbar-width:none] rounded-xl bg-popover p-1.5 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-(--ds-duration-press) ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-(--ds-duration-popover) data-open:ease-out"
+        className="pointer-events-auto flex max-w-full translate-y-2 [scrollbar-width:none] items-center gap-1 overflow-x-auto rounded-xl bg-popover p-1.5 text-sm opacity-0 shadow-popover transition-[opacity,translate] duration-(--ds-duration-press) ease-in motion-reduce:translate-y-0 data-open:translate-y-0 data-open:opacity-100 data-open:duration-(--ds-duration-popover) data-open:ease-out"
       >
         <span className="ps-2 pe-1 font-medium whitespace-nowrap tabular-nums">
-          {count === 1 ? `1 ${noun.one} selected` : `${count} ${noun.other} selected`}
+          {count === 1
+            ? `1 ${noun.one} selected`
+            : `${count} ${noun.other} selected`}
         </span>
         <Button
           variant="ghost"

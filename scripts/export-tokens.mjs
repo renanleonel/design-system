@@ -106,7 +106,7 @@ const FONTS = ["sans", "serif", "mono"]
 
 function exportTheme(name, cssVars) {
   const light = cssVars.light ?? {}
-  const merged = { light, dark: { ...light, ...(cssVars.dark ?? {}) } }
+  const merged = { light, dark: { ...light, ...cssVars.dark } }
 
   const core = {}
   set(core, "radius.base", token("dimension", light.radius ?? "0.5rem"))

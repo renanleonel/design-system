@@ -43,7 +43,7 @@ function ResizableHandle({
       className={cn(
         // A 1px rule; the library widens the hit target around it.
         // aria-orientation is the handle's own: vertical in a horizontal group.
-        "relative flex w-px shrink-0 items-center justify-center bg-border outline-none transition-colors",
+        "relative flex w-px shrink-0 items-center justify-center bg-border transition-colors outline-none",
         // data-separator: inactive | hover | active | focus | disabled.
         "data-[separator=active]:bg-(--ds-focus-ring) data-[separator=focus]:bg-(--ds-focus-ring) data-[separator=hover]:bg-foreground/30",
         "aria-[orientation=horizontal]:h-px aria-[orientation=horizontal]:w-full",

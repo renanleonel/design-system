@@ -17,7 +17,13 @@ export type ScheduleView = "month" | "week" | "day"
 export const SCHEDULE_VIEWS: ScheduleView[] = ["month", "week", "day"]
 
 export type EventTone =
-  "blue" | "green" | "amber" | "orange" | "red" | "purple" | "gray"
+  | "blue"
+  | "green"
+  | "amber"
+  | "orange"
+  | "red"
+  | "purple"
+  | "gray"
 
 export type ScheduleEvent = {
   id: string
