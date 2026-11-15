@@ -17,6 +17,9 @@ const fontMono = Geist_Mono({
 export const metadata: Metadata = {
   title: { default: "renanleonel/ui", template: "%s · renanleonel/ui" },
   description: "Components and blocks for shipping SaaS fast.",
+  metadataBase: new URL("https://ds.renanleonel.com"),
+  openGraph: { siteName: "renanleonel/ui", type: "website" },
+  twitter: { card: "summary_large_image" },
 }
 
 // `cover` lets content reach under the notch; overlays and the toaster pad
