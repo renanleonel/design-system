@@ -98,7 +98,7 @@ const ALL_PAGES = [
   "/blocks/command-palette?data=many",
 ]
 // AUDIT_DIR=rtl appends ?dir=rtl to every URL, so the same checks run mirrored.
-// AUDIT_SHARD=2/4 audits every 4th page starting at the 2nd (CI runs 4 in parallel).
+// AUDIT_SHARD=2/4 audits every 4th page starting at the 2nd (CI runs 6 in parallel).
 const RTL = process.env.AUDIT_DIR === "rtl"
 const [shard, shards] = (process.env.AUDIT_SHARD ?? "1/1")
   .split("/")

@@ -42,14 +42,14 @@ jobs:
         run: pnpm check:size
 
   # The UI audit (layout checks + axe accessibility) covers ~80 pages at two
-  # widths in two themes: split across 4 parallel jobs, each building the app.
+  # widths in two themes: split across 6 parallel jobs, 6 pages at a time in each (the work is mostly waiting on navigation, so more than the 4 vCPUs), each building the app.
   audit:
-    name: UI audit (${{ matrix.shard }}/4)
+    name: UI audit (${{ matrix.shard }}/6)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: [1, 2, 3, 4, 5, 6]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -78,7 +78,8 @@ jobs:
       - name: UI audit (alignment, overflow, popups, names, console, axe)
         run: pnpm audit:ui
         env:
-          AUDIT_SHARD: ${{ matrix.shard }}/4
+          AUDIT_SHARD: ${{ matrix.shard }}/6
+          AUDIT_CONCURRENCY: 6
       # Reuses this shard's build; one shard is enough for the suite.
       - name: Interaction tests
         if: matrix.shard == 1

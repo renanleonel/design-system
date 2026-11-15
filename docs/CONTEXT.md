@@ -55,4 +55,4 @@ public/r/*.json  ──►  npx shadcn add https://ds.renanleonel.com/r/<item>.j
 
 ## CI
 
-`.github/workflows/ci.yml`: lint (oxlint), format check (oxfmt), typecheck, contrast, registry-is-up-to-date (`git diff --exit-code` on generated files), `check:size` (gzip and npm-dependency budget per item), `audit:ui` in 4 shards (pages in parallel inside each) with the interaction tests and the MCP smoke test on shard 1, visual regression in 2 shards, and a fresh-project install of the registry.
+`.github/workflows/ci.yml`: lint (oxlint), format check (oxfmt), typecheck, contrast, registry-is-up-to-date (`git diff --exit-code` on generated files), `check:size` (gzip and npm-dependency budget per item), `audit:ui` in 6 shards (pages in parallel inside each) with the interaction tests and the MCP smoke test on shard 1, visual regression in 2 shards, and a fresh-project install of the registry.
